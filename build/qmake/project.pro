@@ -1,5 +1,3 @@
-#
-#-------------------------------------------------
 #-------------------------------------------------
 #
 # Project created by QtCreator 2017-01-02T20:42:10
@@ -25,9 +23,12 @@ SOURCES += \
 
 
 HEADERS  += \
+    ../../src/abstraction/init.h \
     ../../src/ui/MainWindow.h \
     ../../src/ui/ImageArea.h
 
 FORMS += \
     ../../src/ui/forms/MainWindow.ui
 
+mac: OBJECTIVE_SOURCES = ../../src/abstraction/mac/init.mm
+mac: LIBS += -framework AppKit
