@@ -48,7 +48,7 @@ void MainWindow::onFullScreenTriggered()
         ui.toolBar->show();
         ui.mainToolBar->show();
         ui.dockWidget->show();
-        ui.statusBar->show();
+        ui.actionStatusBar->isChecked() ? ui.statusBar->show() : ui.statusBar->hide();
     }
     else
     {
@@ -79,4 +79,20 @@ void MainWindow::onZoomOutTriggered()
 void MainWindow::onFitToWindowToggled(bool toggled)
 {
     ui.imageAreaWidget->setFitToWindow(toggled);
+}
+
+void MainWindow::onStatusBarToggled(bool toggled)
+{
+   if (isFullScreen())
+   {
+        ui.statusBar->isHidden() ? ui.statusBar->show() : ui.statusBar->hide();
+        // Preserve the previous state once in full-screen mode
+        ui.actionStatusBar->blockSignals(true);
+        ui.actionStatusBar->setChecked(!toggled);
+        ui.actionStatusBar->blockSignals(false);
+   }
+   else
+   {
+       toggled ? ui.statusBar->show() : ui.statusBar->hide();
+   }
 }

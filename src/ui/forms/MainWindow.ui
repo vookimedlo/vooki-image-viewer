@@ -60,6 +60,7 @@
     </widget>
     <addaction name="actionFullScreen"/>
     <addaction name="menuZoom"/>
+    <addaction name="actionStatusBar"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="tearOffEnabled">
@@ -133,7 +134,7 @@
   </widget>
   <action name="actionQuit">
    <property name="icon">
-    <iconset resource="../../../resource/vookiimageviewer.qrc">
+    <iconset resource="../../resource/vookiimageviewer.qrc">
      <normaloff>:/images/quit</normaloff>:/images/quit</iconset>
    </property>
    <property name="text">
@@ -151,7 +152,7 @@
   </action>
   <action name="actionFullScreen">
    <property name="icon">
-    <iconset resource="../../../resource/vookiimageviewer.qrc">
+    <iconset resource="../../resource/vookiimageviewer.qrc">
      <normaloff>:/images/fullscreen</normaloff>:/images/fullscreen</iconset>
    </property>
    <property name="text">
@@ -186,7 +187,7 @@
   </action>
   <action name="actionZoomIn">
    <property name="icon">
-    <iconset resource="../../../resource/vookiimageviewer.qrc">
+    <iconset resource="../../resource/vookiimageviewer.qrc">
      <normaloff>:/images/zoomin</normaloff>:/images/zoomin</iconset>
    </property>
    <property name="text">
@@ -204,7 +205,7 @@
   </action>
   <action name="actionZoomOut">
    <property name="icon">
-    <iconset resource="../../../resource/vookiimageviewer.qrc">
+    <iconset resource="../../resource/vookiimageviewer.qrc">
      <normaloff>:/images/zoomout</normaloff>:/images/zoomout</iconset>
    </property>
    <property name="text">
@@ -242,11 +243,28 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../../../resource/vookiimageviewer.qrc">
+    <iconset resource="../../resource/vookiimageviewer.qrc">
      <normaloff>:/images/originalsize</normaloff>:/images/originalsize</iconset>
    </property>
    <property name="text">
     <string>Fi&amp;t to Window</string>
+   </property>
+  </action>
+  <action name="actionStatusBar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>StatusBar</string>
+   </property>
+   <property name="shortcut">
+    <string>S</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
  </widget>
@@ -260,7 +278,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../resource/vookiimageviewer.qrc"/>
+  <include location="../../resource/vookiimageviewer.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -270,8 +288,8 @@
    <slot>onFullScreenTriggered()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>374</x>
-     <y>267</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>374</x>
@@ -359,6 +377,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionStatusBar</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onStatusBarToggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>374</x>
+     <y>267</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>374</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onQuitTriggered()</slot>
@@ -367,5 +401,6 @@
   <slot>onFitToWindowToggled(bool)</slot>
   <slot>onFullScreenTriggered()</slot>
   <slot>onTreeViewDoubleClicked(QModelIndex)</slot>
+  <slot>onStatusBarToggled(bool)</slot>
  </slots>
 </ui>
