@@ -96,3 +96,8 @@ void MainWindow::onStatusBarToggled(bool toggled)
        toggled ? ui.statusBar->show() : ui.statusBar->hide();
    }
 }
+
+void MainWindow::onOriginalSizeTriggered()
+{
+    ui.imageAreaWidget->zoomReset();
+}

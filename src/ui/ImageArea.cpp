@@ -61,6 +61,7 @@ void ImageArea::scaleImage()
 void ImageArea::setFitToWindow(bool enabled)
 {
     isFitToWindow = enabled;
+    scaleFactor = 1;
     scaleImage();
     update();
 }
@@ -85,4 +86,14 @@ void ImageArea::zoomImageOut(double factor)
     scaleFactor = newScaleFactor;
     scaleImage();
     update();
+}
+
+void ImageArea::zoomReset()
+{
+    bool isFitToWindow = this->isFitToWindow;
+    this->isFitToWindow = false;
+    scaleFactor = 1;
+    scaleImage();
+    update();
+    this->isFitToWindow = isFitToWindow;
 }

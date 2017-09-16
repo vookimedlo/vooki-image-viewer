@@ -13,6 +13,7 @@ public:
     bool showImage(const QString &fileName);
     void zoomImageIn(double factor);
     void zoomImageOut(double factor);
+    void zoomReset();
 
 public slots:
 

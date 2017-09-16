@@ -21,6 +21,7 @@ private slots:
     void onFullScreenTriggered();
     void onTreeViewDoubleClicked(const QModelIndex &index);
     void onStatusBarToggled(bool toggled);
+    void onOriginalSizeTriggered();
 
 private:
     Ui::MainWindow ui;

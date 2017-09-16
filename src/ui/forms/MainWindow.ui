@@ -57,6 +57,7 @@
      <addaction name="actionZoomIn"/>
      <addaction name="actionZoomOut"/>
      <addaction name="actionFitToWindow"/>
+     <addaction name="actionOriginalSize"/>
     </widget>
     <addaction name="actionFullScreen"/>
     <addaction name="menuZoom"/>
@@ -128,6 +129,7 @@
    </attribute>
    <addaction name="actionZoomIn"/>
    <addaction name="actionZoomOut"/>
+   <addaction name="actionOriginalSize"/>
    <addaction name="actionFitToWindow"/>
    <addaction name="separator"/>
    <addaction name="actionFullScreen"/>
@@ -267,6 +269,11 @@
     <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
+  <action name="actionOriginalSize">
+   <property name="text">
+    <string>Original Size</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -393,6 +400,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionOriginalSize</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onOriginalSizeTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>374</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onQuitTriggered()</slot>
@@ -402,5 +425,6 @@
   <slot>onFullScreenTriggered()</slot>
   <slot>onTreeViewDoubleClicked(QModelIndex)</slot>
   <slot>onStatusBarToggled(bool)</slot>
+  <slot>onOriginalSizeTriggered()</slot>
  </slots>
 </ui>
