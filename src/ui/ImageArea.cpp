@@ -1,11 +1,12 @@
 #include "ImageArea.h"
+
 #include <QColor>
 #include <QImage>
 #include <QPainter>
-#include <QRect>
 #include <QPaintEvent>
+#include <QRect>
 
-ImageArea::ImageArea(QWidget *parent): isFitToWindow(false), scaleFactor(1.0), originalImage(), scaledImage(), finalImage(), QWidget(parent)
+ImageArea::ImageArea(QWidget *parent): QWidget(parent), isFitToWindow(false), scaleFactor(1.0), originalImage(), scaledImage(), finalImage()
 {
     originalImage.fill(qRgb(0, 0, 0));
     scaledImage.fill(qRgb(0, 0, 0));
@@ -21,7 +22,6 @@ bool ImageArea::showImage(const QString &fileName)
     update();
     return true;
 }
-
 
 void ImageArea::paintEvent(QPaintEvent *event)
 {

@@ -1,14 +1,8 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
-#include <QtGui>
-#include <QtCore>
-#include <QtWidgets>
+#include "ui_MainWindow.h"
 
-namespace Ui {
-class MainWindow;
-}
-
+//Forward declarations
 class QFileSystemModel;
 
 class MainWindow : public QMainWindow
@@ -20,20 +14,15 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_action_Quit_triggered();
+    void onQuitTriggered();
+    void onZoomInTriggered();
+    void onZoomOutTriggered();
+    void onFitToWindowToggled(bool toggled);
+    void onFullScreenTriggered();
+    void onTreeViewDoubleClicked(const QModelIndex &index);
 
-    void on_treeView_doubleClicked(const QModelIndex &index);
-
-    void on_actionZoom_In_triggered();
-
-    void on_actionZoom_Out_triggered();
-
-    void on_actionFi_t_to_Window_toggled(bool arg1);
-
-    void on_action_FullScreen_triggered();
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow ui;
     QFileSystemModel *fileSystemModel;
 };
 
-#endif // MAINWINDOW_H

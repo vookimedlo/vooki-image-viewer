@@ -1,3 +1,5 @@
+#
+#-------------------------------------------------
 #-------------------------------------------------
 #
 # Project created by QtCreator 2017-01-02T20:42:10
@@ -6,14 +8,15 @@
 
 QT       += core gui widgets
 
-greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
-
-TARGET = VookiImageViever
+TARGET = VookiImageViewer
 TEMPLATE = app
 
 # std::make_unique is part of c++14
 #
 CONFIG += c++14
+
+RESOURCES += \
+    ../../src/resource/vookiimageviewer.qrc
 
 SOURCES += \
     ../../src/main.cpp \

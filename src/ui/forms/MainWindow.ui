@@ -38,15 +38,15 @@
      <height>22</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu_File">
+   <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="action_Open"/>
+    <addaction name="actionOpen"/>
     <addaction name="separator"/>
-    <addaction name="action_Quit"/>
+    <addaction name="actionQuit"/>
    </widget>
-   <widget class="QMenu" name="menu_View">
+   <widget class="QMenu" name="menuView">
     <property name="title">
      <string>&amp;View</string>
     </property>
@@ -54,14 +54,14 @@
      <property name="title">
       <string>&amp;Zoom</string>
      </property>
-     <addaction name="actionZoom_In"/>
-     <addaction name="actionZoom_Out"/>
-     <addaction name="actionFi_t_to_Window"/>
+     <addaction name="actionZoomIn"/>
+     <addaction name="actionZoomOut"/>
+     <addaction name="actionFitToWindow"/>
     </widget>
-    <addaction name="action_FullScreen"/>
+    <addaction name="actionFullScreen"/>
     <addaction name="menuZoom"/>
    </widget>
-   <widget class="QMenu" name="menu_About">
+   <widget class="QMenu" name="menuAbout">
     <property name="tearOffEnabled">
      <bool>true</bool>
     </property>
@@ -71,17 +71,17 @@
     <property name="separatorsCollapsible">
      <bool>true</bool>
     </property>
-    <addaction name="action_About"/>
+    <addaction name="actionAbout"/>
    </widget>
-   <widget class="QMenu" name="menu_Window">
+   <widget class="QMenu" name="menuWindow">
     <property name="title">
      <string>&amp;Window</string>
     </property>
    </widget>
-   <addaction name="menu_File"/>
-   <addaction name="menu_View"/>
-   <addaction name="menu_Window"/>
-   <addaction name="menu_About"/>
+   <addaction name="menuFile"/>
+   <addaction name="menuView"/>
+   <addaction name="menuWindow"/>
+   <addaction name="menuAbout"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <property name="windowTitle">
@@ -96,8 +96,8 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action_Open"/>
-   <addaction name="action_Quit"/>
+   <addaction name="actionQuit"/>
+   <addaction name="actionOpen"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockWidget">
@@ -120,18 +120,22 @@
     <string>toolBar</string>
    </property>
    <attribute name="toolBarArea">
-    <enum>RightToolBarArea</enum>
+    <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionZoom_In"/>
-   <addaction name="actionZoom_Out"/>
-   <addaction name="actionFi_t_to_Window"/>
+   <addaction name="actionZoomIn"/>
+   <addaction name="actionZoomOut"/>
+   <addaction name="actionFitToWindow"/>
    <addaction name="separator"/>
-   <addaction name="action_FullScreen"/>
+   <addaction name="actionFullScreen"/>
   </widget>
-  <action name="action_Quit">
+  <action name="actionQuit">
+   <property name="icon">
+    <iconset resource="../../../resource/vookiimageviewer.qrc">
+     <normaloff>:/images/quit</normaloff>:/images/quit</iconset>
+   </property>
    <property name="text">
     <string>&amp;Quit</string>
    </property>
@@ -139,13 +143,17 @@
     <string>Quits the application</string>
    </property>
    <property name="shortcut">
-    <string extracomment="Quits the application">Q</string>
+    <string>Q</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
-  <action name="action_FullScreen">
+  <action name="actionFullScreen">
+   <property name="icon">
+    <iconset resource="../../../resource/vookiimageviewer.qrc">
+     <normaloff>:/images/fullscreen</normaloff>:/images/fullscreen</iconset>
+   </property>
    <property name="text">
     <string>&amp;FullScreen</string>
    </property>
@@ -156,13 +164,13 @@
     <string>Shows image in FullScreen mode</string>
    </property>
    <property name="shortcut">
-    <string extracomment="Shows image in FullScreen mode">F</string>
+    <string>F</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
-  <action name="action_About">
+  <action name="actionAbout">
    <property name="text">
     <string>&amp;About...</string>
    </property>
@@ -176,7 +184,11 @@
     <string>About the VooView</string>
    </property>
   </action>
-  <action name="actionZoom_In">
+  <action name="actionZoomIn">
+   <property name="icon">
+    <iconset resource="../../../resource/vookiimageviewer.qrc">
+     <normaloff>:/images/zoomin</normaloff>:/images/zoomin</iconset>
+   </property>
    <property name="text">
     <string>Zoom &amp;In</string>
    </property>
@@ -184,13 +196,17 @@
     <string>Zooms the displayed image in</string>
    </property>
    <property name="shortcut">
-    <string extracomment="Zooms the displayed image in">Ctrl++</string>
+    <string>Ctrl++</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
-  <action name="actionZoom_Out">
+  <action name="actionZoomOut">
+   <property name="icon">
+    <iconset resource="../../../resource/vookiimageviewer.qrc">
+     <normaloff>:/images/zoomout</normaloff>:/images/zoomout</iconset>
+   </property>
    <property name="text">
     <string>Zoom &amp;Out</string>
    </property>
@@ -198,13 +214,13 @@
     <string>Zooms the displayed image out</string>
    </property>
    <property name="shortcut">
-    <string extracomment="Zooms the displayed image out">Ctrl+-</string>
+    <string>Ctrl+-</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
-  <action name="action_Open">
+  <action name="actionOpen">
    <property name="text">
     <string>&amp;Open</string>
    </property>
@@ -221,9 +237,13 @@
     <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
-  <action name="actionFi_t_to_Window">
+  <action name="actionFitToWindow">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../../resource/vookiimageviewer.qrc">
+     <normaloff>:/images/originalsize</normaloff>:/images/originalsize</iconset>
    </property>
    <property name="text">
     <string>Fi&amp;t to Window</string>
@@ -239,6 +259,113 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
- <connections/>
+ <resources>
+  <include location="../../../resource/vookiimageviewer.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>actionFullScreen</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onFullScreenTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>374</x>
+     <y>267</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>374</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionQuit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onQuitTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>374</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionZoomIn</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onZoomInTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>374</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionZoomOut</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onZoomOutTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>374</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFitToWindow</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onFitToWindowToggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>374</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeView</sender>
+   <signal>doubleClicked(QModelIndex)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onTreeViewDoubleClicked(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>139</x>
+     <y>290</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>374</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onQuitTriggered()</slot>
+  <slot>onZoomInTriggered()</slot>
+  <slot>onZoomOutTriggered()</slot>
+  <slot>onFitToWindowToggled(bool)</slot>
+  <slot>onFullScreenTriggered()</slot>
+  <slot>onTreeViewDoubleClicked(QModelIndex)</slot>
+ </slots>
 </ui>
