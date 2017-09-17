@@ -39,13 +39,26 @@ void ImageArea::resizeEvent(QResizeEvent *event)
 
 void ImageArea::scaleImage()
 {
+
+/*
+    QImageReader imageReader(StringHelper::toQString(file->path()));
+    QPixmap pixmap = QPixmap::fromImageReader(&imageReader);
+    QPixmap scaledPixmap;
+
+    if (pixmap.width() > pixmap.height())
+        scaledPixmap = pixmap.scaledToWidth(ui.previewWidget->size().width());
+    else
+        scaledPixmap = pixmap.scaledToHeight(ui.previewWidget->size().height());
+
+    ui.previewWidget->setPixmap(scaledPixmap);
+*/
+
+
     if(isFitToWindow)
     {
-        //QSize newSize = originalImage.size().expandedTo(size());
-        if(originalImage.width() < originalImage.height())
+        scaledImage = originalImage.scaledToWidth(width());
+        if(scaledImage.height() > height())
             scaledImage = originalImage.scaledToHeight(height());
-        else
-            scaledImage = originalImage.scaledToWidth(width());
     }
     else
         scaledImage = originalImage.scaledToWidth(originalImage.width() * scaleFactor);
