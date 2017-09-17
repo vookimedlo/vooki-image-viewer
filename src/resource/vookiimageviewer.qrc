@@ -6,5 +6,7 @@
         <file alias="originalsize">image/Search.png</file>
         <file alias="zoomin">image/Zoom In.png</file>
         <file alias="zoomout">image/Zoom Out.png</file>
+        <file alias="previous">image/Left-9_240px.png</file>
+        <file alias="next">image/Right-9_240px.png</file>
     </qresource>
 </RCC>

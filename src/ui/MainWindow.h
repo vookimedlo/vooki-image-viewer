@@ -2,6 +2,8 @@
 
 #include "ui_MainWindow.h"
 
+#include "../model/ImageCatalog.h"
+
 //Forward declarations
 class QFileSystemModel;
 
@@ -22,9 +24,12 @@ private slots:
     void onTreeViewDoubleClicked(const QModelIndex &index);
     void onStatusBarToggled(bool toggled);
     void onOriginalSizeTriggered();
+    void onPreviousImageTriggered();
+    void onNextImageTriggered();
 
 private:
     Ui::MainWindow ui;
     QFileSystemModel *fileSystemModel;
+    ImageCatalog m_catalog;
 };
 

@@ -1,11 +1,14 @@
 #include "MainWindow.h"
 
 #include <QFileSystemModel>
+#include <QImageReader>
 #include <QPainter>
+#include "../util/misc.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    fileSystemModel(new QFileSystemModel())
+    fileSystemModel(new QFileSystemModel()),
+    m_catalog(Util::convertFormatsToFilters(QImageReader::supportedImageFormats()))
 {
     ui.setupUi(this);
 
@@ -14,19 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     for(int i = 1; i < fileSystemModel->columnCount(); i++)
         ui.treeView->setColumnHidden(i, true);
 
-    QStringList filters;
-    filters << "*.JPG";
-    filters << "*.BMP";
-    filters << "*.GIF";
-    filters << "*.JPEG";
-    filters << "*.PNG";
-    filters << "*.PBM";
-    filters << "*.PGM";
-    filters << "*.PPM";
-    filters << "*.XBM";
-    filters << "*.XPM";
-
-    fileSystemModel->setNameFilters(filters);
+    fileSystemModel->setNameFilters(Util::convertFormatsToFilters(QImageReader::supportedImageFormats()));
     fileSystemModel->setNameFilterDisables(false);
 }
 
@@ -63,7 +54,8 @@ void MainWindow::onFullScreenTriggered()
 void MainWindow::onTreeViewDoubleClicked(const QModelIndex &index)
 {
     QString filePath = fileSystemModel->filePath(index);
-    ui.imageAreaWidget->showImage(filePath);
+    m_catalog.initialize(QFile(filePath));
+    ui.imageAreaWidget->showImage(m_catalog.getCurrent());
 }
 
 void MainWindow::onZoomInTriggered()
@@ -100,4 +92,14 @@ void MainWindow::onStatusBarToggled(bool toggled)
 void MainWindow::onOriginalSizeTriggered()
 {
     ui.imageAreaWidget->zoomReset();
+}
+
+void MainWindow::onPreviousImageTriggered()
+{
+    ui.imageAreaWidget->showImage(m_catalog.getPrevious());
+}
+
+void MainWindow::onNextImageTriggered()
+{
+    ui.imageAreaWidget->showImage(m_catalog.getNext());
 }

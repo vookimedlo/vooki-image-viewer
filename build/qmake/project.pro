@@ -19,16 +19,23 @@ RESOURCES += \
 SOURCES += \
     ../../src/main.cpp \
     ../../src/ui/MainWindow.cpp \
-    ../../src/ui/ImageArea.cpp
+    ../../src/ui/ImageArea.cpp \
+    ../../src/model/ImageCatalog.cpp \
+    ../../src/util/misc.cpp
 
 
 HEADERS  += \
     ../../src/abstraction/init.h \
     ../../src/ui/MainWindow.h \
-    ../../src/ui/ImageArea.h
+    ../../src/ui/ImageArea.h \
+    ../../src/model/ImageCatalog.h \
+    ../../src/util/compiler.h \
+    ../../src/util/misc.h
 
 FORMS += \
     ../../src/ui/forms/MainWindow.ui
 
+# OS specific
+#
 mac: OBJECTIVE_SOURCES = ../../src/abstraction/mac/init.mm
 mac: LIBS += -framework AppKit

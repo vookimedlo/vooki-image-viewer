@@ -74,10 +74,20 @@
      <addaction name="actionFlipHorizontally"/>
      <addaction name="actionFlipVertically"/>
     </widget>
+    <widget class="QMenu" name="menuNavigation">
+     <property name="title">
+      <string>Navigation</string>
+     </property>
+     <addaction name="actionNextImage"/>
+     <addaction name="actionPreviousImage"/>
+    </widget>
     <addaction name="actionFullScreen"/>
+    <addaction name="separator"/>
     <addaction name="menuRotate"/>
     <addaction name="menuFlip"/>
     <addaction name="menuZoom"/>
+    <addaction name="separator"/>
+    <addaction name="menuNavigation"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="tearOffEnabled">
@@ -160,6 +170,9 @@
    <addaction name="actionFitToWindow"/>
    <addaction name="separator"/>
    <addaction name="actionFullScreen"/>
+   <addaction name="separator"/>
+   <addaction name="actionPreviousImage"/>
+   <addaction name="actionNextImage"/>
   </widget>
   <action name="actionQuit">
    <property name="icon">
@@ -343,6 +356,36 @@
     <enum>QAction::PreferencesRole</enum>
    </property>
   </action>
+  <action name="actionPreviousImage">
+   <property name="icon">
+    <iconset resource="../../resource/vookiimageviewer.qrc">
+     <normaloff>:/images/previous</normaloff>:/images/previous</iconset>
+   </property>
+   <property name="text">
+    <string>Previous Image</string>
+   </property>
+   <property name="shortcut">
+    <string>Left</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionNextImage">
+   <property name="icon">
+    <iconset resource="../../resource/vookiimageviewer.qrc">
+     <normaloff>:/images/next</normaloff>:/images/next</iconset>
+   </property>
+   <property name="text">
+    <string>Next Image</string>
+   </property>
+   <property name="shortcut">
+    <string>Right</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -485,6 +528,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionPreviousImage</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onPreviousImageTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>374</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionNextImage</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onNextImageTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>374</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onQuitTriggered()</slot>
@@ -495,5 +570,7 @@
   <slot>onTreeViewDoubleClicked(QModelIndex)</slot>
   <slot>onStatusBarToggled(bool)</slot>
   <slot>onOriginalSizeTriggered()</slot>
+  <slot>onPreviousImageTriggered()</slot>
+  <slot>onNextImageTriggered()</slot>
  </slots>
 </ui>
