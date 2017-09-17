@@ -2,6 +2,7 @@
 
 #include <QFileSystemModel>
 #include <QImageReader>
+#include <QMessageBox>
 #include <QPainter>
 #include "../util/misc.h"
 
@@ -55,7 +56,7 @@ void MainWindow::onTreeViewDoubleClicked(const QModelIndex &index)
 {
     QString filePath = fileSystemModel->filePath(index);
     m_catalog.initialize(QFile(filePath));
-    ui.imageAreaWidget->showImage(m_catalog.getCurrent());
+    ui.imageAreaWidget->showImage(registerProcessedImage(m_catalog.getCurrent()));
 }
 
 void MainWindow::onZoomInTriggered()
@@ -96,10 +97,21 @@ void MainWindow::onOriginalSizeTriggered()
 
 void MainWindow::onPreviousImageTriggered()
 {
-    ui.imageAreaWidget->showImage(m_catalog.getPrevious());
+    ui.imageAreaWidget->showImage(registerProcessedImage(m_catalog.getPrevious()));
 }
 
 void MainWindow::onNextImageTriggered()
 {
-    ui.imageAreaWidget->showImage(m_catalog.getNext());
+    ui.imageAreaWidget->showImage(registerProcessedImage(m_catalog.getNext()));
+}
+
+void MainWindow::onAboutQtTriggered()
+{
+    QMessageBox::aboutQt(this);
+}
+
+QString MainWindow::registerProcessedImage(const QString& filepath)
+{
+    ui.statusBar->showMessage(filepath);
+    return filepath;
 }

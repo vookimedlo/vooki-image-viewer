@@ -42,7 +42,14 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="actionOpen"/>
+    <widget class="QMenu" name="menuRecentFiles">
+     <property name="title">
+      <string>Recent Files</string>
+     </property>
+     <addaction name="actionClearHistory"/>
+     <addaction name="separator"/>
+    </widget>
+    <addaction name="menuRecentFiles"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
     <addaction name="actionPreferences"/>
@@ -101,6 +108,7 @@
     </property>
     <addaction name="actionAbout"/>
     <addaction name="actionAboutQt"/>
+    <addaction name="actionSupportedImageFormats"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
@@ -133,7 +141,6 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionQuit"/>
-   <addaction name="actionOpen"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockWidget">
@@ -206,14 +213,14 @@
    <property name="toolTip">
     <string>Shows image in FullScreen mode</string>
    </property>
-   <property name="statusTip">
-    <string>Shows image in FullScreen mode</string>
-   </property>
    <property name="shortcut">
     <string>F</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionAbout">
@@ -250,6 +257,9 @@
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionZoomOut">
    <property name="icon">
@@ -268,22 +278,8 @@
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
    </property>
-  </action>
-  <action name="actionOpen">
-   <property name="text">
-    <string>&amp;Open</string>
-   </property>
-   <property name="toolTip">
-    <string>Opens image</string>
-   </property>
-   <property name="statusTip">
-    <string>Opens image</string>
-   </property>
-   <property name="shortcut">
-    <string extracomment="Opens image">Ctrl+O</string>
-   </property>
-   <property name="shortcutContext">
-    <enum>Qt::ApplicationShortcut</enum>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionFitToWindow">
@@ -292,10 +288,13 @@
    </property>
    <property name="icon">
     <iconset resource="../../resource/vookiimageviewer.qrc">
-     <normaloff>:/images/originalsize</normaloff>:/images/originalsize</iconset>
+     <normaloff>:/images/fittowindow</normaloff>:/images/fittowindow</iconset>
    </property>
    <property name="text">
     <string>Fi&amp;t to Window</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionStatusBar">
@@ -314,30 +313,52 @@
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionOriginalSize">
+   <property name="icon">
+    <iconset resource="../../resource/vookiimageviewer.qrc">
+     <normaloff>:/images/originalsize</normaloff>:/images/originalsize</iconset>
+   </property>
    <property name="text">
     <string>Original Size</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionRotateLeft">
    <property name="text">
     <string>Left</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionRotateRight">
    <property name="text">
     <string>Right</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionFlipHorizontally">
    <property name="text">
     <string>Horizontally</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionFlipVertically">
    <property name="text">
     <string>Vertically</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionAboutQt">
@@ -365,10 +386,13 @@
     <string>Previous Image</string>
    </property>
    <property name="shortcut">
-    <string>Left</string>
+    <string>Alt+Left</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionNextImage">
@@ -380,10 +404,29 @@
     <string>Next Image</string>
    </property>
    <property name="shortcut">
-    <string>Right</string>
+    <string>Alt+Right</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionClearHistory">
+   <property name="text">
+    <string>Clear history</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionSupportedImageFormats">
+   <property name="text">
+    <string>Supported Image Formats...</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
  </widget>
@@ -560,6 +603,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionAboutQt</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onAboutQtTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>374</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onQuitTriggered()</slot>
@@ -572,5 +631,6 @@
   <slot>onOriginalSizeTriggered()</slot>
   <slot>onPreviousImageTriggered()</slot>
   <slot>onNextImageTriggered()</slot>
+  <slot>onAboutQtTriggered()</slot>
  </slots>
 </ui>
