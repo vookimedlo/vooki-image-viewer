@@ -30,7 +30,8 @@ HEADERS  += \
     ../../src/ui/ImageArea.h \
     ../../src/model/ImageCatalog.h \
     ../../src/util/compiler.h \
-    ../../src/util/misc.h
+    ../../src/util/misc.h \
+    ../../src/util/RotatingIndex.h
 
 FORMS += \
     ../../src/ui/forms/MainWindow.ui

@@ -348,7 +348,7 @@
     <string>Rotate Left</string>
    </property>
    <property name="shortcut">
-    <string>Alt+Up, ,</string>
+    <string>,</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -372,7 +372,7 @@
     <string>Rotate Right</string>
    </property>
    <property name="shortcut">
-    <string>Alt+Down, .</string>
+    <string>.</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>

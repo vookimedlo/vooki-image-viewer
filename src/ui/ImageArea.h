@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <QWidget>
+#include "../util/RotatingIndex.h"
 
 class ImageArea : public QWidget
 {
@@ -33,5 +34,5 @@ private:
     QImage m_originalImage;
     QImage m_scaledImage;
     QImage m_finalImage;
-    uint8_t m_rotateIndex;
+    RotatingIndex<uint8_t> m_rotateIndex;
 };

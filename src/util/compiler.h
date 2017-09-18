@@ -1,6 +1,6 @@
 #pragma once
 /****************************************************************************
-VookiImageViewer - tool showing images.
+VookiImageViewer - tool to showing images.
 Copyright(C) 2017  Michal Duda <github@vookimedlo.cz>
 
 https://github.com/vookimedlo/vooki-image-viewer

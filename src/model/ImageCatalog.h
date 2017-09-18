@@ -4,6 +4,7 @@
 #include <QDir>
 #include <QFile>
 #include <QStringList>
+#include "../util/RotatingIndex.h"
 
 class ImageCatalog
 {
@@ -20,6 +21,6 @@ public:
 private:
     QString m_absoluteDir;
     QStringList m_catalog;
-    uint64_t m_catalogIndex;
+    RotatingIndex<uint64_t> m_catalogIndex;
     QStringList m_filter;
 };

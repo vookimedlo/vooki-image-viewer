@@ -12,7 +12,7 @@ ImageArea::ImageArea(QWidget *parent): QWidget(parent),
                                        m_originalImage(),
                                        m_scaledImage(),
                                        m_finalImage(),
-                                       m_rotateIndex(0)
+                                       m_rotateIndex(0, 4) // 4 rotation quadrants
 {
     m_originalImage.fill(qRgb(0, 0, 0));
     m_scaledImage.fill(qRgb(0, 0, 0));
@@ -23,7 +23,7 @@ bool ImageArea::showImage(const QString &fileName)
 {
     if (!m_originalImage.load(fileName))
         return false;
-    m_rotateIndex = 0;
+    m_rotateIndex.reset(0);
     m_scaleFactor = 1;
     transformImage();
     update();
@@ -77,19 +77,14 @@ void ImageArea::setFitToWindow(bool enabled)
 
 void ImageArea::rotateLeft()
 {
-    const int numberOfQuadrants = 4;
-    if (m_rotateIndex == 0)
-        m_rotateIndex = numberOfQuadrants;
-
-    m_rotateIndex = (m_rotateIndex - 1) % numberOfQuadrants;
+    --m_rotateIndex;
     transformImage();
     update();
 }
 
 void ImageArea::rotateRight()
 {
-     const int numberOfQuadrants = 4;
-     m_rotateIndex = (m_rotateIndex + 1) % numberOfQuadrants;
+     ++m_rotateIndex;
      transformImage();
      update();
 }
