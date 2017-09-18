@@ -32,7 +32,6 @@ private:
     bool m_isFitToWindow;
     double m_scaleFactor;
     QImage m_originalImage;
-    QImage m_scaledImage;
     QImage m_finalImage;
     RotatingIndex<uint8_t> m_rotateIndex;
 };

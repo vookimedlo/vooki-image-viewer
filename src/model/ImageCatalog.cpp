@@ -34,26 +34,23 @@ uint64_t ImageCatalog::getCatalogSize()
 
 QString ImageCatalog::getCurrent()
 {
-    if (m_catalog.isEmpty())
-        return QString();
-
-    return m_absoluteDir + QDir::separator() + m_catalog.at(m_catalogIndex);
+    return getCatalogItem(m_catalogIndex);
 }
 
 QString ImageCatalog::getNext()
 {
-    if (m_catalog.isEmpty())
-        return QString();
-
-    ++m_catalogIndex;
-    return m_absoluteDir + QDir::separator() + m_catalog.at(m_catalogIndex);
+    return getCatalogItem(++m_catalogIndex);
 }
 
 QString ImageCatalog::getPrevious()
 {
+    return getCatalogItem(--m_catalogIndex);
+}
+
+QString ImageCatalog::getCatalogItem(const RotatingIndex<uint64_t>& catalogIndex)
+{
     if (m_catalog.isEmpty())
         return QString();
 
-    --m_catalogIndex;
-    return m_absoluteDir + QDir::separator() + m_catalog.at(m_catalogIndex);
+    return m_absoluteDir + QDir::separator() + m_catalog.at(catalogIndex);
 }

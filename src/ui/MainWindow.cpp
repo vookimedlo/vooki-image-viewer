@@ -8,7 +8,7 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    m_fileSystemModel(new QFileSystemModel()),
+    m_fileSystemModel(new QFileSystemModel(this)),
     m_catalog(Util::convertFormatsToFilters(QImageReader::supportedImageFormats()))
 {
     m_ui.setupUi(this);

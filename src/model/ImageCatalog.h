@@ -18,6 +18,9 @@ public:
     QString getNext();
     QString getPrevious();
 
+protected:
+    QString getCatalogItem(const RotatingIndex<uint64_t>& catalogIndex);
+
 private:
     QString m_absoluteDir;
     QStringList m_catalog;
