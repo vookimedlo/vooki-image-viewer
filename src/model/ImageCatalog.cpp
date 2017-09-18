@@ -57,7 +57,7 @@ QString ImageCatalog::getPrevious()
         return QString();
 
     if (m_catalogIndex == 0)
-        m_catalogIndex == m_catalog.size();
+        m_catalogIndex = m_catalog.size();
 
     m_catalogIndex = (m_catalogIndex - 1) % m_catalog.size();
     return m_absoluteDir + QDir::separator() + m_catalog.at(m_catalogIndex);

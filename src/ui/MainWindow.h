@@ -30,10 +30,14 @@ private slots:
     void onPreviousImageTriggered();
     void onNextImageTriggered();
     void onAboutQtTriggered();
+    void onFlipHorizontallyTriggered();
+    void onFlipVerticallyTriggered();
+    void onRotateLeftTriggered();
+    void onRotateRightTriggered();
 
 private:
-    Ui::MainWindow ui;
-    QFileSystemModel *fileSystemModel;
+    Ui::MainWindow m_ui;
+    QFileSystemModel *m_fileSystemModel;
     ImageCatalog m_catalog;
 };
 

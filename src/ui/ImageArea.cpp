@@ -6,19 +6,26 @@
 #include <QPaintEvent>
 #include <QRect>
 
-ImageArea::ImageArea(QWidget *parent): QWidget(parent), isFitToWindow(false), scaleFactor(1.0), originalImage(), scaledImage(), finalImage()
+ImageArea::ImageArea(QWidget *parent): QWidget(parent),
+                                       m_isFitToWindow(false),
+                                       m_scaleFactor(1.0),
+                                       m_originalImage(),
+                                       m_scaledImage(),
+                                       m_finalImage(),
+                                       m_rotateIndex(0)
 {
-    originalImage.fill(qRgb(0, 0, 0));
-    scaledImage.fill(qRgb(0, 0, 0));
-    finalImage.fill(qRgb(0, 0, 0));
+    m_originalImage.fill(qRgb(0, 0, 0));
+    m_scaledImage.fill(qRgb(0, 0, 0));
+    m_finalImage.fill(qRgb(0, 0, 0));
 }
 
 bool ImageArea::showImage(const QString &fileName)
 {
-    if (!originalImage.load(fileName))
+    if (!m_originalImage.load(fileName))
         return false;
-    scaleFactor = 1;
-    scaleImage();
+    m_rotateIndex = 0;
+    m_scaleFactor = 1;
+    transformImage();
     update();
     return true;
 }
@@ -27,86 +34,94 @@ void ImageArea::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     QRect dirtyRect = event->rect();
-    painter.drawImage(dirtyRect, finalImage, dirtyRect);
+    painter.drawImage(dirtyRect, m_finalImage, dirtyRect);
 }
 
 void ImageArea::resizeEvent(QResizeEvent *event)
 {
-    scaleImage();
+    transformImage();
     update();
     QWidget::resizeEvent(event);
 }
 
-void ImageArea::scaleImage()
+void ImageArea::transformImage()
 {
+    QTransform transform;
+    QTransform trans = transform.rotate(m_rotateIndex * 90);
+    QImage rotatedImage = m_originalImage.transformed(trans);
 
-/*
-    QImageReader imageReader(StringHelper::toQString(file->path()));
-    QPixmap pixmap = QPixmap::fromImageReader(&imageReader);
-    QPixmap scaledPixmap;
-
-    if (pixmap.width() > pixmap.height())
-        scaledPixmap = pixmap.scaledToWidth(ui.previewWidget->size().width());
-    else
-        scaledPixmap = pixmap.scaledToHeight(ui.previewWidget->size().height());
-
-    ui.previewWidget->setPixmap(scaledPixmap);
-*/
-
-
-    if(isFitToWindow)
+    if(m_isFitToWindow)
     {
-        scaledImage = originalImage.scaledToWidth(width());
-        if(scaledImage.height() > height())
-            scaledImage = originalImage.scaledToHeight(height());
+        m_scaledImage = rotatedImage.scaledToWidth(width());
+        if(m_scaledImage.height() > height())
+            m_scaledImage = rotatedImage.scaledToHeight(height());
     }
     else
-        scaledImage = originalImage.scaledToWidth(originalImage.width() * scaleFactor);
+        m_scaledImage = rotatedImage.scaledToWidth(rotatedImage.width() * m_scaleFactor);
 
-    QSize newSize = scaledImage.size().expandedTo(size());
+    QSize newSize = m_scaledImage.size().expandedTo(size());
     QImage newImage(newSize, QImage::Format_RGB32);
     newImage.fill(qRgb(0, 0, 0));
     QPainter painterImage(&newImage);
-    painterImage.drawImage(QPoint(newSize.width() / 2 - scaledImage.size().width() / 2, newSize.height() / 2 - scaledImage.size().height() / 2), scaledImage);
-    finalImage = newImage;
+    painterImage.drawImage(QPoint(newSize.width() / 2 - m_scaledImage.size().width() / 2, newSize.height() / 2 - m_scaledImage.size().height() / 2), m_scaledImage);
+    m_finalImage = newImage;
 }
 
 void ImageArea::setFitToWindow(bool enabled)
 {
-    isFitToWindow = enabled;
-    scaleFactor = 1;
-    scaleImage();
+    m_isFitToWindow = enabled;
+    m_scaleFactor = 1;
+    transformImage();
     update();
+}
+
+void ImageArea::rotateLeft()
+{
+    const int numberOfQuadrants = 4;
+    if (m_rotateIndex == 0)
+        m_rotateIndex = numberOfQuadrants;
+
+    m_rotateIndex = (m_rotateIndex - 1) % numberOfQuadrants;
+    transformImage();
+    update();
+}
+
+void ImageArea::rotateRight()
+{
+     const int numberOfQuadrants = 4;
+     m_rotateIndex = (m_rotateIndex + 1) % numberOfQuadrants;
+     transformImage();
+     update();
 }
 
 void ImageArea::zoomImageIn(double factor)
 {
-    double newScaleFactor = factor + scaleFactor;
+    double newScaleFactor = factor + m_scaleFactor;
     if(newScaleFactor > 3.0)
         return;
 
-    scaleFactor = newScaleFactor;
-    scaleImage();
+    m_scaleFactor = newScaleFactor;
+    transformImage();
     update();
 }
 
 void ImageArea::zoomImageOut(double factor)
 {
-    double newScaleFactor = -1 * factor + scaleFactor;
+    double newScaleFactor = -1 * factor + m_scaleFactor;
     if(newScaleFactor < 0.2)
         return;
 
-    scaleFactor = newScaleFactor;
-    scaleImage();
+    m_scaleFactor = newScaleFactor;
+    transformImage();
     update();
 }
 
 void ImageArea::zoomReset()
 {
-    bool isFitToWindow = this->isFitToWindow;
-    this->isFitToWindow = false;
-    scaleFactor = 1;
-    scaleImage();
+    bool isFitToWindow = this->m_isFitToWindow;
+    this->m_isFitToWindow = false;
+    m_scaleFactor = 1;
+    transformImage();
     update();
-    this->isFitToWindow = isFitToWindow;
+    this->m_isFitToWindow = isFitToWindow;
 }

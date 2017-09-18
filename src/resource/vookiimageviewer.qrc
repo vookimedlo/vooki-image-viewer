@@ -9,5 +9,7 @@
         <file alias="previous">image/Left-9_240px.png</file>
         <file alias="next">image/Right-9_240px.png</file>
         <file alias="fittowindow">image/Page-Size_240px.png</file>
+        <file alias="rotateleft">image/Rotate-Left_240px.png</file>
+        <file alias="rotateright">image/Rotate-Right_240px.png</file>
     </qresource>
 </RCC>

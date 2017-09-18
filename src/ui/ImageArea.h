@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <QWidget>
 
 class ImageArea : public QWidget
@@ -11,6 +12,8 @@ public:
 
     void setFitToWindow(bool enabled);
     bool showImage(const QString &fileName);
+    void rotateLeft();
+    void rotateRight();
     void zoomImageIn(double factor);
     void zoomImageOut(double factor);
     void zoomReset();
@@ -22,12 +25,13 @@ protected:
     void resizeEvent(QResizeEvent *event);
 
 private:
-    void scaleImage();
+    void transformImage();
 
 private:
-    bool isFitToWindow;
-    double scaleFactor;
-    QImage originalImage;
-    QImage scaledImage;
-    QImage finalImage;
+    bool m_isFitToWindow;
+    double m_scaleFactor;
+    QImage m_originalImage;
+    QImage m_scaledImage;
+    QImage m_finalImage;
+    uint8_t m_rotateIndex;
 };

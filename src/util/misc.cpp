@@ -5,7 +5,7 @@ namespace Util
     QStringList convertFormatsToFilters(const QList<QByteArray>& formats)
     {
         QStringList filters;
-        // Converts filters (e.g. QImageReader::supportedImageFormats()) to QDir::setNameFilters()
+        // Converts formats (e.g. QImageReader::supportedImageFormats()) to QDir::setNameFilters()
         for (const QByteArray &format : formats)
         {
             QString filter("*.");

@@ -176,10 +176,14 @@
    <addaction name="actionOriginalSize"/>
    <addaction name="actionFitToWindow"/>
    <addaction name="separator"/>
+   <addaction name="actionRotateLeft"/>
+   <addaction name="actionRotateRight"/>
+   <addaction name="separator"/>
    <addaction name="actionFullScreen"/>
    <addaction name="separator"/>
    <addaction name="actionPreviousImage"/>
    <addaction name="actionNextImage"/>
+   <addaction name="separator"/>
   </widget>
   <action name="actionQuit">
    <property name="icon">
@@ -330,16 +334,48 @@
    </property>
   </action>
   <action name="actionRotateLeft">
+   <property name="icon">
+    <iconset resource="../../resource/vookiimageviewer.qrc">
+     <normaloff>:/images/rotateleft</normaloff>:/images/rotateleft</iconset>
+   </property>
    <property name="text">
     <string>Left</string>
+   </property>
+   <property name="iconText">
+    <string>Rotate Left</string>
+   </property>
+   <property name="toolTip">
+    <string>Rotate Left</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Up, ,</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionRotateRight">
+   <property name="icon">
+    <iconset resource="../../resource/vookiimageviewer.qrc">
+     <normaloff>:/images/rotateright</normaloff>:/images/rotateright</iconset>
+   </property>
    <property name="text">
     <string>Right</string>
+   </property>
+   <property name="iconText">
+    <string>Rotate Right</string>
+   </property>
+   <property name="toolTip">
+    <string>Rotate Right</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Down, .</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -619,6 +655,70 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionFlipHorizontally</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onFlipHorizontallyTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>374</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFlipVertically</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onFlipVerticallyTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>374</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRotateLeft</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onRotateLeftTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>374</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRotateRight</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onRotateRightTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>374</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onQuitTriggered()</slot>
@@ -632,5 +732,9 @@
   <slot>onPreviousImageTriggered()</slot>
   <slot>onNextImageTriggered()</slot>
   <slot>onAboutQtTriggered()</slot>
+  <slot>onFlipHorizontallyTriggered()</slot>
+  <slot>onFlipVerticallyTriggered()</slot>
+  <slot>onRotateLeftTriggered()</slot>
+  <slot>onRotateRightTriggered()</slot>
  </slots>
 </ui>
