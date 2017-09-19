@@ -133,12 +133,12 @@ void MainWindow::onAboutQtTriggered()
 
 void MainWindow::onFlipHorizontallyTriggered()
 {
-
+    m_ui.imageAreaWidget->flipHorizontally();
 }
 
 void MainWindow::onFlipVerticallyTriggered()
 {
-
+    m_ui.imageAreaWidget->flipVertically();
 }
 
 void MainWindow::onRotateLeftTriggered()

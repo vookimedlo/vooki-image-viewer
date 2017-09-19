@@ -27,6 +27,8 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QRect>
 
 ImageArea::ImageArea(QWidget *parent): QWidget(parent),
+                                       m_flipHorizontally(false),
+                                       m_flipVertically(false),
                                        m_isFitToWindow(false),
                                        m_scaleFactor(1.0),
                                        m_originalImage(),
@@ -41,6 +43,7 @@ bool ImageArea::showImage(const QString &fileName)
 {
     if (!m_originalImage.load(fileName))
         return false;
+    m_flipHorizontally = m_flipVertically = false;
     m_rotateIndex.reset(0);
     m_scaleFactor = 1;
     transformImage();
@@ -69,6 +72,23 @@ void ImageArea::transformImage()
     QImage rotatedImage = m_originalImage.transformed(trans);
     QImage scaledImage;
 
+    // It seems that Qt implementation has swapped the meaning of the vertical and horizontal flip
+    //rotatedImage = rotatedImage.mirrored(m_flipHorizontally, m_flipVertically);
+
+    if (m_flipHorizontally)
+    {
+        QTransform transform;
+        QTransform trans = transform.rotate(180, Qt::XAxis);
+        rotatedImage = rotatedImage.transformed(trans);
+    }
+
+    if (m_flipVertically)
+    {
+        QTransform transform;
+        QTransform trans = transform.rotate(180, Qt::YAxis);
+        rotatedImage = rotatedImage.transformed(trans);
+    }
+
     if(m_isFitToWindow)
     {
         scaledImage = rotatedImage.scaledToWidth(width());
@@ -86,6 +106,38 @@ void ImageArea::transformImage()
     m_finalImage = newImage;
 }
 
+void ImageArea::flipHorizontally()
+{
+    m_flipHorizontally = !m_flipHorizontally;
+
+    if (m_flipHorizontally && m_flipVertically)
+    {
+        // Simultanous vertical and horizontal flip is equal to the PI RAD (180degress) rotation
+        m_flipHorizontally = m_flipVertically = false;
+        ++m_rotateIndex;
+        ++m_rotateIndex;
+    }
+
+    transformImage();
+    update();
+}
+
+void ImageArea::flipVertically()
+{
+    m_flipVertically = !m_flipVertically;
+
+    if (m_flipHorizontally && m_flipVertically)
+    {
+        // Simultanous vertical and horizontal flip is equal to the PI RAD (180degress) rotation
+        m_flipHorizontally = m_flipVertically = false;
+        ++m_rotateIndex;
+        ++m_rotateIndex;
+    }
+
+    transformImage();
+    update();
+}
+
 void ImageArea::setFitToWindow(bool enabled)
 {
     m_isFitToWindow = enabled;
@@ -96,14 +148,20 @@ void ImageArea::setFitToWindow(bool enabled)
 
 void ImageArea::rotateLeft()
 {
-    --m_rotateIndex;
+    if(m_flipHorizontally || m_flipVertically)
+        ++m_rotateIndex;
+    else
+        --m_rotateIndex;
     transformImage();
     update();
 }
 
 void ImageArea::rotateRight()
 {
-     ++m_rotateIndex;
+    if(m_flipHorizontally || m_flipVertically)
+        --m_rotateIndex;
+    else
+        ++m_rotateIndex;
      transformImage();
      update();
 }

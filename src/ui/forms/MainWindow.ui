@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
+ <author>Michal Duda</author>
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
@@ -179,6 +180,9 @@
    <addaction name="actionRotateLeft"/>
    <addaction name="actionRotateRight"/>
    <addaction name="separator"/>
+   <addaction name="actionFlipHorizontally"/>
+   <addaction name="actionFlipVertically"/>
+   <addaction name="separator"/>
    <addaction name="actionFullScreen"/>
    <addaction name="separator"/>
    <addaction name="actionPreviousImage"/>
@@ -240,6 +244,12 @@
    <property name="statusTip">
     <string>About the VooView</string>
    </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
    <property name="menuRole">
     <enum>QAction::AboutRole</enum>
    </property>
@@ -256,7 +266,7 @@
     <string>Zooms the displayed image in</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl++</string>
+    <string>+</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -277,7 +287,7 @@
     <string>Zooms the displayed image out</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+-</string>
+    <string>-</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -296,6 +306,12 @@
    </property>
    <property name="text">
     <string>Fi&amp;t to Window</string>
+   </property>
+   <property name="shortcut">
+    <string>W</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -328,6 +344,12 @@
    </property>
    <property name="text">
     <string>Original Size</string>
+   </property>
+   <property name="shortcut">
+    <string>*</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -382,16 +404,48 @@
    </property>
   </action>
   <action name="actionFlipHorizontally">
+   <property name="icon">
+    <iconset resource="../../resource/vookiimageviewer.qrc">
+     <normaloff>:/images/fliphorizontal</normaloff>:/images/fliphorizontal</iconset>
+   </property>
    <property name="text">
     <string>Horizontally</string>
+   </property>
+   <property name="iconText">
+    <string>Flip Horizontally</string>
+   </property>
+   <property name="toolTip">
+    <string>Flip Horizontally</string>
+   </property>
+   <property name="shortcut">
+    <string>H</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionFlipVertically">
+   <property name="icon">
+    <iconset resource="../../resource/vookiimageviewer.qrc">
+     <normaloff>:/images/flipvertical</normaloff>:/images/flipvertical</iconset>
+   </property>
    <property name="text">
     <string>Vertically</string>
+   </property>
+   <property name="iconText">
+    <string>Flip Vertically</string>
+   </property>
+   <property name="toolTip">
+    <string>Flip Vertically</string>
+   </property>
+   <property name="shortcut">
+    <string>V</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -409,6 +463,12 @@
    <property name="text">
     <string>Preferences...</string>
    </property>
+   <property name="shortcut">
+    <string>P</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
    <property name="menuRole">
     <enum>QAction::PreferencesRole</enum>
    </property>
@@ -422,7 +482,7 @@
     <string>Previous Image</string>
    </property>
    <property name="shortcut">
-    <string>Alt+Left</string>
+    <string>[</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -440,7 +500,7 @@
     <string>Next Image</string>
    </property>
    <property name="shortcut">
-    <string>Alt+Right</string>
+    <string>]</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>

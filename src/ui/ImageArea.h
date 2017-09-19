@@ -30,6 +30,8 @@ class ImageArea : public QWidget
 public:
     ImageArea(QWidget *parent = 0);
 
+    void flipHorizontally();
+    void flipVertically();
     void setFitToWindow(bool enabled);
     bool showImage(const QString &fileName);
     void rotateLeft();
@@ -48,6 +50,8 @@ private:
     void transformImage();
 
 private:
+    bool m_flipHorizontally;
+    bool m_flipVertically;
     bool m_isFitToWindow;
     double m_scaleFactor;
     QImage m_originalImage;
