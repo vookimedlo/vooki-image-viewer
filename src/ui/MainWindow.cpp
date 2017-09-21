@@ -25,6 +25,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QMessageBox>
 #include <QPainter>
 #include "support/RecentFileAction.h"
+#include "../util/compiler.h"
 #include "../util/misc.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -33,6 +34,12 @@ MainWindow::MainWindow(QWidget *parent) :
     m_catalog(Util::convertFormatsToFilters(QImageReader::supportedImageFormats()))
 {
     m_ui.setupUi(this);
+
+    m_ui.toolBar->toggleViewAction()->setShortcut(QKeySequence(Qt::Key_T));
+    m_ui.menuShow->addAction(m_ui.toolBar->toggleViewAction());
+
+    m_ui.dockWidget->toggleViewAction()->setShortcut(QKeySequence(Qt::Key_N));
+    m_ui.menuShow->addAction(m_ui.dockWidget->toggleViewAction());
 
     m_fileSystemModel->setRootPath(QDir::currentPath());
     m_ui.treeView->setModel(m_fileSystemModel);
@@ -54,20 +61,21 @@ void MainWindow::onQuitTriggered()
     close();
 }
 
-void MainWindow::onFullScreenTriggered()
+void MainWindow::onFullScreenToggled(bool toggled)
 {
+    UNUSED_VARIABLE(toggled);
+
+    // It's better to check the real displayed mode instead of the "toggled" flag.
     if(isFullScreen())
     {
         showNormal();
-        m_ui.toolBar->show();
-        m_ui.mainToolBar->show();
-        m_ui.dockWidget->show();
+        m_ui.toolBar->toggleViewAction()->isChecked() ? m_ui.toolBar->show() : m_ui.toolBar->hide();
+        m_ui.dockWidget->toggleViewAction()->isChecked() ? m_ui.dockWidget->show() : m_ui.dockWidget->hide();
         m_ui.actionStatusBar->isChecked() ? m_ui.statusBar->show() : m_ui.statusBar->hide();
     }
     else
     {
         m_ui.toolBar->hide();
-        m_ui.mainToolBar->hide();
         m_ui.dockWidget->hide();
         m_ui.statusBar->hide();
         showFullScreen();
@@ -173,6 +181,7 @@ QString MainWindow::registerProcessedImage(const QString& filePath, bool addToRe
 
         m_ui.menuRecentFiles->insertActions(0, actions);
 
+        // Remove entry exceeding the allowed limit of menu items in recent files menu
         const int maxRecentFiles = 7;
         if (actions.size() > maxRecentFiles)
         {
@@ -188,9 +197,9 @@ QString MainWindow::registerProcessedImage(const QString& filePath, bool addToRe
     return filePath;
 }
 
-void MainWindow::onRecentFileTriggered(const QString &filepath)
+void MainWindow::onRecentFileTriggered(const QString &filePath)
 {
-    showImage(filepath, false);
+    showImage(filePath, false);
 }
 
 void MainWindow::showImage(const QString &filePath, bool addToRecentFiles)

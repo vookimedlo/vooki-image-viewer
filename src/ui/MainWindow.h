@@ -43,7 +43,7 @@ private slots:
     void onZoomInTriggered();
     void onZoomOutTriggered();
     void onFitToWindowToggled(bool toggled);
-    void onFullScreenTriggered();
+    void onFullScreenToggled(bool toggled);
     void onTreeViewDoubleClicked(const QModelIndex &index);
     void onStatusBarToggled(bool toggled);
     void onOriginalSizeTriggered();
@@ -54,7 +54,7 @@ private slots:
     void onFlipVerticallyTriggered();
     void onRotateLeftTriggered();
     void onRotateRightTriggered();
-    void onRecentFileTriggered(const QString &filepath);
+    void onRecentFileTriggered(const QString &filePath);
 
 private:
     Ui::MainWindow m_ui;

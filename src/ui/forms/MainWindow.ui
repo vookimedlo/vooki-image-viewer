@@ -128,21 +128,6 @@
    <addaction name="menuWindow"/>
    <addaction name="menuAbout"/>
   </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <property name="windowTitle">
-    <string>Main ToolBar</string>
-   </property>
-   <property name="locale">
-    <locale language="English" country="UnitedStates"/>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-   <addaction name="actionQuit"/>
-  </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockWidget">
    <property name="allowedAreas">
@@ -164,7 +149,7 @@
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
-    <string>View ToolBar</string>
+    <string>ToolBar</string>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -172,6 +157,8 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionQuit"/>
+   <addaction name="separator"/>
    <addaction name="actionZoomIn"/>
    <addaction name="actionZoomOut"/>
    <addaction name="actionOriginalSize"/>
@@ -211,6 +198,9 @@
    </property>
   </action>
   <action name="actionFullScreen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../resource/vookiimageviewer.qrc">
      <normaloff>:/images/fullscreen</normaloff>:/images/fullscreen</iconset>
@@ -541,9 +531,9 @@
  <connections>
   <connection>
    <sender>actionFullScreen</sender>
-   <signal>triggered()</signal>
+   <signal>toggled(bool)</signal>
    <receiver>MainWindow</receiver>
-   <slot>onFullScreenTriggered()</slot>
+   <slot>onFullScreenToggled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -785,7 +775,7 @@
   <slot>onZoomInTriggered()</slot>
   <slot>onZoomOutTriggered()</slot>
   <slot>onFitToWindowToggled(bool)</slot>
-  <slot>onFullScreenTriggered()</slot>
+  <slot>onFullScreenToggled(bool)</slot>
   <slot>onTreeViewDoubleClicked(QModelIndex)</slot>
   <slot>onStatusBarToggled(bool)</slot>
   <slot>onOriginalSizeTriggered()</slot>
