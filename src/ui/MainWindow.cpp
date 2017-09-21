@@ -24,6 +24,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QImageReader>
 #include <QMessageBox>
 #include <QPainter>
+#include "support/RecentFileAction.h"
 #include "../util/misc.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -75,9 +76,8 @@ void MainWindow::onFullScreenTriggered()
 
 void MainWindow::onTreeViewDoubleClicked(const QModelIndex &index)
 {
-    QString filePath = m_fileSystemModel->filePath(index);
-    m_catalog.initialize(QFile(filePath));
-    m_ui.imageAreaWidget->showImage(registerProcessedImage(m_catalog.getCurrent()));
+    const QString filePath = m_fileSystemModel->filePath(index);
+    showImage(filePath);
 }
 
 void MainWindow::onZoomInTriggered()
@@ -152,8 +152,49 @@ void MainWindow::onRotateRightTriggered()
 }
 
 
-QString MainWindow::registerProcessedImage(const QString& filepath)
+QString MainWindow::registerProcessedImage(const QString& filePath, bool addToRecentFiles)
 {
-    m_ui.statusBar->showMessage(filepath);
-    return filepath;
+    if (addToRecentFiles)
+    {
+        auto actions = m_ui.menuRecentFiles->actions();
+
+        RecentFileAction *recentImage = new RecentFileAction(filePath, this);
+        recentImage->setStatusTip(filePath);
+
+        QObject::connect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
+
+        // Add the action just after the separator
+        actions.insert(2, recentImage);
+
+        for(QAction *action : actions)
+        {
+            m_ui.menuRecentFiles->removeAction(action);
+        }
+
+        m_ui.menuRecentFiles->insertActions(0, actions);
+
+        const int maxRecentFiles = 7;
+        if (actions.size() > maxRecentFiles)
+        {
+            RecentFileAction *recentImage = dynamic_cast<RecentFileAction *>(actions.at(maxRecentFiles));
+            recentImage->setParent(nullptr);
+            QObject::disconnect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
+            delete recentImage;
+            actions.removeAt(maxRecentFiles);
+        }
+    }
+
+    m_ui.statusBar->showMessage(filePath);
+    return filePath;
+}
+
+void MainWindow::onRecentFileTriggered(const QString &filepath)
+{
+    showImage(filepath, false);
+}
+
+void MainWindow::showImage(const QString &filePath, bool addToRecentFiles)
+{
+    m_catalog.initialize(QFile(filePath));
+    m_ui.imageAreaWidget->showImage(registerProcessedImage(m_catalog.getCurrent(), addToRecentFiles));
 }

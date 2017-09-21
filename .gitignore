@@ -3,6 +3,7 @@
 
 # Build dirs
 build/build*
+build/qmake/build*
 
 # User settings
 *.user

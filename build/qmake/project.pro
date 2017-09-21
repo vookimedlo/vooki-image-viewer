@@ -21,7 +21,8 @@ SOURCES += \
     ../../src/ui/MainWindow.cpp \
     ../../src/ui/ImageArea.cpp \
     ../../src/model/ImageCatalog.cpp \
-    ../../src/util/misc.cpp
+    ../../src/util/misc.cpp \
+    ../../src/ui/support/RecentFileAction.cpp
 
 
 HEADERS  += \
@@ -31,7 +32,8 @@ HEADERS  += \
     ../../src/model/ImageCatalog.h \
     ../../src/util/compiler.h \
     ../../src/util/misc.h \
-    ../../src/util/RotatingIndex.h
+    ../../src/util/RotatingIndex.h \
+    ../../src/ui/support/RecentFileAction.h
 
 FORMS += \
     ../../src/ui/forms/MainWindow.ui

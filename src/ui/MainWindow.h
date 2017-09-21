@@ -35,7 +35,8 @@ public:
     ~MainWindow();
 
 protected:
-    QString registerProcessedImage(const QString& filepath);
+    QString registerProcessedImage(const QString& filePath, bool addToRecentFiles = true);
+    void showImage(const QString &filePath, bool addToRecentFiles = true);
 
 private slots:
     void onQuitTriggered();
@@ -53,6 +54,7 @@ private slots:
     void onFlipVerticallyTriggered();
     void onRotateLeftTriggered();
     void onRotateRightTriggered();
+    void onRecentFileTriggered(const QString &filepath);
 
 private:
     Ui::MainWindow m_ui;
