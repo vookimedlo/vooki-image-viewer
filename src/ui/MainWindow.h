@@ -22,6 +22,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QString>
 #include "ui_MainWindow.h"
 #include "../model/ImageCatalog.h"
+#include "../util/compiler.h"
 
 //Forward declarations
 class QFileSystemModel;
@@ -33,6 +34,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    DISABLE_COPY_MOVE(MainWindow);
 
 protected:
     QString registerProcessedImage(const QString& filePath, bool addToRecentFiles = true);
@@ -62,5 +64,12 @@ private:
     Ui::MainWindow m_ui;
     QFileSystemModel *m_fileSystemModel;
     ImageCatalog m_catalog;
+
+    struct
+    {
+        bool isStatusBarVisible;
+        bool isToolBarVisible;
+        bool isFileSystemNavigationVisible;
+    } m_widgetVisibilityPriorFullscreen;
 };
 

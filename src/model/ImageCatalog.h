@@ -23,12 +23,15 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QDir>
 #include <QFile>
 #include <QStringList>
+#include "../util/compiler.h"
 #include "../util/RotatingIndex.h"
 
 class ImageCatalog
 {
 public:
     ImageCatalog(const QStringList &filter);
+    DISABLE_COPY_MOVE(ImageCatalog);
+
     void initialize(const QFile &imageFile);
     void initialize(const QDir &imageDir);
 

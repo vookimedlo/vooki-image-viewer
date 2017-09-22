@@ -20,6 +20,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #include <QAction>
+#include "../../util/compiler.h"
 
 class RecentFileAction : public QAction
 {
@@ -28,6 +29,7 @@ class RecentFileAction : public QAction
 public:
     RecentFileAction(const QString &text, QObject *parent = nullptr);
     ~RecentFileAction();
+    DISABLE_COPY_MOVE(RecentFileAction);
 
 signals:
     void recentFileActionTriggered(const QString& filename);

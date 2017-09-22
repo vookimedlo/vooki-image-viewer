@@ -21,6 +21,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include <cstdint>
 #include <QWidget>
+#include "../util/compiler.h"
 #include "../util/RotatingIndex.h"
 
 class ImageArea : public QWidget
@@ -29,6 +30,7 @@ class ImageArea : public QWidget
 
 public:
     ImageArea(QWidget *parent = 0);
+    DISABLE_COPY_MOVE(ImageArea);
 
     void flipHorizontally();
     void flipVertically();

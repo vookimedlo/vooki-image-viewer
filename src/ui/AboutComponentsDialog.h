@@ -21,6 +21,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include <QDialog>
 #include "ui_AboutComponentsDialog.h"
+#include "../util/compiler.h"
 
 class AboutComponentsDialog : public QDialog
 {
@@ -28,6 +29,7 @@ class AboutComponentsDialog : public QDialog
 
 public:
     AboutComponentsDialog(QWidget *parent = Q_NULLPTR);
+    DISABLE_COPY_MOVE(AboutComponentsDialog);
 
 public Q_SLOTS:
     virtual void onSelectedComponentChanged(int row);

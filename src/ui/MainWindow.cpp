@@ -28,7 +28,6 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "ui_About.h"
 #include "AboutComponentsDialog.h"
 #include "support/RecentFileAction.h"
-#include "../util/compiler.h"
 #include "../util/misc.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -72,15 +71,24 @@ void MainWindow::onFullScreenToggled(bool toggled)
     if(isFullScreen())
     {
         showNormal();
-        m_ui.toolBar->toggleViewAction()->isChecked() ? m_ui.toolBar->show() : m_ui.toolBar->hide();
-        m_ui.dockWidget->toggleViewAction()->isChecked() ? m_ui.dockWidget->show() : m_ui.dockWidget->hide();
-        m_ui.actionStatusBar->isChecked() ? m_ui.statusBar->show() : m_ui.statusBar->hide();
+        m_ui.toolBar->toggleViewAction()->setChecked(m_widgetVisibilityPriorFullscreen.isToolBarVisible);
+        if(m_widgetVisibilityPriorFullscreen.isToolBarVisible)
+            m_ui.toolBar->show();
+        m_ui.dockWidget->toggleViewAction()->setChecked(m_widgetVisibilityPriorFullscreen.isFileSystemNavigationVisible);
+        if(m_widgetVisibilityPriorFullscreen.isFileSystemNavigationVisible)
+            m_ui.dockWidget->show();
+        m_ui.actionStatusBar->setChecked(m_widgetVisibilityPriorFullscreen.isStatusBarVisible);
+        if (m_widgetVisibilityPriorFullscreen.isStatusBarVisible)
+            m_ui.statusBar->show();
     }
     else
     {
+        m_widgetVisibilityPriorFullscreen.isToolBarVisible = m_ui.toolBar->toggleViewAction()->isChecked();
+        m_widgetVisibilityPriorFullscreen.isFileSystemNavigationVisible = m_ui.dockWidget->toggleViewAction()->isChecked();
+        m_widgetVisibilityPriorFullscreen.isStatusBarVisible = m_ui.actionStatusBar->isChecked();
         m_ui.toolBar->hide();
         m_ui.dockWidget->hide();
-        m_ui.statusBar->hide();
+        m_ui.actionStatusBar->setChecked(false);
         showFullScreen();
     }
 }
@@ -110,18 +118,7 @@ void MainWindow::onFitToWindowToggled(bool toggled)
 
 void MainWindow::onStatusBarToggled(bool toggled)
 {
-   if (isFullScreen())
-   {
-        m_ui.statusBar->isHidden() ? m_ui.statusBar->show() : m_ui.statusBar->hide();
-        // Preserve the previous state once in full-screen mode
-        m_ui.actionStatusBar->blockSignals(true);
-        m_ui.actionStatusBar->setChecked(!toggled);
-        m_ui.actionStatusBar->blockSignals(false);
-   }
-   else
-   {
-       toggled ? m_ui.statusBar->show() : m_ui.statusBar->hide();
-   }
+    toggled ? m_ui.statusBar->show() : m_ui.statusBar->hide();
 }
 
 void MainWindow::onOriginalSizeTriggered()
