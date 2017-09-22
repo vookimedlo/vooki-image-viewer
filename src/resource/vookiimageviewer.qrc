@@ -13,5 +13,12 @@
         <file alias="rotateright">image/Rotate-Right_240px.png</file>
         <file alias="flipvertical">image/Mirror-2-Vertical_custom.png</file>
         <file alias="fliphorizontal">image/Mirror-2-Horizontal_custom.png</file>
+        <file alias="applogo">openclipart/abeautifulwomansface-800px.png</file>
+    </qresource>
+    <qresource prefix="/text">
+        <file alias="aboutapp">text/about.html</file>
+        <file alias="aboutopenclipart">text/aboutOpenClipart.html</file>
+        <file alias="aboutqt">text/aboutQt.html</file>
+        <file alias="abouticon54">text/aboutIcon54.html</file>
     </qresource>
 </RCC>

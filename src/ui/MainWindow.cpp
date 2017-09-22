@@ -20,10 +20,13 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include "MainWindow.h"
 
+#include <QDialog>
 #include <QFileSystemModel>
 #include <QImageReader>
 #include <QMessageBox>
 #include <QPainter>
+#include "ui_About.h"
+#include "AboutComponentsDialog.h"
 #include "support/RecentFileAction.h"
 #include "../util/compiler.h"
 #include "../util/misc.h"
@@ -90,11 +93,13 @@ void MainWindow::onTreeViewDoubleClicked(const QModelIndex &index)
 
 void MainWindow::onZoomInTriggered()
 {
+    m_ui.actionFitToWindow->setChecked(false);
     m_ui.imageAreaWidget->zoomImageIn(0.10);
 }
 
 void MainWindow::onZoomOutTriggered()
 {
+    m_ui.actionFitToWindow->setChecked(false);
     m_ui.imageAreaWidget->zoomImageOut(0.10);
 }
 
@@ -121,6 +126,7 @@ void MainWindow::onStatusBarToggled(bool toggled)
 
 void MainWindow::onOriginalSizeTriggered()
 {
+    m_ui.actionFitToWindow->setChecked(false);
     m_ui.imageAreaWidget->zoomReset();
 }
 
@@ -132,6 +138,20 @@ void MainWindow::onPreviousImageTriggered()
 void MainWindow::onNextImageTriggered()
 {
     m_ui.imageAreaWidget->showImage(registerProcessedImage(m_catalog.getNext()));
+}
+
+void MainWindow::onAboutTriggered()
+{
+    Ui::aboutDialog uiAbout;
+    QDialog dialog(this);
+    uiAbout.setupUi(&dialog);
+    dialog.exec();
+}
+
+void MainWindow::onAboutComponentsTriggered()
+{
+    AboutComponentsDialog dialog(this);
+    dialog.exec();
 }
 
 void MainWindow::onAboutQtTriggered()

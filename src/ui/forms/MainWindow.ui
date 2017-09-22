@@ -7,7 +7,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>749</width>
+    <width>810</width>
     <height>535</height>
    </rect>
   </property>
@@ -35,7 +35,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>749</width>
+     <width>810</width>
      <height>22</height>
     </rect>
    </property>
@@ -108,6 +108,7 @@
      <bool>true</bool>
     </property>
     <addaction name="actionAbout"/>
+    <addaction name="actionAboutComponents"/>
     <addaction name="actionAboutQt"/>
     <addaction name="actionSupportedImageFormats"/>
    </widget>
@@ -515,6 +516,14 @@
     <enum>QAction::NoRole</enum>
    </property>
   </action>
+  <action name="actionAboutComponents">
+   <property name="text">
+    <string>About Components...</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::ApplicationSpecificRole</enum>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -769,6 +778,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionAbout</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onAboutTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>374</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAboutComponents</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onAboutComponentsTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>374</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onQuitTriggered()</slot>
@@ -786,5 +827,7 @@
   <slot>onFlipVerticallyTriggered()</slot>
   <slot>onRotateLeftTriggered()</slot>
   <slot>onRotateRightTriggered()</slot>
+  <slot>onAboutTriggered()</slot>
+  <slot>onAboutComponentsTriggered()</slot>
  </slots>
 </ui>

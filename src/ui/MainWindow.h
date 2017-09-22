@@ -49,6 +49,8 @@ private slots:
     void onOriginalSizeTriggered();
     void onPreviousImageTriggered();
     void onNextImageTriggered();
+    void onAboutTriggered();
+    void onAboutComponentsTriggered();
     void onAboutQtTriggered();
     void onFlipHorizontallyTriggered();
     void onFlipVerticallyTriggered();
