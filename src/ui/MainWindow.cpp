@@ -219,6 +219,18 @@ void MainWindow::onRecentFileTriggered(const QString &filePath)
     showImage(filePath, false);
 }
 
+void MainWindow::onClearHistory()
+{
+    auto actions = m_ui.menuRecentFiles->actions();
+    // Leave the first two actions intact (Clear History & Menu Separator)
+    for(int i = 2; i < actions.size(); i++)
+    {
+        RecentFileAction *recentImage = dynamic_cast<RecentFileAction *>(actions.at(i));
+        QObject::disconnect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
+        m_ui.menuRecentFiles->removeAction(recentImage);
+    }
+}
+
 void MainWindow::showImage(const QString &filePath, bool addToRecentFiles)
 {
     m_catalog.initialize(QFile(filePath));

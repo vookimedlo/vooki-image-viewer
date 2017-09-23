@@ -810,6 +810,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionClearHistory</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onClearHistory()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>404</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onQuitTriggered()</slot>
@@ -829,5 +845,6 @@
   <slot>onRotateRightTriggered()</slot>
   <slot>onAboutTriggered()</slot>
   <slot>onAboutComponentsTriggered()</slot>
+  <slot>onClearHistory()</slot>
  </slots>
 </ui>

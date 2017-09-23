@@ -59,6 +59,7 @@ private slots:
     void onRotateLeftTriggered();
     void onRotateRightTriggered();
     void onRecentFileTriggered(const QString &filePath);
+    void onClearHistory();
 
 private:
     Ui::MainWindow m_ui;
