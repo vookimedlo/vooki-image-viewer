@@ -18,15 +18,34 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
+#include <iostream>
 #include <QApplication>
 #include "abstraction/init.h"
 #include "ui/MainWindow.h"
 
 int main(int argc, char *argv[])
 {
+    const int firstPassedArg = 2;
+    char *requestedPath = nullptr;
+
+    switch (argc)
+    {
+    case 0:
+    case 1:
+        /* Pass through - no args were passed. */
+        break;
+    case firstPassedArg:
+        requestedPath = argv[firstPassedArg - 1];
+        break;
+    default:
+        std::cerr << "Usage:" << std::endl << argv[0] << " [path_to_file|path_to_dir]" << std::endl;
+        return 0;
+    }
+
     QApplication a(argc, argv);
     SystemDependant::Init();
     MainWindow w;
+    w.handleImagePath(requestedPath);
     w.show();
 
     return a.exec();

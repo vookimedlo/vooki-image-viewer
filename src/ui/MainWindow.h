@@ -36,9 +36,19 @@ public:
     ~MainWindow();
     DISABLE_COPY_MOVE(MainWindow);
 
+    enum HANDLE_RESULT_E
+    {
+        HANDLE_RESULT_E_OK,
+        HANDLE_RESULT_E_NOT_READABLE,
+        HANDLE_RESULT_E_DONT_EXIST,
+        HANDLE_GENERAL_ERROR
+    };
+
+    HANDLE_RESULT_E handleImagePath(const QString &path, bool addToRecentFiles = true);
+
 protected:
     QString registerProcessedImage(const QString& filePath, bool addToRecentFiles = true);
-    void showImage(const QString &filePath, bool addToRecentFiles = true);
+    void showImage(bool addToRecentFiles);
 
 private slots:
     void onQuitTriggered();

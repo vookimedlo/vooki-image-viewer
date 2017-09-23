@@ -96,7 +96,7 @@ void MainWindow::onFullScreenToggled(bool toggled)
 void MainWindow::onTreeViewDoubleClicked(const QModelIndex &index)
 {
     const QString filePath = m_fileSystemModel->filePath(index);
-    showImage(filePath);
+    handleImagePath(filePath);
 }
 
 void MainWindow::onZoomInTriggered()
@@ -216,7 +216,7 @@ QString MainWindow::registerProcessedImage(const QString& filePath, bool addToRe
 
 void MainWindow::onRecentFileTriggered(const QString &filePath)
 {
-    showImage(filePath, false);
+    handleImagePath(filePath, false);
 }
 
 void MainWindow::onClearHistory()
@@ -231,8 +231,35 @@ void MainWindow::onClearHistory()
     }
 }
 
-void MainWindow::showImage(const QString &filePath, bool addToRecentFiles)
+void MainWindow::showImage(bool addToRecentFiles)
 {
-    m_catalog.initialize(QFile(filePath));
     m_ui.imageAreaWidget->showImage(registerProcessedImage(m_catalog.getCurrent(), addToRecentFiles));
+}
+
+MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, bool addToRecentFiles)
+{
+    QFileInfo info(path);
+
+    if (info.exists())
+    {
+        if(info.isReadable())
+        {
+            if(info.isDir())
+            {
+                m_catalog.initialize(QDir(path));
+                showImage(addToRecentFiles);
+                return HANDLE_RESULT_E_OK;
+            }
+            else if(info.isFile())
+            {
+                m_catalog.initialize(QFile(path));
+                showImage(addToRecentFiles);
+                return HANDLE_RESULT_E_OK;
+            }
+        }
+
+        return HANDLE_RESULT_E_NOT_READABLE;
+    }
+
+    return HANDLE_RESULT_E_DONT_EXIST;
 }
