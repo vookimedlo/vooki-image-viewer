@@ -53,7 +53,7 @@
     <addaction name="menuRecentFiles"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
-    <addaction name="actionPreferences"/>
+    <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -450,7 +450,7 @@
     <enum>QAction::AboutQtRole</enum>
    </property>
   </action>
-  <action name="actionPreferences">
+  <action name="actionSettings">
    <property name="text">
     <string>Preferences...</string>
    </property>
@@ -842,6 +842,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionSettings</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onSettingsTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>404</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onQuitTriggered()</slot>
@@ -863,5 +879,6 @@
   <slot>onAboutComponentsTriggered()</slot>
   <slot>onClearHistory()</slot>
   <slot>onAboutSupportedImageFormats()</slot>
+  <slot>onSettingsTriggered()</slot>
  </slots>
 </ui>

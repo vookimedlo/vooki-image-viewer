@@ -27,6 +27,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QPainter>
 #include "ui_About.h"
 #include "ui_AboutSupportedFormatsDialog.h"
+#include "ui_SettingsDialog.h"
 #include "AboutComponentsDialog.h"
 #include "support/RecentFileAction.h"
 #include "../util/misc.h"
@@ -238,6 +239,14 @@ void MainWindow::onClearHistory()
         QObject::disconnect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
         m_ui.menuRecentFiles->removeAction(recentImage);
     }
+}
+
+void MainWindow::onSettingsTriggered()
+{
+    Ui::SettingsDialog uiSettingsDialog;
+    QDialog dialog(this);
+    uiSettingsDialog.setupUi(&dialog);
+    dialog.exec();
 }
 
 void MainWindow::showImage(bool addToRecentFiles)

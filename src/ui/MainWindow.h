@@ -71,6 +71,7 @@ private slots:
     void onRecentFileTriggered(const QString &filePath);
     void onClearHistory();
     void onAboutSupportedImageFormats();
+    void onSettingsTriggered();
 
 private:
     Ui::MainWindow m_ui;

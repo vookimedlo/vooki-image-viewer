@@ -36,10 +36,11 @@ if(APPLE)
 endif(APPLE)
 
 qt5_wrap_ui(UI_HEADERS
-    ../../src/ui/forms/MainWindow.ui \
-    ../../src/ui/forms/AboutComponentsDialog.ui \
-    ../../src/ui/forms/AboutSupportedFormatsDialog.ui \
+    ../../src/ui/forms/MainWindow.ui
+    ../../src/ui/forms/AboutComponentsDialog.ui
+    ../../src/ui/forms/AboutSupportedFormatsDialog.ui
     ../../src/ui/forms/AboutDialog.ui
+    ../../src/ui/forms/SettingsDialog.ui
 )
 
 qt5_add_resources(UI_RESOURCES ../../src/resource/vookiimageviewer.qrc)

@@ -41,7 +41,8 @@ FORMS += \
     ../../src/ui/forms/MainWindow.ui \
     ../../src/ui/forms/AboutComponentsDialog.ui \
     ../../src/ui/forms/AboutSupportedFormatsDialog.ui \
-    ../../src/ui/forms/AboutDialog.ui
+    ../../src/ui/forms/AboutDialog.ui \
+    ../../src/ui/forms/SettingsDialog.ui
 
 # OS specific
 #
