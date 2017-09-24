@@ -70,6 +70,7 @@ private slots:
     void onRotateRightTriggered();
     void onRecentFileTriggered(const QString &filePath);
     void onClearHistory();
+    void onAboutSupportedImageFormats();
 
 private:
     Ui::MainWindow m_ui;

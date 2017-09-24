@@ -26,6 +26,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QMessageBox>
 #include <QPainter>
 #include "ui_About.h"
+#include "ui_AboutSupportedFormatsDialog.h"
 #include "AboutComponentsDialog.h"
 #include "support/RecentFileAction.h"
 #include "../util/misc.h"
@@ -154,6 +155,14 @@ void MainWindow::onAboutComponentsTriggered()
 void MainWindow::onAboutQtTriggered()
 {
     QMessageBox::aboutQt(this);
+}
+
+void MainWindow::onAboutSupportedImageFormats()
+{
+    Ui::AboutSupportedFormatsDialog uiAbout;
+    QDialog dialog(this);
+    uiAbout.setupUi(&dialog);
+    dialog.exec();
 }
 
 void MainWindow::onFlipHorizontallyTriggered()
