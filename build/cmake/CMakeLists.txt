@@ -26,6 +26,7 @@ set(SOURCES
     ../../src/util/misc.cpp
     ../../src/ui/support/RecentFileAction.cpp
     ../../src/ui/AboutComponentsDialog.cpp
+    ../../src/ui/SettingsDialog.cpp
 )
 
 if(APPLE)

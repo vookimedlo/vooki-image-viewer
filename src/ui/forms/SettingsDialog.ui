@@ -8,7 +8,7 @@
     <x>0</x>
     <y>0</y>
     <width>577</width>
-    <height>314</height>
+    <height>325</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -223,7 +223,23 @@
       <attribute name="title">
        <string>Shortcuts</string>
       </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_9">
+       <item>
+        <widget class="Line" name="line">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
     </widget>
    </item>
    <item>
@@ -244,7 +260,7 @@
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>accept()</slot>
+   <slot>onAccept()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>248</x>
@@ -273,4 +289,7 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>onAccept()</slot>
+ </slots>
 </ui>

@@ -23,7 +23,8 @@ SOURCES += \
     ../../src/model/ImageCatalog.cpp \
     ../../src/util/misc.cpp \
     ../../src/ui/support/RecentFileAction.cpp \
-    ../../src/ui/AboutComponentsDialog.cpp
+    ../../src/ui/AboutComponentsDialog.cpp \
+    ../../src/ui/SettingsDialog.cpp
 
 
 HEADERS  += \
@@ -35,7 +36,8 @@ HEADERS  += \
     ../../src/util/misc.h \
     ../../src/util/RotatingIndex.h \
     ../../src/ui/support/RecentFileAction.h \
-    ../../src/ui/AboutComponentsDialog.h
+    ../../src/ui/AboutComponentsDialog.h \
+    ../../src/ui/SettingsDialog.h
 
 FORMS += \
     ../../src/ui/forms/MainWindow.ui \

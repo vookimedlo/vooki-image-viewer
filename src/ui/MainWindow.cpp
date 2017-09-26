@@ -29,6 +29,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "ui_AboutSupportedFormatsDialog.h"
 #include "ui_SettingsDialog.h"
 #include "AboutComponentsDialog.h"
+#include "SettingsDialog.h"
 #include "support/RecentFileAction.h"
 #include "../util/misc.h"
 
@@ -244,7 +245,7 @@ void MainWindow::onClearHistory()
 void MainWindow::onSettingsTriggered()
 {
     Ui::SettingsDialog uiSettingsDialog;
-    QDialog dialog(this);
+    SettingsDialog dialog(this);
     uiSettingsDialog.setupUi(&dialog);
     dialog.exec();
 }
