@@ -244,9 +244,7 @@ void MainWindow::onClearHistory()
 
 void MainWindow::onSettingsTriggered()
 {
-    Ui::SettingsDialog uiSettingsDialog;
     SettingsDialog dialog(this);
-    uiSettingsDialog.setupUi(&dialog);
     dialog.exec();
 }
 
