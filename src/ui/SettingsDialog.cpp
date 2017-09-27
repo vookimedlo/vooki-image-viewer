@@ -20,9 +20,10 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include "SettingsDialog.h"
 
+#include <QColorDialog>
 #include <QSettings>
 
-SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
+SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent), m_borderColor(), m_backgroundColor()
 {
     m_uiSettingsDialog.setupUi(this);
     QSettings settings(QSettings::UserScope, QCoreApplication::organizationName(), QCoreApplication::applicationName());
@@ -35,6 +36,10 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
     m_uiSettingsDialog.checkBoxFullscreenHideNavigation->setChecked(settings.value("fullscreen/hide/navigation", true).toBool());
     m_uiSettingsDialog.checkBoxRemeberRecentImages->setChecked(settings.value("image/remember/recent", true).toBool());
     m_uiSettingsDialog.checkBoxImageFitToWindow->setChecked(settings.value("image/fitimagetowindow", false).toBool());
+    m_uiSettingsDialog.checkBoxImageDrawBorder->setChecked(settings.value("image/border/draw", false).toBool());
+    m_uiSettingsDialog.toolButtonBorderColor->setEnabled(settings.value("image/border/draw", false).toBool());
+    m_borderColor = settings.value("image/border/color", QColor(Qt::white)).value<QColor>();
+    m_backgroundColor = settings.value("image/background/color", QColor(Qt::black)).value<QColor>();
 }
 
 void SettingsDialog::onAccept()
@@ -49,10 +54,51 @@ void SettingsDialog::onAccept()
     settings.setValue("fullscreen/hide/navigation", m_uiSettingsDialog.checkBoxFullscreenHideNavigation->isChecked());
     settings.setValue("image/remember/recent", m_uiSettingsDialog.checkBoxRemeberRecentImages->isChecked());
     settings.setValue("image/fitimagetowindow", m_uiSettingsDialog.checkBoxImageFitToWindow->isChecked());
+    settings.setValue("image/border/draw", m_uiSettingsDialog.checkBoxImageDrawBorder->isChecked());
+    settings.setValue("image/border/color", m_borderColor);
+    settings.setValue("image/background/color", m_backgroundColor);
     QDialog::accept();
+}
+
+void SettingsDialog::onButtonBoxButtonClicked(QAbstractButton *button)
+{
+    switch(m_uiSettingsDialog.buttonBox->buttonRole(button))
+    {
+    case QDialogButtonBox::ButtonRole::ResetRole:
+        onRestoreDefaultsTriggered();
+        break;
+    default:
+        return;
+    }
 }
 
 void SettingsDialog::onRestoreDefaultsTriggered()
 {
+    m_uiSettingsDialog.checkBoxGeneralStartInFullscreen->setChecked(false);
+    m_uiSettingsDialog.checkBoxWindowHideStatusbar->setChecked(false);
+    m_uiSettingsDialog.checkBoxWindowHideToolbar->setChecked(false);
+    m_uiSettingsDialog.checkBoxWindowHideNavigation->setChecked(false);
+    m_uiSettingsDialog.checkBoxFullscreenHideStatusbar->setChecked(true);
+    m_uiSettingsDialog.checkBoxFullscreenHideToolbar->setChecked(true);
+    m_uiSettingsDialog.checkBoxFullscreenHideNavigation->setChecked(true);
+    m_uiSettingsDialog.checkBoxRemeberRecentImages->setChecked(true);
+    m_uiSettingsDialog.checkBoxImageFitToWindow->setChecked(false);
+    m_uiSettingsDialog.checkBoxImageDrawBorder->setChecked(false);
+    m_uiSettingsDialog.toolButtonBorderColor->setEnabled(false);
+    m_borderColor = Qt::white;
+    m_backgroundColor = Qt::black;
+}
 
+void SettingsDialog::onToolButtonBorderColorClicked()
+{
+    QColor borderColor = QColorDialog::getColor(m_borderColor);
+    if (borderColor.isValid())
+        m_borderColor = borderColor;
+}
+
+void SettingsDialog::onToolButtonBackgroundColorClicked()
+{
+    QColor backgroundColor = QColorDialog::getColor(m_backgroundColor);
+    if (backgroundColor.isValid())
+        m_backgroundColor = backgroundColor;
 }

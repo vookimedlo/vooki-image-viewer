@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
+#include <QColor>
 #include <QDialog>
 #include "ui_SettingsDialog.h"
 #include "../util/compiler.h"
@@ -33,9 +34,13 @@ public:
 
 protected Q_SLOTS:
     virtual void onAccept();
+    virtual void onButtonBoxButtonClicked(QAbstractButton *button);
     virtual void onRestoreDefaultsTriggered();
+    virtual void onToolButtonBorderColorClicked();
+    virtual void onToolButtonBackgroundColorClicked();
 
-
-protected:
+private:
     Ui::SettingsDialog m_uiSettingsDialog;
+    QColor m_borderColor;
+    QColor m_backgroundColor;
 };

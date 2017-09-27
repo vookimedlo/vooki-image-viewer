@@ -7,8 +7,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>577</width>
-    <height>325</height>
+    <width>634</width>
+    <height>404</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -69,70 +69,49 @@
                </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_2">
-                <item>
-                 <widget class="QCheckBox" name="checkBoxImageDrawBorder">
-                  <property name="text">
-                   <string>Draw image border</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="toolButtonBorderColor">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>16</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+               <widget class="QCheckBox" name="checkBoxImageDrawBorder">
+                <property name="text">
+                 <string>Draw image border</string>
+                </property>
+               </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout">
-                <item>
-                 <widget class="QLabel" name="label">
-                  <property name="text">
-                   <string>Image area background color</string>
-                  </property>
-                  <property name="textInteractionFlags">
-                   <set>Qt::NoTextInteraction</set>
-                  </property>
-                  <property name="buddy">
-                   <cstring>toolButtonBackgroundColor</cstring>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="toolButtonBackgroundColor">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>16</height>
-                   </size>
-                  </property>
-                  <property name="text">
-                   <string>...</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+               <widget class="QToolButton" name="toolButtonBorderColor">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Image border color</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QToolButton" name="toolButtonBackgroundColor">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>16</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Image area background color</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -288,8 +267,75 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>clicked(QAbstractButton*)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>onButtonBoxButtonClicked(QAbstractButton*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>288</x>
+     <y>327</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>288</x>
+     <y>173</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxImageDrawBorder</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>toolButtonBorderColor</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>177</x>
+     <y>188</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>105</x>
+     <y>224</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonBorderColor</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>onToolButtonBorderColorClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>105</x>
+     <y>224</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>316</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonBackgroundColor</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>onToolButtonBackgroundColorClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>130</x>
+     <y>274</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>316</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onAccept()</slot>
+  <slot>onButtonBoxButtonClicked(QAbstractButton*)</slot>
+  <slot>onToolButtonBorderColorClicked()</slot>
+  <slot>onToolButtonBackgroundColorClicked()</slot>
  </slots>
 </ui>
