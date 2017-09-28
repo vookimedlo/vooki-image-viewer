@@ -46,16 +46,24 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent), m_borderColor
 void SettingsDialog::populateShortcuts(QMenu *menu)
 {
     auto actions = menu->actions();
-    m_uiSettingsDialog.tableShortcutsWidget->setRowCount(actions.size());
-    int row = 0;
-
     for (QAction *action : actions)
     {
+        if (action->isSeparator())
+            continue;
+
+        if (action->menu() && action->menu() != menu)
+        {
+            populateShortcuts(action->menu());
+            continue;
+        }
+
+        int rowCount = m_uiSettingsDialog.tableShortcutsWidget->rowCount();
+        m_uiSettingsDialog.tableShortcutsWidget->insertRow(rowCount);
         QTableWidgetItem *headerItem = new QTableWidgetItem(action->toolTip());
-        m_uiSettingsDialog.tableShortcutsWidget->setVerticalHeaderItem(row, headerItem);
+        m_uiSettingsDialog.tableShortcutsWidget->setVerticalHeaderItem(rowCount, headerItem);
 
         SettingsShortcutsTableWidgetItem *item = new SettingsShortcutsTableWidgetItem(action->shortcut());
-        m_uiSettingsDialog.tableShortcutsWidget->setItem(row++, 0, item);
+        m_uiSettingsDialog.tableShortcutsWidget->setItem(rowCount, 0, item);
     }
 }
 
