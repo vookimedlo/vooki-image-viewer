@@ -22,6 +22,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include <QColorDialog>
 #include <QSettings>
+#include "support/SettingsShortcutsTableWidgetItem.h"
 
 SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent), m_borderColor(), m_backgroundColor()
 {
@@ -40,6 +41,22 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent), m_borderColor
     m_uiSettingsDialog.toolButtonBorderColor->setEnabled(settings.value("image/border/draw", false).toBool());
     m_borderColor = settings.value("image/border/color", QColor(Qt::white)).value<QColor>();
     m_backgroundColor = settings.value("image/background/color", QColor(Qt::black)).value<QColor>();
+}
+
+void SettingsDialog::populateShortcuts(QMenu *menu)
+{
+    auto actions = menu->actions();
+    m_uiSettingsDialog.tableShortcutsWidget->setRowCount(actions.size());
+    int row = 0;
+
+    for (QAction *action : actions)
+    {
+        QTableWidgetItem *headerItem = new QTableWidgetItem(action->toolTip());
+        m_uiSettingsDialog.tableShortcutsWidget->setVerticalHeaderItem(row, headerItem);
+
+        SettingsShortcutsTableWidgetItem *item = new SettingsShortcutsTableWidgetItem(action->shortcut());
+        m_uiSettingsDialog.tableShortcutsWidget->setItem(row++, 0, item);
+    }
 }
 
 void SettingsDialog::onAccept()

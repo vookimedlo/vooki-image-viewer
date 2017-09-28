@@ -34,5 +34,20 @@ namespace SystemDependant
         [[NSUserDefaults standardUserDefaults] setBool:NO  forKey:@"NSFullScreenMenuItemEverywhere"];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSDisabledDictationMenuItem"];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSDisabledCharacterPaletteMenuItem"];
+
+        // Disable unwanted MacOS menu items.
+        // - View -> Show Tab Bar
+        // - View -> Show All Tabs
+        [NSWindow setAllowsAutomaticWindowTabbing: false];
+    }
+
+    static void debugPrintNSUserDefaultsAllKeys()
+    {
+        NSLog(@"%@", [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys]);
+    }
+
+    static void debugPrintNSUserDefaultsAllKeysAndValues()
+    {
+        NSLog(@"%@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
     }
 }

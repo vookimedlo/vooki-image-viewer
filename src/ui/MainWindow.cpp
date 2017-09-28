@@ -245,6 +245,7 @@ void MainWindow::onClearHistory()
 void MainWindow::onSettingsTriggered()
 {
     SettingsDialog dialog(this);
+    dialog.populateShortcuts(m_ui.menuView);
     dialog.exec();
 }
 

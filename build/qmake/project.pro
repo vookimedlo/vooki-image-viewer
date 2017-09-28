@@ -24,7 +24,9 @@ SOURCES += \
     ../../src/util/misc.cpp \
     ../../src/ui/support/RecentFileAction.cpp \
     ../../src/ui/AboutComponentsDialog.cpp \
-    ../../src/ui/SettingsDialog.cpp
+    ../../src/ui/SettingsDialog.cpp \
+    ../../src/ui/SettingsShortcutsTableWidget.cpp \
+    ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp
 
 
 HEADERS  += \
@@ -37,7 +39,9 @@ HEADERS  += \
     ../../src/util/RotatingIndex.h \
     ../../src/ui/support/RecentFileAction.h \
     ../../src/ui/AboutComponentsDialog.h \
-    ../../src/ui/SettingsDialog.h
+    ../../src/ui/SettingsDialog.h \
+    ../../src/ui/SettingsShortcutsTableWidget.h \
+    ../../src/ui/support/SettingsShortcutsTableWidgetItem.h
 
 FORMS += \
     ../../src/ui/forms/MainWindow.ui \

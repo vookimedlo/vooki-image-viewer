@@ -27,6 +27,8 @@ set(SOURCES
     ../../src/ui/support/RecentFileAction.cpp
     ../../src/ui/AboutComponentsDialog.cpp
     ../../src/ui/SettingsDialog.cpp
+    ../../src/ui/SettingsShortcutsTableWidget.cpp
+    ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp
 )
 
 if(APPLE)

@@ -19,31 +19,15 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include <QColor>
-#include <QDialog>
-#include <QMenu>
-#include "ui_SettingsDialog.h"
-#include "../util/compiler.h"
+#include <QTableWidget>
+#include <QTableWidgetItem>
 
-class SettingsDialog : public QDialog
+class SettingsShortcutsTableWidget : public QTableWidget
 {
-    Q_OBJECT
-
 public:
-    SettingsDialog(QWidget *parent = Q_NULLPTR);
-    DISABLE_COPY_MOVE(SettingsDialog);
+    SettingsShortcutsTableWidget(QWidget *parent = nullptr);
+    SettingsShortcutsTableWidget(int rows, int columns, QWidget *parent = nullptr);
 
-    void populateShortcuts(QMenu *menu);
+    void setItem(int row, int column, QTableWidgetItem *item);
 
-protected Q_SLOTS:
-    virtual void onAccept();
-    virtual void onButtonBoxButtonClicked(QAbstractButton *button);
-    virtual void onRestoreDefaultsTriggered();
-    virtual void onToolButtonBorderColorClicked();
-    virtual void onToolButtonBackgroundColorClicked();
-
-private:
-    Ui::SettingsDialog m_uiSettingsDialog;
-    QColor m_borderColor;
-    QColor m_backgroundColor;
 };

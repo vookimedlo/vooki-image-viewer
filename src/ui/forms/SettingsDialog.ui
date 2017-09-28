@@ -18,7 +18,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabGeneral">
       <attribute name="title">
@@ -204,21 +204,19 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_9">
        <item>
-        <widget class="Line" name="line">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+        <widget class="SettingsShortcutsTableWidget" name="tableShortcutsWidget">
+         <property name="alternatingRowColors">
+          <bool>true</bool>
          </property>
+         <column>
+          <property name="text">
+           <string>Shortcut</string>
+          </property>
+         </column>
         </widget>
        </item>
       </layout>
      </widget>
-    </widget>
-   </item>
-   <item>
-    <widget class="Line" name="line_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
     </widget>
    </item>
    <item>
@@ -233,6 +231,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SettingsShortcutsTableWidget</class>
+   <extends>QTableWidget</extends>
+   <header>../../src/ui/SettingsShortcutsTableWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
@@ -284,18 +289,18 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxImageDrawBorder</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>toolButtonBorderColor</receiver>
-   <slot>setEnabled(bool)</slot>
+   <sender>toolButtonBackgroundColor</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>onToolButtonBackgroundColorClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>177</x>
-     <y>188</y>
+     <x>130</x>
+     <y>274</y>
     </hint>
     <hint type="destinationlabel">
-     <x>105</x>
-     <y>224</y>
+     <x>316</x>
+     <y>201</y>
     </hint>
    </hints>
   </connection>
@@ -316,18 +321,18 @@
    </hints>
   </connection>
   <connection>
-   <sender>toolButtonBackgroundColor</sender>
-   <signal>clicked()</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>onToolButtonBackgroundColorClicked()</slot>
+   <sender>checkBoxImageDrawBorder</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>toolButtonBorderColor</receiver>
+   <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>130</x>
-     <y>274</y>
+     <x>177</x>
+     <y>188</y>
     </hint>
     <hint type="destinationlabel">
-     <x>316</x>
-     <y>201</y>
+     <x>105</x>
+     <y>224</y>
     </hint>
    </hints>
   </connection>
