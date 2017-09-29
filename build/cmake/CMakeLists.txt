@@ -23,6 +23,7 @@ set(SOURCES
     ../../src/ui/MainWindow.cpp
     ../../src/ui/ImageArea.cpp
     ../../src/model/ImageCatalog.cpp
+    ../../src/model/FileSystemSortFilterProxyModel.cpp
     ../../src/util/misc.cpp
     ../../src/ui/support/RecentFileAction.cpp
     ../../src/ui/AboutComponentsDialog.cpp

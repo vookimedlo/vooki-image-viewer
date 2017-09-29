@@ -31,11 +31,13 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "AboutComponentsDialog.h"
 #include "SettingsDialog.h"
 #include "support/RecentFileAction.h"
+#include "../model/FileSystemSortFilterProxyModel.h"
 #include "../util/misc.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     m_fileSystemModel(new QFileSystemModel(this)),
+    m_sortFileSystemModel(new FileSystemSortFilterProxyModel(this)),
     m_catalog(Util::convertFormatsToFilters(QImageReader::supportedImageFormats()))
 {
     m_ui.setupUi(this);
@@ -46,11 +48,14 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ui.dockWidget->toggleViewAction()->setShortcut(QKeySequence(Qt::Key_N));
     m_ui.menuShow->addAction(m_ui.dockWidget->toggleViewAction());
 
+    m_sortFileSystemModel->setSourceModel(m_fileSystemModel);
+
     m_fileSystemModel->setRootPath(QDir::currentPath());
-    m_ui.treeView->setModel(m_fileSystemModel);
+    m_ui.treeView->setModel(m_sortFileSystemModel);
     for(int i = 1; i < m_fileSystemModel->columnCount(); i++)
         m_ui.treeView->setColumnHidden(i, true);
 
+    m_ui.treeView->sortByColumn(0, Qt::SortOrder::AscendingOrder);
     m_fileSystemModel->setNameFilters(Util::convertFormatsToFilters(QImageReader::supportedImageFormats()));
     m_fileSystemModel->setNameFilterDisables(false);
     m_fileSystemModel->setFilter(QDir::Filter::Hidden|QDir::Filter::AllEntries|QDir::Filter::NoDotAndDotDot|QDir::Filter::AllDirs);
@@ -98,7 +103,7 @@ void MainWindow::onFullScreenToggled(bool toggled)
 
 void MainWindow::onTreeViewDoubleClicked(const QModelIndex &index)
 {
-    const QString filePath = m_fileSystemModel->filePath(index);
+    const QString filePath = m_fileSystemModel->filePath(m_sortFileSystemModel->mapToSource(index));
     handleImagePath(filePath);
 }
 

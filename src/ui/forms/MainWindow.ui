@@ -143,7 +143,20 @@
    <widget class="QWidget" name="dockWidgetContents">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QTreeView" name="treeView"/>
+      <widget class="QTreeView" name="treeView">
+       <property name="showDropIndicator" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="sortingEnabled">
+        <bool>true</bool>
+       </property>
+       <property name="animated">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
@@ -188,6 +201,9 @@
    <property name="toolTip">
     <string>Quit The Application</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">shortcut/app/quit</string>
+   </property>
    <property name="shortcut">
     <string>Q</string>
    </property>
@@ -212,6 +228,9 @@
    <property name="toolTip">
     <string>Show image in FullScreen mode</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">shortcut/view/fullscreen</string>
+   </property>
    <property name="shortcut">
     <string>F</string>
    </property>
@@ -231,6 +250,9 @@
    </property>
    <property name="toolTip">
     <string>About Application</string>
+   </property>
+   <property name="whatsThis">
+    <string notr="true">shortcut/app/about</string>
    </property>
    <property name="shortcut">
     <string>F1</string>
@@ -253,6 +275,9 @@
    <property name="toolTip">
     <string>Zoom In</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">shortcut/view/zoom/in</string>
+   </property>
    <property name="shortcut">
     <string>+</string>
    </property>
@@ -274,6 +299,9 @@
    <property name="toolTip">
     <string>Zoom Out</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">shortcut/view/zoom/out</string>
+   </property>
    <property name="shortcut">
     <string>-</string>
    </property>
@@ -294,6 +322,9 @@
    </property>
    <property name="text">
     <string>Fi&amp;t to Window</string>
+   </property>
+   <property name="whatsThis">
+    <string notr="true">shortcut/view/zoom/fit</string>
    </property>
    <property name="shortcut">
     <string>W</string>
@@ -318,6 +349,9 @@
    <property name="toolTip">
     <string>Show/Hide StatusBar</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">shortcut/window/statusbar</string>
+   </property>
    <property name="shortcut">
     <string>S</string>
    </property>
@@ -335,6 +369,9 @@
    </property>
    <property name="text">
     <string>Original Size</string>
+   </property>
+   <property name="whatsThis">
+    <string notr="true">shortcut/view/zoom/original</string>
    </property>
    <property name="shortcut">
     <string>*</string>
@@ -360,6 +397,9 @@
    <property name="toolTip">
     <string>Rotate Left</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">shortcut/view/rotate/left</string>
+   </property>
    <property name="shortcut">
     <string>,</string>
    </property>
@@ -383,6 +423,9 @@
    </property>
    <property name="toolTip">
     <string>Rotate Right</string>
+   </property>
+   <property name="whatsThis">
+    <string notr="true">shortcut/view/rotate/right</string>
    </property>
    <property name="shortcut">
     <string>.</string>
@@ -408,6 +451,9 @@
    <property name="toolTip">
     <string>Flip Horizontally</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">shortcut/view/flip/horizontally</string>
+   </property>
    <property name="shortcut">
     <string>H</string>
    </property>
@@ -432,6 +478,9 @@
    <property name="toolTip">
     <string>Flip Vertically</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">shortcut/view/flip/vertically</string>
+   </property>
    <property name="shortcut">
     <string>V</string>
    </property>
@@ -446,6 +495,9 @@
    <property name="text">
     <string>About Qt...</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">shortcut/app/about/qt</string>
+   </property>
    <property name="menuRole">
     <enum>QAction::AboutQtRole</enum>
    </property>
@@ -453,6 +505,9 @@
   <action name="actionSettings">
    <property name="text">
     <string>Preferences...</string>
+   </property>
+   <property name="whatsThis">
+    <string notr="true">shortcut/app/settings</string>
    </property>
    <property name="shortcut">
     <string>P</string>
@@ -472,6 +527,9 @@
    <property name="text">
     <string>Previous Image</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">shortcut/view/navigation/previous</string>
+   </property>
    <property name="shortcut">
     <string>[</string>
    </property>
@@ -490,6 +548,9 @@
    <property name="text">
     <string>Next Image</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">shortcut/view/navigation/next</string>
+   </property>
    <property name="shortcut">
     <string>]</string>
    </property>
@@ -504,6 +565,9 @@
    <property name="text">
     <string>Clear History</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">shortcut/history/clear</string>
+   </property>
    <property name="shortcut">
     <string>Alt+C</string>
    </property>
@@ -515,6 +579,9 @@
    <property name="text">
     <string>Supported Image Formats...</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">shortcut/app/about/formats</string>
+   </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
    </property>
@@ -522,6 +589,9 @@
   <action name="actionAboutComponents">
    <property name="text">
     <string>About Components...</string>
+   </property>
+   <property name="whatsThis">
+    <string notr="true">shortcut/app/about/components</string>
    </property>
    <property name="menuRole">
     <enum>QAction::ApplicationSpecificRole</enum>

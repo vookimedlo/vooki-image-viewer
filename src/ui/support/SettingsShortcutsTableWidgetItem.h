@@ -19,18 +19,21 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
+#include <QAction>
 #include <QKeySequence>
 #include <QObject>
 #include <QTableWidgetItem>
+#include "../../util/compiler.h"
 
 class SettingsShortcutsTableWidgetItem final : public QObject, public QTableWidgetItem
 {
     Q_OBJECT
 
 public:
-    SettingsShortcutsTableWidgetItem();
-    SettingsShortcutsTableWidgetItem(const QKeySequence &keySequence);
+    SettingsShortcutsTableWidgetItem(QAction &action);
+    DISABLE_COPY_MOVE(SettingsShortcutsTableWidgetItem);
 
+    QAction &action() const;
     QKeySequence keySequence() const;
 
     static const int type;
@@ -39,5 +42,6 @@ public Q_SLOTS:
     virtual void onKeySequenceChanged(const QKeySequence &keySequence);
 
 private:
+    QAction &m_action;
     QKeySequence m_keySequence;
 };

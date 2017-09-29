@@ -18,28 +18,33 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include "SettingsShortcutsTableWidgetItem.h"
+#include "FileSystemSortFilterProxyModel.h"
 
-const int SettingsShortcutsTableWidgetItem::type = QTableWidgetItem::UserType + 1;
+#include <QFileSystemModel>
 
-
-SettingsShortcutsTableWidgetItem::SettingsShortcutsTableWidgetItem(QAction &action) :  QObject(), QTableWidgetItem(SettingsShortcutsTableWidgetItem::type), m_action(action), m_keySequence(action.shortcut())
+FileSystemSortFilterProxyModel::FileSystemSortFilterProxyModel(QObject *parent) : QSortFilterProxyModel(parent)
 {
 
 }
 
-QAction &SettingsShortcutsTableWidgetItem::action() const
+bool FileSystemSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-    return m_action;
-}
+    // If sorting by filenames column
+    if (sortColumn() == 0) {
+        QFileSystemModel *fsm = qobject_cast<QFileSystemModel*>(sourceModel());
+        bool asc = sortOrder() == Qt::AscendingOrder ? true : false;
 
-QKeySequence SettingsShortcutsTableWidgetItem::keySequence() const
-{
-    return m_keySequence;
-}
+        QFileInfo leftFileInfo  = fsm->fileInfo(left);
+        QFileInfo rightFileInfo = fsm->fileInfo(right);
 
-void SettingsShortcutsTableWidgetItem::onKeySequenceChanged(const QKeySequence &keySequence)
-{
-    m_keySequence = keySequence;
-    m_action.setShortcut(keySequence);
+        // Move dirs up
+        if (!leftFileInfo.isDir() && rightFileInfo.isDir()) {
+            return !asc;
+        }
+        if (leftFileInfo.isDir() && !rightFileInfo.isDir()) {
+            return asc;
+        }
+    }
+
+    return QSortFilterProxyModel::lessThan(left, right);
 }

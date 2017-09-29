@@ -1,3 +1,4 @@
+#pragma once
 /****************************************************************************
 VookiImageViewer - tool to showing images.
 Copyright(C) 2017  Michal Duda <github@vookimedlo.cz>
@@ -18,28 +19,13 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include "SettingsShortcutsTableWidgetItem.h"
+#include <QSortFilterProxyModel>
 
-const int SettingsShortcutsTableWidgetItem::type = QTableWidgetItem::UserType + 1;
-
-
-SettingsShortcutsTableWidgetItem::SettingsShortcutsTableWidgetItem(QAction &action) :  QObject(), QTableWidgetItem(SettingsShortcutsTableWidgetItem::type), m_action(action), m_keySequence(action.shortcut())
+class FileSystemSortFilterProxyModel : public QSortFilterProxyModel
 {
+public:
+    FileSystemSortFilterProxyModel(QObject *parent = nullptr);
 
-}
-
-QAction &SettingsShortcutsTableWidgetItem::action() const
-{
-    return m_action;
-}
-
-QKeySequence SettingsShortcutsTableWidgetItem::keySequence() const
-{
-    return m_keySequence;
-}
-
-void SettingsShortcutsTableWidgetItem::onKeySequenceChanged(const QKeySequence &keySequence)
-{
-    m_keySequence = keySequence;
-    m_action.setShortcut(keySequence);
-}
+protected:
+    bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const override;
+};

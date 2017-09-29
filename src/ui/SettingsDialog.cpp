@@ -51,6 +51,7 @@ void SettingsDialog::populateShortcuts(QMenu *menu)
         if (action->isSeparator())
             continue;
 
+        // I don't like recursion, but menus are usually not too nested, so it doesn't matter.
         if (action->menu() && action->menu() != menu)
         {
             populateShortcuts(action->menu());
@@ -62,7 +63,7 @@ void SettingsDialog::populateShortcuts(QMenu *menu)
         QTableWidgetItem *headerItem = new QTableWidgetItem(action->toolTip());
         m_uiSettingsDialog.tableShortcutsWidget->setVerticalHeaderItem(rowCount, headerItem);
 
-        SettingsShortcutsTableWidgetItem *item = new SettingsShortcutsTableWidgetItem(action->shortcut());
+        SettingsShortcutsTableWidgetItem *item = new SettingsShortcutsTableWidgetItem(*action);
         m_uiSettingsDialog.tableShortcutsWidget->setItem(rowCount, 0, item);
     }
 }
@@ -82,6 +83,19 @@ void SettingsDialog::onAccept()
     settings.setValue("image/border/draw", m_uiSettingsDialog.checkBoxImageDrawBorder->isChecked());
     settings.setValue("image/border/color", m_borderColor);
     settings.setValue("image/background/color", m_backgroundColor);
+
+    // store all shortcuts in user settings
+    for(int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); i++)
+    {
+        QTableWidgetItem *item = m_uiSettingsDialog.tableShortcutsWidget->item(i, 0);
+
+        if (item->type() == SettingsShortcutsTableWidgetItem::type)
+        {
+            SettingsShortcutsTableWidgetItem *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem*>(item);
+            settings.setValue(shortcutItem->action().whatsThis(), shortcutItem->keySequence());
+        }
+    }
+
     QDialog::accept();
 }
 
