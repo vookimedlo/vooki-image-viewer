@@ -33,6 +33,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "support/RecentFileAction.h"
 #include "../model/FileSystemSortFilterProxyModel.h"
 #include "../ui/support/Settings.h"
+#include "../ui/support/SettingsStrings.h"
 #include "../util/misc.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -68,6 +69,16 @@ MainWindow::MainWindow(QWidget *parent) :
     Settings::initializeSettings(m_ui.menuView);
     Settings::initializeSettings(m_ui.menuWindow);
     Settings::initializeSettings(m_ui.menuHelp);
+
+    std::shared_ptr<QSettings> settings = Settings::userSettings();
+    if (settings->value(SETTINGS_WINDOW_HIDE_TOOLBAR).toBool())
+        m_ui.toolBar->hide();
+
+    if (settings->value(SETTINGS_WINDOW_HIDE_NAVIGATION).toBool())
+        m_ui.dockWidget->hide();
+
+    if (settings->value(SETTINGS_WINDOW_HIDE_STATUSBAR).toBool())
+        m_ui.actionStatusBar->setChecked(false);
 }
 
 MainWindow::~MainWindow()
@@ -103,9 +114,17 @@ void MainWindow::onFullScreenToggled(bool toggled)
         m_widgetVisibilityPriorFullscreen.isToolBarVisible = m_ui.toolBar->toggleViewAction()->isChecked();
         m_widgetVisibilityPriorFullscreen.isFileSystemNavigationVisible = m_ui.dockWidget->toggleViewAction()->isChecked();
         m_widgetVisibilityPriorFullscreen.isStatusBarVisible = m_ui.actionStatusBar->isChecked();
-        m_ui.toolBar->hide();
-        m_ui.dockWidget->hide();
-        m_ui.actionStatusBar->setChecked(false);
+
+        std::shared_ptr<QSettings> settings = Settings::userSettings();
+        if (settings->value(SETTINGS_FULLSCREEN_HIDE_TOOLBAR).toBool())
+            m_ui.toolBar->hide();
+
+        if (settings->value(SETTINGS_FULLSCREEN_HIDE_NAVIGATION).toBool())
+            m_ui.dockWidget->hide();
+
+        if (settings->value(SETTINGS_FULLSCREEN_HIDE_STATUSBAR).toBool())
+            m_ui.actionStatusBar->setChecked(false);
+
         showFullScreen();
     }
 }
@@ -263,7 +282,8 @@ void MainWindow::onSettingsTriggered()
     dialog.populateShortcuts(m_ui.menuView);
     dialog.populateShortcuts(m_ui.menuWindow);
     dialog.populateShortcuts(m_ui.menuHelp);
-    dialog.exec();
+    if (dialog.exec() == QDialog::Accepted)
+        m_ui.imageAreaWidget->repaintWithTransformations();
 }
 
 void MainWindow::showImage(bool addToRecentFiles)

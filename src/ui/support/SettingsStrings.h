@@ -19,16 +19,15 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include <QTableWidget>
-#include <QTableWidgetItem>
-
-class SettingsShortcutsTableWidget : public QTableWidget
-{
-public:
-    SettingsShortcutsTableWidget(QWidget *parent = nullptr);
-    SettingsShortcutsTableWidget(int rows, int columns, QWidget *parent = nullptr);
-
-    void setItem(int row, int column, QTableWidgetItem *item);
-    void updateShortcuts();
-
-};
+#define SETTINGS_GENERAL_FULLSCREEN "general/fullscreen"
+#define SETTINGS_WINDOW_HIDE_STATUSBAR "window/hide/statusbar"
+#define SETTINGS_WINDOW_HIDE_TOOLBAR "window/hide/toolbar"
+#define SETTINGS_WINDOW_HIDE_NAVIGATION "window/hide/navigation"
+#define SETTINGS_FULLSCREEN_HIDE_STATUSBAR "fullscreen/hide/statusbar"
+#define SETTINGS_FULLSCREEN_HIDE_TOOLBAR "fullscreen/hide/toolbar"
+#define SETTINGS_FULLSCREEN_HIDE_NAVIGATION "fullscreen/hide/navigation"
+#define SETTINGS_IMAGE_REMEMBER_RECENT "image/remember/recent"
+#define SETTINGS_IMAGE_FITIMAGETOWINDOW "image/fitimagetowindow"
+#define SETTINGS_IMAGE_BORDER_DRAW "image/border/draw"
+#define SETTINGS_IMAGE_BORDER_COLOR "image/border/color"
+#define SETTINGS_IMAGE_BACKGROUND_COLOR "image/background/color"

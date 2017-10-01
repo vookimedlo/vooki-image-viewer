@@ -43,6 +43,7 @@ protected:
 protected Q_SLOTS:
     virtual void onAccept();
     virtual void onButtonBoxButtonClicked(QAbstractButton *button);
+    virtual void onRejected();
     virtual void onRestoreDefaultsTriggered();
     virtual void onToolButtonBorderColorClicked();
     virtual void onToolButtonBackgroundColorClicked();

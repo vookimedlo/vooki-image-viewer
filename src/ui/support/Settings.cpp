@@ -20,24 +20,24 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include "Settings.h"
 #include <QCoreApplication>
+#include "SettingsStrings.h"
 
 void Settings::initializeSettings()
 {
     QSettings defaultSettings(QSettings::SystemScope, QCoreApplication::organizationName(), QCoreApplication::applicationName());
 
-    defaultSettings.setValue("general/fullscreen", false);
-    defaultSettings.setValue("window/hide/statusbar", false);
-    defaultSettings.setValue("window/hide/toolbar", false);
-    defaultSettings.setValue("window/hide/navigation", false);
-    defaultSettings.setValue("fullscreen/hide/statusbar", true);
-    defaultSettings.setValue("fullscreen/hide/toolbar", true);
-    defaultSettings.setValue("fullscreen/hide/navigation", true);
-    defaultSettings.setValue("image/remember/recent", true);
-    defaultSettings.setValue("image/fitimagetowindow", false);
-    defaultSettings.setValue("image/border/draw", false);
-    defaultSettings.setValue("image/border/draw", false);
-    defaultSettings.setValue("image/border/color", QColor(Qt::white));
-    defaultSettings.setValue("image/background/color", QColor(Qt::black));
+    defaultSettings.setValue(SETTINGS_GENERAL_FULLSCREEN, false);
+    defaultSettings.setValue(SETTINGS_WINDOW_HIDE_STATUSBAR, false);
+    defaultSettings.setValue(SETTINGS_WINDOW_HIDE_TOOLBAR, false);
+    defaultSettings.setValue(SETTINGS_WINDOW_HIDE_NAVIGATION, false);
+    defaultSettings.setValue(SETTINGS_FULLSCREEN_HIDE_STATUSBAR, true);
+    defaultSettings.setValue(SETTINGS_FULLSCREEN_HIDE_TOOLBAR, true);
+    defaultSettings.setValue(SETTINGS_FULLSCREEN_HIDE_NAVIGATION, true);
+    defaultSettings.setValue(SETTINGS_IMAGE_REMEMBER_RECENT, true);
+    defaultSettings.setValue(SETTINGS_IMAGE_FITIMAGETOWINDOW, false);
+    defaultSettings.setValue(SETTINGS_IMAGE_BORDER_DRAW, false);
+    defaultSettings.setValue(SETTINGS_IMAGE_BORDER_COLOR, QColor(Qt::white));
+    defaultSettings.setValue(SETTINGS_IMAGE_BACKGROUND_COLOR, QColor(Qt::black));
 }
 
 void Settings::initializeSettings(QMenu *menu)

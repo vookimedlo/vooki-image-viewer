@@ -290,7 +290,7 @@
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
    <receiver>SettingsDialog</receiver>
-   <slot>reject()</slot>
+   <slot>onRejected()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>316</x>
@@ -372,5 +372,6 @@
   <slot>onButtonBoxButtonClicked(QAbstractButton*)</slot>
   <slot>onToolButtonBorderColorClicked()</slot>
   <slot>onToolButtonBackgroundColorClicked()</slot>
+  <slot>onRejected()</slot>
  </slots>
 </ui>
