@@ -21,9 +21,20 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "../init.h"
 
 #import <AppKit/NSWindow.h>
+#include "../../util/compiler.h"
 
 namespace SystemDependant
 {
+    static void debugPrintNSUserDefaultsAllKeys()
+    {
+        NSLog(@"%@", [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys]);
+    }
+
+    static void debugPrintNSUserDefaultsAllKeysAndValues()
+    {
+        NSLog(@"%@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+    }
+
     void Init()
     {
         // Disable unwanted MacOS menu items.
@@ -39,15 +50,8 @@ namespace SystemDependant
         // - View -> Show Tab Bar
         // - View -> Show All Tabs
         [NSWindow setAllowsAutomaticWindowTabbing: false];
-    }
 
-    static void debugPrintNSUserDefaultsAllKeys()
-    {
-        NSLog(@"%@", [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys]);
-    }
-
-    static void debugPrintNSUserDefaultsAllKeysAndValues()
-    {
-        NSLog(@"%@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+        UNUSED_VARIABLE(debugPrintNSUserDefaultsAllKeys);
+        UNUSED_VARIABLE(debugPrintNSUserDefaultsAllKeysAndValues);
     }
 }
