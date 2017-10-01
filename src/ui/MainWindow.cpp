@@ -25,13 +25,14 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QImageReader>
 #include <QMessageBox>
 #include <QPainter>
-#include "ui_About.h"
+#include "ui_AboutDialog.h"
 #include "ui_AboutSupportedFormatsDialog.h"
 #include "ui_SettingsDialog.h"
 #include "AboutComponentsDialog.h"
 #include "SettingsDialog.h"
 #include "support/RecentFileAction.h"
 #include "../model/FileSystemSortFilterProxyModel.h"
+#include "../ui/support/Settings.h"
 #include "../util/misc.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -43,9 +44,11 @@ MainWindow::MainWindow(QWidget *parent) :
     m_ui.setupUi(this);
 
     m_ui.toolBar->toggleViewAction()->setShortcut(QKeySequence(Qt::Key_T));
+    m_ui.toolBar->toggleViewAction()->setWhatsThis("shortcut/window/toolbar");
     m_ui.menuShow->addAction(m_ui.toolBar->toggleViewAction());
 
     m_ui.dockWidget->toggleViewAction()->setShortcut(QKeySequence(Qt::Key_N));
+    m_ui.dockWidget->toggleViewAction()->setWhatsThis("shortcut/window/navigation");
     m_ui.menuShow->addAction(m_ui.dockWidget->toggleViewAction());
 
     m_sortFileSystemModel->setSourceModel(m_fileSystemModel);
@@ -59,6 +62,12 @@ MainWindow::MainWindow(QWidget *parent) :
     m_fileSystemModel->setNameFilters(Util::convertFormatsToFilters(QImageReader::supportedImageFormats()));
     m_fileSystemModel->setNameFilterDisables(false);
     m_fileSystemModel->setFilter(QDir::Filter::Hidden|QDir::Filter::AllEntries|QDir::Filter::NoDotAndDotDot|QDir::Filter::AllDirs);
+
+    Settings::initializeSettings();
+    Settings::initializeSettings(m_ui.menuFile);
+    Settings::initializeSettings(m_ui.menuView);
+    Settings::initializeSettings(m_ui.menuWindow);
+    Settings::initializeSettings(m_ui.menuHelp);
 }
 
 MainWindow::~MainWindow()

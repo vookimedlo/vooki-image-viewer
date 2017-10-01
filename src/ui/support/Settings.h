@@ -20,35 +20,20 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #include <memory>
-#include <QColor>
-#include <QDialog>
 #include <QMenu>
 #include <QSettings>
-#include "ui_SettingsDialog.h"
-#include "../util/compiler.h"
+#include "../../util/compiler.h"
 
-class SettingsDialog : public QDialog
+class Settings
 {
-    Q_OBJECT
-
 public:
-    SettingsDialog(QWidget *parent = Q_NULLPTR);
-    DISABLE_COPY_MOVE(SettingsDialog);
+    Settings() = delete;
+    DISABLE_COPY_MOVE(Settings);
 
-    void populateShortcuts(QMenu *menu);
-
-protected:
-    void initializeUI(std::shared_ptr<QSettings> settings);
-
-protected Q_SLOTS:
-    virtual void onAccept();
-    virtual void onButtonBoxButtonClicked(QAbstractButton *button);
-    virtual void onRestoreDefaultsTriggered();
-    virtual void onToolButtonBorderColorClicked();
-    virtual void onToolButtonBackgroundColorClicked();
-
+    static void initializeSettings();
+    static void initializeSettings(QMenu *menu);
+    static std::shared_ptr<QSettings> userSettings();
+    static std::shared_ptr<QSettings> defaultSettings();
 private:
-    Ui::SettingsDialog m_uiSettingsDialog;
-    QColor m_borderColor;
-    QColor m_backgroundColor;
+    static void restoreDefaultSettings();
 };

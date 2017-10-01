@@ -29,6 +29,7 @@ set(SOURCES
     ../../src/ui/AboutComponentsDialog.cpp
     ../../src/ui/SettingsDialog.cpp
     ../../src/ui/SettingsShortcutsTableWidget.cpp
+    ../../src/ui/support/Settings.cpp
     ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp
 )
 

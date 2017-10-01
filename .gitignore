@@ -37,3 +37,4 @@ build/qmake/build*
 *.exe
 *.out
 *.app
+*.cpp#

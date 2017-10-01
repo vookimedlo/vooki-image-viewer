@@ -27,7 +27,8 @@ SOURCES += \
     ../../src/ui/SettingsDialog.cpp \
     ../../src/ui/SettingsShortcutsTableWidget.cpp \
     ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp \
-    ../../src/model/FileSystemSortFilterProxyModel.cpp
+    ../../src/model/FileSystemSortFilterProxyModel.cpp \
+    ../../src/ui/support/Settings.cpp
 
 
 HEADERS  += \
@@ -43,7 +44,8 @@ HEADERS  += \
     ../../src/ui/SettingsDialog.h \
     ../../src/ui/SettingsShortcutsTableWidget.h \
     ../../src/ui/support/SettingsShortcutsTableWidgetItem.h \
-    ../../src/model/FileSystemSortFilterProxyModel.h
+    ../../src/model/FileSystemSortFilterProxyModel.h \
+    ../../src/ui/support/Settings.h
 
 FORMS += \
     ../../src/ui/forms/MainWindow.ui \
