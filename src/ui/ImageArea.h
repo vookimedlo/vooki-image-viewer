@@ -36,6 +36,7 @@ public:
     void flipVertically();
     void setFitToWindow(bool enabled);
     bool showImage(const QString &fileName);
+    void repaintWithTransformations();
     void rotateLeft();
     void rotateRight();
     void zoomImageIn(double factor);

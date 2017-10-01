@@ -25,6 +25,8 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QPainter>
 #include <QPaintEvent>
 #include <QRect>
+#include "support/Settings.h"
+#include "support/SettingsStrings.h"
 
 ImageArea::ImageArea(QWidget *parent): QWidget(parent),
                                        m_flipHorizontally(false),
@@ -49,6 +51,13 @@ bool ImageArea::showImage(const QString &fileName)
     transformImage();
     update();
     return true;
+}
+
+void ImageArea::repaintWithTransformations()
+{
+    transformImage();
+    update();
+    QWidget::repaint();
 }
 
 void ImageArea::paintEvent(QPaintEvent *event)
@@ -100,7 +109,7 @@ void ImageArea::transformImage()
 
     QSize newSize = scaledImage.size().expandedTo(size());
     QImage newImage(newSize, QImage::Format_RGB32);
-    newImage.fill(qRgb(0, 0, 0));
+    newImage.fill(Settings::userSettings()->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>());
     QPainter painterImage(&newImage);
     painterImage.drawImage(QPoint(newSize.width() / 2 - scaledImage.size().width() / 2, newSize.height() / 2 - scaledImage.size().height() / 2), scaledImage);
     m_finalImage = newImage;

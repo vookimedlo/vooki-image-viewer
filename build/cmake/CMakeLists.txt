@@ -23,9 +23,14 @@ set(SOURCES
     ../../src/ui/MainWindow.cpp
     ../../src/ui/ImageArea.cpp
     ../../src/model/ImageCatalog.cpp
+    ../../src/model/FileSystemSortFilterProxyModel.cpp
     ../../src/util/misc.cpp
     ../../src/ui/support/RecentFileAction.cpp
     ../../src/ui/AboutComponentsDialog.cpp
+    ../../src/ui/SettingsDialog.cpp
+    ../../src/ui/SettingsShortcutsTableWidget.cpp
+    ../../src/ui/support/Settings.cpp
+    ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp
 )
 
 if(APPLE)
@@ -36,10 +41,11 @@ if(APPLE)
 endif(APPLE)
 
 qt5_wrap_ui(UI_HEADERS
-    ../../src/ui/forms/MainWindow.ui \
-    ../../src/ui/forms/AboutComponentsDialog.ui \
-    ../../src/ui/forms/AboutSupportedFormatsDialog.ui \
+    ../../src/ui/forms/MainWindow.ui
+    ../../src/ui/forms/AboutComponentsDialog.ui
+    ../../src/ui/forms/AboutSupportedFormatsDialog.ui
     ../../src/ui/forms/AboutDialog.ui
+    ../../src/ui/forms/SettingsDialog.ui
 )
 
 qt5_add_resources(UI_RESOURCES ../../src/resource/vookiimageviewer.qrc)

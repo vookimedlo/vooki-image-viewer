@@ -26,6 +26,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 //Forward declarations
 class QFileSystemModel;
+class FileSystemSortFilterProxyModel;
 
 class MainWindow : public QMainWindow
 {
@@ -71,10 +72,12 @@ private slots:
     void onRecentFileTriggered(const QString &filePath);
     void onClearHistory();
     void onAboutSupportedImageFormats();
+    void onSettingsTriggered();
 
 private:
     Ui::MainWindow m_ui;
     QFileSystemModel *m_fileSystemModel;
+    FileSystemSortFilterProxyModel *m_sortFileSystemModel;
     ImageCatalog m_catalog;
 
     struct
