@@ -71,14 +71,16 @@ MainWindow::MainWindow(QWidget *parent) :
     Settings::initializeSettings(m_ui.menuHelp);
 
     std::shared_ptr<QSettings> settings = Settings::userSettings();
-    if (settings->value(SETTINGS_WINDOW_HIDE_TOOLBAR).toBool())
-        m_ui.toolBar->hide();
-
-    if (settings->value(SETTINGS_WINDOW_HIDE_NAVIGATION).toBool())
-        m_ui.dockWidget->hide();
+    m_ui.toolBar->setHidden(settings->value(SETTINGS_WINDOW_HIDE_TOOLBAR).toBool());
+    m_ui.dockWidget->setHidden(settings->value(SETTINGS_WINDOW_HIDE_NAVIGATION).toBool());
+    m_ui.toolBar->toggleViewAction()->setChecked(!settings->value(SETTINGS_WINDOW_HIDE_TOOLBAR).toBool());
+    m_ui.dockWidget->toggleViewAction()->setChecked(!settings->value(SETTINGS_WINDOW_HIDE_NAVIGATION).toBool());
 
     if (settings->value(SETTINGS_WINDOW_HIDE_STATUSBAR).toBool())
         m_ui.actionStatusBar->setChecked(false);
+
+    if (settings->value(SETTINGS_GENERAL_FULLSCREEN).toBool())
+        m_ui.actionFullScreen->toggle();
 
     propagateBorderSettings();
 }
@@ -286,8 +288,8 @@ void MainWindow::onSettingsTriggered()
     dialog.populateShortcuts(m_ui.menuHelp);
     if (dialog.exec() == QDialog::Accepted)
     {
-        m_ui.imageAreaWidget->repaintWithTransformations();
         propagateBorderSettings();
+        m_ui.imageAreaWidget->repaintWithTransformations();
     }
 }
 
