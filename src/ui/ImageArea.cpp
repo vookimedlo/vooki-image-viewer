@@ -29,16 +29,24 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "support/SettingsStrings.h"
 
 ImageArea::ImageArea(QWidget *parent): QWidget(parent),
+                                       m_drawBorder(false),
                                        m_flipHorizontally(false),
                                        m_flipVertically(false),
                                        m_isFitToWindow(false),
                                        m_scaleFactor(1.0),
+                                       m_borderColor(Qt::white),
                                        m_originalImage(),
                                        m_finalImage(),
                                        m_rotateIndex(0, 4) // 4 rotation quadrants
 {
     m_originalImage.fill(qRgb(0, 0, 0));
     m_finalImage.fill(qRgb(0, 0, 0));
+}
+
+void ImageArea::drawBorder(bool draw, const QColor &color)
+{
+    m_drawBorder = draw;
+    m_borderColor = color;
 }
 
 bool ImageArea::showImage(const QString &fileName)
@@ -112,6 +120,17 @@ void ImageArea::transformImage()
     newImage.fill(Settings::userSettings()->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>());
     QPainter painterImage(&newImage);
     painterImage.drawImage(QPoint(newSize.width() / 2 - scaledImage.size().width() / 2, newSize.height() / 2 - scaledImage.size().height() / 2), scaledImage);
+
+    if (m_drawBorder)
+    {
+        painterImage.setBrush(Qt::NoBrush);
+        QPen pen = painterImage.pen();
+        pen.setWidth(3);
+        pen.setColor(m_borderColor);
+        painterImage.setPen(pen);
+        painterImage.drawRect(newSize.width() / 2 - scaledImage.size().width() / 2, newSize.height() / 2 - scaledImage.size().height() / 2, scaledImage.width(), scaledImage.height());
+    }
+
     m_finalImage = newImage;
 }
 

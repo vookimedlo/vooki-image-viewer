@@ -48,6 +48,7 @@ public:
     HANDLE_RESULT_E handleImagePath(const QString &path, bool addToRecentFiles = true);
 
 protected:
+    void propagateBorderSettings();
     QString registerProcessedImage(const QString& filePath, bool addToRecentFiles = true);
     void showImage(bool addToRecentFiles);
 

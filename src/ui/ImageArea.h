@@ -20,6 +20,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #include <cstdint>
+#include <QColor>
 #include <QWidget>
 #include "../util/compiler.h"
 #include "../util/RotatingIndex.h"
@@ -32,6 +33,7 @@ public:
     ImageArea(QWidget *parent = 0);
     DISABLE_COPY_MOVE(ImageArea);
 
+    void drawBorder(bool draw, const QColor &color = QColor(Qt::white));
     void flipHorizontally();
     void flipVertically();
     void setFitToWindow(bool enabled);
@@ -53,10 +55,12 @@ private:
     void transformImage();
 
 private:
+    bool m_drawBorder;
     bool m_flipHorizontally;
     bool m_flipVertically;
     bool m_isFitToWindow;
     double m_scaleFactor;
+    QColor m_borderColor;
     QImage m_originalImage;
     QImage m_finalImage;
     RotatingIndex<uint8_t> m_rotateIndex;

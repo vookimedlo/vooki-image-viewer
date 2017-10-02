@@ -79,6 +79,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     if (settings->value(SETTINGS_WINDOW_HIDE_STATUSBAR).toBool())
         m_ui.actionStatusBar->setChecked(false);
+
+    propagateBorderSettings();
 }
 
 MainWindow::~MainWindow()
@@ -283,7 +285,10 @@ void MainWindow::onSettingsTriggered()
     dialog.populateShortcuts(m_ui.menuWindow);
     dialog.populateShortcuts(m_ui.menuHelp);
     if (dialog.exec() == QDialog::Accepted)
+    {
         m_ui.imageAreaWidget->repaintWithTransformations();
+        propagateBorderSettings();
+    }
 }
 
 void MainWindow::showImage(bool addToRecentFiles)
@@ -317,4 +322,10 @@ MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, boo
     }
 
     return HANDLE_RESULT_E_DONT_EXIST;
+}
+
+void MainWindow::propagateBorderSettings()
+{
+    std::shared_ptr<QSettings> settings = Settings::userSettings();
+    m_ui.imageAreaWidget->drawBorder(settings->value(SETTINGS_IMAGE_BORDER_DRAW).toBool(), settings->value(SETTINGS_IMAGE_BORDER_COLOR).value<QColor>());
 }
