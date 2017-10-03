@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
 
     SystemDependant::Init();
     MainWindow w;
+    QObject::connect(&a, &QApplication::aboutToQuit, &w, &MainWindow::onAboutToQuit);
     w.handleImagePath(requestedPath);
     w.show();
 

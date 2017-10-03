@@ -20,6 +20,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include "MainWindow.h"
 
+#include <vector>
 #include <QDialog>
 #include <QFileSystemModel>
 #include <QImageReader>
@@ -83,6 +84,7 @@ MainWindow::MainWindow(QWidget *parent) :
         m_ui.actionFullScreen->toggle();
 
     propagateBorderSettings();
+    restoreRecentFiles();
 }
 
 MainWindow::~MainWindow()
@@ -231,6 +233,12 @@ QString MainWindow::registerProcessedImage(const QString& filePath, bool addToRe
     {
         auto actions = m_ui.menuRecentFiles->actions();
 
+        // Remove all current actions from menu widget
+        for(QAction *action : actions)
+        {
+            m_ui.menuRecentFiles->removeAction(action);
+        }
+
         RecentFileAction *recentImage = new RecentFileAction(filePath, this);
         recentImage->setStatusTip(filePath);
 
@@ -238,11 +246,6 @@ QString MainWindow::registerProcessedImage(const QString& filePath, bool addToRe
 
         // Add the action just after the separator
         actions.insert(2, recentImage);
-
-        for(QAction *action : actions)
-        {
-            m_ui.menuRecentFiles->removeAction(action);
-        }
 
         m_ui.menuRecentFiles->insertActions(0, actions);
 
@@ -330,4 +333,71 @@ void MainWindow::propagateBorderSettings()
 {
     std::shared_ptr<QSettings> settings = Settings::userSettings();
     m_ui.imageAreaWidget->drawBorder(settings->value(SETTINGS_IMAGE_BORDER_DRAW).toBool(), settings->value(SETTINGS_IMAGE_BORDER_COLOR).value<QColor>());
+}
+
+void MainWindow::restoreRecentFiles()
+{
+    std::shared_ptr<QSettings> settings = Settings::userSettings();
+    if(settings->value(SETTINGS_IMAGE_REMEMBER_RECENT).toBool())
+    {
+        const std::vector<QString> settingsKeys = {SETTINGS_RECENT_FILE_5,
+                                                   SETTINGS_RECENT_FILE_4,
+                                                   SETTINGS_RECENT_FILE_3,
+                                                   SETTINGS_RECENT_FILE_2,
+                                                   SETTINGS_RECENT_FILE_1};
+
+        auto actions = m_ui.menuRecentFiles->actions();
+
+        // Remove all current actions from menu widget
+        for(QAction *action : actions)
+            m_ui.menuRecentFiles->removeAction(action);
+
+        for (const QString &key : settingsKeys)
+        {
+            QString value = settings->value(key).toString();
+            if (value.isEmpty())
+                continue;
+
+            RecentFileAction *recentImage = new RecentFileAction(value, this);
+            recentImage->setStatusTip(value);
+
+            QObject::connect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
+
+            // Add the action just after the separator
+            actions.insert(2, recentImage);
+        }
+
+        m_ui.menuRecentFiles->insertActions(0, actions);
+    }
+}
+
+QString MainWindow::getRecentFile(int item) const
+{
+    int index = item + 1;
+    auto actions = m_ui.menuRecentFiles->actions();
+
+    // The first two actions are Clear History & Menu Separator, which are out of our interest
+    if (2 < actions.size() && index < actions.size())
+    {
+        RecentFileAction *recentImage = dynamic_cast<RecentFileAction *>(actions.at(index));
+        return recentImage->text();
+    }
+
+    return QString();
+}
+
+void MainWindow::onAboutToQuit()
+{
+    const std::vector<QString> settingsKeys = {SETTINGS_RECENT_FILE_1,
+                                               SETTINGS_RECENT_FILE_2,
+                                               SETTINGS_RECENT_FILE_3,
+                                               SETTINGS_RECENT_FILE_4,
+                                               SETTINGS_RECENT_FILE_5};
+
+    std::shared_ptr<QSettings> settings = Settings::userSettings();
+
+    for (int i = 0; i < settingsKeys.size(); ++i)
+    {
+        settings->setValue(settingsKeys[i], (settings->value(SETTINGS_IMAGE_REMEMBER_RECENT).toBool()) ? getRecentFile(i + 1) : QString());
+    }
 }

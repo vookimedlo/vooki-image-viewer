@@ -38,6 +38,12 @@ void Settings::initializeSettings()
     defaultSettings.setValue(SETTINGS_IMAGE_BORDER_DRAW, false);
     defaultSettings.setValue(SETTINGS_IMAGE_BORDER_COLOR, QColor(Qt::white));
     defaultSettings.setValue(SETTINGS_IMAGE_BACKGROUND_COLOR, QColor(Qt::black));
+
+    defaultSettings.setValue(SETTINGS_RECENT_FILE_1, QString());
+    defaultSettings.setValue(SETTINGS_RECENT_FILE_2, QString());
+    defaultSettings.setValue(SETTINGS_RECENT_FILE_3, QString());
+    defaultSettings.setValue(SETTINGS_RECENT_FILE_4, QString());
+    defaultSettings.setValue(SETTINGS_RECENT_FILE_5, QString());
 }
 
 void Settings::initializeSettings(QMenu *menu)

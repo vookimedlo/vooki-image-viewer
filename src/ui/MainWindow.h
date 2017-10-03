@@ -49,10 +49,15 @@ public:
 
 protected:
     void propagateBorderSettings();
+    QString getRecentFile(int item) const;
     QString registerProcessedImage(const QString& filePath, bool addToRecentFiles = true);
+    void restoreRecentFiles();
     void showImage(bool addToRecentFiles);
 
-private slots:
+public slots:
+    void onAboutToQuit();
+
+protected slots:
     void onQuitTriggered();
     void onZoomInTriggered();
     void onZoomOutTriggered();

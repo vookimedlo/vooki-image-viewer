@@ -31,3 +31,8 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #define SETTINGS_IMAGE_BORDER_DRAW "image/border/draw"
 #define SETTINGS_IMAGE_BORDER_COLOR "image/border/color"
 #define SETTINGS_IMAGE_BACKGROUND_COLOR "image/background/color"
+#define SETTINGS_RECENT_FILE_1 "recent/file/1"
+#define SETTINGS_RECENT_FILE_2 "recent/file/2"
+#define SETTINGS_RECENT_FILE_3 "recent/file/3"
+#define SETTINGS_RECENT_FILE_4 "recent/file/4"
+#define SETTINGS_RECENT_FILE_5 "recent/file/5"
