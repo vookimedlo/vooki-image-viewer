@@ -50,8 +50,16 @@ qt5_wrap_ui(UI_HEADERS
 
 qt5_add_resources(UI_RESOURCES ../../src/resource/vookiimageviewer.qrc)
 
+if(APPLE)
+    set(MACOSX_BUNDLE_EXECUTABLE_NAME VookiImageViewer)
+    set(MACOSX_BUNDLE_ICON_FILE vookiimageviewericon.icns)
+    set(MACOSX_BUNDLE_BUNDLE_NAME VookiImageViewer)
+    set_source_files_properties(../../src/resource/openclipart/vookiimageviewericon.icns PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+endif(APPLE)
+
 add_executable(VookiImageViewer
     MACOSX_BUNDLE
+    ../../src/resource/openclipart/vookiimageviewericon.icns
     ${SOURCES}
     ${UI_HEADERS}
     ${UI_RESOURCES})

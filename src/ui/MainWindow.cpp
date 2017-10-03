@@ -396,7 +396,7 @@ void MainWindow::onAboutToQuit()
 
     std::shared_ptr<QSettings> settings = Settings::userSettings();
 
-    for (int i = 0; i < settingsKeys.size(); ++i)
+    for (size_t i = 0; i < settingsKeys.size(); ++i)
     {
         settings->setValue(settingsKeys[i], (settings->value(SETTINGS_IMAGE_REMEMBER_RECENT).toBool()) ? getRecentFile(i + 1) : QString());
     }

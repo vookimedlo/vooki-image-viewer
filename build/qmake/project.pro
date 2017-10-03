@@ -59,3 +59,4 @@ FORMS += \
 #
 mac: OBJECTIVE_SOURCES = ../../src/abstraction/mac/init.mm
 mac: LIBS += -framework AppKit
+mac: ICON = ../../src/resource/openclipart/vookiimageviewericon.icns

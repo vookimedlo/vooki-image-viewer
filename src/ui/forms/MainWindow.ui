@@ -12,7 +12,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Vooki Image Viewer</string>
+   <string>VookiImageViewer</string>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
