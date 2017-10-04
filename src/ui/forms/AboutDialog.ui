@@ -15,11 +15,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>About DataAnalyzer</string>
-  </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>:/images/1467665209-300px.png</normaloff>:/images/1467665209-300px.png</iconset>
+   <string>About VookiImageViewer</string>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
