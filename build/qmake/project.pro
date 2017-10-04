@@ -46,7 +46,8 @@ HEADERS  += \
     ../../src/ui/support/SettingsShortcutsTableWidgetItem.h \
     ../../src/model/FileSystemSortFilterProxyModel.h \
     ../../src/ui/support/Settings.h \
-    ../../src/ui/support/SettingsStrings.h
+    ../../src/ui/support/SettingsStrings.h \
+    ../../src/util/version.h
 
 FORMS += \
     ../../src/ui/forms/MainWindow.ui \

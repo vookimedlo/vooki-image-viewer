@@ -36,6 +36,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "../ui/support/Settings.h"
 #include "../ui/support/SettingsStrings.h"
 #include "../util/misc.h"
+#include "../util/version.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -180,10 +181,11 @@ void MainWindow::onNextImageTriggered()
 }
 
 void MainWindow::onAboutTriggered()
-{
+{            
     Ui::aboutDialog uiAbout;
     QDialog dialog(this);
     uiAbout.setupUi(&dialog);
+    uiAbout.versionLabel->setText(uiAbout.versionLabel->text().append(Util::getVersionString()));
     dialog.exec();
 }
 
