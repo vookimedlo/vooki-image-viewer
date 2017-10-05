@@ -68,7 +68,19 @@ if(APPLE)
         ${SOURCES}
         ${UI_HEADERS}
         ${UI_RESOURCES})
-endif(APPLE)
+elseif(WIN32)
+    set(SOURCES
+        ${SOURCES}
+        ../../src/abstraction/win/init.cpp
+    )
+
+    add_executable(VookiImageViewer
+        WIN32
+        ../../src/resource/openclipart/vookiimageviewericon.icns
+        ${SOURCES}
+        ${UI_HEADERS}
+        ${UI_RESOURCES})
+endif()
 
 
 qt5_use_modules(VookiImageViewer
