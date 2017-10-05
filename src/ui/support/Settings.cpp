@@ -24,7 +24,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 void Settings::initializeSettings()
 {
-    QSettings defaultSettings(QSettings::SystemScope, QCoreApplication::organizationName(), QCoreApplication::applicationName());
+    QSettings defaultSettings(QSettings::UserScope, QCoreApplication::organizationName());
 
     defaultSettings.setValue(SETTINGS_GENERAL_FULLSCREEN, false);
     defaultSettings.setValue(SETTINGS_WINDOW_HIDE_STATUSBAR, false);
@@ -48,7 +48,7 @@ void Settings::initializeSettings()
 
 void Settings::initializeSettings(QMenu *menu)
 {
-    QSettings defaultSettings(QSettings::SystemScope, QCoreApplication::organizationName(), QCoreApplication::applicationName());
+    QSettings defaultSettings(QSettings::UserScope, QCoreApplication::organizationName());
     QSettings userSettings(QSettings::UserScope, QCoreApplication::organizationName(), QCoreApplication::applicationName());
 
     auto actions = menu->actions();
@@ -71,7 +71,7 @@ void Settings::initializeSettings(QMenu *menu)
 
 void Settings::restoreDefaultSettings()
 {
-    QSettings defaultSettings(QSettings::SystemScope, QCoreApplication::organizationName(), QCoreApplication::applicationName());
+    QSettings defaultSettings(QSettings::UserScope, QCoreApplication::organizationName());
     QSettings userSettings(QSettings::UserScope, QCoreApplication::organizationName(), QCoreApplication::applicationName());
 
     for (QString &key : defaultSettings.allKeys())
@@ -87,5 +87,5 @@ std::shared_ptr<QSettings> Settings::userSettings()
 
 std::shared_ptr<QSettings> Settings::defaultSettings()
 {
-    return std::make_shared<QSettings>(QSettings::SystemScope, QCoreApplication::organizationName(), QCoreApplication::applicationName());
+    return std::make_shared<QSettings>(QSettings::UserScope, QCoreApplication::organizationName());
 }
