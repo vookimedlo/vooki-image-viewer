@@ -47,6 +47,10 @@ void SettingsDialog::populateShortcuts(QMenu *menu)
             continue;
         }
 
+        // Skip all action which are not for key re-assignment
+        if (action->whatsThis().isEmpty())
+            continue;
+
         int rowCount = m_uiSettingsDialog.tableShortcutsWidget->rowCount();
         m_uiSettingsDialog.tableShortcutsWidget->insertRow(rowCount);
         QTableWidgetItem *headerItem = new QTableWidgetItem(action->toolTip());

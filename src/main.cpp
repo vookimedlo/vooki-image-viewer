@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
     QCoreApplication::setOrganizationName("Michal Duda");
-    QCoreApplication::setOrganizationDomain("vooki-image-viewer.com");
+    QCoreApplication::setOrganizationDomain("VookiImageViewer.com");
     QCoreApplication::setApplicationName("VookiImageViewer");
 
     SystemDependant::Init();
