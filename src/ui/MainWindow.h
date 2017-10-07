@@ -33,7 +33,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     DISABLE_COPY_MOVE(MainWindow);
 
@@ -63,7 +63,7 @@ protected slots:
     void onZoomOutTriggered();
     void onFitToWindowToggled(bool toggled);
     void onFullScreenToggled(bool toggled);
-    void onTreeViewDoubleClicked(const QModelIndex &index);
+    void onFileSystemTreeViewActivated(const QModelIndex &index);
     void onStatusBarToggled(bool toggled);
     void onOriginalSizeTriggered();
     void onPreviousImageTriggered();

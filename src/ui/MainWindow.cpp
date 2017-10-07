@@ -57,11 +57,11 @@ MainWindow::MainWindow(QWidget *parent) :
     m_sortFileSystemModel->setSourceModel(m_fileSystemModel);
 
     m_fileSystemModel->setRootPath(QDir::currentPath());
-    m_ui.treeView->setModel(m_sortFileSystemModel);
+    m_ui.fileSystemTreeView->setModel(m_sortFileSystemModel);
     for(int i = 1; i < m_fileSystemModel->columnCount(); i++)
-        m_ui.treeView->setColumnHidden(i, true);
+        m_ui.fileSystemTreeView->setColumnHidden(i, true);
 
-    m_ui.treeView->sortByColumn(0, Qt::SortOrder::AscendingOrder);
+    m_ui.fileSystemTreeView->sortByColumn(0, Qt::SortOrder::AscendingOrder);
     m_fileSystemModel->setNameFilters(Util::convertFormatsToFilters(QImageReader::supportedImageFormats()));
     m_fileSystemModel->setNameFilterDisables(false);
     m_fileSystemModel->setFilter(QDir::Filter::Hidden|QDir::Filter::AllEntries|QDir::Filter::NoDotAndDotDot|QDir::Filter::AllDirs);
@@ -136,7 +136,7 @@ void MainWindow::onFullScreenToggled(bool toggled)
     }
 }
 
-void MainWindow::onTreeViewDoubleClicked(const QModelIndex &index)
+void MainWindow::onFileSystemTreeViewActivated(const QModelIndex &index)
 {
     const QString filePath = m_fileSystemModel->filePath(m_sortFileSystemModel->mapToSource(index));
     handleImagePath(filePath);
@@ -231,6 +231,9 @@ void MainWindow::onRotateRightTriggered()
 
 QString MainWindow::registerProcessedImage(const QString& filePath, bool addToRecentFiles)
 {
+    if (filePath.isEmpty())
+        return QString();
+
     if (addToRecentFiles)
     {
         auto actions = m_ui.menuRecentFiles->actions();
@@ -263,6 +266,7 @@ QString MainWindow::registerProcessedImage(const QString& filePath, bool addToRe
         }
     }
 
+    m_ui.fileSystemTreeView->setCurrentIndex(m_sortFileSystemModel->mapFromSource(m_fileSystemModel->index(m_catalog.getCurrent())));
     m_ui.statusBar->showMessage(filePath);
     return filePath;
 }
