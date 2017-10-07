@@ -44,6 +44,7 @@ void ImageCatalog::initialize(const QDir &imageDir)
 {
     m_absoluteDir = imageDir.canonicalPath();
     m_catalog = imageDir.entryList(m_filter, QDir::Filter::Files);
+    m_catalog.sort();
     m_catalogIndex.set(0, m_catalog.size());
 }
 

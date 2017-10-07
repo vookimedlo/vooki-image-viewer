@@ -34,10 +34,10 @@ FileSystemTreeView::~FileSystemTreeView()
 
 void FileSystemTreeView::setCurrentIndex(const QModelIndex &index)
 {
-   QAbstractItemView::setCurrentIndex(index);
-   // Guard is not needed here, since an execution is always synchronized by the Qt::QueuedConnection signal processing
-   m_setIndex = index;
-   setExpanded(index, true);
+    QAbstractItemView::setCurrentIndex(index);
+    // Guard is not needed here, since an execution is always synchronized by the Qt::QueuedConnection signal processing
+    m_setIndex = index;
+    setExpanded(index, true);
 }
 
 void FileSystemTreeView::onExpanded(const QModelIndex &index)
