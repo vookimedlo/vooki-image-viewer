@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include "ImageArea.h"
+#include "ImageAreaWidget.h"
 
 #include <QColor>
 #include <QImage>
@@ -28,7 +28,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "support/Settings.h"
 #include "support/SettingsStrings.h"
 
-ImageArea::ImageArea(QWidget *parent): QWidget(parent),
+ImageAreaWidget::ImageAreaWidget(QWidget *parent): QWidget(parent),
                                        m_drawBorder(false),
                                        m_flipHorizontally(false),
                                        m_flipVertically(false),
@@ -43,13 +43,13 @@ ImageArea::ImageArea(QWidget *parent): QWidget(parent),
     m_finalImage.fill(qRgb(0, 0, 0));
 }
 
-void ImageArea::drawBorder(bool draw, const QColor &color)
+void ImageAreaWidget::drawBorder(bool draw, const QColor &color)
 {
     m_drawBorder = draw;
     m_borderColor = color;
 }
 
-bool ImageArea::showImage(const QString &fileName)
+bool ImageAreaWidget::showImage(const QString &fileName)
 {
     if (!m_originalImage.load(fileName))
         return false;
@@ -61,28 +61,28 @@ bool ImageArea::showImage(const QString &fileName)
     return true;
 }
 
-void ImageArea::repaintWithTransformations()
+void ImageAreaWidget::repaintWithTransformations()
 {
     transformImage();
     update();
     QWidget::repaint();
 }
 
-void ImageArea::paintEvent(QPaintEvent *event)
+void ImageAreaWidget::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     QRect dirtyRect = event->rect();
     painter.drawImage(dirtyRect, m_finalImage, dirtyRect);
 }
 
-void ImageArea::resizeEvent(QResizeEvent *event)
+void ImageAreaWidget::resizeEvent(QResizeEvent *event)
 {
     transformImage();
     update();
     QWidget::resizeEvent(event);
 }
 
-void ImageArea::transformImage()
+void ImageAreaWidget::transformImage()
 {
     QTransform transform;
     QTransform trans = transform.rotate(m_rotateIndex * 90);
@@ -134,7 +134,7 @@ void ImageArea::transformImage()
     m_finalImage = newImage;
 }
 
-void ImageArea::flipHorizontally()
+void ImageAreaWidget::flipHorizontally()
 {
     m_flipHorizontally = !m_flipHorizontally;
 
@@ -150,7 +150,7 @@ void ImageArea::flipHorizontally()
     update();
 }
 
-void ImageArea::flipVertically()
+void ImageAreaWidget::flipVertically()
 {
     m_flipVertically = !m_flipVertically;
 
@@ -166,7 +166,7 @@ void ImageArea::flipVertically()
     update();
 }
 
-void ImageArea::setFitToWindow(bool enabled)
+void ImageAreaWidget::setFitToWindow(bool enabled)
 {
     m_isFitToWindow = enabled;
     m_scaleFactor = 1;
@@ -174,7 +174,7 @@ void ImageArea::setFitToWindow(bool enabled)
     update();
 }
 
-void ImageArea::rotateLeft()
+void ImageAreaWidget::rotateLeft()
 {
     if(m_flipHorizontally || m_flipVertically)
         ++m_rotateIndex;
@@ -184,7 +184,7 @@ void ImageArea::rotateLeft()
     update();
 }
 
-void ImageArea::rotateRight()
+void ImageAreaWidget::rotateRight()
 {
     if(m_flipHorizontally || m_flipVertically)
         --m_rotateIndex;
@@ -194,7 +194,7 @@ void ImageArea::rotateRight()
      update();
 }
 
-void ImageArea::zoomImageIn(double factor)
+void ImageAreaWidget::zoomImageIn(double factor)
 {
     double newScaleFactor = factor + m_scaleFactor;
     if(newScaleFactor > 3.0)
@@ -205,7 +205,7 @@ void ImageArea::zoomImageIn(double factor)
     update();
 }
 
-void ImageArea::zoomImageOut(double factor)
+void ImageAreaWidget::zoomImageOut(double factor)
 {
     double newScaleFactor = -1 * factor + m_scaleFactor;
     if(newScaleFactor < 0.2)
@@ -216,7 +216,7 @@ void ImageArea::zoomImageOut(double factor)
     update();
 }
 
-void ImageArea::zoomReset()
+void ImageAreaWidget::zoomReset()
 {
     bool isFitToWindow = this->m_isFitToWindow;
     this->m_isFitToWindow = false;

@@ -27,7 +27,7 @@ set(SOURCES
     ../../src/model/ImageCatalog.cpp
     ../../src/ui/AboutComponentsDialog.cpp
     ../../src/ui/FileSystemTreeView.cpp
-    ../../src/ui/ImageArea.cpp
+    ../../src/ui/ImageAreaWidget.cpp
     ../../src/ui/MainWindow.cpp
     ../../src/ui/SettingsDialog.cpp
     ../../src/ui/SettingsShortcutsTableWidget.cpp

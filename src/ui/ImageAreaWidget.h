@@ -25,13 +25,13 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "../util/compiler.h"
 #include "../util/RotatingIndex.h"
 
-class ImageArea : public QWidget
+class ImageAreaWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    ImageArea(QWidget *parent = 0);
-    DISABLE_COPY_MOVE(ImageArea);
+    ImageAreaWidget(QWidget *parent = 0);
+    DISABLE_COPY_MOVE(ImageAreaWidget);
 
     void drawBorder(bool draw, const QColor &color = QColor(Qt::white));
     void flipHorizontally();

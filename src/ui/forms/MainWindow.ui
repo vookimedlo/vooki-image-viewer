@@ -26,7 +26,7 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="ImageArea" name="imageAreaWidget" native="true"/>
+     <widget class="ImageAreaWidget" name="imageAreaWidget" native="true"/>
     </item>
    </layout>
   </widget>
@@ -601,9 +601,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>ImageArea</class>
+   <class>ImageAreaWidget</class>
    <extends>QWidget</extends>
-   <header>../../src/ui/ImageArea.h</header>
+   <header>../../src/ui/ImageAreaWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

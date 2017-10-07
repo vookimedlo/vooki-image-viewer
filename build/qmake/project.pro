@@ -22,14 +22,14 @@ SOURCES += \
     ../../src/model/FileSystemSortFilterProxyModel.cpp \
     ../../src/ui/AboutComponentsDialog.cpp \
     ../../src/ui/FileSystemTreeView.cpp \
-    ../../src/ui/ImageArea.cpp \
     ../../src/ui/MainWindow.cpp \
     ../../src/ui/SettingsDialog.cpp \
     ../../src/ui/SettingsShortcutsTableWidget.cpp \
     ../../src/ui/support/RecentFileAction.cpp \
     ../../src/ui/support/Settings.cpp \
     ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp \
-    ../../src/util/misc.cpp
+    ../../src/util/misc.cpp \
+    ../../src/ui/ImageAreaWidget.cpp
 
 HEADERS  += \
     ../../src/abstraction/init.h \
@@ -37,7 +37,6 @@ HEADERS  += \
     ../../src/model/FileSystemSortFilterProxyModel.h \
     ../../src/ui/AboutComponentsDialog.h \
     ../../src/ui/FileSystemTreeView.h \
-    ../../src/ui/ImageArea.h \
     ../../src/ui/MainWindow.h \
     ../../src/ui/SettingsDialog.h \
     ../../src/ui/SettingsShortcutsTableWidget.h \
@@ -48,7 +47,8 @@ HEADERS  += \
     ../../src/util/compiler.h \
     ../../src/util/misc.h \
     ../../src/util/RotatingIndex.h \
-    ../../src/util/version.h
+    ../../src/util/version.h \
+    ../../src/ui/ImageAreaWidget.h
 
 FORMS += \
     ../../src/ui/forms/AboutComponentsDialog.ui \
