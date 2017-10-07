@@ -89,6 +89,15 @@
      <addaction name="actionNextImage"/>
      <addaction name="actionPreviousImage"/>
     </widget>
+    <widget class="QMenu" name="menuScroll">
+     <property name="title">
+      <string>Scroll</string>
+     </property>
+     <addaction name="actionScrollUp"/>
+     <addaction name="actionScrollDown"/>
+     <addaction name="actionScrollLeft"/>
+     <addaction name="actionScrollRight"/>
+    </widget>
     <addaction name="actionFullScreen"/>
     <addaction name="separator"/>
     <addaction name="menuRotate"/>
@@ -96,6 +105,7 @@
     <addaction name="menuZoom"/>
     <addaction name="separator"/>
     <addaction name="menuNavigation"/>
+    <addaction name="menuScroll"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="tearOffEnabled">
@@ -189,6 +199,10 @@
    <addaction name="actionPreviousImage"/>
    <addaction name="actionNextImage"/>
    <addaction name="separator"/>
+   <addaction name="actionScrollLeft"/>
+   <addaction name="actionScrollRight"/>
+   <addaction name="actionScrollUp"/>
+   <addaction name="actionScrollDown"/>
   </widget>
   <action name="actionQuit">
    <property name="icon">
@@ -597,6 +611,90 @@
     <enum>QAction::ApplicationSpecificRole</enum>
    </property>
   </action>
+  <action name="actionScrollLeft">
+   <property name="icon">
+    <iconset resource="../../resource/vookiimageviewer.qrc">
+     <normaloff>:/images/scrollleft</normaloff>:/images/scrollleft</iconset>
+   </property>
+   <property name="text">
+    <string>Left</string>
+   </property>
+   <property name="iconText">
+    <string>Scroll Left</string>
+   </property>
+   <property name="toolTip">
+    <string>Scroll Left</string>
+   </property>
+   <property name="shortcut">
+    <string>J</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionScrollRight">
+   <property name="icon">
+    <iconset resource="../../resource/vookiimageviewer.qrc">
+     <normaloff>:/images/scrollright</normaloff>:/images/scrollright</iconset>
+   </property>
+   <property name="text">
+    <string>Right</string>
+   </property>
+   <property name="iconText">
+    <string>Scroll Right</string>
+   </property>
+   <property name="toolTip">
+    <string>Scroll Right</string>
+   </property>
+   <property name="shortcut">
+    <string>L</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionScrollUp">
+   <property name="icon">
+    <iconset resource="../../resource/vookiimageviewer.qrc">
+     <normaloff>:/images/scrollup</normaloff>:/images/scrollup</iconset>
+   </property>
+   <property name="text">
+    <string>Up</string>
+   </property>
+   <property name="iconText">
+    <string>Scroll Up</string>
+   </property>
+   <property name="toolTip">
+    <string>Scroll Up</string>
+   </property>
+   <property name="shortcut">
+    <string>I</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
+  <action name="actionScrollDown">
+   <property name="icon">
+    <iconset resource="../../resource/vookiimageviewer.qrc">
+     <normaloff>:/images/scrolldown</normaloff>:/images/scrolldown</iconset>
+   </property>
+   <property name="text">
+    <string>Down</string>
+   </property>
+   <property name="iconText">
+    <string>Scroll Down</string>
+   </property>
+   <property name="toolTip">
+    <string>Scroll Down</string>
+   </property>
+   <property name="shortcut">
+    <string>K</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::ApplicationShortcut</enum>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -936,6 +1034,70 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionScrollLeft</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onScrollLeftTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>404</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionScrollRight</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onScrollRightTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>404</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionScrollUp</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onScrollUpTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>404</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionScrollDown</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onScrollDownTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>404</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onQuitTriggered()</slot>
@@ -958,5 +1120,9 @@
   <slot>onClearHistory()</slot>
   <slot>onAboutSupportedImageFormats()</slot>
   <slot>onSettingsTriggered()</slot>
+  <slot>onScrollLeftTriggered()</slot>
+  <slot>onScrollRightTriggered()</slot>
+  <slot>onScrollUpTriggered()</slot>
+  <slot>onScrollDownTriggered()</slot>
  </slots>
 </ui>

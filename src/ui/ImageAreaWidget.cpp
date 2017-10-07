@@ -37,10 +37,58 @@ ImageAreaWidget::ImageAreaWidget(QWidget *parent): QWidget(parent),
                                        m_borderColor(Qt::white),
                                        m_originalImage(),
                                        m_finalImage(),
-                                       m_rotateIndex(0, 4) // 4 rotation quadrants
+                                       m_rotateIndex(0, 4), // 4 rotation quadrants
+                                       m_imageOffsetStep(200),
+                                       m_imageOffsetY(0),
+                                       m_imageOffsetX(0)
 {
     m_originalImage.fill(qRgb(0, 0, 0));
     m_finalImage.fill(qRgb(0, 0, 0));
+}
+
+void ImageAreaWidget::onIncreaseOffsetY()
+{
+    m_imageOffsetY += m_imageOffsetStep;
+    repaintWithTransformations();
+}
+
+void ImageAreaWidget::onIncreaseOffsetX()
+{
+    m_imageOffsetX += m_imageOffsetStep;
+    repaintWithTransformations();
+}
+
+void ImageAreaWidget::onDecreaseOffsetY()
+{
+    m_imageOffsetY -= m_imageOffsetStep;
+    repaintWithTransformations();
+}
+
+void ImageAreaWidget::onDecreaseOffsetX()
+{
+    m_imageOffsetX -= m_imageOffsetStep;
+    repaintWithTransformations();
+}
+
+void ImageAreaWidget::checkScrollOffset()
+{
+    if (m_finalImage.height() < size().height())
+        m_imageOffsetY = 0;
+    else
+    if (m_finalImage.height() - m_imageOffsetY < size().height())
+        m_imageOffsetY = m_finalImage.height() - size().height();
+
+    if (m_finalImage.width() < size().width())
+        m_imageOffsetX = 0;
+    else
+    if (m_finalImage.width() - m_imageOffsetX < size().width())
+        m_imageOffsetX = m_finalImage.width() - size().width();
+
+    if(m_imageOffsetY < 0)
+        m_imageOffsetY = 0;
+
+    if(m_imageOffsetX < 0)
+        m_imageOffsetX = 0;
 }
 
 void ImageAreaWidget::drawBorder(bool draw, const QColor &color)
@@ -54,6 +102,7 @@ bool ImageAreaWidget::showImage(const QString &fileName)
     if (!m_originalImage.load(fileName))
         return false;
     m_flipHorizontally = m_flipVertically = false;
+    m_imageOffsetX = m_imageOffsetY = 0;
     m_rotateIndex.reset(0);
     m_scaleFactor = 1;
     transformImage();
@@ -108,6 +157,7 @@ void ImageAreaWidget::transformImage()
 
     if(m_isFitToWindow)
     {
+        m_imageOffsetX = m_imageOffsetY = 0;
         scaledImage = rotatedImage.scaledToWidth(width());
         if(scaledImage.height() > height())
             scaledImage = rotatedImage.scaledToHeight(height());
@@ -118,8 +168,11 @@ void ImageAreaWidget::transformImage()
     QSize newSize = scaledImage.size().expandedTo(size());
     QImage newImage(newSize, QImage::Format_RGB32);
     newImage.fill(Settings::userSettings()->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>());
+
+    // Update scroll settings
+    checkScrollOffset();
     QPainter painterImage(&newImage);
-    painterImage.drawImage(QPoint(newSize.width() / 2 - scaledImage.size().width() / 2, newSize.height() / 2 - scaledImage.size().height() / 2), scaledImage);
+    painterImage.drawImage(newSize.width() / 2 - scaledImage.size().width() / 2, newSize.height() / 2 - scaledImage.size().height() / 2, scaledImage, m_imageOffsetX, m_imageOffsetY);
 
     if (m_drawBorder)
     {

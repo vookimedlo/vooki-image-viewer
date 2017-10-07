@@ -407,3 +407,23 @@ void MainWindow::onAboutToQuit()
         settings->setValue(settingsKeys[i], (settings->value(SETTINGS_IMAGE_REMEMBER_RECENT).toBool()) ? getRecentFile(i + 1) : QString());
     }
 }
+
+void MainWindow::onScrollLeftTriggered()
+{
+    m_ui.imageAreaWidget->onIncreaseOffsetX();
+}
+
+void MainWindow::onScrollRightTriggered()
+{
+    m_ui.imageAreaWidget->onDecreaseOffsetX();
+}
+
+void MainWindow::onScrollUpTriggered()
+{
+    m_ui.imageAreaWidget->onIncreaseOffsetY();
+}
+
+void MainWindow::onScrollDownTriggered()
+{
+    m_ui.imageAreaWidget->onDecreaseOffsetY();
+}

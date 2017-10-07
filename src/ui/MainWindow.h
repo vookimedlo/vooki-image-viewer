@@ -79,6 +79,10 @@ protected slots:
     void onClearHistory();
     void onAboutSupportedImageFormats();
     void onSettingsTriggered();
+    void onScrollLeftTriggered();
+    void onScrollRightTriggered();
+    void onScrollUpTriggered();
+    void onScrollDownTriggered();
 
 private:
     Ui::MainWindow m_ui;

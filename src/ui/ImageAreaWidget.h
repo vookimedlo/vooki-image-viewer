@@ -46,8 +46,13 @@ public:
     void zoomReset();
 
 public slots:
+    void onIncreaseOffsetY();
+    void onIncreaseOffsetX();
+    void onDecreaseOffsetY();
+    void onDecreaseOffsetX();
 
 protected:
+    void checkScrollOffset();
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent *event);
 
@@ -64,4 +69,7 @@ private:
     QImage m_originalImage;
     QImage m_finalImage;
     RotatingIndex<uint8_t> m_rotateIndex;
+    int m_imageOffsetStep;
+    int m_imageOffsetY;
+    int m_imageOffsetX;
 };
