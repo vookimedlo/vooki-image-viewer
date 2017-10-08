@@ -4,6 +4,7 @@
 # Build dirs
 build/build*
 build/qmake/build*
+build/cmake/windows/build
 
 # User settings
 *.user

@@ -77,6 +77,7 @@ elseif(WIN32)
 
     add_executable(VookiImageViewer
         WIN32
+        windows/application.rc
         ${SOURCES}
         ${UI_HEADERS}
         ${UI_RESOURCES})
