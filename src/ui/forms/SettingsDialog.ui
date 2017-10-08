@@ -14,6 +14,10 @@
   <property name="windowTitle">
    <string>Preferences</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../../resource/vookiimageviewer.qrc">
+    <normaloff>:/images/appicon</normaloff>:/images/appicon</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTabWidget" name="tabWidget">
@@ -268,7 +272,9 @@
    <header>../../src/ui/SettingsShortcutsTableWidget.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../resource/vookiimageviewer.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

@@ -17,6 +17,10 @@
   <property name="windowTitle">
    <string>About VookiImageViewer</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../../resource/vookiimageviewer.qrc">
+    <normaloff>:/images/appicon</normaloff>:/images/appicon</iconset>
+  </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
   </property>

@@ -17,6 +17,10 @@
   <property name="windowTitle">
    <string>Supported Formats</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../../resource/vookiimageviewer.qrc">
+    <normaloff>:/images/appicon</normaloff>:/images/appicon</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTableWidget" name="tableWidget">
@@ -245,7 +249,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../resource/vookiimageviewer.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

@@ -77,12 +77,20 @@ elseif(WIN32)
 
     add_executable(VookiImageViewer
         WIN32
-        ../../src/resource/openclipart/vookiimageviewericon.icns
+        ${SOURCES}
+        ${UI_HEADERS}
+        ${UI_RESOURCES})
+else()
+    set(SOURCES
+        ${SOURCES}
+        ../../src/abstraction/unix/init.cpp
+    )
+
+    add_executable(VookiImageViewer
         ${SOURCES}
         ${UI_HEADERS}
         ${UI_RESOURCES})
 endif()
-
 
 qt5_use_modules(VookiImageViewer
     Core

@@ -18,6 +18,7 @@
         <file alias="scrollup">image/Scroll-Up_240px.png</file>
         <file alias="scrollleft">image/Swipe-Left_240px.png</file>
         <file alias="scrollright">image/Swipe-Right_240px.png</file>
+        <file alias="appicon">openclipart/vookiimageviewericon.png</file>
     </qresource>
     <qresource prefix="/text">
         <file alias="aboutapp">text/about.html</file>
