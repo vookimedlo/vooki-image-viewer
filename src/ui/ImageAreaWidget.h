@@ -34,29 +34,27 @@ public:
     DISABLE_COPY_MOVE(ImageAreaWidget);
 
     void drawBorder(bool draw, const QColor &color = QColor(Qt::white));
-    void flipHorizontally();
-    void flipVertically();
-    void setFitToWindow(bool enabled);
     bool showImage(const QString &fileName);
     void repaintWithTransformations();
-    void rotateLeft();
-    void rotateRight();
-    void zoomImageIn(double factor);
-    void zoomImageOut(double factor);
-    void zoomReset();
 
 public slots:
     void onIncreaseOffsetY();
     void onIncreaseOffsetX();
     void onDecreaseOffsetY();
     void onDecreaseOffsetX();
+    void onRotateLeft();
+    void onRotateRight();
+    void onFlipHorizontally();
+    void onFlipVertically();
+    void onSetFitToWindow(bool enabled);
+    void onZoomImageIn(double factor);
+    void onZoomImageOut(double factor);
+    void onZoomReset();
 
 protected:
     void checkScrollOffset();
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent *event);
-
-private:
     void transformImage();
 
 private:

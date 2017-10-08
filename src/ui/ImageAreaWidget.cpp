@@ -187,7 +187,7 @@ void ImageAreaWidget::transformImage()
     m_finalImage = newImage;
 }
 
-void ImageAreaWidget::flipHorizontally()
+void ImageAreaWidget::onFlipHorizontally()
 {
     m_flipHorizontally = !m_flipHorizontally;
 
@@ -203,7 +203,7 @@ void ImageAreaWidget::flipHorizontally()
     update();
 }
 
-void ImageAreaWidget::flipVertically()
+void ImageAreaWidget::onFlipVertically()
 {
     m_flipVertically = !m_flipVertically;
 
@@ -219,7 +219,7 @@ void ImageAreaWidget::flipVertically()
     update();
 }
 
-void ImageAreaWidget::setFitToWindow(bool enabled)
+void ImageAreaWidget::onSetFitToWindow(bool enabled)
 {
     m_isFitToWindow = enabled;
     m_scaleFactor = 1;
@@ -227,7 +227,7 @@ void ImageAreaWidget::setFitToWindow(bool enabled)
     update();
 }
 
-void ImageAreaWidget::rotateLeft()
+void ImageAreaWidget::onRotateLeft()
 {
     if(m_flipHorizontally || m_flipVertically)
         ++m_rotateIndex;
@@ -237,7 +237,7 @@ void ImageAreaWidget::rotateLeft()
     update();
 }
 
-void ImageAreaWidget::rotateRight()
+void ImageAreaWidget::onRotateRight()
 {
     if(m_flipHorizontally || m_flipVertically)
         --m_rotateIndex;
@@ -247,7 +247,7 @@ void ImageAreaWidget::rotateRight()
      update();
 }
 
-void ImageAreaWidget::zoomImageIn(double factor)
+void ImageAreaWidget::onZoomImageIn(double factor)
 {
     double newScaleFactor = factor + m_scaleFactor;
     if(newScaleFactor > 3.0)
@@ -258,7 +258,7 @@ void ImageAreaWidget::zoomImageIn(double factor)
     update();
 }
 
-void ImageAreaWidget::zoomImageOut(double factor)
+void ImageAreaWidget::onZoomImageOut(double factor)
 {
     double newScaleFactor = -1 * factor + m_scaleFactor;
     if(newScaleFactor < 0.2)
@@ -269,7 +269,7 @@ void ImageAreaWidget::zoomImageOut(double factor)
     update();
 }
 
-void ImageAreaWidget::zoomReset()
+void ImageAreaWidget::onZoomReset()
 {
     bool isFitToWindow = this->m_isFitToWindow;
     this->m_isFitToWindow = false;

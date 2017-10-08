@@ -145,18 +145,18 @@ void MainWindow::onFileSystemTreeViewActivated(const QModelIndex &index)
 void MainWindow::onZoomInTriggered()
 {
     m_ui.actionFitToWindow->setChecked(false);
-    m_ui.imageAreaWidget->zoomImageIn(0.10);
+    m_ui.imageAreaWidget->onZoomImageIn(0.10);
 }
 
 void MainWindow::onZoomOutTriggered()
 {
     m_ui.actionFitToWindow->setChecked(false);
-    m_ui.imageAreaWidget->zoomImageOut(0.10);
+    m_ui.imageAreaWidget->onZoomImageOut(0.10);
 }
 
 void MainWindow::onFitToWindowToggled(bool toggled)
 {
-    m_ui.imageAreaWidget->setFitToWindow(toggled);
+    m_ui.imageAreaWidget->onSetFitToWindow(toggled);
 }
 
 void MainWindow::onStatusBarToggled(bool toggled)
@@ -167,7 +167,7 @@ void MainWindow::onStatusBarToggled(bool toggled)
 void MainWindow::onOriginalSizeTriggered()
 {
     m_ui.actionFitToWindow->setChecked(false);
-    m_ui.imageAreaWidget->zoomReset();
+    m_ui.imageAreaWidget->onZoomReset();
 }
 
 void MainWindow::onPreviousImageTriggered()
@@ -210,22 +210,22 @@ void MainWindow::onAboutSupportedImageFormats()
 
 void MainWindow::onFlipHorizontallyTriggered()
 {
-    m_ui.imageAreaWidget->flipHorizontally();
+    m_ui.imageAreaWidget->onFlipHorizontally();
 }
 
 void MainWindow::onFlipVerticallyTriggered()
 {
-    m_ui.imageAreaWidget->flipVertically();
+    m_ui.imageAreaWidget->onFlipVertically();
 }
 
 void MainWindow::onRotateLeftTriggered()
 {
-    m_ui.imageAreaWidget->rotateLeft();
+    m_ui.imageAreaWidget->onRotateLeft();
 }
 
 void MainWindow::onRotateRightTriggered()
 {
-    m_ui.imageAreaWidget->rotateRight();
+    m_ui.imageAreaWidget->onRotateRight();
 }
 
 
