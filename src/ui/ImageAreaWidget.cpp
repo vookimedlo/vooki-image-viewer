@@ -181,7 +181,7 @@ void ImageAreaWidget::transformImage()
         pen.setWidth(3);
         pen.setColor(m_borderColor);
         painterImage.setPen(pen);
-        painterImage.drawRect(newSize.width() / 2 - scaledImage.size().width() / 2, newSize.height() / 2 - scaledImage.size().height() / 2, scaledImage.width(), scaledImage.height());
+        painterImage.drawRect((newSize.width() / 2 - scaledImage.size().width() / 2) - m_imageOffsetX, (newSize.height() / 2 - scaledImage.size().height() / 2) - m_imageOffsetY, scaledImage.width(), scaledImage.height());
     }
 
     m_finalImage = newImage;

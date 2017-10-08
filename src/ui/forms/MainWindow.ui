@@ -216,7 +216,7 @@
     <string>Quit The Application</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">shortcut/app/quit</string>
+    <string notr="true">viv/shortcut/app/quit</string>
    </property>
    <property name="shortcut">
     <string>Q</string>
@@ -243,7 +243,7 @@
     <string>Show image in FullScreen mode</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">shortcut/view/fullscreen</string>
+    <string notr="true">viv/shortcut/view/fullscreen</string>
    </property>
    <property name="shortcut">
     <string>F</string>
@@ -290,7 +290,7 @@
     <string>Zoom In</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">shortcut/view/zoom/in</string>
+    <string notr="true">viv/shortcut/view/zoom/in</string>
    </property>
    <property name="shortcut">
     <string>+</string>
@@ -314,7 +314,7 @@
     <string>Zoom Out</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">shortcut/view/zoom/out</string>
+    <string notr="true">viv/shortcut/view/zoom/out</string>
    </property>
    <property name="shortcut">
     <string>-</string>
@@ -338,7 +338,7 @@
     <string>Fi&amp;t to Window</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">shortcut/view/zoom/fit</string>
+    <string notr="true">viv/shortcut/view/zoom/fit</string>
    </property>
    <property name="shortcut">
     <string>W</string>
@@ -385,7 +385,7 @@
     <string>Original Size</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">shortcut/view/zoom/original</string>
+    <string notr="true">viv/shortcut/view/zoom/original</string>
    </property>
    <property name="shortcut">
     <string>*</string>
@@ -412,7 +412,7 @@
     <string>Rotate Left</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">shortcut/view/rotate/left</string>
+    <string notr="true">viv/shortcut/view/rotate/left</string>
    </property>
    <property name="shortcut">
     <string>,</string>
@@ -439,7 +439,7 @@
     <string>Rotate Right</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">shortcut/view/rotate/right</string>
+    <string notr="true">viv/shortcut/view/rotate/right</string>
    </property>
    <property name="shortcut">
     <string>.</string>
@@ -466,7 +466,7 @@
     <string>Flip Horizontally</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">shortcut/view/flip/horizontally</string>
+    <string notr="true">viv/shortcut/view/flip/horizontally</string>
    </property>
    <property name="shortcut">
     <string>H</string>
@@ -493,7 +493,7 @@
     <string>Flip Vertically</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">shortcut/view/flip/vertically</string>
+    <string notr="true">viv/shortcut/view/flip/vertically</string>
    </property>
    <property name="shortcut">
     <string>V</string>
@@ -542,7 +542,7 @@
     <string>Previous Image</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">shortcut/view/navigation/previous</string>
+    <string notr="true">viv/shortcut/view/navigation/previous</string>
    </property>
    <property name="shortcut">
     <string>[</string>
@@ -563,7 +563,7 @@
     <string>Next Image</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">shortcut/view/navigation/next</string>
+    <string notr="true">viv/shortcut/view/navigation/next</string>
    </property>
    <property name="shortcut">
     <string>]</string>
@@ -625,6 +625,9 @@
    <property name="toolTip">
     <string>Scroll Left</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">viv/shortcut/view/scroll/left</string>
+   </property>
    <property name="shortcut">
     <string>J</string>
    </property>
@@ -645,6 +648,9 @@
    </property>
    <property name="toolTip">
     <string>Scroll Right</string>
+   </property>
+   <property name="whatsThis">
+    <string notr="true">viv/shortcut/view/scroll/right</string>
    </property>
    <property name="shortcut">
     <string>L</string>
@@ -667,6 +673,9 @@
    <property name="toolTip">
     <string>Scroll Up</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true">viv/shortcut/view/scroll/up</string>
+   </property>
    <property name="shortcut">
     <string>I</string>
    </property>
@@ -687,6 +696,9 @@
    </property>
    <property name="toolTip">
     <string>Scroll Down</string>
+   </property>
+   <property name="whatsThis">
+    <string notr="true">viv/shortcut/view/scroll/down</string>
    </property>
    <property name="shortcut">
     <string>K</string>
