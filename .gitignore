@@ -5,6 +5,7 @@
 build/build*
 build/qmake/build*
 build/cmake/windows/build
+build/cmake/mac/build
 
 # User settings
 *.user
