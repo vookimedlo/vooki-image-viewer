@@ -25,8 +25,11 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QPainter>
 #include <QPaintEvent>
 #include <QRect>
+#include <QWheelEvent>
 #include "support/Settings.h"
 #include "support/SettingsStrings.h"
+
+const int ImageAreaWidget::m_imageOffsetStep = 100;
 
 ImageAreaWidget::ImageAreaWidget(QWidget *parent): QWidget(parent),
                                        m_drawBorder(false),
@@ -38,7 +41,6 @@ ImageAreaWidget::ImageAreaWidget(QWidget *parent): QWidget(parent),
                                        m_originalImage(),
                                        m_finalImage(),
                                        m_rotateIndex(0, 4), // 4 rotation quadrants
-                                       m_imageOffsetStep(200),
                                        m_imageOffsetY(0),
                                        m_imageOffsetX(0)
 {
@@ -46,27 +48,27 @@ ImageAreaWidget::ImageAreaWidget(QWidget *parent): QWidget(parent),
     m_finalImage.fill(qRgb(0, 0, 0));
 }
 
-void ImageAreaWidget::onIncreaseOffsetY()
+void ImageAreaWidget::onIncreaseOffsetY(int pixels)
 {
-    m_imageOffsetY += m_imageOffsetStep;
+    m_imageOffsetY += pixels;
     repaintWithTransformations();
 }
 
-void ImageAreaWidget::onIncreaseOffsetX()
+void ImageAreaWidget::onIncreaseOffsetX(int pixels)
 {
-    m_imageOffsetX += m_imageOffsetStep;
+    m_imageOffsetX += pixels;
     repaintWithTransformations();
 }
 
-void ImageAreaWidget::onDecreaseOffsetY()
+void ImageAreaWidget::onDecreaseOffsetY(int pixels)
 {
-    m_imageOffsetY -= m_imageOffsetStep;
+    m_imageOffsetY -= pixels;
     repaintWithTransformations();
 }
 
-void ImageAreaWidget::onDecreaseOffsetX()
+void ImageAreaWidget::onDecreaseOffsetX(int pixels)
 {
-    m_imageOffsetX -= m_imageOffsetStep;
+    m_imageOffsetX -= pixels;
     repaintWithTransformations();
 }
 
@@ -277,4 +279,37 @@ void ImageAreaWidget::onZoomReset()
     transformImage();
     update();
     this->m_isFitToWindow = isFitToWindow;
+}
+
+void ImageAreaWidget::scroll(const QPoint &point)
+{
+    if (point.x() >= 0)
+        onDecreaseOffsetX(point.x());
+    else
+        onIncreaseOffsetX(-point.x());
+
+    if (point.y() >= 0)
+        onDecreaseOffsetY(point.y());
+    else
+        onIncreaseOffsetY(-point.y());
+}
+
+void ImageAreaWidget::wheelEvent(QWheelEvent *event)
+{
+    QPoint numPixels = event->pixelDelta();
+    QPoint numDegrees = event->angleDelta() / 8;
+
+    if (!numPixels.isNull())
+    {
+        scroll(numPixels);
+    }
+    else if (!numDegrees.isNull())
+    {
+        QPoint numSteps = numDegrees / 15;
+        numSteps.rx() *= m_imageOffsetStep;
+        numSteps.ry() *= m_imageOffsetStep;
+        scroll(numPixels);
+    }
+
+    event->accept();
 }

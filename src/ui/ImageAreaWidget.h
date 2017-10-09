@@ -38,10 +38,10 @@ public:
     void repaintWithTransformations();
 
 public slots:
-    void onIncreaseOffsetY();
-    void onIncreaseOffsetX();
-    void onDecreaseOffsetY();
-    void onDecreaseOffsetX();
+    void onIncreaseOffsetY(int pixels = m_imageOffsetStep);
+    void onIncreaseOffsetX(int pixels = m_imageOffsetStep);
+    void onDecreaseOffsetY(int pixels = m_imageOffsetStep);
+    void onDecreaseOffsetX(int pixels = m_imageOffsetStep);
     void onRotateLeft();
     void onRotateRight();
     void onFlipHorizontally();
@@ -55,7 +55,9 @@ protected:
     void checkScrollOffset();
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent *event);
+    void scroll(const QPoint &point);
     void transformImage();
+    void wheelEvent(QWheelEvent *event);
 
 private:
     bool m_drawBorder;
@@ -67,7 +69,8 @@ private:
     QImage m_originalImage;
     QImage m_finalImage;
     RotatingIndex<uint8_t> m_rotateIndex;
-    int m_imageOffsetStep;
     int m_imageOffsetY;
     int m_imageOffsetX;
+
+    static const int m_imageOffsetStep;
 };
