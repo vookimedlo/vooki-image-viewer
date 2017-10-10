@@ -143,7 +143,7 @@
    <addaction name="menuWindow"/>
    <addaction name="menuHelp"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="StatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockWidget">
    <property name="allowedAreas">
     <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
@@ -724,6 +724,11 @@
    <class>FileSystemTreeView</class>
    <extends>QTreeView</extends>
    <header>../../src/ui/FileSystemTreeView.h</header>
+  </customwidget>
+  <customwidget>
+   <class>StatusBar</class>
+   <extends>QStatusBar</extends>
+   <header>../../src/ui/StatusBar.h</header>
   </customwidget>
  </customwidgets>
  <resources>

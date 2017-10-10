@@ -29,7 +29,8 @@ SOURCES += \
     ../../src/ui/support/Settings.cpp \
     ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp \
     ../../src/util/misc.cpp \
-    ../../src/ui/ImageAreaWidget.cpp
+    ../../src/ui/ImageAreaWidget.cpp \
+    ../../src/ui/StatusBar.cpp
 
 HEADERS  += \
     ../../src/abstraction/init.h \
@@ -48,7 +49,8 @@ HEADERS  += \
     ../../src/util/misc.h \
     ../../src/util/RotatingIndex.h \
     ../../src/util/version.h \
-    ../../src/ui/ImageAreaWidget.h
+    ../../src/ui/ImageAreaWidget.h \
+    ../../src/ui/StatusBar.h
 
 FORMS += \
     ../../src/ui/forms/AboutComponentsDialog.ui \
