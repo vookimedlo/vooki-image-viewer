@@ -20,8 +20,11 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include "ImageAreaWidget.h"
 
+#include <cmath>
 #include <QColor>
+#include <QDebug>
 #include <QImage>
+#include <QNativeGestureEvent>
 #include <QPainter>
 #include <QPaintEvent>
 #include <QRect>
@@ -251,22 +254,18 @@ void ImageAreaWidget::onRotateRight()
 
 void ImageAreaWidget::onZoomImageIn(double factor)
 {
+    const double maxValue = 2.0;
     double newScaleFactor = factor + m_scaleFactor;
-    if(newScaleFactor > 3.0)
-        return;
-
-    m_scaleFactor = newScaleFactor;
+    m_scaleFactor = newScaleFactor < maxValue ? newScaleFactor : maxValue;
     transformImage();
     update();
 }
 
 void ImageAreaWidget::onZoomImageOut(double factor)
 {
-    double newScaleFactor = -1 * factor + m_scaleFactor;
-    if(newScaleFactor < 0.2)
-        return;
-
-    m_scaleFactor = newScaleFactor;
+    const double minValue = 0.1;
+    double newScaleFactor = -factor + m_scaleFactor;
+    m_scaleFactor = newScaleFactor > minValue ? newScaleFactor : minValue;
     transformImage();
     update();
 }
@@ -312,4 +311,68 @@ void ImageAreaWidget::wheelEvent(QWheelEvent *event)
     }
 
     event->accept();
+}
+
+bool ImageAreaWidget::event(QEvent *ev)
+{
+   switch (ev->type())
+   {
+   case QEvent::NativeGesture:
+       nativeGestureEvent(static_cast<QNativeGestureEvent*>(ev));
+       break;
+   default:
+       return QWidget::event(ev);
+   }
+
+   return ev->isAccepted();
+}
+
+void ImageAreaWidget::nativeGestureEvent(QNativeGestureEvent *event)
+{
+    static qreal zoomPercentage = 0;
+
+    switch(event->gestureType())
+    {
+    case Qt::EndNativeGesture:
+        if (zoomPercentage)
+        {
+            gestureZoom(zoomPercentage);
+            zoomPercentage = 0;
+        }
+        break;
+    case Qt::ZoomNativeGesture:
+        zoomPercentage += event->value();
+
+        // Redraw image in 0.10 steps
+        if (std::abs(zoomPercentage) > 0.10)
+        {
+            gestureZoom(zoomPercentage);
+            zoomPercentage = 0;
+        }
+        break;
+    case Qt::SmartZoomNativeGesture:
+    {
+        const double factor = 1000;
+        if (event->value())
+            onZoomImageIn(factor);
+        else
+            onZoomImageOut(factor);
+        break;
+    }
+    default:
+        ; // nothing here - intentionally
+    }
+
+    event->accept();
+}
+
+void ImageAreaWidget::gestureZoom(qreal value)
+{
+    qDebug() << "before " << m_scaleFactor;
+    value /= 5;
+    if (value > 0)
+        onZoomImageIn(value);
+    else
+        onZoomImageOut(-value);
+    qDebug() << "after " << m_scaleFactor;
 }

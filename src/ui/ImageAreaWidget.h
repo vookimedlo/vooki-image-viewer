@@ -25,9 +25,13 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "../util/compiler.h"
 #include "../util/RotatingIndex.h"
 
+// Forward declarations
+class QNativeGestureEvent;
+
 class ImageAreaWidget : public QWidget
 {
     Q_OBJECT
+    typedef QWidget BaseClass;
 
 public:
     ImageAreaWidget(QWidget *parent = 0);
@@ -53,11 +57,14 @@ public slots:
 
 protected:
     void checkScrollOffset();
-    void paintEvent(QPaintEvent *event);
-    void resizeEvent(QResizeEvent *event);
+    void paintEvent(QPaintEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
+    void wheelEvent(QWheelEvent *event) override;
+    void nativeGestureEvent(QNativeGestureEvent *event);
+    void gestureZoom(qreal value);
     void scroll(const QPoint &point);
     void transformImage();
-    void wheelEvent(QWheelEvent *event);
+    bool event(QEvent *ev) override;
 
 private:
     bool m_drawBorder;
