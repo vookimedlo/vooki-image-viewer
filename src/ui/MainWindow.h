@@ -75,6 +75,7 @@ protected slots:
     void onClearHistory();
     void onAboutSupportedImageFormats();
     void onSettingsTriggered();
+    void onZoomPercentageChanged(qreal value);
 
 private:
     Ui::MainWindow m_ui;

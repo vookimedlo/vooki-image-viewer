@@ -40,7 +40,7 @@ public:
 protected:
     void initializeUI(std::shared_ptr<QSettings> settings);
 
-protected Q_SLOTS:
+protected slots:
     virtual void onAccept();
     virtual void onButtonBoxButtonClicked(QAbstractButton *button);
     virtual void onRejected();

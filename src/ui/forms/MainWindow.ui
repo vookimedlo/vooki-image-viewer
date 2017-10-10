@@ -720,6 +720,7 @@
    <header>../../src/ui/ImageAreaWidget.h</header>
    <container>1</container>
    <slots>
+    <signal>zoomPercentageChanged(qreal)</signal>
     <slot>onRotateRightTriggered()</slot>
     <slot>onRotateLeftTriggered()</slot>
     <slot>onFlipHorizontallyTriggered()</slot>
@@ -1129,6 +1130,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>imageAreaWidget</sender>
+   <signal>zoomPercentageChanged(qreal)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onZoomPercentageChanged(qreal)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>545</x>
+     <y>289</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>404</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onQuitTriggered()</slot>
@@ -1142,18 +1159,11 @@
   <slot>onPreviousImageTriggered()</slot>
   <slot>onNextImageTriggered()</slot>
   <slot>onAboutQtTriggered()</slot>
-  <slot>onFlipHorizontallyTriggered()</slot>
-  <slot>onFlipVerticallyTriggered()</slot>
-  <slot>onRotateLeftTriggered()</slot>
-  <slot>onRotateRightTriggered()</slot>
   <slot>onAboutTriggered()</slot>
   <slot>onAboutComponentsTriggered()</slot>
   <slot>onClearHistory()</slot>
   <slot>onAboutSupportedImageFormats()</slot>
   <slot>onSettingsTriggered()</slot>
-  <slot>onScrollLeftTriggered()</slot>
-  <slot>onScrollRightTriggered()</slot>
-  <slot>onScrollUpTriggered()</slot>
-  <slot>onScrollDownTriggered()</slot>
+  <slot>onZoomPercentageChanged(qreal)</slot>
  </slots>
 </ui>

@@ -190,6 +190,9 @@ void ImageAreaWidget::transformImage()
     }
 
     m_finalImage = newImage;
+
+    if(!m_originalImage.isNull())
+        emit zoomPercentageChanged(scaledImage.width()/(qreal)m_originalImage.width());
 }
 
 void ImageAreaWidget::onFlipHorizontallyTriggered()

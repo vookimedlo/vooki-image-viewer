@@ -387,3 +387,7 @@ void MainWindow::onAboutToQuit()
     }
 }
 
+void MainWindow::onZoomPercentageChanged(qreal value)
+{
+    m_ui.statusBar->rightLabel().setText(tr("Zoom: ") + QString::number((int)(value * 100)) + "%");
+}

@@ -41,6 +41,9 @@ public:
     bool showImage(const QString &fileName);
     void repaintWithTransformations();
 
+signals:
+    void zoomPercentageChanged(qreal value);
+
 public slots:
     void onIncreaseOffsetY(int pixels = m_imageOffsetStep);
     void onIncreaseOffsetX(int pixels = m_imageOffsetStep);
