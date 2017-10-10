@@ -71,18 +71,10 @@ protected slots:
     void onAboutTriggered();
     void onAboutComponentsTriggered();
     void onAboutQtTriggered();
-    void onFlipHorizontallyTriggered();
-    void onFlipVerticallyTriggered();
-    void onRotateLeftTriggered();
-    void onRotateRightTriggered();
     void onRecentFileTriggered(const QString &filePath);
     void onClearHistory();
     void onAboutSupportedImageFormats();
     void onSettingsTriggered();
-    void onScrollLeftTriggered();
-    void onScrollRightTriggered();
-    void onScrollUpTriggered();
-    void onScrollDownTriggered();
 
 private:
     Ui::MainWindow m_ui;

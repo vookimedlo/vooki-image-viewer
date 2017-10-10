@@ -46,14 +46,18 @@ public slots:
     void onIncreaseOffsetX(int pixels = m_imageOffsetStep);
     void onDecreaseOffsetY(int pixels = m_imageOffsetStep);
     void onDecreaseOffsetX(int pixels = m_imageOffsetStep);
-    void onRotateLeft();
-    void onRotateRight();
-    void onFlipHorizontally();
-    void onFlipVertically();
-    void onSetFitToWindow(bool enabled);
-    void onZoomImageIn(double factor);
-    void onZoomImageOut(double factor);
-    void onZoomReset();
+    void onRotateLeftTriggered();
+    void onRotateRightTriggered();
+    void onFlipHorizontallyTriggered();
+    void onFlipVerticallyTriggered();
+    void onScrollLeftTriggered();
+    void onScrollRightTriggered();
+    void onScrollUpTriggered();
+    void onScrollDownTriggered();
+    void onSetFitToWindowTriggered(bool enabled);
+    void onZoomImageInTriggered(double factor);
+    void onZoomImageOutTriggered(double factor);
+    void onZoomResetTriggered();
 
 protected:
     void checkScrollOffset();

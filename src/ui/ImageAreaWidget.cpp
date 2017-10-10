@@ -192,7 +192,7 @@ void ImageAreaWidget::transformImage()
     m_finalImage = newImage;
 }
 
-void ImageAreaWidget::onFlipHorizontally()
+void ImageAreaWidget::onFlipHorizontallyTriggered()
 {
     m_flipHorizontally = !m_flipHorizontally;
 
@@ -208,7 +208,7 @@ void ImageAreaWidget::onFlipHorizontally()
     update();
 }
 
-void ImageAreaWidget::onFlipVertically()
+void ImageAreaWidget::onFlipVerticallyTriggered()
 {
     m_flipVertically = !m_flipVertically;
 
@@ -224,7 +224,7 @@ void ImageAreaWidget::onFlipVertically()
     update();
 }
 
-void ImageAreaWidget::onSetFitToWindow(bool enabled)
+void ImageAreaWidget::onSetFitToWindowTriggered(bool enabled)
 {
     m_isFitToWindow = enabled;
     m_scaleFactor = 1;
@@ -232,7 +232,7 @@ void ImageAreaWidget::onSetFitToWindow(bool enabled)
     update();
 }
 
-void ImageAreaWidget::onRotateLeft()
+void ImageAreaWidget::onRotateLeftTriggered()
 {
     if(m_flipHorizontally || m_flipVertically)
         ++m_rotateIndex;
@@ -242,7 +242,7 @@ void ImageAreaWidget::onRotateLeft()
     update();
 }
 
-void ImageAreaWidget::onRotateRight()
+void ImageAreaWidget::onRotateRightTriggered()
 {
     if(m_flipHorizontally || m_flipVertically)
         --m_rotateIndex;
@@ -252,7 +252,7 @@ void ImageAreaWidget::onRotateRight()
      update();
 }
 
-void ImageAreaWidget::onZoomImageIn(double factor)
+void ImageAreaWidget::onZoomImageInTriggered(double factor)
 {
     const double maxValue = 2.0;
     double newScaleFactor = factor + m_scaleFactor;
@@ -261,7 +261,7 @@ void ImageAreaWidget::onZoomImageIn(double factor)
     update();
 }
 
-void ImageAreaWidget::onZoomImageOut(double factor)
+void ImageAreaWidget::onZoomImageOutTriggered(double factor)
 {
     const double minValue = 0.1;
     double newScaleFactor = -factor + m_scaleFactor;
@@ -270,7 +270,7 @@ void ImageAreaWidget::onZoomImageOut(double factor)
     update();
 }
 
-void ImageAreaWidget::onZoomReset()
+void ImageAreaWidget::onZoomResetTriggered()
 {
     bool isFitToWindow = this->m_isFitToWindow;
     this->m_isFitToWindow = false;
@@ -354,9 +354,9 @@ void ImageAreaWidget::nativeGestureEvent(QNativeGestureEvent *event)
     {
         const double factor = 1000;
         if (event->value())
-            onZoomImageIn(factor);
+            onZoomImageInTriggered(factor);
         else
-            onZoomImageOut(factor);
+            onZoomImageOutTriggered(factor);
         break;
     }
     default:
@@ -371,8 +371,28 @@ void ImageAreaWidget::gestureZoom(qreal value)
     qDebug() << "before " << m_scaleFactor;
     value /= 5;
     if (value > 0)
-        onZoomImageIn(value);
+        onZoomImageInTriggered(value);
     else
-        onZoomImageOut(-value);
+        onZoomImageOutTriggered(-value);
     qDebug() << "after " << m_scaleFactor;
+}
+
+void ImageAreaWidget::onScrollLeftTriggered()
+{
+    onIncreaseOffsetX();
+}
+
+void ImageAreaWidget::onScrollRightTriggered()
+{
+    onDecreaseOffsetX();
+}
+
+void ImageAreaWidget::onScrollUpTriggered()
+{
+    onIncreaseOffsetY();
+}
+
+void ImageAreaWidget::onScrollDownTriggered()
+{
+    onDecreaseOffsetY();
 }

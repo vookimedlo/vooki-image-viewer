@@ -145,18 +145,18 @@ void MainWindow::onFileSystemTreeViewActivated(const QModelIndex &index)
 void MainWindow::onZoomInTriggered()
 {
     m_ui.actionFitToWindow->setChecked(false);
-    m_ui.imageAreaWidget->onZoomImageIn(0.10);
+    m_ui.imageAreaWidget->onZoomImageInTriggered(0.10);
 }
 
 void MainWindow::onZoomOutTriggered()
 {
     m_ui.actionFitToWindow->setChecked(false);
-    m_ui.imageAreaWidget->onZoomImageOut(0.10);
+    m_ui.imageAreaWidget->onZoomImageOutTriggered(0.10);
 }
 
 void MainWindow::onFitToWindowToggled(bool toggled)
 {
-    m_ui.imageAreaWidget->onSetFitToWindow(toggled);
+    m_ui.imageAreaWidget->onSetFitToWindowTriggered(toggled);
 }
 
 void MainWindow::onStatusBarToggled(bool toggled)
@@ -167,7 +167,7 @@ void MainWindow::onStatusBarToggled(bool toggled)
 void MainWindow::onOriginalSizeTriggered()
 {
     m_ui.actionFitToWindow->setChecked(false);
-    m_ui.imageAreaWidget->onZoomReset();
+    m_ui.imageAreaWidget->onZoomResetTriggered();
 }
 
 void MainWindow::onPreviousImageTriggered()
@@ -207,27 +207,6 @@ void MainWindow::onAboutSupportedImageFormats()
     uiAbout.setupUi(&dialog);
     dialog.exec();
 }
-
-void MainWindow::onFlipHorizontallyTriggered()
-{
-    m_ui.imageAreaWidget->onFlipHorizontally();
-}
-
-void MainWindow::onFlipVerticallyTriggered()
-{
-    m_ui.imageAreaWidget->onFlipVertically();
-}
-
-void MainWindow::onRotateLeftTriggered()
-{
-    m_ui.imageAreaWidget->onRotateLeft();
-}
-
-void MainWindow::onRotateRightTriggered()
-{
-    m_ui.imageAreaWidget->onRotateRight();
-}
-
 
 QString MainWindow::registerProcessedImage(const QString& filePath, bool addToRecentFiles)
 {
@@ -408,22 +387,3 @@ void MainWindow::onAboutToQuit()
     }
 }
 
-void MainWindow::onScrollLeftTriggered()
-{
-    m_ui.imageAreaWidget->onIncreaseOffsetX();
-}
-
-void MainWindow::onScrollRightTriggered()
-{
-    m_ui.imageAreaWidget->onDecreaseOffsetX();
-}
-
-void MainWindow::onScrollUpTriggered()
-{
-    m_ui.imageAreaWidget->onIncreaseOffsetY();
-}
-
-void MainWindow::onScrollDownTriggered()
-{
-    m_ui.imageAreaWidget->onDecreaseOffsetY();
-}

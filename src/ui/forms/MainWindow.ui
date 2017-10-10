@@ -719,6 +719,16 @@
    <extends>QWidget</extends>
    <header>../../src/ui/ImageAreaWidget.h</header>
    <container>1</container>
+   <slots>
+    <slot>onRotateRightTriggered()</slot>
+    <slot>onRotateLeftTriggered()</slot>
+    <slot>onFlipHorizontallyTriggered()</slot>
+    <slot>onFlipVerticallyTriggered()</slot>
+    <slot>onScrollLeftTriggered()</slot>
+    <slot>onScrollRightTriggered()</slot>
+    <slot>onScrollUpTriggered()</slot>
+    <slot>onScrollDownTriggered()</slot>
+   </slots>
   </customwidget>
   <customwidget>
    <class>FileSystemTreeView</class>
@@ -914,7 +924,7 @@
   <connection>
    <sender>actionFlipHorizontally</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>imageAreaWidget</receiver>
    <slot>onFlipHorizontallyTriggered()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -922,15 +932,15 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>374</x>
-     <y>267</y>
+     <x>545</x>
+     <y>289</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>actionFlipVertically</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>imageAreaWidget</receiver>
    <slot>onFlipVerticallyTriggered()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -938,15 +948,15 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>374</x>
-     <y>267</y>
+     <x>545</x>
+     <y>289</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>actionRotateLeft</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>imageAreaWidget</receiver>
    <slot>onRotateLeftTriggered()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -954,15 +964,15 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>374</x>
-     <y>267</y>
+     <x>545</x>
+     <y>289</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>actionRotateRight</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>imageAreaWidget</receiver>
    <slot>onRotateRightTriggered()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -970,8 +980,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>374</x>
-     <y>267</y>
+     <x>545</x>
+     <y>289</y>
     </hint>
    </hints>
   </connection>
@@ -1058,7 +1068,7 @@
   <connection>
    <sender>actionScrollLeft</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>imageAreaWidget</receiver>
    <slot>onScrollLeftTriggered()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1066,15 +1076,15 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>404</x>
-     <y>267</y>
+     <x>545</x>
+     <y>289</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>actionScrollRight</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>imageAreaWidget</receiver>
    <slot>onScrollRightTriggered()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1082,15 +1092,15 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>404</x>
-     <y>267</y>
+     <x>545</x>
+     <y>289</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>actionScrollUp</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>imageAreaWidget</receiver>
    <slot>onScrollUpTriggered()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1098,15 +1108,15 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>404</x>
-     <y>267</y>
+     <x>545</x>
+     <y>289</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>actionScrollDown</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>imageAreaWidget</receiver>
    <slot>onScrollDownTriggered()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1114,8 +1124,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>404</x>
-     <y>267</y>
+     <x>545</x>
+     <y>289</y>
     </hint>
    </hints>
   </connection>
