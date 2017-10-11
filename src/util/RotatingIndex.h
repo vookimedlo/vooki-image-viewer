@@ -21,15 +21,18 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include <type_traits>
 
-template <typename T>
+template<typename T>
 class RotatingIndex
 {
 public:
-    RotatingIndex (T initialValue = 0) : RotatingIndex(0, initialValue + 1)
+    RotatingIndex(T initialValue = 0)
+                                            : RotatingIndex(0, initialValue + 1)
     {
     }
 
-    RotatingIndex (T initialValue, T maxValuePlus1) : m_index(initialValue), m_maxValuePlus1(maxValuePlus1)
+    RotatingIndex(T initialValue, T maxValuePlus1)
+                                            : m_index(initialValue)
+                                            , m_maxValuePlus1(maxValuePlus1)
     {
         static_assert(std::is_integral<T>::value, "Integer required.");
     }
@@ -60,7 +63,7 @@ public:
     operator T() const { return m_index; }
 
     // Pre-increment operator
-    RotatingIndex& operator++()
+    RotatingIndex &operator++()
     {
         m_index = (m_index + 1) % m_maxValuePlus1;
         return *this;
@@ -75,7 +78,7 @@ public:
     }
 
     // Pre-decrement operator
-    RotatingIndex& operator--()
+    RotatingIndex &operator--()
     {
         if (m_index == 0)
             m_index = m_maxValuePlus1;

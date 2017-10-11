@@ -19,9 +19,8 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-
 /*
- * C++11 Draft 
+ * C++11 Draft
  * - url http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4296.pdf
  * $5.2.9/6 Static cast
  *   Any expression can be explicitly converted to type cv void, in which case it becomes a discarded - value
@@ -31,8 +30,8 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
  */
 #define UNUSED_VARIABLE(X) static_cast<const void>(X)
 
-#define DISABLE_COPY_MOVE(CLASS) \
-    CLASS &operator=(const CLASS &) = delete; \
-    CLASS(const CLASS &) = delete; \
-    CLASS &operator=(const CLASS &&) = delete; \
+#define DISABLE_COPY_MOVE(CLASS)                                                                                                                               \
+    CLASS &operator=(const CLASS &) = delete;                                                                                                                  \
+    CLASS(const CLASS &) = delete;                                                                                                                             \
+    CLASS &operator=(const CLASS &&) = delete;                                                                                                                 \
     CLASS(const CLASS &&) = delete

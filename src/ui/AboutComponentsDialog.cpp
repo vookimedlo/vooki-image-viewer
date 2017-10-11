@@ -20,8 +20,8 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include "AboutComponentsDialog.h"
 
-
-AboutComponentsDialog::AboutComponentsDialog(QWidget* parent) : QDialog(parent)
+AboutComponentsDialog::AboutComponentsDialog(QWidget *parent)
+                                        : QDialog(parent)
 {
     m_uiAboutComponentsDialog.setupUi(this);
     m_uiAboutComponentsDialog.listWidget->setCurrentRow(0);
@@ -31,17 +31,16 @@ void AboutComponentsDialog::onSelectedComponentChanged(int row)
 {
     switch (row)
     {
-    case 0:
-        m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutqt"));
-        break;
-    case 1:
-        m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/abouticon54"));
-        break;
-    case 2:
-        m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutopenclipart"));
-        break;
-    default:
-        m_uiAboutComponentsDialog.textBrowser->clear();
+        case 0:
+            m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutqt"));
+            break;
+        case 1:
+            m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/abouticon54"));
+            break;
+        case 2:
+            m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutopenclipart"));
+            break;
+        default:
+            m_uiAboutComponentsDialog.textBrowser->clear();
     }
-
 }

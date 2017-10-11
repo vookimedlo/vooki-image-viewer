@@ -20,29 +20,29 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include "MainWindow.h"
 
-#include <vector>
-#include <QDialog>
-#include <QFileSystemModel>
-#include <QImageReader>
-#include <QMessageBox>
-#include <QPainter>
-#include "ui_AboutDialog.h"
-#include "ui_AboutSupportedFormatsDialog.h"
-#include "ui_SettingsDialog.h"
-#include "AboutComponentsDialog.h"
-#include "SettingsDialog.h"
-#include "support/RecentFileAction.h"
 #include "../model/FileSystemSortFilterProxyModel.h"
 #include "../ui/support/Settings.h"
 #include "../ui/support/SettingsStrings.h"
 #include "../util/misc.h"
 #include "../util/version.h"
+#include "AboutComponentsDialog.h"
+#include "SettingsDialog.h"
+#include "support/RecentFileAction.h"
+#include "ui_AboutDialog.h"
+#include "ui_AboutSupportedFormatsDialog.h"
+#include "ui_SettingsDialog.h"
+#include <QDialog>
+#include <QFileSystemModel>
+#include <QImageReader>
+#include <QMessageBox>
+#include <QPainter>
+#include <vector>
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    m_fileSystemModel(new QFileSystemModel(this)),
-    m_sortFileSystemModel(new FileSystemSortFilterProxyModel(this)),
-    m_catalog(Util::convertFormatsToFilters(QImageReader::supportedImageFormats()))
+MainWindow::MainWindow(QWidget *parent)
+                                        : QMainWindow(parent)
+                                        , m_fileSystemModel(new QFileSystemModel(this))
+                                        , m_sortFileSystemModel(new FileSystemSortFilterProxyModel(this))
+                                        , m_catalog(Util::convertFormatsToFilters(QImageReader::supportedImageFormats()))
 {
     m_ui.setupUi(this);
 
@@ -58,13 +58,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_fileSystemModel->setRootPath(QDir::currentPath());
     m_ui.fileSystemTreeView->setModel(m_sortFileSystemModel);
-    for(int i = 1; i < m_fileSystemModel->columnCount(); i++)
+    for (int i = 1; i < m_fileSystemModel->columnCount(); i++)
         m_ui.fileSystemTreeView->setColumnHidden(i, true);
 
     m_ui.fileSystemTreeView->sortByColumn(0, Qt::SortOrder::AscendingOrder);
     m_fileSystemModel->setNameFilters(Util::convertFormatsToFilters(QImageReader::supportedImageFormats()));
     m_fileSystemModel->setNameFilterDisables(false);
-    m_fileSystemModel->setFilter(QDir::Filter::Hidden|QDir::Filter::AllEntries|QDir::Filter::NoDotAndDotDot|QDir::Filter::AllDirs);
+    m_fileSystemModel->setFilter(QDir::Filter::Hidden | QDir::Filter::AllEntries | QDir::Filter::NoDotAndDotDot | QDir::Filter::AllDirs);
 
     Settings::initializeSettings();
     Settings::initializeSettings(m_ui.menuFile);
@@ -88,10 +88,7 @@ MainWindow::MainWindow(QWidget *parent) :
     restoreRecentFiles();
 }
 
-MainWindow::~MainWindow()
-{
-
-}
+MainWindow::~MainWindow() {}
 
 void MainWindow::onQuitTriggered()
 {
@@ -103,14 +100,14 @@ void MainWindow::onFullScreenToggled(bool toggled)
     UNUSED_VARIABLE(toggled);
 
     // It's better to check the real displayed mode instead of the "toggled" flag.
-    if(isFullScreen())
+    if (isFullScreen())
     {
         showNormal();
         m_ui.toolBar->toggleViewAction()->setChecked(m_widgetVisibilityPriorFullscreen.isToolBarVisible);
-        if(m_widgetVisibilityPriorFullscreen.isToolBarVisible)
+        if (m_widgetVisibilityPriorFullscreen.isToolBarVisible)
             m_ui.toolBar->show();
         m_ui.dockWidget->toggleViewAction()->setChecked(m_widgetVisibilityPriorFullscreen.isFileSystemNavigationVisible);
-        if(m_widgetVisibilityPriorFullscreen.isFileSystemNavigationVisible)
+        if (m_widgetVisibilityPriorFullscreen.isFileSystemNavigationVisible)
             m_ui.dockWidget->show();
         m_ui.actionStatusBar->setChecked(m_widgetVisibilityPriorFullscreen.isStatusBarVisible);
         if (m_widgetVisibilityPriorFullscreen.isStatusBarVisible)
@@ -181,7 +178,7 @@ void MainWindow::onNextImageTriggered()
 }
 
 void MainWindow::onAboutTriggered()
-{            
+{
     Ui::aboutDialog uiAbout;
     QDialog dialog(this);
     uiAbout.setupUi(&dialog);
@@ -208,7 +205,7 @@ void MainWindow::onAboutSupportedImageFormats()
     dialog.exec();
 }
 
-QString MainWindow::registerProcessedImage(const QString& filePath, bool addToRecentFiles)
+QString MainWindow::registerProcessedImage(const QString &filePath, bool addToRecentFiles)
 {
     if (filePath.isEmpty())
         return QString();
@@ -218,7 +215,7 @@ QString MainWindow::registerProcessedImage(const QString& filePath, bool addToRe
         auto actions = m_ui.menuRecentFiles->actions();
 
         // Remove all current actions from menu widget
-        for(QAction *action : actions)
+        for (QAction *action : actions)
         {
             m_ui.menuRecentFiles->removeAction(action);
         }
@@ -259,7 +256,7 @@ void MainWindow::onClearHistory()
 {
     auto actions = m_ui.menuRecentFiles->actions();
     // Leave the first two actions intact (Clear History & Menu Separator)
-    for(int i = 2; i < actions.size(); i++)
+    for (int i = 2; i < actions.size(); i++)
     {
         RecentFileAction *recentImage = dynamic_cast<RecentFileAction *>(actions.at(i));
         QObject::disconnect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
@@ -292,15 +289,15 @@ MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, boo
 
     if (info.exists())
     {
-        if(info.isReadable())
+        if (info.isReadable())
         {
-            if(info.isDir())
+            if (info.isDir())
             {
                 m_catalog.initialize(QDir(path));
                 showImage(addToRecentFiles);
                 return HANDLE_RESULT_E_OK;
             }
-            else if(info.isFile())
+            else if (info.isFile())
             {
                 m_catalog.initialize(QFile(path));
                 showImage(addToRecentFiles);
@@ -323,18 +320,16 @@ void MainWindow::propagateBorderSettings()
 void MainWindow::restoreRecentFiles()
 {
     std::shared_ptr<QSettings> settings = Settings::userSettings();
-    if(settings->value(SETTINGS_IMAGE_REMEMBER_RECENT).toBool())
+    if (settings->value(SETTINGS_IMAGE_REMEMBER_RECENT).toBool())
     {
-        const std::vector<QString> settingsKeys = {SETTINGS_RECENT_FILE_5,
-                                                   SETTINGS_RECENT_FILE_4,
-                                                   SETTINGS_RECENT_FILE_3,
-                                                   SETTINGS_RECENT_FILE_2,
-                                                   SETTINGS_RECENT_FILE_1};
+        const std::vector<QString> settingsKeys = {
+            SETTINGS_RECENT_FILE_5, SETTINGS_RECENT_FILE_4, SETTINGS_RECENT_FILE_3, SETTINGS_RECENT_FILE_2, SETTINGS_RECENT_FILE_1
+        };
 
         auto actions = m_ui.menuRecentFiles->actions();
 
         // Remove all current actions from menu widget
-        for(QAction *action : actions)
+        for (QAction *action : actions)
             m_ui.menuRecentFiles->removeAction(action);
 
         for (const QString &key : settingsKeys)
@@ -373,11 +368,9 @@ QString MainWindow::getRecentFile(int item) const
 
 void MainWindow::onAboutToQuit()
 {
-    const std::vector<QString> settingsKeys = {SETTINGS_RECENT_FILE_1,
-                                               SETTINGS_RECENT_FILE_2,
-                                               SETTINGS_RECENT_FILE_3,
-                                               SETTINGS_RECENT_FILE_4,
-                                               SETTINGS_RECENT_FILE_5};
+    const std::vector<QString> settingsKeys = {
+        SETTINGS_RECENT_FILE_1, SETTINGS_RECENT_FILE_2, SETTINGS_RECENT_FILE_3, SETTINGS_RECENT_FILE_4, SETTINGS_RECENT_FILE_5
+    };
 
     std::shared_ptr<QSettings> settings = Settings::userSettings();
 

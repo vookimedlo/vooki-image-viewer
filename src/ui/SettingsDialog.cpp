@@ -20,12 +20,15 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include "SettingsDialog.h"
 
+#include "../ui/support/Settings.h"
+#include "support/SettingsShortcutsTableWidgetItem.h"
 #include <QColorDialog>
 #include <QSettings>
-#include "support/SettingsShortcutsTableWidgetItem.h"
-#include "../ui/support/Settings.h"
 
-SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent), m_borderColor(), m_backgroundColor()
+SettingsDialog::SettingsDialog(QWidget *parent)
+                                        : QDialog(parent)
+                                        , m_borderColor()
+                                        , m_backgroundColor()
 {
     m_uiSettingsDialog.setupUi(this);
     std::shared_ptr<QSettings> settings = Settings::userSettings();
@@ -95,13 +98,13 @@ void SettingsDialog::onAccept()
     settings->setValue("image/background/color", m_backgroundColor);
 
     // store all shortcuts in user settings
-    for(int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); i++)
+    for (int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); i++)
     {
         QTableWidgetItem *item = m_uiSettingsDialog.tableShortcutsWidget->item(i, 0);
 
         if (item->type() == SettingsShortcutsTableWidgetItem::type)
         {
-            SettingsShortcutsTableWidgetItem *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem*>(item);
+            SettingsShortcutsTableWidgetItem *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item);
             settings->setValue(shortcutItem->action().whatsThis(), shortcutItem->keySequence());
         }
     }
@@ -111,13 +114,13 @@ void SettingsDialog::onAccept()
 
 void SettingsDialog::onButtonBoxButtonClicked(QAbstractButton *button)
 {
-    switch(m_uiSettingsDialog.buttonBox->buttonRole(button))
+    switch (m_uiSettingsDialog.buttonBox->buttonRole(button))
     {
-    case QDialogButtonBox::ButtonRole::ResetRole:
-        onRestoreDefaultsTriggered();
-        break;
-    default:
-        return;
+        case QDialogButtonBox::ButtonRole::ResetRole:
+            onRestoreDefaultsTriggered();
+            break;
+        default:
+            return;
     }
 }
 
@@ -126,13 +129,13 @@ void SettingsDialog::onRejected()
     std::shared_ptr<QSettings> settings = Settings::userSettings();
 
     // restore all shortcuts from user settings
-    for(int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); i++)
+    for (int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); i++)
     {
         QTableWidgetItem *item = m_uiSettingsDialog.tableShortcutsWidget->item(i, 0);
 
         if (item->type() == SettingsShortcutsTableWidgetItem::type)
         {
-            SettingsShortcutsTableWidgetItem *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem*>(item);
+            SettingsShortcutsTableWidgetItem *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item);
             shortcutItem->action().setShortcut(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
         }
     }
@@ -146,13 +149,13 @@ void SettingsDialog::onRestoreDefaultsTriggered()
     initializeUI(settings);
 
     // restore all shortcuts from default settings
-    for(int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); i++)
+    for (int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); i++)
     {
         QTableWidgetItem *item = m_uiSettingsDialog.tableShortcutsWidget->item(i, 0);
 
         if (item->type() == SettingsShortcutsTableWidgetItem::type)
         {
-            SettingsShortcutsTableWidgetItem *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem*>(item);
+            SettingsShortcutsTableWidgetItem *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item);
             shortcutItem->onKeySequenceChanged(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
         }
     }

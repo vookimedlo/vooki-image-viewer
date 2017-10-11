@@ -19,13 +19,13 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include <memory>
+#include "../util/compiler.h"
+#include "ui_SettingsDialog.h"
 #include <QColor>
 #include <QDialog>
 #include <QMenu>
 #include <QSettings>
-#include "ui_SettingsDialog.h"
-#include "../util/compiler.h"
+#include <memory>
 
 class SettingsDialog : public QDialog
 {

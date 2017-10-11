@@ -20,9 +20,10 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include "ImageCatalog.h"
 
-ImageCatalog::ImageCatalog(const QStringList &filter) : m_catalogIndex(), m_filter(filter)
+ImageCatalog::ImageCatalog(const QStringList &filter)
+                                        : m_catalogIndex()
+                                        , m_filter(filter)
 {
-
 }
 
 void ImageCatalog::initialize(const QFile &imageFile)
@@ -32,7 +33,7 @@ void ImageCatalog::initialize(const QFile &imageFile)
     m_absoluteDir = info.absoluteDir().canonicalPath();
     initialize(info.absoluteDir());
 
-    for (const QString& item : m_catalog)
+    for (const QString &item : m_catalog)
     {
         if (item.compare(filename) == 0)
             break;
@@ -68,7 +69,7 @@ QString ImageCatalog::getPrevious()
     return getCatalogItem(--m_catalogIndex);
 }
 
-QString ImageCatalog::getCatalogItem(const RotatingIndex<uint64_t>& catalogIndex)
+QString ImageCatalog::getCatalogItem(const RotatingIndex<uint64_t> &catalogIndex)
 {
     if (m_catalog.isEmpty())
         return QString();

@@ -30,5 +30,4 @@ public:
 
     void setItem(int row, int column, QTableWidgetItem *item);
     void updateShortcuts();
-
 };

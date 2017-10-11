@@ -20,17 +20,17 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include "SettingsShortcutsTableWidget.h"
 
-#include <QKeySequenceEdit>
 #include "../ui/support/SettingsShortcutsTableWidgetItem.h"
+#include <QKeySequenceEdit>
 
-SettingsShortcutsTableWidget::SettingsShortcutsTableWidget(QWidget *parent) : QTableWidget(parent)
+SettingsShortcutsTableWidget::SettingsShortcutsTableWidget(QWidget *parent)
+                                        : QTableWidget(parent)
 {
-
 }
 
-SettingsShortcutsTableWidget::SettingsShortcutsTableWidget(int rows, int columns, QWidget *parent) : QTableWidget(rows, columns, parent)
+SettingsShortcutsTableWidget::SettingsShortcutsTableWidget(int rows, int columns, QWidget *parent)
+                                        : QTableWidget(rows, columns, parent)
 {
-
 }
 
 void SettingsShortcutsTableWidget::setItem(int row, int column, QTableWidgetItem *item)
@@ -56,7 +56,7 @@ void SettingsShortcutsTableWidget::updateShortcuts()
             SettingsShortcutsTableWidgetItem *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item);
             QKeySequenceEdit *widget = dynamic_cast<QKeySequenceEdit *>(cellWidget(row, 0));
             if (widget)
-               widget->setKeySequence(shortcutItem->keySequence());
+                widget->setKeySequence(shortcutItem->keySequence());
         }
     }
 }

@@ -19,8 +19,8 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include <QAction>
 #include "../../util/compiler.h"
+#include <QAction>
 
 class RecentFileAction : public QAction
 {
@@ -32,7 +32,7 @@ public:
     DISABLE_COPY_MOVE(RecentFileAction);
 
 signals:
-    void recentFileActionTriggered(const QString& filename);
+    void recentFileActionTriggered(const QString &filename);
 
 private slots:
     void actionTriggered();

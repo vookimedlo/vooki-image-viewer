@@ -22,10 +22,12 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 const int SettingsShortcutsTableWidgetItem::type = QTableWidgetItem::UserType + 1;
 
-
-SettingsShortcutsTableWidgetItem::SettingsShortcutsTableWidgetItem(QAction &action) :  QObject(), QTableWidgetItem(SettingsShortcutsTableWidgetItem::type), m_action(action), m_keySequence(action.shortcut())
+SettingsShortcutsTableWidgetItem::SettingsShortcutsTableWidgetItem(QAction &action)
+                                        : QObject()
+                                        , QTableWidgetItem(SettingsShortcutsTableWidgetItem::type)
+                                        , m_action(action)
+                                        , m_keySequence(action.shortcut())
 {
-
 }
 
 QAction &SettingsShortcutsTableWidgetItem::action() const

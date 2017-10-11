@@ -22,26 +22,29 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include <QFileSystemModel>
 
-FileSystemSortFilterProxyModel::FileSystemSortFilterProxyModel(QObject *parent) : QSortFilterProxyModel(parent)
+FileSystemSortFilterProxyModel::FileSystemSortFilterProxyModel(QObject *parent)
+                                        : QSortFilterProxyModel(parent)
 {
-
 }
 
 bool FileSystemSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
     // If sorting by filenames column
-    if (sortColumn() == 0) {
-        QFileSystemModel *fsm = qobject_cast<QFileSystemModel*>(sourceModel());
+    if (sortColumn() == 0)
+    {
+        QFileSystemModel *fsm = qobject_cast<QFileSystemModel *>(sourceModel());
         bool asc = sortOrder() == Qt::AscendingOrder ? true : false;
 
-        QFileInfo leftFileInfo  = fsm->fileInfo(left);
+        QFileInfo leftFileInfo = fsm->fileInfo(left);
         QFileInfo rightFileInfo = fsm->fileInfo(right);
 
         // Move dirs up
-        if (!leftFileInfo.isDir() && rightFileInfo.isDir()) {
+        if (!leftFileInfo.isDir() && rightFileInfo.isDir())
+        {
             return !asc;
         }
-        if (leftFileInfo.isDir() && !rightFileInfo.isDir()) {
+        if (leftFileInfo.isDir() && !rightFileInfo.isDir())
+        {
             return asc;
         }
     }

@@ -19,9 +19,9 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include <QDialog>
-#include "ui_AboutComponentsDialog.h"
 #include "../util/compiler.h"
+#include "ui_AboutComponentsDialog.h"
+#include <QDialog>
 
 class AboutComponentsDialog : public QDialog
 {

@@ -19,13 +19,15 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
+#include "../../util/compiler.h"
 #include <QAction>
 #include <QKeySequence>
 #include <QObject>
 #include <QTableWidgetItem>
-#include "../../util/compiler.h"
 
-class SettingsShortcutsTableWidgetItem final : public QObject, public QTableWidgetItem
+class SettingsShortcutsTableWidgetItem final
+                                        : public QObject
+                                        , public QTableWidgetItem
 {
     Q_OBJECT
 

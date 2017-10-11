@@ -19,10 +19,10 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include <memory>
+#include "../../util/compiler.h"
 #include <QMenu>
 #include <QSettings>
-#include "../../util/compiler.h"
+#include <memory>
 
 class Settings
 {
@@ -34,6 +34,7 @@ public:
     static void initializeSettings(QMenu *menu);
     static std::shared_ptr<QSettings> userSettings();
     static std::shared_ptr<QSettings> defaultSettings();
+
 private:
     static void restoreDefaultSettings();
 };

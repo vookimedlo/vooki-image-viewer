@@ -19,11 +19,11 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include <cstdint>
+#include "../util/RotatingIndex.h"
+#include "../util/compiler.h"
 #include <QColor>
 #include <QWidget>
-#include "../util/compiler.h"
-#include "../util/RotatingIndex.h"
+#include <cstdint>
 
 // Forward declarations
 class QNativeGestureEvent;

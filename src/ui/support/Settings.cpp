@@ -19,8 +19,8 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #include "Settings.h"
-#include <QCoreApplication>
 #include "SettingsStrings.h"
+#include <QCoreApplication>
 
 void Settings::initializeSettings()
 {

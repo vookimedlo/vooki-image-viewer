@@ -19,12 +19,12 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include <QString>
-#include "ui_MainWindow.h"
 #include "../model/ImageCatalog.h"
 #include "../util/compiler.h"
+#include "ui_MainWindow.h"
+#include <QString>
 
-//Forward declarations
+// Forward declarations
 class QFileSystemModel;
 class FileSystemSortFilterProxyModel;
 
@@ -50,7 +50,7 @@ public:
 protected:
     void propagateBorderSettings();
     QString getRecentFile(int item) const;
-    QString registerProcessedImage(const QString& filePath, bool addToRecentFiles = true);
+    QString registerProcessedImage(const QString &filePath, bool addToRecentFiles = true);
     void restoreRecentFiles();
     void showImage(bool addToRecentFiles);
 
@@ -90,4 +90,3 @@ private:
         bool isFileSystemNavigationVisible;
     } m_widgetVisibilityPriorFullscreen;
 };
-

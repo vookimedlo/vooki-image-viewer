@@ -19,12 +19,12 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include <cstdint>
+#include "../util/RotatingIndex.h"
+#include "../util/compiler.h"
 #include <QDir>
 #include <QFile>
 #include <QStringList>
-#include "../util/compiler.h"
-#include "../util/RotatingIndex.h"
+#include <cstdint>
 
 class ImageCatalog
 {
@@ -41,7 +41,7 @@ public:
     QString getPrevious();
 
 protected:
-    QString getCatalogItem(const RotatingIndex<uint64_t>& catalogIndex);
+    QString getCatalogItem(const RotatingIndex<uint64_t> &catalogIndex);
 
 private:
     QString m_absoluteDir;

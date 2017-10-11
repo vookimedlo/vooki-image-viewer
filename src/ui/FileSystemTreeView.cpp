@@ -22,7 +22,8 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include <QKeyEvent>
 
-FileSystemTreeView::FileSystemTreeView(QWidget *parent) : QTreeView(parent)
+FileSystemTreeView::FileSystemTreeView(QWidget *parent)
+                                        : QTreeView(parent)
 {
     QObject::connect(this, &QTreeView::expanded, this, &FileSystemTreeView::onExpanded, Qt::QueuedConnection);
 }
@@ -42,7 +43,7 @@ void FileSystemTreeView::setCurrentIndex(const QModelIndex &index)
 
 void FileSystemTreeView::onExpanded(const QModelIndex &index)
 {
-    if(m_setIndex == index)
+    if (m_setIndex == index)
         scrollTo(currentIndex(), QAbstractItemView::PositionAtCenter);
 }
 
@@ -50,20 +51,20 @@ void FileSystemTreeView::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key())
     {
-    case Qt::Key_Down:
-    case Qt::Key_Up:
-    case Qt::Key_Left:
-    case Qt::Key_Right:
-    case Qt::Key_PageUp:
-    case Qt::Key_PageDown:
-        QTreeView::keyPressEvent(event);
-        break;
-    case Qt::Key_Enter:
-    case Qt::Key_Return:
-        emit activated(currentIndex());
-        break;
-    default:
-        // Ignore the key and send it up to the parent widget
-        event->ignore();
+        case Qt::Key_Down:
+        case Qt::Key_Up:
+        case Qt::Key_Left:
+        case Qt::Key_Right:
+        case Qt::Key_PageUp:
+        case Qt::Key_PageDown:
+            QTreeView::keyPressEvent(event);
+            break;
+        case Qt::Key_Enter:
+        case Qt::Key_Return:
+            emit activated(currentIndex());
+            break;
+        default:
+            // Ignore the key and send it up to the parent widget
+            event->ignore();
     }
 }

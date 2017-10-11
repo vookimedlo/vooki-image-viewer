@@ -20,32 +20,34 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include "ImageAreaWidget.h"
 
-#include <cmath>
+#include "support/Settings.h"
+#include "support/SettingsStrings.h"
 #include <QColor>
 #include <QDebug>
 #include <QImage>
 #include <QNativeGestureEvent>
-#include <QPainter>
 #include <QPaintEvent>
+#include <QPainter>
 #include <QRect>
 #include <QWheelEvent>
-#include "support/Settings.h"
-#include "support/SettingsStrings.h"
+#include <cmath>
 
 const int ImageAreaWidget::m_imageOffsetStep = 100;
 
-ImageAreaWidget::ImageAreaWidget(QWidget *parent): QWidget(parent),
-                                       m_drawBorder(false),
-                                       m_flipHorizontally(false),
-                                       m_flipVertically(false),
-                                       m_isFitToWindow(false),
-                                       m_scaleFactor(1.0),
-                                       m_borderColor(Qt::white),
-                                       m_originalImage(),
-                                       m_finalImage(),
-                                       m_rotateIndex(0, 4), // 4 rotation quadrants
-                                       m_imageOffsetY(0),
-                                       m_imageOffsetX(0)
+ImageAreaWidget::ImageAreaWidget(QWidget *parent)
+                                        : QWidget(parent)
+                                        , m_drawBorder(false)
+                                        , m_flipHorizontally(false)
+                                        , m_flipVertically(false)
+                                        , m_isFitToWindow(false)
+                                        , m_scaleFactor(1.0)
+                                        , m_borderColor(Qt::white)
+                                        , m_originalImage()
+                                        , m_finalImage()
+                                        , m_rotateIndex(0, 4)
+                                        , // 4 rotation quadrants
+                                        m_imageOffsetY(0)
+                                        , m_imageOffsetX(0)
 {
     m_originalImage.fill(qRgb(0, 0, 0));
     m_finalImage.fill(qRgb(0, 0, 0));
@@ -79,20 +81,18 @@ void ImageAreaWidget::checkScrollOffset()
 {
     if (m_finalImage.height() < size().height())
         m_imageOffsetY = 0;
-    else
-    if (m_finalImage.height() - m_imageOffsetY < size().height())
+    else if (m_finalImage.height() - m_imageOffsetY < size().height())
         m_imageOffsetY = m_finalImage.height() - size().height();
 
     if (m_finalImage.width() < size().width())
         m_imageOffsetX = 0;
-    else
-    if (m_finalImage.width() - m_imageOffsetX < size().width())
+    else if (m_finalImage.width() - m_imageOffsetX < size().width())
         m_imageOffsetX = m_finalImage.width() - size().width();
 
-    if(m_imageOffsetY < 0)
+    if (m_imageOffsetY < 0)
         m_imageOffsetY = 0;
 
-    if(m_imageOffsetX < 0)
+    if (m_imageOffsetX < 0)
         m_imageOffsetX = 0;
 }
 
@@ -144,7 +144,7 @@ void ImageAreaWidget::transformImage()
     QImage scaledImage;
 
     // It seems that Qt implementation has swapped the meaning of the vertical and horizontal flip
-    //rotatedImage = rotatedImage.mirrored(m_flipHorizontally, m_flipVertically);
+    // rotatedImage = rotatedImage.mirrored(m_flipHorizontally, m_flipVertically);
 
     if (m_flipHorizontally)
     {
@@ -160,11 +160,11 @@ void ImageAreaWidget::transformImage()
         rotatedImage = rotatedImage.transformed(trans);
     }
 
-    if(m_isFitToWindow)
+    if (m_isFitToWindow)
     {
         m_imageOffsetX = m_imageOffsetY = 0;
         scaledImage = rotatedImage.scaledToWidth(width());
-        if(scaledImage.height() > height())
+        if (scaledImage.height() > height())
             scaledImage = rotatedImage.scaledToHeight(height());
     }
     else
@@ -177,7 +177,11 @@ void ImageAreaWidget::transformImage()
     // Update scroll settings
     checkScrollOffset();
     QPainter painterImage(&newImage);
-    painterImage.drawImage(newSize.width() / 2 - scaledImage.size().width() / 2, newSize.height() / 2 - scaledImage.size().height() / 2, scaledImage, m_imageOffsetX, m_imageOffsetY);
+    painterImage.drawImage(newSize.width() / 2 - scaledImage.size().width() / 2,
+                           newSize.height() / 2 - scaledImage.size().height() / 2,
+                           scaledImage,
+                           m_imageOffsetX,
+                           m_imageOffsetY);
 
     if (m_drawBorder)
     {
@@ -186,13 +190,16 @@ void ImageAreaWidget::transformImage()
         pen.setWidth(3);
         pen.setColor(m_borderColor);
         painterImage.setPen(pen);
-        painterImage.drawRect((newSize.width() / 2 - scaledImage.size().width() / 2) - m_imageOffsetX, (newSize.height() / 2 - scaledImage.size().height() / 2) - m_imageOffsetY, scaledImage.width(), scaledImage.height());
+        painterImage.drawRect((newSize.width() / 2 - scaledImage.size().width() / 2) - m_imageOffsetX,
+                              (newSize.height() / 2 - scaledImage.size().height() / 2) - m_imageOffsetY,
+                              scaledImage.width(),
+                              scaledImage.height());
     }
 
     m_finalImage = newImage;
 
-    if(!m_originalImage.isNull())
-        emit zoomPercentageChanged(scaledImage.width()/(qreal)m_originalImage.width());
+    if (!m_originalImage.isNull())
+        emit zoomPercentageChanged(scaledImage.width() / (qreal)m_originalImage.width());
 }
 
 void ImageAreaWidget::onFlipHorizontallyTriggered()
@@ -237,7 +244,7 @@ void ImageAreaWidget::onSetFitToWindowTriggered(bool enabled)
 
 void ImageAreaWidget::onRotateLeftTriggered()
 {
-    if(m_flipHorizontally || m_flipVertically)
+    if (m_flipHorizontally || m_flipVertically)
         ++m_rotateIndex;
     else
         --m_rotateIndex;
@@ -247,12 +254,12 @@ void ImageAreaWidget::onRotateLeftTriggered()
 
 void ImageAreaWidget::onRotateRightTriggered()
 {
-    if(m_flipHorizontally || m_flipVertically)
+    if (m_flipHorizontally || m_flipVertically)
         --m_rotateIndex;
     else
         ++m_rotateIndex;
-     transformImage();
-     update();
+    transformImage();
+    update();
 }
 
 void ImageAreaWidget::onZoomImageInTriggered(double factor)
@@ -318,52 +325,51 @@ void ImageAreaWidget::wheelEvent(QWheelEvent *event)
 
 bool ImageAreaWidget::event(QEvent *ev)
 {
-   switch (ev->type())
-   {
-   case QEvent::NativeGesture:
-       nativeGestureEvent(static_cast<QNativeGestureEvent*>(ev));
-       break;
-   default:
-       return QWidget::event(ev);
-   }
+    switch (ev->type())
+    {
+        case QEvent::NativeGesture:
+            nativeGestureEvent(static_cast<QNativeGestureEvent *>(ev));
+            break;
+        default:
+            return QWidget::event(ev);
+    }
 
-   return ev->isAccepted();
+    return ev->isAccepted();
 }
 
 void ImageAreaWidget::nativeGestureEvent(QNativeGestureEvent *event)
 {
     static qreal zoomPercentage = 0;
 
-    switch(event->gestureType())
+    switch (event->gestureType())
     {
-    case Qt::EndNativeGesture:
-        if (zoomPercentage)
-        {
-            gestureZoom(zoomPercentage);
-            zoomPercentage = 0;
-        }
-        break;
-    case Qt::ZoomNativeGesture:
-        zoomPercentage += event->value();
+        case Qt::EndNativeGesture:
+            if (zoomPercentage)
+            {
+                gestureZoom(zoomPercentage);
+                zoomPercentage = 0;
+            }
+            break;
+        case Qt::ZoomNativeGesture:
+            zoomPercentage += event->value();
 
-        // Redraw image in 0.10 steps
-        if (std::abs(zoomPercentage) > 0.10)
+            // Redraw image in 0.10 steps
+            if (std::abs(zoomPercentage) > 0.10)
+            {
+                gestureZoom(zoomPercentage);
+                zoomPercentage = 0;
+            }
+            break;
+        case Qt::SmartZoomNativeGesture:
         {
-            gestureZoom(zoomPercentage);
-            zoomPercentage = 0;
+            const double factor = 1000;
+            if (event->value())
+                onZoomImageInTriggered(factor);
+            else
+                onZoomImageOutTriggered(factor);
+            break;
         }
-        break;
-    case Qt::SmartZoomNativeGesture:
-    {
-        const double factor = 1000;
-        if (event->value())
-            onZoomImageInTriggered(factor);
-        else
-            onZoomImageOutTriggered(factor);
-        break;
-    }
-    default:
-        ; // nothing here - intentionally
+        default:; // nothing here - intentionally
     }
 
     event->accept();

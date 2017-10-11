@@ -22,7 +22,8 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include <QObject>
 
-RecentFileAction::RecentFileAction(const QString &text, QObject *parent) : QAction(text, parent)
+RecentFileAction::RecentFileAction(const QString &text, QObject *parent)
+                                        : QAction(text, parent)
 {
     QObject::connect(this, &QAction::triggered, this, &RecentFileAction::actionTriggered);
 }

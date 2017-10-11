@@ -22,7 +22,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 namespace Util
 {
-    QStringList convertFormatsToFilters(const QList<QByteArray>& formats)
+    QStringList convertFormatsToFilters(const QList<QByteArray> &formats)
     {
         QStringList filters;
         // Converts formats (e.g. QImageReader::supportedImageFormats()) to QDir::setNameFilters()
