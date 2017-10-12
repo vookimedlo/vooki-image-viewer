@@ -17,7 +17,7 @@ RESOURCES += \
     ../../src/resource/vookiimageviewer.qrc
 
 SOURCES += \
-    ../../src/main.cpp \
+    ../../src/application/main.cpp \
     ../../src/model/ImageCatalog.cpp \
     ../../src/model/FileSystemSortFilterProxyModel.cpp \
     ../../src/ui/AboutComponentsDialog.cpp \
@@ -30,7 +30,8 @@ SOURCES += \
     ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp \
     ../../src/util/misc.cpp \
     ../../src/ui/ImageAreaWidget.cpp \
-    ../../src/ui/StatusBar.cpp
+    ../../src/ui/StatusBar.cpp \
+    ../../src/application/Application.cpp
 
 HEADERS  += \
     ../../src/abstraction/init.h \
@@ -50,7 +51,8 @@ HEADERS  += \
     ../../src/util/RotatingIndex.h \
     ../../src/util/version.h \
     ../../src/ui/ImageAreaWidget.h \
-    ../../src/ui/StatusBar.h
+    ../../src/ui/StatusBar.h \
+    ../../src/application/Application.h
 
 FORMS += \
     ../../src/ui/forms/AboutComponentsDialog.ui \
@@ -64,3 +66,5 @@ FORMS += \
 mac: OBJECTIVE_SOURCES = ../../src/abstraction/mac/init.mm
 mac: LIBS += -framework AppKit
 mac: ICON = ../../src/resource/openclipart/vookiimageviewericon.icns
+mac: QMAKE_INFO_PLIST = support/macos/Info.plist
+

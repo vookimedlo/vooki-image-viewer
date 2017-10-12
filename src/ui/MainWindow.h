@@ -56,6 +56,7 @@ protected:
 
 public slots:
     void onAboutToQuit();
+    void onOpenFileRequested(const QString &path);
 
 protected slots:
     void onQuitTriggered();
