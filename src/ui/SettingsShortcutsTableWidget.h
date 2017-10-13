@@ -26,8 +26,8 @@ class SettingsShortcutsTableWidget : public QTableWidget
 {
 public:
     SettingsShortcutsTableWidget(QWidget *parent = nullptr);
-    SettingsShortcutsTableWidget(int rows, int columns, QWidget *parent = nullptr);
+    SettingsShortcutsTableWidget(const int rows, const int columns, QWidget *parent = nullptr);
 
-    void setItem(int row, int column, QTableWidgetItem *item);
-    void updateShortcuts();
+    void setItem(const int row, const int column, QTableWidgetItem *item);
+    void updateShortcuts() const;
 };

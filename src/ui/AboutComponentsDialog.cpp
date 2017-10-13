@@ -27,7 +27,7 @@ AboutComponentsDialog::AboutComponentsDialog(QWidget *parent)
     m_uiAboutComponentsDialog.listWidget->setCurrentRow(0);
 }
 
-void AboutComponentsDialog::onSelectedComponentChanged(int row)
+void AboutComponentsDialog::onSelectedComponentChanged(const int row)
 {
     switch (row)
     {

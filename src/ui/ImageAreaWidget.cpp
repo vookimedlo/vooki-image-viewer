@@ -19,17 +19,14 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #include "ImageAreaWidget.h"
-
 #include "support/Settings.h"
 #include "support/SettingsStrings.h"
 #include <QColor>
 #include <QDebug>
 #include <QImage>
-#include <QNativeGestureEvent>
 #include <QPaintEvent>
 #include <QPainter>
 #include <QRect>
-#include <QWheelEvent>
 #include <cmath>
 
 const int ImageAreaWidget::m_imageOffsetStep = 100;
@@ -53,25 +50,25 @@ ImageAreaWidget::ImageAreaWidget(QWidget *parent)
     m_finalImage.fill(qRgb(0, 0, 0));
 }
 
-void ImageAreaWidget::onIncreaseOffsetY(int pixels)
+void ImageAreaWidget::onIncreaseOffsetY(const int pixels)
 {
     m_imageOffsetY += pixels;
     repaintWithTransformations();
 }
 
-void ImageAreaWidget::onIncreaseOffsetX(int pixels)
+void ImageAreaWidget::onIncreaseOffsetX(const int pixels)
 {
     m_imageOffsetX += pixels;
     repaintWithTransformations();
 }
 
-void ImageAreaWidget::onDecreaseOffsetY(int pixels)
+void ImageAreaWidget::onDecreaseOffsetY(const int pixels)
 {
     m_imageOffsetY -= pixels;
     repaintWithTransformations();
 }
 
-void ImageAreaWidget::onDecreaseOffsetX(int pixels)
+void ImageAreaWidget::onDecreaseOffsetX(const int pixels)
 {
     m_imageOffsetX -= pixels;
     repaintWithTransformations();
@@ -96,7 +93,7 @@ void ImageAreaWidget::checkScrollOffset()
         m_imageOffsetX = 0;
 }
 
-void ImageAreaWidget::drawBorder(bool draw, const QColor &color)
+void ImageAreaWidget::drawBorder(const bool draw, const QColor &color)
 {
     m_drawBorder = draw;
     m_borderColor = color;
@@ -125,7 +122,7 @@ void ImageAreaWidget::repaintWithTransformations()
 void ImageAreaWidget::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    QRect dirtyRect = event->rect();
+    const QRect dirtyRect = event->rect();
     painter.drawImage(dirtyRect, m_finalImage, dirtyRect);
 }
 
@@ -139,7 +136,7 @@ void ImageAreaWidget::resizeEvent(QResizeEvent *event)
 void ImageAreaWidget::transformImage()
 {
     QTransform transform;
-    QTransform trans = transform.rotate(m_rotateIndex * 90);
+    const QTransform trans = transform.rotate(m_rotateIndex * 90);
     QImage rotatedImage = m_originalImage.transformed(trans);
     QImage scaledImage;
 
@@ -199,7 +196,7 @@ void ImageAreaWidget::transformImage()
     m_finalImage = newImage;
 
     if (!m_originalImage.isNull())
-        emit zoomPercentageChanged(scaledImage.width() / (qreal)m_originalImage.width());
+        emit zoomPercentageChanged(scaledImage.width() / static_cast<qreal>(m_originalImage.width()));
 }
 
 void ImageAreaWidget::onFlipHorizontallyTriggered()
@@ -234,7 +231,7 @@ void ImageAreaWidget::onFlipVerticallyTriggered()
     update();
 }
 
-void ImageAreaWidget::onSetFitToWindowTriggered(bool enabled)
+void ImageAreaWidget::onSetFitToWindowTriggered(const bool enabled)
 {
     m_isFitToWindow = enabled;
     m_scaleFactor = 1;
@@ -262,19 +259,19 @@ void ImageAreaWidget::onRotateRightTriggered()
     update();
 }
 
-void ImageAreaWidget::onZoomImageInTriggered(double factor)
+void ImageAreaWidget::onZoomImageInTriggered(const double factor)
 {
     const double maxValue = 2.0;
-    double newScaleFactor = factor + m_scaleFactor;
+    const double newScaleFactor = factor + m_scaleFactor;
     m_scaleFactor = newScaleFactor < maxValue ? newScaleFactor : maxValue;
     transformImage();
     update();
 }
 
-void ImageAreaWidget::onZoomImageOutTriggered(double factor)
+void ImageAreaWidget::onZoomImageOutTriggered(const double factor)
 {
     const double minValue = 0.1;
-    double newScaleFactor = -factor + m_scaleFactor;
+    const double newScaleFactor = -factor + m_scaleFactor;
     m_scaleFactor = newScaleFactor > minValue ? newScaleFactor : minValue;
     transformImage();
     update();
@@ -282,7 +279,7 @@ void ImageAreaWidget::onZoomImageOutTriggered(double factor)
 
 void ImageAreaWidget::onZoomResetTriggered()
 {
-    bool isFitToWindow = this->m_isFitToWindow;
+    const bool isFitToWindow = this->m_isFitToWindow;
     this->m_isFitToWindow = false;
     m_scaleFactor = 1;
     transformImage();
@@ -308,16 +305,17 @@ void ImageAreaWidget::wheelEvent(QWheelEvent *event)
     QPoint numPixels = event->pixelDelta();
     QPoint numDegrees = event->angleDelta() / 8;
 
+    // High-res input
     if (!numPixels.isNull())
     {
         scroll(numPixels);
-    }
+    } // Low-res input
     else if (!numDegrees.isNull())
     {
         QPoint numSteps = numDegrees / 15;
         numSteps.rx() *= m_imageOffsetStep;
         numSteps.ry() *= m_imageOffsetStep;
-        scroll(numPixels);
+        scroll(numSteps);
     }
 
     event->accept();

@@ -28,12 +28,12 @@ SettingsShortcutsTableWidget::SettingsShortcutsTableWidget(QWidget *parent)
 {
 }
 
-SettingsShortcutsTableWidget::SettingsShortcutsTableWidget(int rows, int columns, QWidget *parent)
+SettingsShortcutsTableWidget::SettingsShortcutsTableWidget(const int rows, const int columns, QWidget *parent)
                                         : QTableWidget(rows, columns, parent)
 {
 }
 
-void SettingsShortcutsTableWidget::setItem(int row, int column, QTableWidgetItem *item)
+void SettingsShortcutsTableWidget::setItem(const int row, const int column, QTableWidgetItem *item)
 {
     QTableWidget::setItem(row, column, item);
 
@@ -46,7 +46,7 @@ void SettingsShortcutsTableWidget::setItem(int row, int column, QTableWidgetItem
     }
 }
 
-void SettingsShortcutsTableWidget::updateShortcuts()
+void SettingsShortcutsTableWidget::updateShortcuts() const
 {
     for (int row = 0; row < rowCount(); ++row)
     {
