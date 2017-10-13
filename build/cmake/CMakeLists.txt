@@ -106,3 +106,42 @@ qt5_use_modules(VookiImageViewer
     Widgets)
 
 TARGET_LINK_LIBRARIES(VookiImageViewer ${OS_LIBS})
+
+
+#### Plugins ####
+#
+
+# Photoshop documents (psd)
+#
+add_library(vooki_kimg_psd MODULE ../../src/plugins/kimageformats/psd.cpp)
+TARGET_LINK_LIBRARIES(vooki_kimg_psd Qt5::Gui)
+
+# Gimp (xcf)
+#
+add_library(vooki_kimg_xcf MODULE ../../src/plugins/kimageformats/xcf.cpp)
+TARGET_LINK_LIBRARIES(vooki_kimg_xcf Qt5::Gui)
+
+# Personal Computer Exchange (pcx)
+#
+add_library(vooki_kimg_pcx MODULE ../../src/plugins/kimageformats/pcx.cpp)
+TARGET_LINK_LIBRARIES(vooki_kimg_pcx Qt5::Gui)
+
+# Targa (tga): supports more formats than Qt's version
+#
+add_library(vooki_kimg_tga MODULE ../../src/plugins/kimageformats/tga.cpp)
+TARGET_LINK_LIBRARIES(vooki_kimg_tga Qt5::Gui)
+
+# Sun Raster (ras)
+#
+add_library(vooki_kimg_ras MODULE ../../src/plugins/kimageformats/ras.cpp)
+TARGET_LINK_LIBRARIES(vooki_kimg_ras Qt5::Gui)
+
+# Softimage PIC (pic)
+#
+add_library(vooki_kimg_pic MODULE ../../src/plugins/kimageformats/pic.cpp)
+TARGET_LINK_LIBRARIES(vooki_kimg_pic Qt5::Gui)
+
+# SGI images (rgb, rgba, sgi, bw)
+#
+add_library(vooki_kimg_rgb MODULE ../../src/plugins/kimageformats/rgb.cpp)
+TARGET_LINK_LIBRARIES(vooki_kimg_rgb Qt5::Gui)
