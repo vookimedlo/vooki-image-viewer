@@ -379,6 +379,11 @@ void MainWindow::onAboutToQuit() const
     }
 }
 
+void MainWindow::onOpenFileRequested(const QString &path)
+{
+    handleImagePath(path);
+}
+
 void MainWindow::onZoomPercentageChanged(const qreal value) const
 {
     m_ui.statusBar->rightLabel().setText(tr("Zoom: ") + QString::number(static_cast<int>(value * 100)) + "%");

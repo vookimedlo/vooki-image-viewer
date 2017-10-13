@@ -15,14 +15,16 @@ set(CMAKE_AUTOMOC ON)
 
 if(NOT BUILD_DATE)
     string(TIMESTAMP BUILD_DATE "%Y-%m-%d")
+    string(TIMESTAMP BUILD_DATE_DOTTED "%Y.%m.%d")
 endif()
 
 add_definitions(
-    -DBUILD_DATE=\"${BUILD_DATE}\"
+    -DBUILD_DATE=\"${BUILD_DATE_DOTTED}\"
 )
 
 set(SOURCES
-    ../../src/main.cpp
+    ../../src/application/Application.cpp
+    ../../src/application/main.cpp
     ../../src/model/FileSystemSortFilterProxyModel.cpp
     ../../src/model/ImageCatalog.cpp
     ../../src/ui/AboutComponentsDialog.cpp
@@ -56,7 +58,8 @@ if(APPLE)
     set(MACOSX_BUNDLE_ICON_FILE vookiimageviewericon.icns)
     set(MACOSX_BUNDLE_BUNDLE_NAME VookiImageViewer)
     set(MACOSX_BUNDLE_COPYRIGHT "(C) 2017 Michal Duda")
-    set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${BUILD_DATE})
+    set(MACOSX_BUNDLE_INFO_STRING "Lightweight image viewer")
+    set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${BUILD_DATE_DOTTED})
     set_source_files_properties(../../src/resource/openclipart/vookiimageviewericon.icns PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
     set(SOURCES
@@ -70,6 +73,9 @@ if(APPLE)
         ${SOURCES}
         ${UI_HEADERS}
         ${UI_RESOURCES})
+
+    set_target_properties(VookiImageViewer PROPERTIES MACOSX_BUNDLE_INFO_PLIST ../support/MacOSXBundleInfo.plist.in)
+
 elseif(WIN32)
     set(SOURCES
         ${SOURCES}

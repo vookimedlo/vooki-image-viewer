@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>NSPrincipalClass</key>
+    <string>NSApplication</string>
+    <key>CFBundleIconFile</key>
+    <string>@ICON@</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleGetInfoString</key>
+    <string>Lightweight Image Viewer</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleExecutable</key>
+    <string>@EXECUTABLE@</string>
+    <key>CFBundleShortVersionString</key>
+    <string>@SHORT_VERSION@</string>
+    <key>CFBundleIdentifier</key>
+    <string>cz.vookimedlo.apple.VookiImageViewer</string>
+    <key>NOTE</key>
+    <string>Michal Duda - VookiImageViewer</string>
+
+    <key>CFBundleDocumentTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleTypeExtensions</key>
+        <array>
+          <string>png</string>
+          <string>jpg</string>
+          <string>jpeg</string>
+          <string>bmp</string>
+          <string>gif</string>
+          <string>pbm</string>
+          <string>pgm</string>
+          <string>ppm</string>
+          <string>xbm</string>
+          <string>xpm</string>
+          <string>tiff</string>
+          <string>webp</string>
+          <string>tga</string>
+          <string>wbmp</string>
+        </array>
+        <key>CFBundleTypeRole</key>
+        <string>Viewer</string>
+      </dict>
+    </array>
+  </dict>
+</plist>

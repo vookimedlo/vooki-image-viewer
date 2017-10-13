@@ -18,8 +18,9 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include "abstraction/init.h"
-#include "ui/MainWindow.h"
+#include "../abstraction/init.h"
+#include "../ui/MainWindow.h"
+#include "Application.h"
 #include <QApplication>
 #include <iostream>
 
@@ -42,16 +43,17 @@ int main(int argc, char *argv[])
             return 0;
     }
 
-    QApplication a(argc, argv);
+    Application application(argc, argv);
     QCoreApplication::setOrganizationName("Michal Duda");
     QCoreApplication::setOrganizationDomain("VookiImageViewer.com");
     QCoreApplication::setApplicationName("VookiImageViewer");
 
     SystemDependant::Init();
-    MainWindow w;
-    QObject::connect(&a, &QApplication::aboutToQuit, &w, &MainWindow::onAboutToQuit);
-    w.handleImagePath(requestedPath);
-    w.show();
+    MainWindow mainWindow;
+    QObject::connect(&application, &Application::aboutToQuit, &mainWindow, &MainWindow::onAboutToQuit);
+    QObject::connect(&application, &Application::openFileRequested, &mainWindow, &MainWindow::onOpenFileRequested);
+    mainWindow.handleImagePath(requestedPath);
+    mainWindow.show();
 
-    return a.exec();
+    return application.exec();
 }
