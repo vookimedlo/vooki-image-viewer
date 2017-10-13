@@ -35,10 +35,10 @@ public:
     SettingsDialog(QWidget *parent = Q_NULLPTR);
     DISABLE_COPY_MOVE(SettingsDialog);
 
-    void populateShortcuts(QMenu *menu);
+    void populateShortcuts(QMenu *menu) const;
 
 protected:
-    void initializeUI(std::shared_ptr<QSettings> settings);
+    void initializeUI(const std::shared_ptr<QSettings> settings);
 
 protected slots:
     virtual void onAccept();

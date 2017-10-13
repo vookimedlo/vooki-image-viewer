@@ -45,37 +45,37 @@ public:
         HANDLE_GENERAL_ERROR
     };
 
-    HANDLE_RESULT_E handleImagePath(const QString &path, bool addToRecentFiles = true);
+    HANDLE_RESULT_E handleImagePath(const QString &path, const bool addToRecentFiles = true);
 
 protected:
-    void propagateBorderSettings();
-    QString getRecentFile(int item) const;
-    QString registerProcessedImage(const QString &filePath, bool addToRecentFiles = true);
+    void propagateBorderSettings() const;
+    QString getRecentFile(const int item) const;
+    QString registerProcessedImage(const QString &filePath, const bool addToRecentFiles = true);
     void restoreRecentFiles();
     void showImage(bool addToRecentFiles);
 
 public slots:
-    void onAboutToQuit();
+    void onAboutToQuit() const;
 
 protected slots:
     void onQuitTriggered();
-    void onZoomInTriggered();
-    void onZoomOutTriggered();
-    void onFitToWindowToggled(bool toggled);
-    void onFullScreenToggled(bool toggled);
+    void onZoomInTriggered() const;
+    void onZoomOutTriggered() const;
+    void onFitToWindowToggled(const bool toggled) const;
+    void onFullScreenToggled(const bool toggled);
     void onFileSystemTreeViewActivated(const QModelIndex &index);
-    void onStatusBarToggled(bool toggled);
-    void onOriginalSizeTriggered();
+    void onStatusBarToggled(const bool toggled) const;
+    void onOriginalSizeTriggered() const;
     void onPreviousImageTriggered();
     void onNextImageTriggered();
     void onAboutTriggered();
     void onAboutComponentsTriggered();
     void onAboutQtTriggered();
     void onRecentFileTriggered(const QString &filePath);
-    void onClearHistory();
+    void onClearHistory() const;
     void onAboutSupportedImageFormats();
     void onSettingsTriggered();
-    void onZoomPercentageChanged(qreal value);
+    void onZoomPercentageChanged(const qreal value) const;
 
 private:
     Ui::MainWindow m_ui;

@@ -35,13 +35,13 @@ public:
     void initialize(const QFile &imageFile);
     void initialize(const QDir &imageDir);
 
-    uint64_t getCatalogSize();
-    QString getCurrent();
+    uint64_t getCatalogSize() const;
+    QString getCurrent() const;
     QString getNext();
     QString getPrevious();
 
 protected:
-    QString getCatalogItem(const RotatingIndex<uint64_t> &catalogIndex);
+    QString getCatalogItem(const RotatingIndex<uint64_t> &catalogIndex) const;
 
 private:
     QString m_absoluteDir;

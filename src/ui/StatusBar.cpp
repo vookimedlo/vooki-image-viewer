@@ -27,7 +27,7 @@ StatusBar::StatusBar(QWidget *parent)
     addPermanentWidget(m_rightLabel);
 }
 
-QLabel &StatusBar::rightLabel()
+QLabel &StatusBar::rightLabel() const
 {
     return *m_rightLabel;
 }

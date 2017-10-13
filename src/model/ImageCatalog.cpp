@@ -29,7 +29,7 @@ ImageCatalog::ImageCatalog(const QStringList &filter)
 void ImageCatalog::initialize(const QFile &imageFile)
 {
     QFileInfo info(imageFile);
-    QString filename = info.fileName();
+    const QString filename = info.fileName();
     m_absoluteDir = info.absoluteDir().canonicalPath();
     initialize(info.absoluteDir());
 
@@ -49,12 +49,12 @@ void ImageCatalog::initialize(const QDir &imageDir)
     m_catalogIndex.set(0, m_catalog.size());
 }
 
-uint64_t ImageCatalog::getCatalogSize()
+uint64_t ImageCatalog::getCatalogSize() const
 {
     return m_catalog.size();
 }
 
-QString ImageCatalog::getCurrent()
+QString ImageCatalog::getCurrent() const
 {
     return getCatalogItem(m_catalogIndex);
 }
@@ -69,7 +69,7 @@ QString ImageCatalog::getPrevious()
     return getCatalogItem(--m_catalogIndex);
 }
 
-QString ImageCatalog::getCatalogItem(const RotatingIndex<uint64_t> &catalogIndex)
+QString ImageCatalog::getCatalogItem(const RotatingIndex<uint64_t> &catalogIndex) const
 {
     if (m_catalog.isEmpty())
         return QString();

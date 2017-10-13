@@ -27,7 +27,7 @@ class StatusBar : public QStatusBar
 public:
     StatusBar(QWidget *parent = nullptr);
 
-    QLabel &rightLabel();
+    QLabel &rightLabel() const;
 
 private:
     QLabel *m_rightLabel;

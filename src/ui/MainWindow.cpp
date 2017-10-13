@@ -30,7 +30,6 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "support/RecentFileAction.h"
 #include "ui_AboutDialog.h"
 #include "ui_AboutSupportedFormatsDialog.h"
-#include "ui_SettingsDialog.h"
 #include <QDialog>
 #include <QFileSystemModel>
 #include <QImageReader>
@@ -72,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent)
     Settings::initializeSettings(m_ui.menuWindow);
     Settings::initializeSettings(m_ui.menuHelp);
 
-    std::shared_ptr<QSettings> settings = Settings::userSettings();
+    const std::shared_ptr<QSettings> settings = Settings::userSettings();
     m_ui.toolBar->setHidden(settings->value(SETTINGS_WINDOW_HIDE_TOOLBAR).toBool());
     m_ui.dockWidget->setHidden(settings->value(SETTINGS_WINDOW_HIDE_NAVIGATION).toBool());
     m_ui.toolBar->toggleViewAction()->setChecked(!settings->value(SETTINGS_WINDOW_HIDE_TOOLBAR).toBool());
@@ -119,7 +118,7 @@ void MainWindow::onFullScreenToggled(bool toggled)
         m_widgetVisibilityPriorFullscreen.isFileSystemNavigationVisible = m_ui.dockWidget->toggleViewAction()->isChecked();
         m_widgetVisibilityPriorFullscreen.isStatusBarVisible = m_ui.actionStatusBar->isChecked();
 
-        std::shared_ptr<QSettings> settings = Settings::userSettings();
+        const std::shared_ptr<QSettings> settings = Settings::userSettings();
         if (settings->value(SETTINGS_FULLSCREEN_HIDE_TOOLBAR).toBool())
             m_ui.toolBar->hide();
 
@@ -139,29 +138,29 @@ void MainWindow::onFileSystemTreeViewActivated(const QModelIndex &index)
     handleImagePath(filePath);
 }
 
-void MainWindow::onZoomInTriggered()
+void MainWindow::onZoomInTriggered() const
 {
     m_ui.actionFitToWindow->setChecked(false);
     m_ui.imageAreaWidget->onZoomImageInTriggered(0.10);
 }
 
-void MainWindow::onZoomOutTriggered()
+void MainWindow::onZoomOutTriggered() const
 {
     m_ui.actionFitToWindow->setChecked(false);
     m_ui.imageAreaWidget->onZoomImageOutTriggered(0.10);
 }
 
-void MainWindow::onFitToWindowToggled(bool toggled)
+void MainWindow::onFitToWindowToggled(const bool toggled) const
 {
     m_ui.imageAreaWidget->onSetFitToWindowTriggered(toggled);
 }
 
-void MainWindow::onStatusBarToggled(bool toggled)
+void MainWindow::onStatusBarToggled(const bool toggled) const
 {
     toggled ? m_ui.statusBar->show() : m_ui.statusBar->hide();
 }
 
-void MainWindow::onOriginalSizeTriggered()
+void MainWindow::onOriginalSizeTriggered() const
 {
     m_ui.actionFitToWindow->setChecked(false);
     m_ui.imageAreaWidget->onZoomResetTriggered();
@@ -205,7 +204,7 @@ void MainWindow::onAboutSupportedImageFormats()
     dialog.exec();
 }
 
-QString MainWindow::registerProcessedImage(const QString &filePath, bool addToRecentFiles)
+QString MainWindow::registerProcessedImage(const QString &filePath, const bool addToRecentFiles)
 {
     if (filePath.isEmpty())
         return QString();
@@ -228,7 +227,7 @@ QString MainWindow::registerProcessedImage(const QString &filePath, bool addToRe
         // Add the action just after the separator
         actions.insert(2, recentImage);
 
-        m_ui.menuRecentFiles->insertActions(0, actions);
+        m_ui.menuRecentFiles->insertActions(nullptr, actions);
 
         // Remove entry exceeding the allowed limit of menu items in recent files menu
         const int maxRecentFiles = 7;
@@ -252,7 +251,7 @@ void MainWindow::onRecentFileTriggered(const QString &filePath)
     handleImagePath(filePath, false);
 }
 
-void MainWindow::onClearHistory()
+void MainWindow::onClearHistory() const
 {
     auto actions = m_ui.menuRecentFiles->actions();
     // Leave the first two actions intact (Clear History & Menu Separator)
@@ -278,12 +277,12 @@ void MainWindow::onSettingsTriggered()
     }
 }
 
-void MainWindow::showImage(bool addToRecentFiles)
+void MainWindow::showImage(const bool addToRecentFiles)
 {
     m_ui.imageAreaWidget->showImage(registerProcessedImage(m_catalog.getCurrent(), addToRecentFiles));
 }
 
-MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, bool addToRecentFiles)
+MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, const bool addToRecentFiles)
 {
     QFileInfo info(path);
 
@@ -311,15 +310,15 @@ MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, boo
     return HANDLE_RESULT_E_DONT_EXIST;
 }
 
-void MainWindow::propagateBorderSettings()
+void MainWindow::propagateBorderSettings() const
 {
-    std::shared_ptr<QSettings> settings = Settings::userSettings();
+    const std::shared_ptr<QSettings> settings = Settings::userSettings();
     m_ui.imageAreaWidget->drawBorder(settings->value(SETTINGS_IMAGE_BORDER_DRAW).toBool(), settings->value(SETTINGS_IMAGE_BORDER_COLOR).value<QColor>());
 }
 
 void MainWindow::restoreRecentFiles()
 {
-    std::shared_ptr<QSettings> settings = Settings::userSettings();
+    const std::shared_ptr<QSettings> settings = Settings::userSettings();
     if (settings->value(SETTINGS_IMAGE_REMEMBER_RECENT).toBool())
     {
         const std::vector<QString> settingsKeys = {
@@ -347,13 +346,13 @@ void MainWindow::restoreRecentFiles()
             actions.insert(2, recentImage);
         }
 
-        m_ui.menuRecentFiles->insertActions(0, actions);
+        m_ui.menuRecentFiles->insertActions(nullptr, actions);
     }
 }
 
-QString MainWindow::getRecentFile(int item) const
+QString MainWindow::getRecentFile(const int item) const
 {
-    int index = item + 1;
+    const int index = item + 1;
     auto actions = m_ui.menuRecentFiles->actions();
 
     // The first two actions are Clear History & Menu Separator, which are out of our interest
@@ -366,7 +365,7 @@ QString MainWindow::getRecentFile(int item) const
     return QString();
 }
 
-void MainWindow::onAboutToQuit()
+void MainWindow::onAboutToQuit() const
 {
     const std::vector<QString> settingsKeys = {
         SETTINGS_RECENT_FILE_1, SETTINGS_RECENT_FILE_2, SETTINGS_RECENT_FILE_3, SETTINGS_RECENT_FILE_4, SETTINGS_RECENT_FILE_5
@@ -380,7 +379,7 @@ void MainWindow::onAboutToQuit()
     }
 }
 
-void MainWindow::onZoomPercentageChanged(qreal value)
+void MainWindow::onZoomPercentageChanged(const qreal value) const
 {
-    m_ui.statusBar->rightLabel().setText(tr("Zoom: ") + QString::number((int)(value * 100)) + "%");
+    m_ui.statusBar->rightLabel().setText(tr("Zoom: ") + QString::number(static_cast<int>(value * 100)) + "%");
 }

@@ -31,11 +31,11 @@ SettingsDialog::SettingsDialog(QWidget *parent)
                                         , m_backgroundColor()
 {
     m_uiSettingsDialog.setupUi(this);
-    std::shared_ptr<QSettings> settings = Settings::userSettings();
+    const std::shared_ptr<QSettings> settings = Settings::userSettings();
     initializeUI(settings);
 }
 
-void SettingsDialog::populateShortcuts(QMenu *menu)
+void SettingsDialog::populateShortcuts(QMenu *menu) const
 {
     auto actions = menu->actions();
     for (QAction *action : actions)
@@ -54,7 +54,7 @@ void SettingsDialog::populateShortcuts(QMenu *menu)
         if (action->whatsThis().isEmpty())
             continue;
 
-        int rowCount = m_uiSettingsDialog.tableShortcutsWidget->rowCount();
+        const int rowCount = m_uiSettingsDialog.tableShortcutsWidget->rowCount();
         m_uiSettingsDialog.tableShortcutsWidget->insertRow(rowCount);
         QTableWidgetItem *headerItem = new QTableWidgetItem(action->toolTip());
         m_uiSettingsDialog.tableShortcutsWidget->setVerticalHeaderItem(rowCount, headerItem);
@@ -64,7 +64,7 @@ void SettingsDialog::populateShortcuts(QMenu *menu)
     }
 }
 
-void SettingsDialog::initializeUI(std::shared_ptr<QSettings> settings)
+void SettingsDialog::initializeUI(const std::shared_ptr<QSettings> settings)
 {
     m_uiSettingsDialog.checkBoxGeneralStartInFullscreen->setChecked(settings->value(m_uiSettingsDialog.checkBoxGeneralStartInFullscreen->whatsThis()).toBool());
     m_uiSettingsDialog.checkBoxWindowHideStatusbar->setChecked(settings->value(m_uiSettingsDialog.checkBoxWindowHideStatusbar->whatsThis()).toBool());
@@ -126,7 +126,7 @@ void SettingsDialog::onButtonBoxButtonClicked(QAbstractButton *button)
 
 void SettingsDialog::onRejected()
 {
-    std::shared_ptr<QSettings> settings = Settings::userSettings();
+    const std::shared_ptr<QSettings> settings = Settings::userSettings();
 
     // restore all shortcuts from user settings
     for (int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); i++)
@@ -145,7 +145,7 @@ void SettingsDialog::onRejected()
 
 void SettingsDialog::onRestoreDefaultsTriggered()
 {
-    std::shared_ptr<QSettings> settings = Settings::defaultSettings();
+    const std::shared_ptr<QSettings> settings = Settings::defaultSettings();
     initializeUI(settings);
 
     // restore all shortcuts from default settings
