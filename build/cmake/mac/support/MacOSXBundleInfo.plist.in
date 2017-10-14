@@ -50,6 +50,15 @@
           <string>webp</string>
           <string>tga</string>
           <string>wbmp</string>
+          <string>pcx</string>
+          <string>pic</string>
+          <string>psd</string>
+          <string>ras</string>
+          <string>rgb</string>
+          <string>rgba</string>
+          <string>bw</string>
+          <string>sgi</string>
+          <string>xcf</string>
         </array>
         <key>CFBundleTypeRole</key>
         <string>Viewer</string>
