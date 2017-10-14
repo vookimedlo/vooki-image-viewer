@@ -49,6 +49,11 @@
          <string>Open Clipart Library</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>KDE KImageFormats</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item>
