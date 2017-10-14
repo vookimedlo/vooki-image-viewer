@@ -40,6 +40,9 @@ void AboutComponentsDialog::onSelectedComponentChanged(const int row)
         case 2:
             m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutopenclipart"));
             break;
+        case 3:
+            m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutkimageformats"));
+            break;
         default:
             m_uiAboutComponentsDialog.textBrowser->clear();
     }
