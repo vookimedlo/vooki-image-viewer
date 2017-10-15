@@ -4,6 +4,8 @@ find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
+find_library(RAW NAMES libraw_r.a raw_r)
+
 # std::make_unique is part of c++14
 #
 set(CMAKE_CXX_STANDARD 14)
@@ -12,6 +14,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
+
+include_directories(/usr/local/include)
+#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I/usr/local/include/")
 
 if(NOT BUILD_DATE)
     string(TIMESTAMP BUILD_DATE "%Y-%m-%d")
@@ -145,3 +150,8 @@ TARGET_LINK_LIBRARIES(vooki_kimg_pic Qt5::Gui)
 #
 add_library(vooki_kimg_rgb MODULE ../../src/plugins/kimageformats/rgb.cpp)
 TARGET_LINK_LIBRARIES(vooki_kimg_rgb Qt5::Gui)
+
+# Camera RAW Thumbnails (arw, crw, cr2, dng, nef, raf)
+#
+add_library(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
+TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui /Users/duda/Downloads/LibRaw-0.18.5/lib/libraw_r.a)
