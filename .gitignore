@@ -9,6 +9,7 @@ build/cmake/mac/build
 
 # User settings
 *.user
+.vs
 
 # Compiled Object files
 *.slo
@@ -41,3 +42,4 @@ build/cmake/mac/build
 *.app
 *.cpp#
 *.h#
+
