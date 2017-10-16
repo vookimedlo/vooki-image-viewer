@@ -54,6 +54,11 @@
          <string>KDE KImageFormats</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>LibRAW</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item>
