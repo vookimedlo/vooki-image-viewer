@@ -15,9 +15,6 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
-include_directories(/usr/local/include)
-#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I/usr/local/include/")
-
 if(NOT BUILD_DATE)
     string(TIMESTAMP BUILD_DATE "%Y-%m-%d")
     string(TIMESTAMP BUILD_DATE_DOTTED "%Y.%m.%d")
@@ -153,5 +150,12 @@ TARGET_LINK_LIBRARIES(vooki_kimg_rgb Qt5::Gui)
 
 # Camera RAW Thumbnails (arw, crw, cr2, dng, nef, raf)
 #
-add_library(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
-TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui /Users/duda/Downloads/LibRaw-0.18.5/lib/libraw_r.a)
+
+if(APPLE)
+    SET(LIBRAW "3rdPartyLibs/LibRaw-0.18.5")
+    SET(CMAKE_CXX_FLAGS "-I../${LIBRAW} ${CMAKE_CXX_FLAGS}")
+    SET(CMAKE_MODULE_LINKER_FLAGS "-L../${LIBRAW}/lib ${CMAKE_MODULE_LINKER_FLAGS}")
+
+    add_library(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
+    TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui libraw_r.a)
+endif()
