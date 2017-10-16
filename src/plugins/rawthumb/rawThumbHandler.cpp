@@ -60,8 +60,7 @@ bool RawThumbHandler::canRead(QIODevice *device)
     auto state = raw.open_buffer(buffer.data(), buffer.size());
     if (LIBRAW_SUCCESS == state)
     {
-        QImage thumbnail;
-        if (LIBRAW_SUCCESS == raw.unpack_thumb())
+        if (LIBRAW_SUCCESS == raw.unpack_thumb() && LIBRAW_THUMBNAIL_JPEG == raw.imgdata.thumbnail.tformat)
         {
             raw.recycle();
             return true;

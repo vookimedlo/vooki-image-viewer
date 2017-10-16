@@ -1,11 +1,18 @@
 {
-    "Keys": 
+    "Keys":
 	[
-		"arw",
-		"crw", 
+		"raf",
+		"mos",
 		"cr2",
+		"erf",
 		"dng",
+		"mrw",
 		"nef",
-		"raf"
+		"orf",
+		"rw2",
+		"pef",
+		"x3f",
+		"srw",
+		"arw"
 	]
 }

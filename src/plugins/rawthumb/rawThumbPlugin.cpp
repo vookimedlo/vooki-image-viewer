@@ -24,7 +24,8 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 QImageIOPlugin::Capabilities RawThumbPlugin::capabilities(QIODevice *device, const QByteArray &format) const
 {
-    static const QStringList formats = { "arw", "crw", "cr2", "dng", "nef", "raf" };
+    static const QStringList formats = { "raf", "mos", "cr2", "erf", "dng", "mrw", "nef", "orf", "rw2", "pef", "x3f", "srw", "x3f", "arw" };
+
     if (formats.contains(format))
     {
         return Capabilities(CanRead);

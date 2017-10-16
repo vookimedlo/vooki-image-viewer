@@ -142,6 +142,71 @@
        <string/>
       </property>
      </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
      <column>
       <property name="text">
        <string>Format</string>
@@ -350,6 +415,136 @@
      <item row="16" column="1">
       <property name="text">
        <string>Targa</string>
+      </property>
+     </item>
+     <item row="17" column="0">
+      <property name="text">
+       <string>ARW</string>
+      </property>
+     </item>
+     <item row="17" column="1">
+      <property name="text">
+       <string>Sony Alpha Raw</string>
+      </property>
+     </item>
+     <item row="18" column="0">
+      <property name="text">
+       <string>CR2</string>
+      </property>
+     </item>
+     <item row="18" column="1">
+      <property name="text">
+       <string>Canon Raw Version 2</string>
+      </property>
+     </item>
+     <item row="19" column="0">
+      <property name="text">
+       <string>DNG</string>
+      </property>
+     </item>
+     <item row="19" column="1">
+      <property name="text">
+       <string>Digital Negative</string>
+      </property>
+     </item>
+     <item row="20" column="0">
+      <property name="text">
+       <string>ERF</string>
+      </property>
+     </item>
+     <item row="20" column="1">
+      <property name="text">
+       <string>Epson RAW File</string>
+      </property>
+     </item>
+     <item row="21" column="0">
+      <property name="text">
+       <string>MOS</string>
+      </property>
+     </item>
+     <item row="21" column="1">
+      <property name="text">
+       <string>Leaf Raw Image File</string>
+      </property>
+     </item>
+     <item row="22" column="0">
+      <property name="text">
+       <string>MRW</string>
+      </property>
+     </item>
+     <item row="22" column="1">
+      <property name="text">
+       <string>Konica Minolta RAW</string>
+      </property>
+     </item>
+     <item row="23" column="0">
+      <property name="text">
+       <string>NEF</string>
+      </property>
+     </item>
+     <item row="23" column="1">
+      <property name="text">
+       <string>Nikon Raw Image File</string>
+      </property>
+     </item>
+     <item row="24" column="0">
+      <property name="text">
+       <string>ORF</string>
+      </property>
+     </item>
+     <item row="24" column="1">
+      <property name="text">
+       <string>Olympus Raw Image File</string>
+      </property>
+     </item>
+     <item row="25" column="0">
+      <property name="text">
+       <string>PEF</string>
+      </property>
+     </item>
+     <item row="25" column="1">
+      <property name="text">
+       <string>Pentax Raw Image File</string>
+      </property>
+     </item>
+     <item row="26" column="0">
+      <property name="text">
+       <string>RAF</string>
+      </property>
+     </item>
+     <item row="26" column="1">
+      <property name="text">
+       <string>Fuji Raw Image File</string>
+      </property>
+     </item>
+     <item row="27" column="0">
+      <property name="text">
+       <string>RW2</string>
+      </property>
+     </item>
+     <item row="27" column="1">
+      <property name="text">
+       <string>Panasonic RAW Image File</string>
+      </property>
+     </item>
+     <item row="28" column="0">
+      <property name="text">
+       <string>SRW</string>
+      </property>
+     </item>
+     <item row="28" column="1">
+      <property name="text">
+       <string>Samsung RAW Image File</string>
+      </property>
+     </item>
+     <item row="29" column="0">
+      <property name="text">
+       <string>X3F</string>
+      </property>
+     </item>
+     <item row="29" column="1">
+      <property name="text">
+       <string>SIGMA X3F Camera RAW File</string>
       </property>
      </item>
     </widget>

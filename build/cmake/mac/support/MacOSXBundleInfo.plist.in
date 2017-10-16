@@ -59,6 +59,19 @@
           <string>bw</string>
           <string>sgi</string>
           <string>xcf</string>
+          <string>raf</string>
+          <string>mos</string>
+          <string>cr2</string>
+          <string>erf</string>
+          <string>dng</string>
+          <string>mrw</string>
+          <string>nef</string>
+          <string>orf</string>
+          <string>rw2</string>
+          <string>pef</string>
+          <string>x3f</string>
+          <string>srw</string>
+          <string>arw</string>
         </array>
         <key>CFBundleTypeRole</key>
         <string>Viewer</string>
