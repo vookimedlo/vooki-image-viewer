@@ -4,8 +4,6 @@ find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
-find_library(RAW NAMES libraw_r.a raw_r)
-
 # std::make_unique is part of c++14
 #
 set(CMAKE_CXX_STANDARD 14)
@@ -165,4 +163,9 @@ elseif(WIN32)
 
     add_library(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
     TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui ../${LIBRAW}/lib/libraw)
+else()
+	
+    find_library(LIBRAW NAMES libraw_r raw_r)
+    add_library(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
+    TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui ${LIBRAW})
 endif()
