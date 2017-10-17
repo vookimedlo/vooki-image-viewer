@@ -26,5 +26,6 @@
         <file alias="aboutqt">text/aboutQt.html</file>
         <file alias="abouticon54">text/aboutIcon54.html</file>
         <file alias="aboutkimageformats">text/aboutKImageFormats.html</file>
+        <file alias="aboutlibraw">text/aboutLibRaw.html</file>
     </qresource>
 </RCC>

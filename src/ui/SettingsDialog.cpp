@@ -21,6 +21,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "SettingsDialog.h"
 
 #include "../ui/support/Settings.h"
+#include "../ui/support/SettingsStrings.h"
 #include "support/SettingsShortcutsTableWidgetItem.h"
 #include <QColorDialog>
 #include <QSettings>
@@ -77,8 +78,8 @@ void SettingsDialog::initializeUI(const std::shared_ptr<QSettings> settings)
     m_uiSettingsDialog.checkBoxImageFitToWindow->setChecked(settings->value(m_uiSettingsDialog.checkBoxImageFitToWindow->whatsThis()).toBool());
     m_uiSettingsDialog.checkBoxImageDrawBorder->setChecked(settings->value(m_uiSettingsDialog.checkBoxImageDrawBorder->whatsThis()).toBool());
     m_uiSettingsDialog.toolButtonBorderColor->setEnabled(settings->value(m_uiSettingsDialog.checkBoxImageDrawBorder->whatsThis()).toBool());
-    m_borderColor = settings->value("image/border/color").value<QColor>();
-    m_backgroundColor = settings->value("image/background/color").value<QColor>();
+    m_borderColor = settings->value(SETTINGS_IMAGE_BORDER_COLOR).value<QColor>();
+    m_backgroundColor = settings->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>();
 }
 
 void SettingsDialog::onAccept()
@@ -94,8 +95,8 @@ void SettingsDialog::onAccept()
     settings->setValue(m_uiSettingsDialog.checkBoxRemeberRecentImages->whatsThis(), m_uiSettingsDialog.checkBoxRemeberRecentImages->isChecked());
     settings->setValue(m_uiSettingsDialog.checkBoxImageFitToWindow->whatsThis(), m_uiSettingsDialog.checkBoxImageFitToWindow->isChecked());
     settings->setValue(m_uiSettingsDialog.checkBoxImageDrawBorder->whatsThis(), m_uiSettingsDialog.checkBoxImageDrawBorder->isChecked());
-    settings->setValue("image/border/color", m_borderColor);
-    settings->setValue("image/background/color", m_backgroundColor);
+    settings->setValue(SETTINGS_IMAGE_BORDER_COLOR, m_borderColor);
+    settings->setValue(SETTINGS_IMAGE_BACKGROUND_COLOR, m_backgroundColor);
 
     // store all shortcuts in user settings
     for (int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); i++)
