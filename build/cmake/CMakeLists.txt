@@ -148,7 +148,7 @@ TARGET_LINK_LIBRARIES(vooki_kimg_pic Qt5::Gui)
 add_library(vooki_kimg_rgb MODULE ../../src/plugins/kimageformats/rgb.cpp)
 TARGET_LINK_LIBRARIES(vooki_kimg_rgb Qt5::Gui)
 
-# Camera RAW Thumbnails (arw, crw, cr2, dng, nef, raf)
+# Camera RAW Thumbnails (raf, mos, cr2, erf, dng, mrw, nef, orf, rw2, pef, x3f, srw, x3f, arw)
 #
 if(APPLE)
     SET(LIBRAW "3rdPartyLibs/LibRaw-0.18.5")
