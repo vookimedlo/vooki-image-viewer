@@ -86,7 +86,7 @@ elseif(WIN32)
 
     add_executable(VookiImageViewer
         WIN32
-        windows/application.rc
+        windows/support/application.rc
         ${SOURCES}
         ${UI_HEADERS}
         ${UI_RESOURCES})
@@ -150,7 +150,6 @@ TARGET_LINK_LIBRARIES(vooki_kimg_rgb Qt5::Gui)
 
 # Camera RAW Thumbnails (arw, crw, cr2, dng, nef, raf)
 #
-
 if(APPLE)
     SET(LIBRAW "3rdPartyLibs/LibRaw-0.18.5")
     SET(CMAKE_CXX_FLAGS "-I../${LIBRAW} ${CMAKE_CXX_FLAGS}")
@@ -158,4 +157,12 @@ if(APPLE)
 
     add_library(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
     TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui libraw_r.a)
+elseif(WIN32)
+    add_definitions(-DLIBRAW_NODLL)
+
+    SET(LIBRAW "3rdPartyLibs/LibRaw-0.18.5")
+    SET(CMAKE_CXX_FLAGS "-I../${LIBRAW} ${CMAKE_CXX_FLAGS}")
+
+    add_library(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
+    TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui ../${LIBRAW}/lib/libraw)
 endif()
