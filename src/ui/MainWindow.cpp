@@ -105,12 +105,18 @@ void MainWindow::onFullScreenToggled(bool toggled)
         m_ui.toolBar->toggleViewAction()->setChecked(m_widgetVisibilityPriorFullscreen.isToolBarVisible);
         if (m_widgetVisibilityPriorFullscreen.isToolBarVisible)
             m_ui.toolBar->show();
+        else
+            m_ui.toolBar->hide();
         m_ui.dockWidget->toggleViewAction()->setChecked(m_widgetVisibilityPriorFullscreen.isFileSystemNavigationVisible);
         if (m_widgetVisibilityPriorFullscreen.isFileSystemNavigationVisible)
             m_ui.dockWidget->show();
+        else
+            m_ui.dockWidget->hide();
         m_ui.actionStatusBar->setChecked(m_widgetVisibilityPriorFullscreen.isStatusBarVisible);
         if (m_widgetVisibilityPriorFullscreen.isStatusBarVisible)
             m_ui.statusBar->show();
+        else
+            m_ui.statusBar->hide();
     }
     else
     {
@@ -120,13 +126,22 @@ void MainWindow::onFullScreenToggled(bool toggled)
 
         const std::shared_ptr<QSettings> settings = Settings::userSettings();
         if (settings->value(SETTINGS_FULLSCREEN_HIDE_TOOLBAR).toBool())
+        {
+            m_ui.toolBar->toggleViewAction()->setChecked(false);
             m_ui.toolBar->hide();
+        }
 
         if (settings->value(SETTINGS_FULLSCREEN_HIDE_NAVIGATION).toBool())
+        {
+            m_ui.dockWidget->toggleViewAction()->setChecked(false);
             m_ui.dockWidget->hide();
+        }
 
         if (settings->value(SETTINGS_FULLSCREEN_HIDE_STATUSBAR).toBool())
+        {
             m_ui.actionStatusBar->setChecked(false);
+            m_ui.statusBar->hide();
+        }
 
         showFullScreen();
     }
