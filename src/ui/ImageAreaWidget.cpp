@@ -50,49 +50,6 @@ ImageAreaWidget::ImageAreaWidget(QWidget *parent)
     m_finalImage.fill(qRgb(0, 0, 0));
 }
 
-void ImageAreaWidget::onIncreaseOffsetY(const int pixels)
-{
-    m_imageOffsetY += pixels;
-    repaintWithTransformations();
-}
-
-void ImageAreaWidget::onIncreaseOffsetX(const int pixels)
-{
-    m_imageOffsetX += pixels;
-    repaintWithTransformations();
-}
-
-void ImageAreaWidget::onDecreaseOffsetY(const int pixels)
-{
-    m_imageOffsetY -= pixels;
-    repaintWithTransformations();
-}
-
-void ImageAreaWidget::onDecreaseOffsetX(const int pixels)
-{
-    m_imageOffsetX -= pixels;
-    repaintWithTransformations();
-}
-
-void ImageAreaWidget::checkScrollOffset()
-{
-    if (m_finalImage.height() < size().height())
-        m_imageOffsetY = 0;
-    else if (m_finalImage.height() - m_imageOffsetY < size().height())
-        m_imageOffsetY = m_finalImage.height() - size().height();
-
-    if (m_finalImage.width() < size().width())
-        m_imageOffsetX = 0;
-    else if (m_finalImage.width() - m_imageOffsetX < size().width())
-        m_imageOffsetX = m_finalImage.width() - size().width();
-
-    if (m_imageOffsetY < 0)
-        m_imageOffsetY = 0;
-
-    if (m_imageOffsetX < 0)
-        m_imageOffsetX = 0;
-}
-
 void ImageAreaWidget::drawBorder(const bool draw, const QColor &color)
 {
     m_drawBorder = draw;
@@ -119,6 +76,220 @@ void ImageAreaWidget::repaintWithTransformations()
     QWidget::repaint();
 }
 
+void ImageAreaWidget::onDecreaseOffsetX(const int pixels)
+{
+    m_imageOffsetX -= pixels;
+    repaintWithTransformations();
+}
+
+void ImageAreaWidget::onDecreaseOffsetY(const int pixels)
+{
+    m_imageOffsetY -= pixels;
+    repaintWithTransformations();
+}
+
+void ImageAreaWidget::onFlipHorizontallyTriggered()
+{
+    m_flipHorizontally = !m_flipHorizontally;
+
+    if (m_flipHorizontally && m_flipVertically)
+    {
+        // Simultanous vertical and horizontal flip is equal to the PI RAD (180degress) rotation
+        m_flipHorizontally = m_flipVertically = false;
+        ++m_rotateIndex;
+        ++m_rotateIndex;
+    }
+
+    transformImage();
+    update();
+}
+
+void ImageAreaWidget::onFlipVerticallyTriggered()
+{
+    m_flipVertically = !m_flipVertically;
+
+    if (m_flipHorizontally && m_flipVertically)
+    {
+        // Simultanous vertical and horizontal flip is equal to the PI RAD (180degress) rotation
+        m_flipHorizontally = m_flipVertically = false;
+        ++m_rotateIndex;
+        ++m_rotateIndex;
+    }
+
+    transformImage();
+    update();
+}
+
+void ImageAreaWidget::onIncreaseOffsetX(const int pixels)
+{
+    m_imageOffsetX += pixels;
+    repaintWithTransformations();
+}
+
+void ImageAreaWidget::onIncreaseOffsetY(const int pixels)
+{
+    m_imageOffsetY += pixels;
+    repaintWithTransformations();
+}
+
+void ImageAreaWidget::onRotateLeftTriggered()
+{
+    if (m_flipHorizontally || m_flipVertically)
+        ++m_rotateIndex;
+    else
+        --m_rotateIndex;
+    transformImage();
+    update();
+}
+
+void ImageAreaWidget::onRotateRightTriggered()
+{
+    if (m_flipHorizontally || m_flipVertically)
+        --m_rotateIndex;
+    else
+        ++m_rotateIndex;
+    transformImage();
+    update();
+}
+
+void ImageAreaWidget::onScrollDownTriggered()
+{
+    onDecreaseOffsetY();
+}
+
+void ImageAreaWidget::onScrollLeftTriggered()
+{
+    onIncreaseOffsetX();
+}
+
+void ImageAreaWidget::onScrollRightTriggered()
+{
+    onDecreaseOffsetX();
+}
+
+void ImageAreaWidget::onScrollUpTriggered()
+{
+    onIncreaseOffsetY();
+}
+
+void ImageAreaWidget::onSetFitToWindowTriggered(const bool enabled)
+{
+    m_isFitToWindow = enabled;
+    m_scaleFactor = 1;
+    transformImage();
+    update();
+}
+
+void ImageAreaWidget::onZoomImageInTriggered(const double factor)
+{
+    const double maxValue = 2.0;
+    const double newScaleFactor = factor + m_scaleFactor;
+    m_scaleFactor = newScaleFactor < maxValue ? newScaleFactor : maxValue;
+    transformImage();
+    update();
+}
+
+void ImageAreaWidget::onZoomImageOutTriggered(const double factor)
+{
+    const double minValue = 0.1;
+    const double newScaleFactor = -factor + m_scaleFactor;
+    m_scaleFactor = newScaleFactor > minValue ? newScaleFactor : minValue;
+    transformImage();
+    update();
+}
+
+void ImageAreaWidget::onZoomResetTriggered()
+{
+    const bool isFitToWindow = this->m_isFitToWindow;
+    this->m_isFitToWindow = false;
+    m_scaleFactor = 1;
+    transformImage();
+    update();
+    this->m_isFitToWindow = isFitToWindow;
+}
+
+void ImageAreaWidget::checkScrollOffset()
+{
+    if (m_finalImage.height() < size().height())
+        m_imageOffsetY = 0;
+    else if (m_finalImage.height() - m_imageOffsetY < size().height())
+        m_imageOffsetY = m_finalImage.height() - size().height();
+
+    if (m_finalImage.width() < size().width())
+        m_imageOffsetX = 0;
+    else if (m_finalImage.width() - m_imageOffsetX < size().width())
+        m_imageOffsetX = m_finalImage.width() - size().width();
+
+    if (m_imageOffsetY < 0)
+        m_imageOffsetY = 0;
+
+    if (m_imageOffsetX < 0)
+        m_imageOffsetX = 0;
+}
+
+bool ImageAreaWidget::event(QEvent *ev)
+{
+    switch (ev->type())
+    {
+        case QEvent::NativeGesture:
+            nativeGestureEvent(static_cast<QNativeGestureEvent *>(ev));
+            break;
+        default:
+            return QWidget::event(ev);
+    }
+
+    return ev->isAccepted();
+}
+
+void ImageAreaWidget::gestureZoom(qreal value)
+{
+    qDebug() << "before " << m_scaleFactor;
+    value /= 5;
+    if (value > 0)
+        onZoomImageInTriggered(value);
+    else
+        onZoomImageOutTriggered(-value);
+    qDebug() << "after " << m_scaleFactor;
+}
+
+void ImageAreaWidget::nativeGestureEvent(QNativeGestureEvent *event)
+{
+    static qreal zoomPercentage = 0;
+
+    switch (event->gestureType())
+    {
+        case Qt::EndNativeGesture:
+            if (zoomPercentage)
+            {
+                gestureZoom(zoomPercentage);
+                zoomPercentage = 0;
+            }
+            break;
+        case Qt::ZoomNativeGesture:
+            zoomPercentage += event->value();
+
+            // Redraw image in 0.10 steps
+            if (std::abs(zoomPercentage) > 0.10)
+            {
+                gestureZoom(zoomPercentage);
+                zoomPercentage = 0;
+            }
+            break;
+        case Qt::SmartZoomNativeGesture:
+        {
+            const double factor = 1000;
+            if (event->value())
+                onZoomImageInTriggered(factor);
+            else
+                onZoomImageOutTriggered(factor);
+            break;
+        }
+        default:; // nothing here - intentionally
+    }
+
+    event->accept();
+}
+
 void ImageAreaWidget::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
@@ -131,6 +302,19 @@ void ImageAreaWidget::resizeEvent(QResizeEvent *event)
     transformImage();
     update();
     QWidget::resizeEvent(event);
+}
+
+void ImageAreaWidget::scroll(const QPoint &point)
+{
+    if (point.x() >= 0)
+        onDecreaseOffsetX(point.x());
+    else
+        onIncreaseOffsetX(-point.x());
+
+    if (point.y() >= 0)
+        onDecreaseOffsetY(point.y());
+    else
+        onIncreaseOffsetY(-point.y());
 }
 
 void ImageAreaWidget::transformImage()
@@ -199,107 +383,6 @@ void ImageAreaWidget::transformImage()
         emit zoomPercentageChanged(scaledImage.width() / static_cast<qreal>(m_originalImage.width()));
 }
 
-void ImageAreaWidget::onFlipHorizontallyTriggered()
-{
-    m_flipHorizontally = !m_flipHorizontally;
-
-    if (m_flipHorizontally && m_flipVertically)
-    {
-        // Simultanous vertical and horizontal flip is equal to the PI RAD (180degress) rotation
-        m_flipHorizontally = m_flipVertically = false;
-        ++m_rotateIndex;
-        ++m_rotateIndex;
-    }
-
-    transformImage();
-    update();
-}
-
-void ImageAreaWidget::onFlipVerticallyTriggered()
-{
-    m_flipVertically = !m_flipVertically;
-
-    if (m_flipHorizontally && m_flipVertically)
-    {
-        // Simultanous vertical and horizontal flip is equal to the PI RAD (180degress) rotation
-        m_flipHorizontally = m_flipVertically = false;
-        ++m_rotateIndex;
-        ++m_rotateIndex;
-    }
-
-    transformImage();
-    update();
-}
-
-void ImageAreaWidget::onSetFitToWindowTriggered(const bool enabled)
-{
-    m_isFitToWindow = enabled;
-    m_scaleFactor = 1;
-    transformImage();
-    update();
-}
-
-void ImageAreaWidget::onRotateLeftTriggered()
-{
-    if (m_flipHorizontally || m_flipVertically)
-        ++m_rotateIndex;
-    else
-        --m_rotateIndex;
-    transformImage();
-    update();
-}
-
-void ImageAreaWidget::onRotateRightTriggered()
-{
-    if (m_flipHorizontally || m_flipVertically)
-        --m_rotateIndex;
-    else
-        ++m_rotateIndex;
-    transformImage();
-    update();
-}
-
-void ImageAreaWidget::onZoomImageInTriggered(const double factor)
-{
-    const double maxValue = 2.0;
-    const double newScaleFactor = factor + m_scaleFactor;
-    m_scaleFactor = newScaleFactor < maxValue ? newScaleFactor : maxValue;
-    transformImage();
-    update();
-}
-
-void ImageAreaWidget::onZoomImageOutTriggered(const double factor)
-{
-    const double minValue = 0.1;
-    const double newScaleFactor = -factor + m_scaleFactor;
-    m_scaleFactor = newScaleFactor > minValue ? newScaleFactor : minValue;
-    transformImage();
-    update();
-}
-
-void ImageAreaWidget::onZoomResetTriggered()
-{
-    const bool isFitToWindow = this->m_isFitToWindow;
-    this->m_isFitToWindow = false;
-    m_scaleFactor = 1;
-    transformImage();
-    update();
-    this->m_isFitToWindow = isFitToWindow;
-}
-
-void ImageAreaWidget::scroll(const QPoint &point)
-{
-    if (point.x() >= 0)
-        onDecreaseOffsetX(point.x());
-    else
-        onIncreaseOffsetX(-point.x());
-
-    if (point.y() >= 0)
-        onDecreaseOffsetY(point.y());
-    else
-        onIncreaseOffsetY(-point.y());
-}
-
 void ImageAreaWidget::wheelEvent(QWheelEvent *event)
 {
     QPoint numPixels = event->pixelDelta();
@@ -319,87 +402,4 @@ void ImageAreaWidget::wheelEvent(QWheelEvent *event)
     }
 
     event->accept();
-}
-
-bool ImageAreaWidget::event(QEvent *ev)
-{
-    switch (ev->type())
-    {
-        case QEvent::NativeGesture:
-            nativeGestureEvent(static_cast<QNativeGestureEvent *>(ev));
-            break;
-        default:
-            return QWidget::event(ev);
-    }
-
-    return ev->isAccepted();
-}
-
-void ImageAreaWidget::nativeGestureEvent(QNativeGestureEvent *event)
-{
-    static qreal zoomPercentage = 0;
-
-    switch (event->gestureType())
-    {
-        case Qt::EndNativeGesture:
-            if (zoomPercentage)
-            {
-                gestureZoom(zoomPercentage);
-                zoomPercentage = 0;
-            }
-            break;
-        case Qt::ZoomNativeGesture:
-            zoomPercentage += event->value();
-
-            // Redraw image in 0.10 steps
-            if (std::abs(zoomPercentage) > 0.10)
-            {
-                gestureZoom(zoomPercentage);
-                zoomPercentage = 0;
-            }
-            break;
-        case Qt::SmartZoomNativeGesture:
-        {
-            const double factor = 1000;
-            if (event->value())
-                onZoomImageInTriggered(factor);
-            else
-                onZoomImageOutTriggered(factor);
-            break;
-        }
-        default:; // nothing here - intentionally
-    }
-
-    event->accept();
-}
-
-void ImageAreaWidget::gestureZoom(qreal value)
-{
-    qDebug() << "before " << m_scaleFactor;
-    value /= 5;
-    if (value > 0)
-        onZoomImageInTriggered(value);
-    else
-        onZoomImageOutTriggered(-value);
-    qDebug() << "after " << m_scaleFactor;
-}
-
-void ImageAreaWidget::onScrollLeftTriggered()
-{
-    onIncreaseOffsetX();
-}
-
-void ImageAreaWidget::onScrollRightTriggered()
-{
-    onDecreaseOffsetX();
-}
-
-void ImageAreaWidget::onScrollUpTriggered()
-{
-    onIncreaseOffsetY();
-}
-
-void ImageAreaWidget::onScrollDownTriggered()
-{
-    onDecreaseOffsetY();
 }

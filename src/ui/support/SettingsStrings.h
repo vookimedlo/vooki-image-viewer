@@ -20,9 +20,6 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #define SETTINGS_GENERAL_FULLSCREEN "viv/general/fullscreen"
-#define SETTINGS_WINDOW_HIDE_STATUSBAR "viv/window/hide/statusbar"
-#define SETTINGS_WINDOW_HIDE_TOOLBAR "viv/window/hide/toolbar"
-#define SETTINGS_WINDOW_HIDE_NAVIGATION "viv/window/hide/navigation"
 #define SETTINGS_FULLSCREEN_HIDE_STATUSBAR "viv/fullscreen/hide/statusbar"
 #define SETTINGS_FULLSCREEN_HIDE_TOOLBAR "viv/fullscreen/hide/toolbar"
 #define SETTINGS_FULLSCREEN_HIDE_NAVIGATION "viv/fullscreen/hide/navigation"
@@ -36,3 +33,6 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #define SETTINGS_RECENT_FILE_3 "viv/recent/file/3"
 #define SETTINGS_RECENT_FILE_4 "viv/recent/file/4"
 #define SETTINGS_RECENT_FILE_5 "viv/recent/file/5"
+#define SETTINGS_WINDOW_HIDE_STATUSBAR "viv/window/hide/statusbar"
+#define SETTINGS_WINDOW_HIDE_TOOLBAR "viv/window/hide/toolbar"
+#define SETTINGS_WINDOW_HIDE_NAVIGATION "viv/window/hide/navigation"

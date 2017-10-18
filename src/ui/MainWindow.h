@@ -48,8 +48,8 @@ public:
     HANDLE_RESULT_E handleImagePath(const QString &path, const bool addToRecentFiles = true);
 
 protected:
-    void propagateBorderSettings() const;
     QString getRecentFile(const int item) const;
+    void propagateBorderSettings() const;
     QString registerProcessedImage(const QString &filePath, const bool addToRecentFiles = true);
     void restoreRecentFiles();
     void showImage(bool addToRecentFiles);
@@ -59,23 +59,23 @@ public slots:
     void onOpenFileRequested(const QString &path);
 
 protected slots:
-    void onQuitTriggered();
-    void onZoomInTriggered() const;
-    void onZoomOutTriggered() const;
-    void onFitToWindowToggled(const bool toggled) const;
-    void onFullScreenToggled(const bool toggled);
-    void onFileSystemTreeViewActivated(const QModelIndex &index);
-    void onStatusBarToggled(const bool toggled) const;
-    void onOriginalSizeTriggered() const;
-    void onPreviousImageTriggered();
-    void onNextImageTriggered();
     void onAboutTriggered();
     void onAboutComponentsTriggered();
     void onAboutQtTriggered();
-    void onRecentFileTriggered(const QString &filePath);
-    void onClearHistory() const;
     void onAboutSupportedImageFormats();
+    void onClearHistory() const;
+    void onFileSystemTreeViewActivated(const QModelIndex &index);
+    void onFitToWindowToggled(const bool toggled) const;
+    void onFullScreenToggled(const bool toggled);
+    void onNextImageTriggered();
+    void onOriginalSizeTriggered() const;
+    void onPreviousImageTriggered();
+    void onQuitTriggered();
+    void onRecentFileTriggered(const QString &filePath);
     void onSettingsTriggered();
+    void onStatusBarToggled(const bool toggled) const;
+    void onZoomInTriggered() const;
+    void onZoomOutTriggered() const;
     void onZoomPercentageChanged(const qreal value) const;
 
 private:
@@ -86,8 +86,8 @@ private:
 
     struct
     {
+        bool isFileSystemNavigationVisible;
         bool isStatusBarVisible;
         bool isToolBarVisible;
-        bool isFileSystemNavigationVisible;
     } m_widgetVisibilityPriorFullscreen;
 };

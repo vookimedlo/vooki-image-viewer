@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
+#include "../util/compiler.h"
 #include <QLabel>
 #include <QStatusBar>
 
@@ -26,6 +27,7 @@ class StatusBar : public QStatusBar
 {
 public:
     StatusBar(QWidget *parent = nullptr);
+    DISABLE_COPY_MOVE(StatusBar);
 
     QLabel &rightLabel() const;
 

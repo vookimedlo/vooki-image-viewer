@@ -19,6 +19,12 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
+#define DISABLE_COPY_MOVE(CLASS)                                                                                                                               \
+    CLASS &operator=(const CLASS &) = delete;                                                                                                                  \
+    CLASS(const CLASS &) = delete;                                                                                                                             \
+    CLASS &operator=(const CLASS &&) = delete;                                                                                                                 \
+    CLASS(const CLASS &&) = delete
+
 /*
  * C++11 Draft
  * - url http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n4296.pdf
@@ -29,9 +35,3 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
  *   executing the destructor.
  */
 #define UNUSED_VARIABLE(X) static_cast<const void>(X)
-
-#define DISABLE_COPY_MOVE(CLASS)                                                                                                                               \
-    CLASS &operator=(const CLASS &) = delete;                                                                                                                  \
-    CLASS(const CLASS &) = delete;                                                                                                                             \
-    CLASS &operator=(const CLASS &&) = delete;                                                                                                                 \
-    CLASS(const CLASS &&) = delete

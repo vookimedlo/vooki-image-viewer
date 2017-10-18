@@ -22,6 +22,11 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "SettingsStrings.h"
 #include <QCoreApplication>
 
+std::shared_ptr<QSettings> Settings::defaultSettings()
+{
+    return std::make_shared<QSettings>(QSettings::UserScope, QCoreApplication::organizationName());
+}
+
 void Settings::initializeSettings()
 {
     QSettings defaultSettings(QSettings::UserScope, QCoreApplication::organizationName());
@@ -86,9 +91,4 @@ void Settings::restoreDefaultSettings()
 std::shared_ptr<QSettings> Settings::userSettings()
 {
     return std::make_shared<QSettings>(QSettings::UserScope, QCoreApplication::organizationName(), QCoreApplication::applicationName());
-}
-
-std::shared_ptr<QSettings> Settings::defaultSettings()
-{
-    return std::make_shared<QSettings>(QSettings::UserScope, QCoreApplication::organizationName());
 }

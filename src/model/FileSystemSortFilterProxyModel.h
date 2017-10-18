@@ -19,12 +19,14 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
+#include "../util/compiler.h"
 #include <QSortFilterProxyModel>
 
 class FileSystemSortFilterProxyModel : public QSortFilterProxyModel
 {
 public:
     FileSystemSortFilterProxyModel(QObject *parent = nullptr);
+    DISABLE_COPY_MOVE(FileSystemSortFilterProxyModel);
 
 protected:
     bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const override;

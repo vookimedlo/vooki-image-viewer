@@ -45,18 +45,18 @@ signals:
     void zoomPercentageChanged(qreal value);
 
 public slots:
-    void onIncreaseOffsetY(int pixels = m_imageOffsetStep);
-    void onIncreaseOffsetX(int pixels = m_imageOffsetStep);
-    void onDecreaseOffsetY(int pixels = m_imageOffsetStep);
     void onDecreaseOffsetX(int pixels = m_imageOffsetStep);
-    void onRotateLeftTriggered();
-    void onRotateRightTriggered();
+    void onDecreaseOffsetY(int pixels = m_imageOffsetStep);
     void onFlipHorizontallyTriggered();
     void onFlipVerticallyTriggered();
+    void onIncreaseOffsetY(int pixels = m_imageOffsetStep);
+    void onIncreaseOffsetX(int pixels = m_imageOffsetStep);
+    void onRotateLeftTriggered();
+    void onRotateRightTriggered();
+    void onScrollDownTriggered();
     void onScrollLeftTriggered();
     void onScrollRightTriggered();
     void onScrollUpTriggered();
-    void onScrollDownTriggered();
     void onSetFitToWindowTriggered(bool enabled);
     void onZoomImageInTriggered(double factor);
     void onZoomImageOutTriggered(double factor);
@@ -64,14 +64,14 @@ public slots:
 
 protected:
     void checkScrollOffset();
+    bool event(QEvent *ev) override;
+    void gestureZoom(qreal value);
+    void nativeGestureEvent(QNativeGestureEvent *event);
     void paintEvent(QPaintEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
-    void wheelEvent(QWheelEvent *event) override;
-    void nativeGestureEvent(QNativeGestureEvent *event);
-    void gestureZoom(qreal value);
     void scroll(const QPoint &point);
     void transformImage();
-    bool event(QEvent *ev) override;
+    void wheelEvent(QWheelEvent *event) override;
 
 private:
     bool m_drawBorder;

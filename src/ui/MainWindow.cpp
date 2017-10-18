@@ -89,9 +89,204 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow() {}
 
-void MainWindow::onQuitTriggered()
+MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, const bool addToRecentFiles)
 {
-    close();
+    QFileInfo info(path);
+
+    if (info.exists())
+    {
+        if (info.isReadable())
+        {
+            if (info.isDir())
+            {
+                m_catalog.initialize(QDir(path));
+                showImage(addToRecentFiles);
+                return HANDLE_RESULT_E_OK;
+            }
+            else if (info.isFile())
+            {
+                m_catalog.initialize(QFile(path));
+                showImage(addToRecentFiles);
+                return HANDLE_RESULT_E_OK;
+            }
+        }
+
+        return HANDLE_RESULT_E_NOT_READABLE;
+    }
+
+    return HANDLE_RESULT_E_DONT_EXIST;
+}
+
+QString MainWindow::getRecentFile(const int item) const
+{
+    const int index = item + 1;
+    auto actions = m_ui.menuRecentFiles->actions();
+
+    // The first two actions are Clear History & Menu Separator, which are out of our interest
+    if (2 < actions.size() && index < actions.size())
+    {
+        RecentFileAction *recentImage = dynamic_cast<RecentFileAction *>(actions.at(index));
+        return recentImage->text();
+    }
+
+    return QString();
+}
+
+void MainWindow::propagateBorderSettings() const
+{
+    const std::shared_ptr<QSettings> settings = Settings::userSettings();
+    m_ui.imageAreaWidget->drawBorder(settings->value(SETTINGS_IMAGE_BORDER_DRAW).toBool(), settings->value(SETTINGS_IMAGE_BORDER_COLOR).value<QColor>());
+}
+
+QString MainWindow::registerProcessedImage(const QString &filePath, const bool addToRecentFiles)
+{
+    if (filePath.isEmpty())
+        return QString();
+
+    if (addToRecentFiles)
+    {
+        auto actions = m_ui.menuRecentFiles->actions();
+
+        // Remove all current actions from menu widget
+        for (QAction *action : actions)
+        {
+            m_ui.menuRecentFiles->removeAction(action);
+        }
+
+        RecentFileAction *recentImage = new RecentFileAction(filePath, this);
+        recentImage->setStatusTip(filePath);
+
+        QObject::connect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
+
+        // Add the action just after the separator
+        actions.insert(2, recentImage);
+
+        m_ui.menuRecentFiles->insertActions(nullptr, actions);
+
+        // Remove entry exceeding the allowed limit of menu items in recent files menu
+        const int maxRecentFiles = 7;
+        if (actions.size() > maxRecentFiles)
+        {
+            RecentFileAction *recentImage = dynamic_cast<RecentFileAction *>(actions.at(maxRecentFiles));
+            recentImage->setParent(nullptr);
+            QObject::disconnect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
+            delete recentImage;
+            actions.removeAt(maxRecentFiles);
+        }
+    }
+
+    m_ui.fileSystemTreeView->setCurrentIndex(m_sortFileSystemModel->mapFromSource(m_fileSystemModel->index(m_catalog.getCurrent())));
+    m_ui.statusBar->showMessage(filePath);
+    return filePath;
+}
+
+void MainWindow::restoreRecentFiles()
+{
+    const std::shared_ptr<QSettings> settings = Settings::userSettings();
+    if (settings->value(SETTINGS_IMAGE_REMEMBER_RECENT).toBool())
+    {
+        const std::vector<QString> settingsKeys = {
+            SETTINGS_RECENT_FILE_5, SETTINGS_RECENT_FILE_4, SETTINGS_RECENT_FILE_3, SETTINGS_RECENT_FILE_2, SETTINGS_RECENT_FILE_1
+        };
+
+        auto actions = m_ui.menuRecentFiles->actions();
+
+        // Remove all current actions from menu widget
+        for (QAction *action : actions)
+            m_ui.menuRecentFiles->removeAction(action);
+
+        for (const QString &key : settingsKeys)
+        {
+            QString value = settings->value(key).toString();
+            if (value.isEmpty())
+                continue;
+
+            RecentFileAction *recentImage = new RecentFileAction(value, this);
+            recentImage->setStatusTip(value);
+
+            QObject::connect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
+
+            // Add the action just after the separator
+            actions.insert(2, recentImage);
+        }
+
+        m_ui.menuRecentFiles->insertActions(nullptr, actions);
+    }
+}
+
+void MainWindow::showImage(const bool addToRecentFiles)
+{
+    m_ui.imageAreaWidget->showImage(registerProcessedImage(m_catalog.getCurrent(), addToRecentFiles));
+}
+
+void MainWindow::onAboutToQuit() const
+{
+    const std::vector<QString> settingsKeys = {
+        SETTINGS_RECENT_FILE_1, SETTINGS_RECENT_FILE_2, SETTINGS_RECENT_FILE_3, SETTINGS_RECENT_FILE_4, SETTINGS_RECENT_FILE_5
+    };
+
+    std::shared_ptr<QSettings> settings = Settings::userSettings();
+
+    for (size_t i = 0; i < settingsKeys.size(); ++i)
+    {
+        settings->setValue(settingsKeys[i], (settings->value(SETTINGS_IMAGE_REMEMBER_RECENT).toBool()) ? getRecentFile(i + 1) : QString());
+    }
+}
+
+void MainWindow::onOpenFileRequested(const QString &path)
+{
+    handleImagePath(path);
+}
+
+void MainWindow::onAboutTriggered()
+{
+    Ui::aboutDialog uiAbout;
+    QDialog dialog(this);
+    uiAbout.setupUi(&dialog);
+    uiAbout.versionLabel->setText(uiAbout.versionLabel->text().append(Util::getVersionString()));
+    dialog.exec();
+}
+
+void MainWindow::onAboutComponentsTriggered()
+{
+    AboutComponentsDialog dialog(this);
+    dialog.exec();
+}
+
+void MainWindow::onAboutQtTriggered()
+{
+    QMessageBox::aboutQt(this);
+}
+
+void MainWindow::onAboutSupportedImageFormats()
+{
+    Ui::AboutSupportedFormatsDialog uiAbout;
+    QDialog dialog(this);
+    uiAbout.setupUi(&dialog);
+    dialog.exec();
+}
+
+void MainWindow::onClearHistory() const
+{
+    auto actions = m_ui.menuRecentFiles->actions();
+    // Leave the first two actions intact (Clear History & Menu Separator)
+    for (int i = 2; i < actions.size(); i++)
+    {
+        RecentFileAction *recentImage = dynamic_cast<RecentFileAction *>(actions.at(i));
+        QObject::disconnect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
+        m_ui.menuRecentFiles->removeAction(recentImage);
+    }
+}
+
+void MainWindow::onFileSystemTreeViewActivated(const QModelIndex &index)
+{
+    const QString filePath = m_fileSystemModel->filePath(m_sortFileSystemModel->mapToSource(index));
+    handleImagePath(filePath);
+}
+
+void MainWindow::onFitToWindowToggled(const bool toggled) const
+{
+    m_ui.imageAreaWidget->onSetFitToWindowTriggered(toggled);
 }
 
 void MainWindow::onFullScreenToggled(bool toggled)
@@ -147,32 +342,9 @@ void MainWindow::onFullScreenToggled(bool toggled)
     }
 }
 
-void MainWindow::onFileSystemTreeViewActivated(const QModelIndex &index)
+void MainWindow::onNextImageTriggered()
 {
-    const QString filePath = m_fileSystemModel->filePath(m_sortFileSystemModel->mapToSource(index));
-    handleImagePath(filePath);
-}
-
-void MainWindow::onZoomInTriggered() const
-{
-    m_ui.actionFitToWindow->setChecked(false);
-    m_ui.imageAreaWidget->onZoomImageInTriggered(0.10);
-}
-
-void MainWindow::onZoomOutTriggered() const
-{
-    m_ui.actionFitToWindow->setChecked(false);
-    m_ui.imageAreaWidget->onZoomImageOutTriggered(0.10);
-}
-
-void MainWindow::onFitToWindowToggled(const bool toggled) const
-{
-    m_ui.imageAreaWidget->onSetFitToWindowTriggered(toggled);
-}
-
-void MainWindow::onStatusBarToggled(const bool toggled) const
-{
-    toggled ? m_ui.statusBar->show() : m_ui.statusBar->hide();
+    m_ui.imageAreaWidget->showImage(registerProcessedImage(m_catalog.getNext()));
 }
 
 void MainWindow::onOriginalSizeTriggered() const
@@ -186,96 +358,14 @@ void MainWindow::onPreviousImageTriggered()
     m_ui.imageAreaWidget->showImage(registerProcessedImage(m_catalog.getPrevious()));
 }
 
-void MainWindow::onNextImageTriggered()
+void MainWindow::onQuitTriggered()
 {
-    m_ui.imageAreaWidget->showImage(registerProcessedImage(m_catalog.getNext()));
-}
-
-void MainWindow::onAboutTriggered()
-{
-    Ui::aboutDialog uiAbout;
-    QDialog dialog(this);
-    uiAbout.setupUi(&dialog);
-    uiAbout.versionLabel->setText(uiAbout.versionLabel->text().append(Util::getVersionString()));
-    dialog.exec();
-}
-
-void MainWindow::onAboutComponentsTriggered()
-{
-    AboutComponentsDialog dialog(this);
-    dialog.exec();
-}
-
-void MainWindow::onAboutQtTriggered()
-{
-    QMessageBox::aboutQt(this);
-}
-
-void MainWindow::onAboutSupportedImageFormats()
-{
-    Ui::AboutSupportedFormatsDialog uiAbout;
-    QDialog dialog(this);
-    uiAbout.setupUi(&dialog);
-    dialog.exec();
-}
-
-QString MainWindow::registerProcessedImage(const QString &filePath, const bool addToRecentFiles)
-{
-    if (filePath.isEmpty())
-        return QString();
-
-    if (addToRecentFiles)
-    {
-        auto actions = m_ui.menuRecentFiles->actions();
-
-        // Remove all current actions from menu widget
-        for (QAction *action : actions)
-        {
-            m_ui.menuRecentFiles->removeAction(action);
-        }
-
-        RecentFileAction *recentImage = new RecentFileAction(filePath, this);
-        recentImage->setStatusTip(filePath);
-
-        QObject::connect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
-
-        // Add the action just after the separator
-        actions.insert(2, recentImage);
-
-        m_ui.menuRecentFiles->insertActions(nullptr, actions);
-
-        // Remove entry exceeding the allowed limit of menu items in recent files menu
-        const int maxRecentFiles = 7;
-        if (actions.size() > maxRecentFiles)
-        {
-            RecentFileAction *recentImage = dynamic_cast<RecentFileAction *>(actions.at(maxRecentFiles));
-            recentImage->setParent(nullptr);
-            QObject::disconnect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
-            delete recentImage;
-            actions.removeAt(maxRecentFiles);
-        }
-    }
-
-    m_ui.fileSystemTreeView->setCurrentIndex(m_sortFileSystemModel->mapFromSource(m_fileSystemModel->index(m_catalog.getCurrent())));
-    m_ui.statusBar->showMessage(filePath);
-    return filePath;
+    close();
 }
 
 void MainWindow::onRecentFileTriggered(const QString &filePath)
 {
     handleImagePath(filePath, false);
-}
-
-void MainWindow::onClearHistory() const
-{
-    auto actions = m_ui.menuRecentFiles->actions();
-    // Leave the first two actions intact (Clear History & Menu Separator)
-    for (int i = 2; i < actions.size(); i++)
-    {
-        RecentFileAction *recentImage = dynamic_cast<RecentFileAction *>(actions.at(i));
-        QObject::disconnect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
-        m_ui.menuRecentFiles->removeAction(recentImage);
-    }
 }
 
 void MainWindow::onSettingsTriggered()
@@ -292,111 +382,21 @@ void MainWindow::onSettingsTriggered()
     }
 }
 
-void MainWindow::showImage(const bool addToRecentFiles)
+void MainWindow::onStatusBarToggled(const bool toggled) const
 {
-    m_ui.imageAreaWidget->showImage(registerProcessedImage(m_catalog.getCurrent(), addToRecentFiles));
+    toggled ? m_ui.statusBar->show() : m_ui.statusBar->hide();
 }
 
-MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, const bool addToRecentFiles)
+void MainWindow::onZoomInTriggered() const
 {
-    QFileInfo info(path);
-
-    if (info.exists())
-    {
-        if (info.isReadable())
-        {
-            if (info.isDir())
-            {
-                m_catalog.initialize(QDir(path));
-                showImage(addToRecentFiles);
-                return HANDLE_RESULT_E_OK;
-            }
-            else if (info.isFile())
-            {
-                m_catalog.initialize(QFile(path));
-                showImage(addToRecentFiles);
-                return HANDLE_RESULT_E_OK;
-            }
-        }
-
-        return HANDLE_RESULT_E_NOT_READABLE;
-    }
-
-    return HANDLE_RESULT_E_DONT_EXIST;
+    m_ui.actionFitToWindow->setChecked(false);
+    m_ui.imageAreaWidget->onZoomImageInTriggered(0.10);
 }
 
-void MainWindow::propagateBorderSettings() const
+void MainWindow::onZoomOutTriggered() const
 {
-    const std::shared_ptr<QSettings> settings = Settings::userSettings();
-    m_ui.imageAreaWidget->drawBorder(settings->value(SETTINGS_IMAGE_BORDER_DRAW).toBool(), settings->value(SETTINGS_IMAGE_BORDER_COLOR).value<QColor>());
-}
-
-void MainWindow::restoreRecentFiles()
-{
-    const std::shared_ptr<QSettings> settings = Settings::userSettings();
-    if (settings->value(SETTINGS_IMAGE_REMEMBER_RECENT).toBool())
-    {
-        const std::vector<QString> settingsKeys = {
-            SETTINGS_RECENT_FILE_5, SETTINGS_RECENT_FILE_4, SETTINGS_RECENT_FILE_3, SETTINGS_RECENT_FILE_2, SETTINGS_RECENT_FILE_1
-        };
-
-        auto actions = m_ui.menuRecentFiles->actions();
-
-        // Remove all current actions from menu widget
-        for (QAction *action : actions)
-            m_ui.menuRecentFiles->removeAction(action);
-
-        for (const QString &key : settingsKeys)
-        {
-            QString value = settings->value(key).toString();
-            if (value.isEmpty())
-                continue;
-
-            RecentFileAction *recentImage = new RecentFileAction(value, this);
-            recentImage->setStatusTip(value);
-
-            QObject::connect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
-
-            // Add the action just after the separator
-            actions.insert(2, recentImage);
-        }
-
-        m_ui.menuRecentFiles->insertActions(nullptr, actions);
-    }
-}
-
-QString MainWindow::getRecentFile(const int item) const
-{
-    const int index = item + 1;
-    auto actions = m_ui.menuRecentFiles->actions();
-
-    // The first two actions are Clear History & Menu Separator, which are out of our interest
-    if (2 < actions.size() && index < actions.size())
-    {
-        RecentFileAction *recentImage = dynamic_cast<RecentFileAction *>(actions.at(index));
-        return recentImage->text();
-    }
-
-    return QString();
-}
-
-void MainWindow::onAboutToQuit() const
-{
-    const std::vector<QString> settingsKeys = {
-        SETTINGS_RECENT_FILE_1, SETTINGS_RECENT_FILE_2, SETTINGS_RECENT_FILE_3, SETTINGS_RECENT_FILE_4, SETTINGS_RECENT_FILE_5
-    };
-
-    std::shared_ptr<QSettings> settings = Settings::userSettings();
-
-    for (size_t i = 0; i < settingsKeys.size(); ++i)
-    {
-        settings->setValue(settingsKeys[i], (settings->value(SETTINGS_IMAGE_REMEMBER_RECENT).toBool()) ? getRecentFile(i + 1) : QString());
-    }
-}
-
-void MainWindow::onOpenFileRequested(const QString &path)
-{
-    handleImagePath(path);
+    m_ui.actionFitToWindow->setChecked(false);
+    m_ui.imageAreaWidget->onZoomImageOutTriggered(0.10);
 }
 
 void MainWindow::onZoomPercentageChanged(const qreal value) const
