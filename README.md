@@ -1,21 +1,21 @@
 # VookiImageViewer
 Lightweight image viewer for a fast image preview. It has been developed to have the same viewer available for all major operating systems - Microsoft Windows 10, MacOS and GNU/Linux.
 
-The main goal is to have free of charge cross-platform viewer with a simple design and minimum functions which are commonly used.
+The main goal is to have a free of charge cross-platform viewer with a simple design and minimum functions which are commonly used.
 
 - Transformations
-  - Rotation _(clockwise and counterclockwise in 90° steps)._
   - Flip _(horizontal, vertical)._
+  - Rotation _(clockwise and counterclockwise in 90° steps)._
   - Zoom _(in, out, original size, fit to window)._
 - Fullscreen or Window mode.
+- Custom background color.
+- Custom image border color.
 - Remembers recent files.
 - Supports Apple high definition trackpad gestures.
-- Custom background color
-- Custom image border color
 
 ![Application screenshot](src/resource/readme/screenshot_2017-10-19_21-24-02.png?raw=true "")
 
-Supported image formats covers the very common formats as well as the rare ones. Viewer is not intentionally [demosaicing][1] the RAW images, but only displays the embedded thumbnail.
+Supported image formats cover the very common formats as well as the rare ones. Viewer does not intentionally [demosaic][1] the RAW images, but only displays the embedded thumbnail.
 
 
 | FORMAT             | DESCRIPTION                                      |
@@ -83,6 +83,10 @@ All operations have assigned shortcuts and all of them can be user re-assigned e
 | ﻿none            | none                        | none                        | About Qt                                 |
 | ﻿none            | none                        | none                        | About supported formats                  |
 
+All code developed during this project is [GPLv3][2] licensed. Images as well as the 3rd-party components have their own licenses, see proper LICENCE files in a [GitHub Source Tree][3].
+
 
 
 [1]: https://en.wikipedia.org/wiki/Demosaicing
+[2]: ./LICENSE
+[3]: https://github.com/vookimedlo/vooki-image-viewer/
