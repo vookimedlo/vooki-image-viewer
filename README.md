@@ -13,6 +13,8 @@ The main goal is to have free of charge cross-platform viewer with a simple desi
 - Custom background color
 - Custom image border color
 
+![Application screenshot](src/resource/readme/screenshot_2017-10-19_21-24-02.png?raw=true "")
+
 Supported image formats covers the very common formats as well as the rare ones. Viewer is not intentionally [demosaicing][1] the RAW images, but only displays the embedded thumbnail.
 
 
