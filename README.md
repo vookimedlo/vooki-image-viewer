@@ -85,8 +85,9 @@ All operations have assigned shortcuts and all of them can be user re-assigned e
 
 All code developed during this project is [GPLv3][2] licensed. Images as well as the 3rd-party components have their own licenses, see proper LICENCE files in a [GitHub Source Tree][3].
 
-
+Homepage: [https://vookiimageviewer.cz/][4]
 
 [1]: https://en.wikipedia.org/wiki/Demosaicing
 [2]: ./LICENSE
 [3]: https://github.com/vookimedlo/vooki-image-viewer/
+[4]: https://vookiimageviewer.cz/
