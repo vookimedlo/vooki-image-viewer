@@ -77,6 +77,9 @@ MainWindow::MainWindow(QWidget *parent)
     m_ui.toolBar->toggleViewAction()->setChecked(!settings->value(SETTINGS_WINDOW_HIDE_TOOLBAR).toBool());
     m_ui.dockWidget->toggleViewAction()->setChecked(!settings->value(SETTINGS_WINDOW_HIDE_NAVIGATION).toBool());
 
+    if (settings->value(SETTINGS_IMAGE_FITIMAGETOWINDOW).toBool())
+        m_ui.actionFitToWindow->setChecked(true);
+
     if (settings->value(SETTINGS_WINDOW_HIDE_STATUSBAR).toBool())
         m_ui.actionStatusBar->setChecked(false);
 
