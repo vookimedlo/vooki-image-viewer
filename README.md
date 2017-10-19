@@ -54,7 +54,7 @@ All operations have assigned shortcuts and all of them can be user re-assigned e
 
 
 | MacOS | Windows | Linux | Operation                                                             |
----------------------------------------------------------------------------------------------------
+|-------------------------------------------------------------------------------------------------|
 | ﻿<kbd>﻿⌥c</kbd> | <kbd>ALT</kbd>+<kbd>c</kbd> | <kbd>ALT</kbd>+<kbd>c</kbd> | Clear recent file |
 | ﻿<kbd>﻿q</kbd>   | <kbd>q</kbd>                | <kbd>q</kbd> | Quit application                 |
 | ﻿<kbd>﻿﻿⌘,</kbd>  | <kbd>p</kbd>               | <kbd>p</kbd> | Preferences                       |
