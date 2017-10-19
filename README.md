@@ -53,8 +53,8 @@ Supported image formats covers the very common formats as well as the rare ones.
 All operations have assigned shortcuts and all of them can be user re-assigned except the one which is used for Preferences on MacOS.
 
 
-| MacOS | Windows | Linux | Operation                                                             |
-|-------------------------------------------------------------------------------------------------|
+| MacOS          | Windows                     | Linux | Operation                                |
+|----------------|-----------------------------|--------------------------------------------------|
 | ﻿<kbd>﻿⌥c</kbd> | <kbd>ALT</kbd>+<kbd>c</kbd> | <kbd>ALT</kbd>+<kbd>c</kbd> | Clear recent file |
 | ﻿<kbd>﻿q</kbd>   | <kbd>q</kbd>                | <kbd>q</kbd> | Quit application                 |
 | ﻿<kbd>﻿﻿⌘,</kbd>  | <kbd>p</kbd>               | <kbd>p</kbd> | Preferences                       |
