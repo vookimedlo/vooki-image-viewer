@@ -6,6 +6,7 @@ build/build*
 build/qmake/build*
 build/cmake/windows/build
 build/cmake/mac/build
+build/cmake/mac/package
 
 # User settings
 *.user
@@ -42,4 +43,3 @@ build/cmake/mac/build
 *.app
 *.cpp#
 *.h#
-
