@@ -44,7 +44,6 @@ MainWindow::MainWindow(QWidget *parent)
                                         , m_catalog(Util::convertFormatsToFilters(QImageReader::supportedImageFormats()))
 {
     m_ui.setupUi(this);
-
     m_ui.toolBar->toggleViewAction()->setShortcut(QKeySequence(Qt::Key_T));
     m_ui.toolBar->toggleViewAction()->setWhatsThis("shortcut/window/toolbar");
     m_ui.menuShow->addAction(m_ui.toolBar->toggleViewAction());
@@ -247,12 +246,14 @@ void MainWindow::onAboutTriggered()
     QDialog dialog(this);
     uiAbout.setupUi(&dialog);
     uiAbout.versionLabel->setText(uiAbout.versionLabel->text().append(Util::getVersionString()));
+    dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint);
     dialog.exec();
 }
 
 void MainWindow::onAboutComponentsTriggered()
 {
     AboutComponentsDialog dialog(this);
+    dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint);
     dialog.exec();
 }
 
@@ -266,6 +267,7 @@ void MainWindow::onAboutSupportedImageFormats()
     Ui::AboutSupportedFormatsDialog uiAbout;
     QDialog dialog(this);
     uiAbout.setupUi(&dialog);
+    dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint);
     dialog.exec();
 }
 
@@ -374,6 +376,7 @@ void MainWindow::onRecentFileTriggered(const QString &filePath)
 void MainWindow::onSettingsTriggered()
 {
     SettingsDialog dialog(this);
+    dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint);
     dialog.populateShortcuts(m_ui.menuFile);
     dialog.populateShortcuts(m_ui.menuView);
     dialog.populateShortcuts(m_ui.menuWindow);
