@@ -1,10 +1,12 @@
 # Backups
 *~
+*#
 
 # Build dirs
 build/build*
 build/qmake/build*
 build/cmake/windows/build
+build/cmake/windows/support/package/SourceDir
 build/cmake/mac/build
 build/cmake/mac/package
 
@@ -41,5 +43,9 @@ build/cmake/mac/package
 *.exe
 *.out
 *.app
-*.cpp#
-*.h#
+*.msi
+
+# Installer
+*.wixobj
+*.wixpdb
+
