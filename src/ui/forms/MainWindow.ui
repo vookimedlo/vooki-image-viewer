@@ -270,7 +270,7 @@
     <string>About Application</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">shortcut/app/about</string>
+    <string notr="true">viv/shortcut/app/about</string>
    </property>
    <property name="shortcut">
     <string>F1</string>
@@ -368,7 +368,7 @@
     <string>Show/Hide StatusBar</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">shortcut/window/statusbar</string>
+    <string notr="true">viv/shortcut/window/statusbar</string>
    </property>
    <property name="shortcut">
     <string>S</string>
@@ -514,7 +514,7 @@
     <string>About Qt...</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">shortcut/app/about/qt</string>
+    <string notr="true">viv/shortcut/app/about/qt</string>
    </property>
    <property name="menuRole">
     <enum>QAction::AboutQtRole</enum>
@@ -525,7 +525,7 @@
     <string>Preferences...</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">shortcut/app/settings</string>
+    <string notr="true">viv/shortcut/app/settings</string>
    </property>
    <property name="shortcut">
     <string>P</string>
@@ -584,7 +584,7 @@
     <string>Clear History</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">shortcut/history/clear</string>
+    <string notr="true">viv/shortcut/history/clear</string>
    </property>
    <property name="shortcut">
     <string>Alt+C</string>
@@ -598,7 +598,7 @@
     <string>Supported Image Formats...</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">shortcut/app/about/formats</string>
+    <string notr="true">viv/shortcut/app/about/formats</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -609,7 +609,7 @@
     <string>About Components...</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">shortcut/app/about/components</string>
+    <string notr="true">viv/shortcut/app/about/components</string>
    </property>
    <property name="menuRole">
     <enum>QAction::ApplicationSpecificRole</enum>
