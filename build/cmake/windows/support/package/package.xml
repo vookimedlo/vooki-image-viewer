@@ -327,6 +327,9 @@
 
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
     <WixVariable Id="WixUILicenseRtf" Value="gpl-3.0.rtf" />
+    <WixVariable Id="WixUIBannerBmp" Value="wix-vookiimageviewer-banner.png" />
+    <WixVariable Id="WixUIDialogBmp" Value="wix-vookiimageviewer-dialog.png" />
+
 
     <UIRef Id="WixUI_InstallDir" />
     <UIRef Id="WixUI_ErrorProgressText" />
