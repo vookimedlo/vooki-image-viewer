@@ -17,10 +17,10 @@ env:
     - QT=59 BREW=@5.9 PPA=beineri/opt-qt592-trusty
 
 before_install:
-  - '[ "$TRAVIS_OS_NAME" != linux ] || sudo add-apt-repository -y ppa:beineri/opt-qt592-trusty'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || sudo add-apt-repository -y ppa:$PPA'
   - '[ "$TRAVIS_OS_NAME" != linux ] || sudo apt-get update -qq'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || sudo apt-get install qt59-meta-minimal cmake libraw-dev'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || export CMAKE_PREFIX_PATH=/opt/qt59/'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || sudo apt-get install qt$QT-meta-minimal cmake libraw-dev'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || export CMAKE_PREFIX_PATH=/opt/qt$QT/'
   # Ugly hack (next 2 lines) to workaround the host OS misconfiguration while using clang.
   - '[[ "$TRAVIS_OS_NAME" != linux  || "$CXX" != clang++ ]] || sudo apt-get install libc++-dev'
   - '[[ "$TRAVIS_OS_NAME" != linux  || "$CXX" != clang++ ]] || export CXX="clang++ -stdlib=libc++"'
