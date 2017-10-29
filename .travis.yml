@@ -6,9 +6,9 @@ os:
 sudo: required
 dist: trusty
 
-compiler:
-  - '[ "$TRAVIS_OS_NAME" != osx ] || clang'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || gcc'
+#compiler:
+#  - '[ "$TRAVIS_OS_NAME" != osx ] || clang'
+#  - '[ "$TRAVIS_OS_NAME" != linux ] || gcc'
 
 matrix:
   - QT=59 BREW=@5.9 PPA=beineri/opt-qt591-trusty
