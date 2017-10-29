@@ -1,25 +1,25 @@
 language: cpp
 os:
-#  - linux
   - osx
 
 sudo: required
-dist: trusty
+#dist: trusty
 
 #compiler:
 #  - '[ "$TRAVIS_OS_NAME" != osx ] || clang'
 #  - '[ "$TRAVIS_OS_NAME" != linux ] || gcc'
-
-matrix:
-  - QT=59 BREW=@5.9 PPA=beineri/opt-qt591-trusty
-
-before_install:
 #  - '[ "$TRAVIS_OS_NAME" != linux ] || sudo add-apt-repository -y ppa:beineri/opt-qt591-trusty'
 #  - '[ "$TRAVIS_OS_NAME" != linux ] || sudo apt-get update -qq'
 #  - '[ "$TRAVIS_OS_NAME" != linux ] || sudo apt-get install qt59-meta-full cmake libraw-dev'
 #  - '[ "$TRAVIS_OS_NAME" != linux ] || QTDIR="/opt/qt59"'
 #  - '[ "$TRAVIS_OS_NAME" != linux ] || PATH="$QTDIR/bin:$PATH"'
 #  - '[ "$TRAVIS_OS_NAME" != linux ] || source /opt/qt59/bin/qt59-env.sh'
+#  - linux
+
+matrix:
+  - QT=59 BREW=@5.9 PPA=beineri/opt-qt591-trusty
+
+before_install:
   - '[ "$TRAVIS_OS_NAME" != osx ] || brew update'
   - '[ "$TRAVIS_OS_NAME" != osx ] || brew install qt$BREW'
   - '[ "$TRAVIS_OS_NAME" != osx ] || brew link --force qt$BREW'
