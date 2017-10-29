@@ -83,13 +83,20 @@ All operations have assigned shortcuts and all of them can be user re-assigned e
 | ﻿none            | none                        | none                        | About Qt                                 |
 | ﻿none            | none                        | none                        | About supported formats                  |
 
-All code developed during this project is [GPLv3][2] licensed. Images as well as the 3rd-party components have their own licenses, see proper LICENCE files in a [GitHub Source Tree][3].
+All code developed during this project is [GPLv3][2] licensed. Images as well as the 3rd-party components have their own licenses, see proper LICENSE files in a [GitHub Source Tree][3].
 
 -----------------
 
 ## Releases
 Prebuilt binaries for Windows 10 and MacOS as well as sources are available [here.][5]
 Unix binaries are not prebuilt and can be easily built from sources.
+
+-----------------
+
+## Builds
+All binaries could be built easily. For your convenience, travis-ci is used to continuously check if current source code is buildable on Linux and MacOS.
+
+And the result is: [![Build Status](https://travis-ci.org/vookimedlo/vooki-image-viewer.svg?branch=master)](https://travis-ci.org/vookimedlo/vooki-image-viewer)
 
 -----------------
 
