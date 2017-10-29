@@ -14,7 +14,6 @@ matrix:
   - QT=59 BREW=@5.9 PPA=beineri/opt-qt591-trusty
 
 before_install:
-  - '[ "$TRAVIS_OS_NAME" != linux ] || sudo apt-get -qy update'
   - '[ "$TRAVIS_OS_NAME" != linux ] || sudo add-apt-repository -y ppa:beineri/opt-qt591-trusty'
   - '[ "$TRAVIS_OS_NAME" != linux ] || sudo apt-get update -qq'
   - '[ "$TRAVIS_OS_NAME" != linux ] || sudo apt-get install qt59-meta-full cmake libraw-dev'
@@ -29,7 +28,7 @@ before_install:
 
 script:
   - '[ "$TRAVIS_OS_NAME" != linux ] || cd build/cmake/unix'
-  - '[ "$TRAVIS_OS_NAME" != osx ] || cd build/cmake/unix'
+  - '[ "$TRAVIS_OS_NAME" != osx ] || cd build/cmake/mac'
   - mkdir build
   - cd build
   - cmake -DCMAKE_BUILD_TYPE=Release ../../
