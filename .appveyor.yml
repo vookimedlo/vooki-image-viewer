@@ -29,7 +29,7 @@ build_script:
   - cd \projects\vooki-image-viewer\build\cmake\windows
   - generate.bat
   - cd \projects\vooki-image-viewer\build\cmake\windows\build
-  - msbuild Project.sln /t:Build /p:Configuration=Release
+  - msbuild Project.sln /p:Configuration=Release /p:Platform=x64
 
 test: off
 
