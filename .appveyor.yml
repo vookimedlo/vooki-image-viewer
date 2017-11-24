@@ -28,7 +28,7 @@ before_build:
 build_script:
   - cd \projects\vooki-image-viewer\build\cmake\windows
   - generate.bat
-  - cd build
+  - cd \projects\vooki-image-viewer\build\cmake\windows\build
   - msbuild Project.sln /p:UseEnv=true /p:PreferredToolArchitecture=x64 /t:Build /p:Configuration=Release
 
 test: off
