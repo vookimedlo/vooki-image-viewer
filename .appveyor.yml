@@ -18,7 +18,8 @@ init:
   - set Qt5Widgets_DIR=%QTDIR%\lib\cmake\Qt5Widgets\
   - set ORIGPATH=%PATH%
   - set PATH=%QTDIR%\bin;;C:\Program Files (x86)\CMake\bin;%PATH%
-  - if not %platform%==mingw call "C:\Program Files (x86)\Microsoft Visual Studio 15.0\VC\vcvarsall.bat" %platform%
+#  - if not %platform%==mingw call "C:\Program Files (x86)\Microsoft Visual Studio 15.0\VC\vcvarsall.bat" %platform%
+  - dir "C:\Program Files (x86)\"
 
 before_build:
   - qmake -v
