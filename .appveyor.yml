@@ -19,7 +19,7 @@ init:
   - set ORIGPATH=%PATH%
   - set PATH=%QTDIR%\bin;;C:\Program Files (x86)\CMake\bin;%PATH%
 #  - if not %platform%==mingw call "C:\Program Files (x86)\Microsoft Visual Studio 15.0\VC\vcvarsall.bat" %platform%
-  - dir "C:\Program Files (x86)\"
+  - dir "C:\Program Files (x86)"
 
 before_build:
   - qmake -v
@@ -28,6 +28,8 @@ before_build:
 build_script:
   - cd \projects\vooki-image-viewer\build\cmake\windows
   - generate.bat
+  - cd build
+  - msbuild Project.sln /p:UseEnv=true /p:PreferredToolArchitecture=x64 /t:Build /p:Configuration=Release
 
 test: off
 
