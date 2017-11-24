@@ -53,6 +53,15 @@ qt5_wrap_ui(UI_HEADERS
     ../../src/ui/forms/SettingsDialog.ui
 )
 
+# Satisfy new Policy CMP0071
+#
+set_property(SOURCE "ui_AboutComponentsDialog.h" PROPERTY SKIP_AUTOMOC ON)
+set_property(SOURCE "ui_AboutDialog.h" PROPERTY SKIP_AUTOMOC ON)
+set_property(SOURCE "ui_AboutSupportedFormatsDialog.h" PROPERTY SKIP_AUTOMOC ON)
+set_property(SOURCE "ui_MainWindow.h" PROPERTY SKIP_AUTOMOC ON)
+set_property(SOURCE "ui_SettingsDialog.h" PROPERTY SKIP_AUTOMOC ON)
+set_property(SOURCE "qrc_vookiimageviewer.cpp" PROPERTY SKIP_AUTOMOC ON)
+
 qt5_add_resources(UI_RESOURCES ../../src/resource/vookiimageviewer.qrc)
 
 if(APPLE)
@@ -65,6 +74,8 @@ if(APPLE)
     set(MACOSX_BUNDLE_COPYRIGHT "(C) 2017 Michal Duda")
     set(MACOSX_BUNDLE_INFO_STRING "Lightweight image viewer")
     set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${BUILD_DATE_DOTTED})
+    set(MACOSX_BUNDLE_GUI_IDENTIFIER "cz.VookiImageViewer")
+
     set_source_files_properties(../../src/resource/openclipart/vookiimageviewericon.icns PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
     set(SOURCES
