@@ -13,7 +13,7 @@ Expected environment variables
 
 | Environment Variable  | Value                         |
 |-----------------------|-------------------------------|
-| QTDIR                 | c:\Qt\5.9.1\msvc2017_64       |
+| QTDIR                 | c:\Qt\5.9.3\msvc2017_64       |
 | Qt5Core_DIR           | %QTDIR%\lib\cmake\Qt5Core\    |
 | Qt5Gui_DIR            | %QTDIR%\lib\cmake\Qt5Gui\     |
 | Qt5Widgets_DIR        | %QTDIR%\lib\cmake\Qt5Widgets\ |
@@ -26,4 +26,4 @@ Run the generate.bat.
 Deployment
 ----------
 
-Run the deploy.bat to copy all dependant files to the resulting build directory _build/Release._
+Run the deploy.bat to copy all dependant files to the resulting build directory _build/Release.
