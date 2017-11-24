@@ -1,0 +1,35 @@
+# https://VookiImageViewer.cz
+
+image: Visual Studio 2017
+
+version: build{build}
+
+environment:
+  matrix:
+    - example: VookiImageViewer
+      name: win64
+      platform: amd64
+      qt: msvc2017_64
+
+init:
+  - set QTDIR=c:\Qt\5.9\%qt%
+  - set Qt5Core_DIR=%QTDIR%\lib\cmake\Qt5Core\
+  - set Qt5Gui_DIR=%QTDIR%\lib\cmake\Qt5Gui\
+  - set Qt5Widgets_DIR=%QTDIR%\lib\cmake\Qt5Widgets\
+  - set ORIGPATH=%PATH%
+  - set PATH=%QTDIR%\bin;;C:\Program Files (x86)\CMake\bin;%PATH%
+  - if not %platform%==mingw call "C:\Program Files (x86)\Microsoft Visual Studio 15.0\VC\vcvarsall.bat" %platform%
+
+before_build:
+  - qmake -v
+  - cmake --version
+
+build_script:
+  - cd \projects\vooki-image-viewer\build\cmake\windows
+  - generate.bat
+
+test: off
+
+matrix:
+  fast_finish: true
+
