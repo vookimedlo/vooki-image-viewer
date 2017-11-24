@@ -96,8 +96,10 @@ Unix binaries are not prebuilt and can be easily built from sources.
 ## Builds
 All binaries could be built easily. For your convenience, travis-ci is used to continuously check if current source code is buildable on Linux and MacOS.
 
-And the result is: [![Build Status](https://travis-ci.org/vookimedlo/vooki-image-viewer.svg?branch=master)](https://travis-ci.org/vookimedlo/vooki-image-viewer)
-
+And the result is: 
+ - Linux and MacOS: [![Build Status](https://travis-ci.org/vookimedlo/vooki-image-viewer.svg?branch=master)](https://travis-ci.org/vookimedlo/vooki-image-viewer)
+ - Windows: [![Build status](https://ci.appveyor.com/api/projects/status/a0ots8hy6d8lutdv/branch/master?svg=true)](https://ci.appveyor.com/project/vookimedlo/vooki-image-viewer/branch/master)
+ 
 -----------------
 
 Homepage: [https://vookiimageviewer.cz/][4]
