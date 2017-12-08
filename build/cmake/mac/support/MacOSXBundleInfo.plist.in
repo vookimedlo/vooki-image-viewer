@@ -46,6 +46,7 @@
           <string>ppm</string>
           <string>xbm</string>
           <string>xpm</string>
+          <string>tif</string>
           <string>tiff</string>
           <string>webp</string>
           <string>tga</string>

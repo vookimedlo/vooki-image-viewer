@@ -24,6 +24,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QColor>
 #include <QDebug>
 #include <QImage>
+#include <QImageReader>
 #include <QPaintEvent>
 #include <QPainter>
 #include <QRect>
@@ -58,8 +59,13 @@ void ImageAreaWidget::drawBorder(const bool draw, const QColor &color)
 
 bool ImageAreaWidget::showImage(const QString &fileName)
 {
-    if (!m_originalImage.load(fileName))
+    QImageReader reader(fileName);
+    reader.setQuality(100);
+    m_originalImage = reader.read();
+
+    if (m_originalImage.isNull())
         return false;
+
     m_flipHorizontally = m_flipVertically = false;
     m_imageOffsetX = m_imageOffsetY = 0;
     m_rotateIndex.reset(0);
@@ -321,7 +327,7 @@ void ImageAreaWidget::transformImage()
 {
     QTransform transform;
     const QTransform trans = transform.rotate(m_rotateIndex * 90);
-    QImage rotatedImage = m_originalImage.transformed(trans);
+    QImage rotatedImage = m_originalImage.transformed(trans, Qt::SmoothTransformation);
     QImage scaledImage;
 
     // It seems that Qt implementation has swapped the meaning of the vertical and horizontal flip
@@ -331,25 +337,25 @@ void ImageAreaWidget::transformImage()
     {
         QTransform transform;
         QTransform trans = transform.rotate(180, Qt::XAxis);
-        rotatedImage = rotatedImage.transformed(trans);
+        rotatedImage = rotatedImage.transformed(trans, Qt::SmoothTransformation);
     }
 
     if (m_flipVertically)
     {
         QTransform transform;
         QTransform trans = transform.rotate(180, Qt::YAxis);
-        rotatedImage = rotatedImage.transformed(trans);
+        rotatedImage = rotatedImage.transformed(trans, Qt::SmoothTransformation);
     }
 
     if (m_isFitToWindow)
     {
         m_imageOffsetX = m_imageOffsetY = 0;
-        scaledImage = rotatedImage.scaledToWidth(width());
+        scaledImage = rotatedImage.scaledToWidth(width(), Qt::SmoothTransformation);
         if (scaledImage.height() > height())
-            scaledImage = rotatedImage.scaledToHeight(height());
+            scaledImage = rotatedImage.scaledToHeight(height(), Qt::SmoothTransformation);
     }
     else
-        scaledImage = rotatedImage.scaledToWidth(rotatedImage.width() * m_scaleFactor);
+        scaledImage = rotatedImage.scaledToWidth(rotatedImage.width() * m_scaleFactor, Qt::SmoothTransformation);
 
     QSize newSize = scaledImage.size().expandedTo(size());
     QImage newImage(newSize, QImage::Format_RGB32);
