@@ -174,7 +174,7 @@ if(APPLE)
 elseif(WIN32)
     add_definitions(-DLIBRAW_NODLL)
 
-    SET(LIBRAW "3rdPartyLibs/LibRaw-0.18.5")
+    SET(LIBRAW "3rdPartyLibs/LibRaw-0.18.6")
     SET(CMAKE_CXX_FLAGS "-I../${LIBRAW} ${CMAKE_CXX_FLAGS}")
 
     add_library(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
