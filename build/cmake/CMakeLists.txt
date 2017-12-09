@@ -165,7 +165,7 @@ TARGET_LINK_LIBRARIES(vooki_kimg_rgb Qt5::Gui)
 # Camera RAW Thumbnails (raf, mos, cr2, erf, dng, mrw, nef, orf, rw2, pef, x3f, srw, x3f, arw)
 #
 if(APPLE)
-    SET(LIBRAW "3rdPartyLibs/LibRaw-0.18.5")
+    SET(LIBRAW "3rdPartyLibs/LibRaw-0.18.6")
     SET(CMAKE_CXX_FLAGS "-I../${LIBRAW} ${CMAKE_CXX_FLAGS}")
     SET(CMAKE_MODULE_LINKER_FLAGS "-L../${LIBRAW}/lib ${CMAKE_MODULE_LINKER_FLAGS}")
 
@@ -174,7 +174,7 @@ if(APPLE)
 elseif(WIN32)
     add_definitions(-DLIBRAW_NODLL)
 
-    SET(LIBRAW "3rdPartyLibs/LibRaw-0.18.5")
+    SET(LIBRAW "3rdPartyLibs/LibRaw-0.18.6")
     SET(CMAKE_CXX_FLAGS "-I../${LIBRAW} ${CMAKE_CXX_FLAGS}")
 
     add_library(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)

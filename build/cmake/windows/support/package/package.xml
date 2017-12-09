@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
   <Product Name='VookiImageViewer' Id='28F2F82D-4157-4A7E-9D27-FEEA3C0AEC15' UpgradeCode='91FA8A80-C971-408A-A735-4EB3D230D9F6'
-           Language='1033' Codepage='1252' Version='17.11.24' Manufacturer='Michal Duda'>
+           Language='1033' Codepage='1252' Version='17.12.09' Manufacturer='Michal Duda'>
 
-    <Package Id='*' Keywords='Installer' Description="Michal Duda VookiImageViewer 1.0 Installer"
+    <Package Id='*' Keywords='Installer' Description="Michal Duda VookiImageViewer Installer"
              Comments='Lightweight image viewer for a fast image preview.' Manufacturer='Michal Duda'
              InstallerVersion='500' Languages='1033' Compressed='yes' SummaryCodepage='1252'
              Platform="x64" />
@@ -255,6 +255,7 @@
                 <File Id="qjpeg.dll" Name="qjpeg.dll" />
                 <File Id="qsvg.dll" Name="qsvg.dll" />
                 <File Id="qtga.dll" Name="qtga.dll" />
+                <File Id="qtiff.dll" Name="qtiff.dll" />
                 <File Id="qwbmp.dll" Name="qwbmp.dll" />
                 <File Id="qwebp.dll" Name="qwebp.dll" />
                 <File Id="vooki_kimg_pcx.dll" Name="vooki_kimg_pcx.dll" />
@@ -264,7 +265,7 @@
                 <File Id="vooki_kimg_rgb.dll" Name="vooki_kimg_rgb.dll" />
                 <File Id="vooki_kimg_tga.dll" Name="vooki_kimg_tga.dll" />
                 <File Id="vooki_kimg_xcf.dll" Name="vooki_kimg_xcf.dll" />
-                <File Id="vooki_raw_thumb.dll" Name="vooki_raw_thumb.dll" KeyPath="yes"/>
+                <File Id="vooki_raw_thumb.dll" Name="vooki_raw_thumb.dll" KeyPath="yes" />
               </Component>
             </Directory>
 
