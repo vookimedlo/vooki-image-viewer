@@ -14,7 +14,7 @@ compiler:
 
 env:
   matrix:
-    - QT=59 BREW=@5.9 PPA=beineri/opt-qt593-trusty
+    - QT=59 BREW=@5.10 PPA=beineri/opt-qt593-trusty
 
 before_install:
   - '[ "$TRAVIS_OS_NAME" != linux ] || sudo add-apt-repository -y ppa:$PPA'
