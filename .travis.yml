@@ -21,7 +21,7 @@ env:
 
 before_install:
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker pull vookimedlo/ubuntu-qt:"$QT"_"$CC"_xenial'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker run -d --name ubuntu_bash --rm -ti ubuntu-qt:"$QT"_"$CC"_xenial bash'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker run -d --name ubuntu_bash --rm -ti vookimedlo/ubuntu-qt:"$QT"_"$CC"_xenial bash'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash apt-get update -qq'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash apt-get install libraw-dev'
 
