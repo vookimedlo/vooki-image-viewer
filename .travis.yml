@@ -35,9 +35,12 @@ install:
 before_script: 
   - '[ "$TRAVIS_OS_NAME" != osx ] || qmake -v'
   - '[ "$TRAVIS_OS_NAME" != osx ] || cmake --version'
+  - '[ "$TRAVIS_OS_NAME" != osx ] || uname -a'
   
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash qmake -v'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash cmake --version'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash uname -a'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash cat /etc/issue.net' 
 
 script:
   - '[ "$TRAVIS_OS_NAME" != osx ] || cd build/cmake/mac'
