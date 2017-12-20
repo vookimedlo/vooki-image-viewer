@@ -20,7 +20,7 @@ env:
     - QT=5.10 BREW=@5.10 PPA=beineri/opt-qt593-trusty
 
 before_install:
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker pull vookimedlo/ubuntu-qt:${QT}_${CXX}_xenial'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker pull vookimedlo/ubuntu-qt:"$QT"_"$CC"_xenial'
   # Ugly hack (next 2 lines) to workaround the host OS misconfiguration while using clang.
   #- '[[ "$TRAVIS_OS_NAME" != linux  || "$CXX" != clang++ ]] || sudo apt-get install libc++-dev'
   #- '[[ "$TRAVIS_OS_NAME" != linux  || "$CXX" != clang++ ]] || export CXX="clang++ -stdlib=libc++"'
