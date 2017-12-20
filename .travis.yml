@@ -46,6 +46,6 @@ script:
   - '[ "$TRAVIS_OS_NAME" != osx ] || cmake -DCMAKE_BUILD_TYPE=Release ../../'
   - '[ "$TRAVIS_OS_NAME" != osx ] || make'
   
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash bash -c "cd /root/sources/build/cmake/unix && ./generate.sh && cd build && make"'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash bash -c "source /etc/profile && cd /root/sources/build/cmake/unix && ./generate.sh && cd build && make"'
 
       
