@@ -23,7 +23,10 @@ before_install:
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker pull vookimedlo/ubuntu-qt:"$QT"_"$CC"_xenial'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker run -d --name ubuntu_bash --rm -ti vookimedlo/ubuntu-qt:"$QT"_"$CC"_xenial bash'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash apt-get update -qq'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash apt-get install libraw-dev'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash apt-get -y install libraw-dev'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash mkdir /root/sources'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker cp -L ./ ubuntu_bash:/root/sources'
+  
 
 # Ugly hack (next 2 lines) to workaround the host OS misconfiguration while using clang.
   #- '[[ "$TRAVIS_OS_NAME" != linux  || "$CXX" != clang++ ]] || sudo apt-get install libc++-dev'
@@ -43,4 +46,4 @@ script:
   - '[ "$TRAVIS_OS_NAME" != osx ] || cmake -DCMAKE_BUILD_TYPE=Release ../../'
   - '[ "$TRAVIS_OS_NAME" != osx ] || make'
   
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec "ubuntu_bashcd build/cmake/unix && ./generate.sh && build && make"'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash "cd /root/sources/build/cmake/unix && ./generate.sh && build && make"'
