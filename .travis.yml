@@ -16,8 +16,9 @@ compiler:
   - gcc
 
 env:
-  - QT=5.10 UBUNTU=xenial
-  - QT=latestDistroOfficial UBUNTU=xenial
+  - QT=5.10 RELEASE=xenial
+  - QT=latestDistroOfficial RELEASE=xenial
+  - QT=latestDistroOfficial RELEASE=debian-stable
   - BREW=@5.10
 
 matrix:
@@ -25,16 +26,18 @@ matrix:
   - os: linux
     env: BREW=@5.10
   - os: osx
-    env: QT=5.10 UBUNTU=xenial
+    env: QT=5.10 RELEASE=xenial
   - os: osx
-    env: QT=latestDistroOfficial UBUNTU=xenial
+    env: QT=latestDistroOfficial RELEASE=xenial
+  - os: osx
+    env: QT=latestDistroOfficial RELEASE=debian-stable    
     
 install:
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker pull vookimedlo/ubuntu-qt:"$QT"_"$CC"_"$UBUNTU"'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker run -d --name ubuntu_bash --rm -ti vookimedlo/ubuntu-qt:"$QT"_"$CC"_"$UBUNTU" bash'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash apt-get update -qq'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash apt-get -y install libraw-dev'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash mkdir /root/sources'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker pull vookimedlo/ubuntu-qt:"$QT"_"$CC"_"$RELEASE"'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker run -d --name linux_docker --rm -ti vookimedlo/ubuntu-qt:"$QT"_"$CC"_"$RELEASE" bash'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker apt-get update -qq'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker apt-get -y install libraw-dev'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker mkdir /root/sources'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker cp -L ./ ubuntu_bash:/root/sources'
 
   - '[ "$TRAVIS_OS_NAME" != osx ] || brew update'
@@ -47,10 +50,10 @@ before_script:
   - '[ "$TRAVIS_OS_NAME" != osx ] || cmake --version'
   - '[ "$TRAVIS_OS_NAME" != osx ] || uname -a'
   
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash bash -c "source /etc/profile && qmake -v"'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash cmake --version'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash uname -a'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash cat /etc/issue.net' 
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker bash -c "source /etc/profile && qmake -v"'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker cmake --version'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker uname -a'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker cat /etc/issue.net' 
 
 script:
   - '[ "$TRAVIS_OS_NAME" != osx ] || cd build/cmake/mac'
@@ -59,7 +62,7 @@ script:
   - '[ "$TRAVIS_OS_NAME" != osx ] || cmake -DCMAKE_BUILD_TYPE=Release ../../'
   - '[ "$TRAVIS_OS_NAME" != osx ] || make'
   
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash bash -c "source /etc/profile && cd /root/sources/build/cmake/unix && ./generate.sh && cd build && make"'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker bash -c "source /etc/profile && cd /root/sources/build/cmake/unix && ./generate.sh && cd build && make"'
 
 after_script:
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker stop ubuntu_bash'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker stop linux_docker'
