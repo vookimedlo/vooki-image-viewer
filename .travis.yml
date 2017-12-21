@@ -17,8 +17,8 @@ compiler:
 
 env:
   - QT=5.10 RELEASE=xenial
-  - QT=latestDistroOfficial RELEASE=xenial
-  - QT=latestDistroOfficial RELEASE=debian-stable
+  - QT=latestDistroOfficial RELEASE=xenial DISTRO=ubuntu
+  - QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian
   - BREW=@5.10
 
 matrix:
@@ -28,17 +28,17 @@ matrix:
   - os: osx
     env: QT=5.10 RELEASE=xenial
   - os: osx
-    env: QT=latestDistroOfficial RELEASE=xenial
+    env: QT=latestDistroOfficial RELEASE=xenial DISTRO=ubuntu
   - os: osx
-    env: QT=latestDistroOfficial RELEASE=debian-stable    
+    env: QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian    
     
 install:
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker pull vookimedlo/ubuntu-qt:"$QT"_"$CC"_"$RELEASE"'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker run -d --name linux_docker --rm -ti vookimedlo/ubuntu-qt:"$QT"_"$CC"_"$RELEASE" bash'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker pull vookimedlo/"$DISTRO"-qt:"$QT"_"$CC"_"$RELEASE"'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker run -d --name linux_docker --rm -ti vookimedlo/"$DISTRO"-qt:"$QT"_"$CC"_"$RELEASE" bash'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker apt-get update -qq'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker apt-get -y install libraw-dev'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker mkdir /root/sources'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker cp -L ./ ubuntu_bash:/root/sources'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker cp -L ./ linux_docker:/root/sources'
 
   - '[ "$TRAVIS_OS_NAME" != osx ] || brew update'
   - '[ "$TRAVIS_OS_NAME" != osx ] || brew install qt$BREW'
