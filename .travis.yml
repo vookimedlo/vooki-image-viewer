@@ -5,7 +5,7 @@ os:
   - linux
   - osx
 
-sudo: required
+sudo: false
 dist: trusty
 
 services:
@@ -17,11 +17,11 @@ compiler:
 
 env:
   matrix:
-    - QT=5.10 BREW=@5.10
+    - QT=5.10 BREW=@5.10 UBUNTU=xenial
 
 install:
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker pull vookimedlo/ubuntu-qt:"$QT"_"$CC"_xenial'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker run -d --name ubuntu_bash --rm -ti vookimedlo/ubuntu-qt:"$QT"_"$CC"_xenial bash'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker pull vookimedlo/ubuntu-qt:"$QT"_"$CC"_"$UBUNTU"'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker run -d --name ubuntu_bash --rm -ti vookimedlo/ubuntu-qt:"$QT"_"$CC"_"$UBUNTU" bash'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash apt-get update -qq'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash apt-get -y install libraw-dev'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec ubuntu_bash mkdir /root/sources'
