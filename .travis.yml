@@ -54,7 +54,8 @@ before_script:
   - '[ "$TRAVIS_OS_NAME" != osx ] || cmake --version'
   - '[ "$TRAVIS_OS_NAME" != osx ] || uname -a'
   
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker bash -c "source /etc/profile && qmake -v"'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || ([ "$DISTRO" != ubuntu ] && [ "$DISTRO" != debian ]) || docker exec linux_docker bash -c "source /etc/profile && qmake -v"'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || [ "$DISTRO" != fedora ] || docker exec linux_docker bash -c "source /etc/profile && qmake-qt5 -v"'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker cmake --version'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker uname -a'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker cat /etc/issue.net' 
@@ -63,7 +64,7 @@ script:
   - '[ "$TRAVIS_OS_NAME" != osx ] || cd build/cmake/mac'
   - '[ "$TRAVIS_OS_NAME" != osx ] || mkdir build'
   - '[ "$TRAVIS_OS_NAME" != osx ] || cd build'
-  - '[ "$TRAVIS_OS_NAME" != osx ] || cmake -DCMAKE_BUILD_TYPE=Release ../../'
+  - '[ "$TRAVIS_OS_NAME" != osx ] || bash -c "source /etc/profile && cmake -DCMAKE_BUILD_TYPE=Release ../../"'
   - '[ "$TRAVIS_OS_NAME" != osx ] || make'
   
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker bash -c "source /etc/profile && cd /root/sources/build/cmake/unix && ./generate.sh && cd build && make"'
