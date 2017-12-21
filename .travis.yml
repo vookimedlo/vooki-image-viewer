@@ -16,7 +16,7 @@ compiler:
   - gcc
 
 env:
-  - QT=5.10 RELEASE=xenial
+  - QT=5.10 RELEASE=xenial DISTRO=ubuntu
   - QT=latestDistroOfficial RELEASE=xenial DISTRO=ubuntu
   - QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian
   - BREW=@5.10
@@ -26,7 +26,7 @@ matrix:
   - os: linux
     env: BREW=@5.10
   - os: osx
-    env: QT=5.10 RELEASE=xenial
+    env: QT=5.10 RELEASE=xenial DISTRO=ubuntu
   - os: osx
     env: QT=latestDistroOfficial RELEASE=xenial DISTRO=ubuntu
   - os: osx
