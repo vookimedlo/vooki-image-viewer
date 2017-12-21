@@ -16,8 +16,15 @@ compiler:
   - gcc
 
 env:
-  matrix:
-    - QT=5.10 BREW=@5.10 UBUNTU=xenial
+  - QT=5.10 UBUNTU=xenial
+  - BREW=@5.10
+
+matrix:
+  include:
+  - os: osx
+    env: BREW=@5.10
+  - os: linux
+    env: QT=5.10 UBUNTU=xenial
 
 install:
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker pull vookimedlo/ubuntu-qt:"$QT"_"$CC"_"$UBUNTU"'
