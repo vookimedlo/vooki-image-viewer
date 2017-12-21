@@ -20,10 +20,10 @@ env:
   - BREW=@5.10
 
 matrix:
-  include:
-  - os: osx
-    env: BREW=@5.10
+  exclude:
   - os: linux
+    env: BREW=@5.10
+  - os: osx
     env: QT=5.10 UBUNTU=xenial
 
 install:
