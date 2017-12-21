@@ -19,6 +19,7 @@ env:
   - QT=5.10 RELEASE=xenial DISTRO=ubuntu
   - QT=latestDistroOfficial RELEASE=xenial DISTRO=ubuntu
   - QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian
+  - QT=latestDistroOfficial RELEASE=fedora-stable DISTRO=fedora
   - BREW=@5.10
 
 matrix:
@@ -30,13 +31,16 @@ matrix:
   - os: osx
     env: QT=latestDistroOfficial RELEASE=xenial DISTRO=ubuntu
   - os: osx
-    env: QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian    
+    env: QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian
+  - os: osx
+    env: QT=latestDistroOfficial RELEASE=fedora-stable DISTRO=fedora   
     
 install:
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker pull vookimedlo/"$DISTRO"-qt:"$QT"_"$CC"_"$RELEASE"'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker run -d --name linux_docker --rm -ti vookimedlo/"$DISTRO"-qt:"$QT"_"$CC"_"$RELEASE" bash'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker apt-get update -qq'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker apt-get -y install libraw-dev'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || ([ "$DISTRO" == ubuntu ] || [ "$DISTRO" == debian ]) && docker exec linux_docker apt-get update -qq'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || ([ "$DISTRO" == ubuntu ] || [ "$DISTRO" == debian ]) && docker exec linux_docker apt-get -y install libraw-dev'
+  - '[ "$TRAVIS_OS_NAME" != linux ] ||  [ "$DISTRO" == fedora ] && docker exec linux_docker yum -y install LibRaw LibRaw-devel'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker mkdir /root/sources'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker cp -L ./ linux_docker:/root/sources'
 
