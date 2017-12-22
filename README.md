@@ -37,6 +37,7 @@ Supported image formats cover the very common formats as well as the rare ones. 
 | RGB, RGBA, SGI, BW | SGI Images                                       |
 | PIC                | Softimage                                        |
 | TGA                | Targa                                            |
+| TIFF               | Tagged Image File Format
 | ARW                | Sony Alpha Raw [Inner thumbnail only]            |
 | CR2                | Canon Raw Version 2 [Inner thumbnail only]       |
 | DNG                | Digital Negative [Inner thumbnail only]          |
