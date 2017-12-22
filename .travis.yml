@@ -5,38 +5,69 @@ os:
   - linux
   - osx
 
-sudo: required
+sudo: false
 dist: trusty
+
+services:
+  - docker
 
 compiler:
   - clang
   - gcc
 
 env:
-  matrix:
-    - QT=59 BREW=@5.10 PPA=beineri/opt-qt593-trusty
+  - QT=5.10 RELEASE=xenial DISTRO=ubuntu
+  - QT=latestDistroOfficial RELEASE=xenial DISTRO=ubuntu
+  - QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian
+  - QT=latestDistroOfficial RELEASE=fedora-stable DISTRO=fedora
+  - BREW=@5.10
 
-before_install:
-  - '[ "$TRAVIS_OS_NAME" != linux ] || sudo add-apt-repository -y ppa:$PPA'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || sudo apt-get update -qq'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || sudo apt-get install qt$QT-meta-minimal cmake libraw-dev'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || export CMAKE_PREFIX_PATH=/opt/qt$QT/'
-  # Ugly hack (next 2 lines) to workaround the host OS misconfiguration while using clang.
-  - '[[ "$TRAVIS_OS_NAME" != linux  || "$CXX" != clang++ ]] || sudo apt-get install libc++-dev'
-  - '[[ "$TRAVIS_OS_NAME" != linux  || "$CXX" != clang++ ]] || export CXX="clang++ -stdlib=libc++"'
+matrix:
+  exclude:
+  - os: linux
+    env: BREW=@5.10
+  - os: osx
+    env: QT=5.10 RELEASE=xenial DISTRO=ubuntu
+  - os: osx
+    env: QT=latestDistroOfficial RELEASE=xenial DISTRO=ubuntu
+  - os: osx
+    env: QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian
+  - os: osx
+    env: QT=latestDistroOfficial RELEASE=fedora-stable DISTRO=fedora   
+    
+install:
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker pull vookimedlo/"$DISTRO"-qt:"$QT"_"$CC"_"$RELEASE"'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker run -d --name linux_docker --rm -ti vookimedlo/"$DISTRO"-qt:"$QT"_"$CC"_"$RELEASE" bash'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || ([ "$DISTRO" != ubuntu ] && [ "$DISTRO" != debian ]) || docker exec linux_docker apt-get update -qq'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || ([ "$DISTRO" != ubuntu ] && [ "$DISTRO" != debian ]) || docker exec linux_docker apt-get -y install libraw-dev'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || [ "$DISTRO" != fedora ] || docker exec linux_docker yum -y install LibRaw LibRaw-devel'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker mkdir /root/sources'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker cp -L ./ linux_docker:/root/sources'
 
   - '[ "$TRAVIS_OS_NAME" != osx ] || brew update'
   - '[ "$TRAVIS_OS_NAME" != osx ] || brew install qt$BREW'
   - '[ "$TRAVIS_OS_NAME" != osx ] || brew link --force qt$BREW'
   - '[ "$TRAVIS_OS_NAME" != osx ] || export CMAKE_PREFIX_PATH=/usr/local/opt/qt/'
 
-  - qmake -v
-  - cmake --version
+before_script: 
+  - '[ "$TRAVIS_OS_NAME" != osx ] || qmake -v'
+  - '[ "$TRAVIS_OS_NAME" != osx ] || cmake --version'
+  - '[ "$TRAVIS_OS_NAME" != osx ] || uname -a'
+  
+  - '[ "$TRAVIS_OS_NAME" != linux ] || ([ "$DISTRO" != ubuntu ] && [ "$DISTRO" != debian ]) || docker exec linux_docker bash -c "source /etc/profile && qmake -v"'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || [ "$DISTRO" != fedora ] || docker exec linux_docker bash -c "source /etc/profile && qmake-qt5 -v"'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker cmake --version'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker uname -a'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker cat /etc/issue.net' 
 
 script:
-  - '[ "$TRAVIS_OS_NAME" != linux ] || cd build/cmake/unix'
   - '[ "$TRAVIS_OS_NAME" != osx ] || cd build/cmake/mac'
-  - mkdir build
-  - cd build
-  - cmake -DCMAKE_BUILD_TYPE=Release ../../
-  - make
+  - '[ "$TRAVIS_OS_NAME" != osx ] || mkdir build'
+  - '[ "$TRAVIS_OS_NAME" != osx ] || cd build'
+  - '[ "$TRAVIS_OS_NAME" != osx ] || bash -c "source /etc/profile && cmake -DCMAKE_BUILD_TYPE=Release ../../"'
+  - '[ "$TRAVIS_OS_NAME" != osx ] || make'
+  
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker bash -c "source /etc/profile && cd /root/sources/build/cmake/unix && ./generate.sh && cd build && make"'
+
+after_script:
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker stop linux_docker'
