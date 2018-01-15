@@ -66,6 +66,8 @@ protected:
     void checkScrollOffset();
     bool event(QEvent *ev) override;
     void gestureZoom(qreal value);
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
     void nativeGestureEvent(QNativeGestureEvent *event);
     void paintEvent(QPaintEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
@@ -85,6 +87,7 @@ private:
     RotatingIndex<uint8_t> m_rotateIndex;
     int m_imageOffsetY;
     int m_imageOffsetX;
+    QPoint m_mouseMoveLast;
 
     static const int m_imageOffsetStep;
 };
