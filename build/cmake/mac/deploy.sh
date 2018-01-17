@@ -7,3 +7,4 @@ target=VookiImageViewer.app/Contents/PlugIns/imageformats/
 cd build
 cp -f libvooki_kimg_pcx.so libvooki_kimg_pic.so libvooki_kimg_psd.so libvooki_kimg_ras.so libvooki_kimg_rgb.so libvooki_kimg_tga.so libvooki_kimg_xcf.so $target
 cp -f libvooki_raw_thumb.so $target
+cp -f ../3rdPartyLibs/qt-backport/5.10/libqmacheif.dylib $target
