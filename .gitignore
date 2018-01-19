@@ -48,4 +48,4 @@ build/cmake/mac/package
 # Installer
 *.wixobj
 *.wixpdb
-
+*.dmg
