@@ -29,6 +29,9 @@ echo "Setting background image"
 test -d "$MOUNT_DIR/.background" || mkdir "$MOUNT_DIR/.background"
 cp -f "$BACKGROUND_FILE" "$MOUNT_DIR/.background/background.png"
 
+echo "Setting custom volume icon"
+cp -f "$VOLUME_ICON_FILE" "$MOUNT_DIR/.VolumeIcon.icns"
+
 echo "Executing script"
 cat <<EOF | /usr/bin/osascript -l JavaScript
     var finder = Application("Finder");
@@ -37,6 +40,7 @@ cat <<EOF | /usr/bin/osascript -l JavaScript
     var window = disk.containerWindow();
     window.currentView = "icon view";
     window.toolbarVisible = false;
+    window.statusbarVisible = false;
     window.sidebarWidth = 135;
     window.bounds = {"x":30, "y":50, "width":550+135, "height":450};
     var options = window.iconViewOptions();
@@ -44,6 +48,9 @@ cat <<EOF | /usr/bin/osascript -l JavaScript
     options.arrangement = "not arranged";
     options.backgroundPicture = disk.files[".background:background.png"];
 
+    disk.items[".VolumeIcon.icns"].position = {"x":1000, "y":1000};
+    disk.items[".fseventsd"].position = {"x":1000, "y":1000};
+    disk.items[".background"].position = {"x":1000, "y":1000};
     disk.items["VookiImageViewer.app"].position = {"x":280, "y":130};
     disk.items["Applications"].position = {"x":580, "y":130};
 
@@ -68,7 +75,7 @@ EOF
 
 echo "Setting custom volume icon"
 cp -f "$VOLUME_ICON_FILE" "$MOUNT_DIR/.VolumeIcon.icns"
-SetFile -c icnC "$MOUNT_DIR/.VolumeIcon.icns"
+SetFile -c nC "$MOUNT_DIR/.VolumeIcon.icns"
 SetFile -a C "$MOUNT_DIR"
 
 echo "Fixing permissions"
