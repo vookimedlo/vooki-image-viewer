@@ -20,7 +20,7 @@ env:
   - QT=latestDistroOfficial RELEASE=xenial DISTRO=ubuntu
   - QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian
   - QT=latestDistroOfficial RELEASE=fedora-stable DISTRO=fedora
-  - BREW=@5.10
+  - BREW=@5.11
 
 matrix:
   exclude:
