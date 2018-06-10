@@ -16,20 +16,21 @@ compiler:
   - gcc
 
 env:
-  - QT=5.10 RELEASE=xenial DISTRO=ubuntu
-  - QT=latestDistroOfficial RELEASE=xenial DISTRO=ubuntu
+  - QT=5.11 RELEASE=bionic DISTRO=ubuntu
+  - QT=latestDistroOfficial RELEASE=bionic DISTRO=ubuntu
   - QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian
   - QT=latestDistroOfficial RELEASE=fedora-stable DISTRO=fedora
-  - BREW=@5.10
+  - BREW=@5.11
 
 matrix:
   exclude:
   - os: linux
-    env: BREW=@5.10
+    env: BREW=@5.11
+    
   - os: osx
-    env: QT=5.10 RELEASE=xenial DISTRO=ubuntu
+    env: QT=5.11 RELEASE=bionic DISTRO=ubuntu
   - os: osx
-    env: QT=latestDistroOfficial RELEASE=xenial DISTRO=ubuntu
+    env: QT=latestDistroOfficial RELEASE=bionic DISTRO=ubuntu
   - os: osx
     env: QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian
   - os: osx
