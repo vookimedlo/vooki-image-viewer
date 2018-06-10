@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.2)
 
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Gui REQUIRED)
-find_package(Qt5Widgets REQUIRED)
+set(USE_QT_LIBRARIES
+    Core Gui Widgets
+   )
+
+find_package(Qt5 REQUIRED ${USE_QT_LIBRARIES})
 
 # std::make_unique is part of c++14
 #
@@ -116,10 +118,10 @@ else()
         ${UI_RESOURCES})
 endif()
 
-qt5_use_modules(VookiImageViewer
-    Core
-    Gui
-    Widgets)
+target_link_libraries(VookiImageViewer
+    Qt5::Core
+    Qt5::Gui
+    Qt5::Widgets)
 
 TARGET_LINK_LIBRARIES(VookiImageViewer ${OS_LIBS})
 
