@@ -20,12 +20,12 @@ env:
   - QT=latestDistroOfficial RELEASE=bionic DISTRO=ubuntu
   - QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian
   - QT=latestDistroOfficial RELEASE=fedora-stable DISTRO=fedora
-  - BREW=@5.11
+  - BREW=
 
 matrix:
   exclude:
   - os: linux
-    env: BREW=@5.11
+    env: BREW=
     
   - os: osx
     env: QT=5.11 RELEASE=bionic DISTRO=ubuntu
