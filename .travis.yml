@@ -30,7 +30,7 @@ matrix:
   - os: osx
     env: QT=5.11 RELEASE=bionic DISTRO=ubuntu
   - os: osx
-    env: QT=latestDistroOfficial RELEASE=bionic DISTRO=ubuntu
+    env: QT=latestDistroOfficial RELEASE=cosmic DISTRO=ubuntu
   - os: osx
     env: QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian
   - os: osx
