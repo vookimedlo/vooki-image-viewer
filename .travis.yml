@@ -16,7 +16,7 @@ compiler:
   - gcc
 
 env:
-  - QT=5.11 RELEASE=bionic DISTRO=ubuntu
+  - QT=5.12 RELEASE=bionic DISTRO=ubuntu
   - QT=latestDistroOfficial RELEASE=cosmic DISTRO=ubuntu
   - QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian
   - QT=latestDistroOfficial RELEASE=fedora-stable DISTRO=fedora
@@ -28,7 +28,7 @@ matrix:
     env: BREW=
     
   - os: osx
-    env: QT=5.11 RELEASE=bionic DISTRO=ubuntu
+    env: QT=5.12 RELEASE=bionic DISTRO=ubuntu
   - os: osx
     env: QT=latestDistroOfficial RELEASE=cosmic DISTRO=ubuntu
   - os: osx
