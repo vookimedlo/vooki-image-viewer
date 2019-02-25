@@ -14,6 +14,7 @@
 #include <QPrinter>
 #include <QProcess>
 #include <QTemporaryFile>
+#include <QCoreApplication>
 
 // logging category for this framework, default: log stuff >= warning
 Q_LOGGING_CATEGORY(EPSPLUGIN, "epsplugin", QtWarningMsg)
@@ -156,7 +157,7 @@ bool EPSHandler::read(QImage *image)
 
     QTemporaryFile tmpFile;
     if (!tmpFile.open()) {
-        qWarning() << "Could not create the temporary file" << tmpFile.fileName();
+        qCWarning(EPSPLUGIN) << "Could not create the temporary file" << tmpFile.fileName();
         return false;
     }
     qCDebug(EPSPLUGIN) << "temporary file:" << tmpFile.fileName();
@@ -198,7 +199,7 @@ bool EPSHandler::read(QImage *image)
     converter.setProcessChannelMode(QProcess::ForwardedErrorChannel);
     converter.start(QStringLiteral("gs"), gsArgs);
     if (!converter.waitForStarted(3000)) {
-        qWarning() << "Reading EPS files requires gs (from GhostScript)";
+        qCWarning(EPSPLUGIN) << "Reading EPS files requires gs (from GhostScript)";
         return false;
     }
 
@@ -297,7 +298,7 @@ bool EPSHandler::write(const QImage &image)
         converter.start(QStringLiteral("gs"), gsArgs);
 
         if (!converter.waitForStarted(3000)) {
-            qWarning() << "Creating EPS files requires pdftops (from Poppler) or gs (from GhostScript)";
+            qCWarning(EPSPLUGIN) << "Creating EPS files requires pdftops (from Poppler) or gs (from GhostScript)";
             return false;
         }
     }
@@ -312,7 +313,7 @@ bool EPSHandler::write(const QImage &image)
 bool EPSHandler::canRead(QIODevice *device)
 {
     if (!device) {
-        qWarning("EPSHandler::canRead() called with no device");
+        qCWarning(EPSPLUGIN) << "EPSHandler::canRead() called with no device";
         return false;
     }
 
@@ -333,14 +334,23 @@ bool EPSHandler::canRead(QIODevice *device)
 
 QImageIOPlugin::Capabilities EPSPlugin::capabilities(QIODevice *device, const QByteArray &format) const
 {
+    // prevent bug #397040: when on app shutdown the clipboard content is to be copied to survive end of the app,
+    // QXcbIntegration looks for some QImageIOHandler to apply, querying the capabilities and picking any first.
+    // At that point this plugin no longer has its requirements e.g. to run the external process, so we have to deny.
+    // The capabilities seem to be queried on demand in Qt code and not cached, so it's fine to report based
+    // in current dynamic state
+    if (!QCoreApplication::instance()) {
+        return {};
+    }
+
     if (format == "eps" || format == "epsi" || format == "epsf") {
         return Capabilities(CanRead | CanWrite);
     }
     if (!format.isEmpty()) {
-        return nullptr;
+        return {};
     }
     if (!device->isOpen()) {
-        return nullptr;
+        return {};
     }
 
     Capabilities cap;

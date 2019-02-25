@@ -24,10 +24,12 @@
 #include <stdlib.h>
 #include <QImage>
 #include <QPainter>
-#include <QtCore/QIODevice>
-#include <QtCore/QStack>
-#include <QtCore/QVector>
-// #include <QDebug>
+#include <QIODevice>
+#include <QStack>
+#include <QVector>
+#include <QDebug>
+
+#include <string.h>
 
 #include "gimp_p.h"
 
@@ -86,16 +88,17 @@ private:
         } mask_channel;
 
         bool active;            //!< Is this layer the active layer?
-        quint32 opacity;        //!< The opacity of the layer
-        quint32 visible;        //!< Is the layer visible?
+        quint32 opacity = 255;  //!< The opacity of the layer
+        quint32 visible = 1;    //!< Is the layer visible?
         quint32 linked;     //!< Is this layer linked (geometrically)
         quint32 preserve_transparency; //!< Preserve alpha when drawing on layer?
-        quint32 apply_mask;     //!< Apply the layer mask?
+        quint32 apply_mask = 9; //!< Apply the layer mask? Use 9 as "uninitilized". Spec says "If the property does not appear for a layer which has a layer mask, it defaults to true (1).
+                                //   Robust readers should force this to false if the layer has no layer mask.
         quint32 edit_mask;      //!< Is the layer mask the being edited?
         quint32 show_mask;      //!< Show the layer mask rather than the image?
-        qint32 x_offset;        //!< x offset of the layer relative to the image
-        qint32 y_offset;        //!< y offset of the layer relative to the image
-        quint32 mode;           //!< Combining mode of layer (LayerModeEffects)
+        qint32 x_offset = 0;    //!< x offset of the layer relative to the image
+        qint32 y_offset = 0;    //!< y offset of the layer relative to the image
+        quint32 mode = 0;       //!< Combining mode of layer (LayerModeEffects)
         quint32 tattoo;     //!< (unique identifier?)
 
         //! As each tile is read from the file, it is buffered here.
@@ -112,6 +115,9 @@ private:
         {
             delete[] name;
         }
+
+        Layer(const Layer &) = delete;
+        Layer &operator=(const Layer &) = delete;
     };
 
     /*!
@@ -126,11 +132,11 @@ private:
         qint32 type;            //!< type of the XCF image (GimpImageBaseType)
 
         quint8 compression;     //!< tile compression method (CompressionType)
-        float x_resolution;     //!< x resolution in dots per inch
-        float y_resolution;     //!< y resolution in dots per inch
+        float x_resolution = -1;//!< x resolution in dots per inch
+        float y_resolution = -1;//!< y resolution in dots per inch
         qint32 tattoo;          //!< (unique identifier?)
         quint32 unit;           //!< Units of The GIMP (inch, mm, pica, etc...)
-        qint32 num_colors;      //!< number of colors in an indexed image
+        qint32 num_colors = 0;  //!< number of colors in an indexed image
         QVector<QRgb> palette;          //!< indexed image color palette
 
         int num_layers;         //!< number of layers
@@ -178,7 +184,7 @@ private:
     static const LayerModes layer_modes[];
 
     bool loadImageProperties(QDataStream &xcf_io, XCFImage &image);
-    bool loadProperty(QDataStream &xcf_io, PropType &type, QByteArray &bytes);
+    bool loadProperty(QDataStream &xcf_io, PropType &type, QByteArray &bytes, quint32 &rawType);
     bool loadLayer(QDataStream &xcf_io, XCFImage &xcf_image);
     bool loadLayerProperties(QDataStream &xcf_io, Layer &layer);
     bool composeTiles(XCFImage &xcf_image);
@@ -384,8 +390,9 @@ bool XCFImageFormat::loadImageProperties(QDataStream &xcf_io, XCFImage &xcf_imag
     while (true) {
         PropType type;
         QByteArray bytes;
+        quint32 rawType;
 
-        if (!loadProperty(xcf_io, type, bytes)) {
+        if (!loadProperty(xcf_io, type, bytes, rawType)) {
 //          qDebug() << "XCF: error loading global image properties";
             return false;
         }
@@ -444,6 +451,7 @@ bool XCFImageFormat::loadImageProperties(QDataStream &xcf_io, XCFImage &xcf_imag
                 return false;
             }
 
+            xcf_image.palette = QVector<QRgb>();
             xcf_image.palette.reserve(xcf_image.num_colors);
 
             for (int i = 0; i < xcf_image.num_colors; i++) {
@@ -454,7 +462,7 @@ bool XCFImageFormat::loadImageProperties(QDataStream &xcf_io, XCFImage &xcf_imag
             break;
 
         default:
-//                  qDebug() << "XCF: unimplemented image property" << type
+//                  qDebug() << "XCF: unimplemented image property" << rawType
 //                          << ", size " << bytes.size() << endl;
             break;
         }
@@ -468,11 +476,16 @@ bool XCFImageFormat::loadImageProperties(QDataStream &xcf_io, XCFImage &xcf_imag
  * \param type returns with the property type.
  * \param bytes returns with the property data.
  * \return true if there were no IO errors.  */
-bool XCFImageFormat::loadProperty(QDataStream &xcf_io, PropType &type, QByteArray &bytes)
+bool XCFImageFormat::loadProperty(QDataStream &xcf_io, PropType &type, QByteArray &bytes, quint32 &rawType)
 {
-    quint32 foo;
-    xcf_io >> foo;
-    type = PropType(foo); // TODO urks
+    xcf_io >> rawType;
+    if (rawType >= MAX_SUPPORTED_PROPTYPE) {
+        type = MAX_SUPPORTED_PROPTYPE;
+        // return true because we don't really want to totally fail on an unsupported property since it may not be fatal
+        return true;
+    }
+
+    type = PropType(rawType);
 
     char *data = nullptr;
     quint32 size;
@@ -486,11 +499,12 @@ bool XCFImageFormat::loadProperty(QDataStream &xcf_io, PropType &type, QByteArra
         quint32 ncolors;
         xcf_io >> ncolors;
 
+        size = 3 * ncolors + 4;
+
         if (size > 65535 || size < 4) {
             return false;
         }
 
-        size = 3 * ncolors + 4;
         data = new char[size];
 
         // since we already read "ncolors" from the stream, we put that data back
@@ -528,7 +542,11 @@ bool XCFImageFormat::loadProperty(QDataStream &xcf_io, PropType &type, QByteArra
             return false;
         }
         data = new char[size];
-        xcf_io.readRawData(data, size);
+        const quint32 dataRead = xcf_io.readRawData(data, size);
+        if (dataRead < size) {
+//          qDebug() << "XCF: loadProperty read less data than expected" << data_length << dataRead;
+            memset(&data[dataRead], 0, size - dataRead);
+        }
     }
 
     if (size != 0 && data) {
@@ -595,11 +613,19 @@ bool XCFImageFormat::loadLayer(QDataStream &xcf_io, XCFImage &xcf_image)
     }
 
     if (layer.mask_offset != 0) {
+        // 9 means its not on the file. Spec says "If the property does not appear for a layer which has a layer mask, it defaults to true (1).
+        if (layer.apply_mask == 9) {
+            layer.apply_mask = 1;
+        }
+
         xcf_io.device()->seek(layer.mask_offset);
 
         if (!loadMask(xcf_io, layer)) {
             return false;
         }
+    } else {
+        // Spec says "Robust readers should force this to false if the layer has no layer mask."
+        layer.apply_mask = 0;
     }
 
     // Now we should have enough information to initialize the final
@@ -631,8 +657,9 @@ bool XCFImageFormat::loadLayerProperties(QDataStream &xcf_io, Layer &layer)
     while (true) {
         PropType type;
         QByteArray bytes;
+        quint32 rawType;
 
-        if (!loadProperty(xcf_io, type, bytes)) {
+        if (!loadProperty(xcf_io, type, bytes, rawType)) {
 //          qDebug() << "XCF: error loading layer properties";
             return false;
         }
@@ -649,6 +676,7 @@ bool XCFImageFormat::loadLayerProperties(QDataStream &xcf_io, Layer &layer)
 
         case PROP_OPACITY:
             property >> layer.opacity;
+            layer.opacity = std::min(layer.opacity, 255u);
             break;
 
         case PROP_VISIBLE:
@@ -688,7 +716,7 @@ bool XCFImageFormat::loadLayerProperties(QDataStream &xcf_io, Layer &layer)
             break;
 
         default:
-//              qDebug() << "XCF: unimplemented layer property " << type
+//              qDebug() << "XCF: unimplemented layer property " << rawType
 //                      << ", size " << bytes.size() << endl;
             break;
         }
@@ -713,7 +741,8 @@ bool XCFImageFormat::composeTiles(XCFImage &xcf_image)
 
     // SANITY CHECK: Catch corrupted XCF image file where the width or height
     // of a tile is reported are bogus. See Bug# 234030.
-    if (layer.width > 32767 || layer.height > 32767 || layer.width * layer.height > 16384 * 16384) {
+    if (layer.width > 32767 || layer.height > 32767
+        || (sizeof(void *) == 4 && layer.width * layer.height > 16384 * 16384)) {
         return false;
     }
 
@@ -872,7 +901,7 @@ void XCFImageFormat::setPalette(XCFImage &xcf_image, QImage &image)
 void XCFImageFormat::assignImageBytes(Layer &layer, uint i, uint j)
 {
     QImage &image = layer.image_tiles[j][i];
-    uchar *tile = layer.tile;
+    const uchar *tile = layer.tile;
     const int width = image.width();
     const int height = image.height();
     const int bytesPerLine = image.bytesPerLine();
@@ -952,6 +981,46 @@ bool XCFImageFormat::loadHierarchy(QDataStream &xcf_io, Layer &layer)
 
     xcf_io >> width >> height >> bpp >> offset;
 
+    // make sure bpp is correct and complain if it is not
+    switch (layer.type) {
+        case RGB_GIMAGE:
+            if (bpp != 3) {
+                qWarning() << "Found layer of type RGB but with bpp != 3" << bpp;
+                bpp = 3;
+            }
+            break;
+        case RGBA_GIMAGE:
+            if (bpp != 4) {
+                qWarning() << "Found layer of type RGBA but with bpp != 4" << bpp;
+                bpp = 4;
+            }
+            break;
+        case GRAY_GIMAGE:
+            if (bpp != 1) {
+                qWarning() << "Found layer of type Gray but with bpp != 1" << bpp;
+                bpp = 1;
+            }
+            break;
+        case GRAYA_GIMAGE:
+            if (bpp != 2) {
+                qWarning() << "Found layer of type Gray+Alpha but with bpp != 2" << bpp;
+                bpp = 2;
+            }
+            break;
+        case INDEXED_GIMAGE:
+            if (bpp != 1) {
+                qWarning() << "Found layer of type Indexed but with bpp != 1" << bpp;
+                bpp = 1;
+            }
+            break;
+        case INDEXEDA_GIMAGE:
+            if (bpp != 2) {
+                qWarning() << "Found layer of type Indexed+Alpha but with bpp != 2" << bpp;
+                bpp = 2;
+            }
+            break;
+    }
+
     // GIMP stores images in a "mipmap"-like format (multiple levels of
     // increasingly lower resolution). Only the top level is used here,
     // however.
@@ -994,6 +1063,13 @@ bool XCFImageFormat::loadLevel(QDataStream &xcf_io, Layer &layer, qint32 bpp)
     xcf_io >> width >> height >> offset;
 
     if (offset == 0) {
+        // offset 0 with rowsxcols != 0 is probably an error since it means we have tiles
+        // without data but just clear the bits for now instead of returning false
+        for (uint j = 0; j < layer.nrows; j++) {
+            for (uint i = 0; i < layer.ncols; i++) {
+                layer.image_tiles[j][i].fill(Qt::transparent);
+            }
+        }
         return true;
     }
 
@@ -1108,7 +1184,11 @@ bool XCFImageFormat::loadTileRLE(QDataStream &xcf_io, uchar *tile, int image_siz
 
     xcfdata = xcfodata = new uchar[data_length];
 
-    xcf_io.readRawData((char *)xcfdata, data_length);
+    const int dataRead = xcf_io.readRawData((char *)xcfdata, data_length);
+    if (dataRead < data_length) {
+//      qDebug() << "XCF: read less data than expected" << data_length << dataRead;
+        memset(&xcfdata[dataRead], 0, data_length - dataRead);
+    }
 
     if (!xcf_io.device()->isOpen()) {
         delete[] xcfodata;
@@ -1214,8 +1294,9 @@ bool XCFImageFormat::loadChannelProperties(QDataStream &xcf_io, Layer &layer)
     while (true) {
         PropType type;
         QByteArray bytes;
+        quint32 rawType;
 
-        if (!loadProperty(xcf_io, type, bytes)) {
+        if (!loadProperty(xcf_io, type, bytes, rawType)) {
 //          qDebug() << "XCF: error loading channel properties";
             return false;
         }
@@ -1228,6 +1309,7 @@ bool XCFImageFormat::loadChannelProperties(QDataStream &xcf_io, Layer &layer)
 
         case PROP_OPACITY:
             property >> layer.mask_channel.opacity;
+            layer.mask_channel.opacity = std::min(layer.mask_channel.opacity, 255u);
             break;
 
         case PROP_VISIBLE:
@@ -1248,7 +1330,7 @@ bool XCFImageFormat::loadChannelProperties(QDataStream &xcf_io, Layer &layer)
             break;
 
         default:
-//              qDebug() << "XCF: unimplemented channel property " << type
+//              qDebug() << "XCF: unimplemented channel property " << rawType
 //                      << ", size " << bytes.size() << endl;
             break;
         }
@@ -1323,9 +1405,7 @@ bool XCFImageFormat::initializeImage(XCFImage &xcf_image)
             image.fill(qRgb(255, 255, 255));
             break;
         } // else, fall through to 32-bit representation
-#if QT_VERSION >= QT_VERSION_CHECK(5,8,0)
         Q_FALLTHROUGH();
-#endif
     case RGBA_GIMAGE:
         image = QImage(xcf_image.width, xcf_image.height, QImage::Format_ARGB32);
         if (image.isNull()) {
@@ -1345,9 +1425,7 @@ bool XCFImageFormat::initializeImage(XCFImage &xcf_image)
             image.fill(255);
             break;
         } // else, fall through to 32-bit representation
-#if QT_VERSION >= QT_VERSION_CHECK(5,8,0)
         Q_FALLTHROUGH();
-#endif
     case GRAYA_GIMAGE:
         image = QImage(xcf_image.width, xcf_image.height, QImage::Format_ARGB32);
         if (image.isNull()) {
@@ -1432,8 +1510,16 @@ bool XCFImageFormat::initializeImage(XCFImage &xcf_image)
         break;
     }
 
-    image.setDotsPerMeterX((int)(xcf_image.x_resolution * INCHESPERMETER));
-    image.setDotsPerMeterY((int)(xcf_image.y_resolution * INCHESPERMETER));
+    if (xcf_image.x_resolution > 0 && xcf_image.y_resolution > 0) {
+        const float dpmx = xcf_image.x_resolution * INCHESPERMETER;
+        if (dpmx > std::numeric_limits<int>::max())
+            return false;
+        const float dpmy = xcf_image.y_resolution * INCHESPERMETER;
+        if (dpmy > std::numeric_limits<int>::max())
+            return false;
+        image.setDotsPerMeterX((int)dpmx);
+        image.setDotsPerMeterY((int)dpmy);
+    }
     return true;
 }
 
@@ -2135,7 +2221,7 @@ void XCFImageFormat::mergeRGBToRGB(Layer &layer, uint i, uint j, int k, int l,
     uchar new_r, new_g, new_b, new_a;
     new_a = dst_a + INT_MULT(OPAQUE_OPACITY - dst_a, src_a);
 
-    float src_ratio = (float)src_a / new_a;
+    const float src_ratio = new_a == 0 ? 1.0 : (float)src_a / new_a;
     float dst_ratio = 1.0 - src_ratio;
 
     new_r = (uchar)(src_ratio * src_r + dst_ratio * dst_r + EPSILON);
@@ -2294,7 +2380,7 @@ void XCFImageFormat::mergeGrayAToGray(Layer &layer, uint i, uint j, int k, int l
 
     uchar new_a = OPAQUE_OPACITY;
 
-    float src_ratio = (float)src_a / new_a;
+    const float src_ratio = new_a == 0 ? 1.0 : (float)src_a / new_a;
     float dst_ratio = 1.0 - src_ratio;
 
     uchar new_g = (uchar)(src_ratio * src + dst_ratio * dst + EPSILON);
@@ -2467,7 +2553,7 @@ void XCFImageFormat::mergeGrayAToRGB(Layer &layer, uint i, uint j, int k, int l,
 
     uchar new_a = dst_a + INT_MULT(OPAQUE_OPACITY - dst_a, src_a);
 
-    float src_ratio = (float)src_a / new_a;
+    const float src_ratio = new_a == 0 ? 1.0 : (float)src_a / new_a;
     float dst_ratio = 1.0 - src_ratio;
 
     uchar new_g = (uchar)(src_ratio * src + dst_ratio * dst + EPSILON);
@@ -2690,10 +2776,10 @@ QImageIOPlugin::Capabilities XCFPlugin::capabilities(QIODevice *device, const QB
         return Capabilities(CanRead);
     }
     if (!format.isEmpty()) {
-        return nullptr;
+        return {};
     }
     if (!device->isOpen()) {
-        return nullptr;
+        return {};
     }
 
     Capabilities cap;

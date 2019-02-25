@@ -23,11 +23,11 @@
 
 #include "rgb_p.h"
 
-#include <QtCore/QMap>
-#include <QtCore/QVector>
+#include <QMap>
+#include <QVector>
 
 #include <QImage>
-// #include <QDebug>
+#include <QDebug>
 
 class RLEData : public QVector<uchar>
 {
@@ -144,13 +144,16 @@ bool SGIImage::getRow(uchar *dest)
         if (_bpc == 2) {
             _pos++;
         }
+        if (_pos >= _data.end()) {
+            return false;
+        }
         n = *_pos & 0x7f;
         if (!n) {
             break;
         }
 
         if (*_pos++ & 0x80) {
-            for (; i < _xsize && n--; i++) {
+            for (; i < _xsize && _pos < _data.end() && n--; i++) {
                 *dest++ = *_pos;
                 _pos += _bpc;
             }
@@ -309,15 +312,22 @@ bool SGIImage::readImage(QImage &img)
         return false;
     }
 
-    _numrows = _ysize * _zsize;
-
     img = QImage(_xsize, _ysize, QImage::Format_RGB32);
+
+    if (_zsize == 0 )
+        return false;
 
     if (_zsize == 2 || _zsize == 4) {
         img = img.convertToFormat(QImage::Format_ARGB32);
     } else if (_zsize > 4) {
 //         qDebug() << "using first 4 of " << _zsize << " channels";
+        // Only let this continue if it won't cause a int overflow later
+        // this is most likely a broken file anyway
+        if (_ysize > std::numeric_limits<int>::max() / _zsize)
+            return false;
     }
+
+    _numrows = _ysize * _zsize;
 
     if (_rle) {
         uint l;
@@ -686,8 +696,8 @@ bool RGBHandler::canRead(QIODevice *device)
         return false;
     }
 
-    qint64 oldPos = device->pos();
-    QByteArray head = device->readLine(64);
+    const qint64 oldPos = device->pos();
+    const QByteArray head = device->readLine(64);
     int readBytes = head.size();
 
     if (device->isSequential()) {
@@ -699,10 +709,7 @@ bool RGBHandler::canRead(QIODevice *device)
         device->seek(oldPos);
     }
 
-    const QRegExp regexp(QLatin1String("^\x01\xda\x01[\x01\x02]"));
-    QString data(QString::fromLocal8Bit(head));
-
-    return data.contains(regexp);
+    return head.size() >= 4 && head.startsWith("\x01\xda\x01") && (head[3] == 1 || head[3] == 2);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -714,10 +721,10 @@ QImageIOPlugin::Capabilities RGBPlugin::capabilities(QIODevice *device, const QB
         return Capabilities(CanRead | CanWrite);
     }
     if (!format.isEmpty()) {
-        return nullptr;
+        return {};
     }
     if (!device->isOpen()) {
-        return nullptr;
+        return {};
     }
 
     Capabilities cap;

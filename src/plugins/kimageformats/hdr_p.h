@@ -7,8 +7,8 @@
    version 2 of the License, or (at your option) any later version.
 */
 
-#ifndef KIMG_HDR_H
-#define KIMG_HDR_H
+#ifndef KIMG_HDR_P_H
+#define KIMG_HDR_P_H
 
 class QImageIO;
 
