@@ -66,10 +66,10 @@ QImageIOPlugin::Capabilities KraPlugin::capabilities(QIODevice *device, const QB
         return Capabilities(CanRead);
     }
     if (!format.isEmpty()) {
-        return nullptr;
+        return {};
     }
     if (!device->isOpen()) {
-        return nullptr;
+        return {};
     }
 
     Capabilities cap;

@@ -30,7 +30,7 @@
 
 #include <QImage>
 #include <QDataStream>
-// #include <QDebug>
+#include <QDebug>
 #include <QImageIOPlugin>
 
 class K_IStream: public Imf::IStream
@@ -41,10 +41,10 @@ public:
     {
     }
 
-    bool  read(char c[], int n) Q_DECL_OVERRIDE;
-    Imf::Int64 tellg() Q_DECL_OVERRIDE;
-    void seekg(Imf::Int64 pos) Q_DECL_OVERRIDE;
-    void clear() Q_DECL_OVERRIDE;
+    bool  read(char c[], int n) override;
+    Imf::Int64 tellg() override;
+    void seekg(Imf::Int64 pos) override;
+    void clear() override;
 
 private:
     QIODevice *m_dev;
@@ -218,10 +218,10 @@ QImageIOPlugin::Capabilities EXRPlugin::capabilities(QIODevice *device, const QB
         return Capabilities(CanRead);
     }
     if (!format.isEmpty()) {
-        return nullptr;
+        return {};
     }
     if (!device->isOpen()) {
-        return nullptr;
+        return {};
     }
 
     Capabilities cap;

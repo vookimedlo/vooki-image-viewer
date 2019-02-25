@@ -17,7 +17,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  * ----------------------------------------------------------------------------
  */
 
@@ -59,7 +59,10 @@ static QDataStream &operator>> (QDataStream &s, PicHeader &header)
     header.comment = QByteArray(comment);
 
     header.id.resize(4);
-    s.readRawData(header.id.data(), 4);
+    const int bytesRead = s.readRawData(header.id.data(), 4);
+    if (bytesRead != 4) {
+        header.id.resize(bytesRead);
+    }
 
     s >> header.width;
     s >> header.height;
@@ -449,10 +452,10 @@ QImageIOPlugin::Capabilities SoftimagePICPlugin::capabilities(QIODevice *device,
         return Capabilities(CanRead | CanWrite);
     }
     if (!format.isEmpty()) {
-        return nullptr;
+        return {};
     }
     if (!device->isOpen()) {
-        return nullptr;
+        return {};
     }
 
     Capabilities cap;

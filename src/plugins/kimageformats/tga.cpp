@@ -23,8 +23,8 @@
 #include <assert.h>
 
 #include <QImage>
-#include <QtCore/QDataStream>
-// #include <QDebug>
+#include <QDataStream>
+#include <QDebug>
 
 typedef quint32 uint;
 typedef quint16 ushort;
@@ -145,9 +145,7 @@ struct TgaHeaderInfo {
         switch (tga.image_type) {
         case TGA_TYPE_RLE_INDEXED:
             rle = true;
-#if QT_VERSION >= QT_VERSION_CHECK(5,8,0)
         Q_FALLTHROUGH();
-#endif
         // no break is intended!
         case TGA_TYPE_INDEXED:
             pal = true;
@@ -155,9 +153,7 @@ struct TgaHeaderInfo {
 
         case TGA_TYPE_RLE_RGB:
             rle = true;
-#if QT_VERSION >= QT_VERSION_CHECK(5,8,0)
         Q_FALLTHROUGH();
-#endif
         // no break is intended!
         case TGA_TYPE_RGB:
             rgb = true;
@@ -165,9 +161,7 @@ struct TgaHeaderInfo {
 
         case TGA_TYPE_RLE_GREY:
             rle = true;
-#if QT_VERSION >= QT_VERSION_CHECK(5,8,0)
         Q_FALLTHROUGH();
-#endif
         // no break is intended!
         case TGA_TYPE_GREY:
             grey = true;
@@ -192,10 +186,14 @@ static bool LoadTGA(QDataStream &s, const TgaHeader &tga, QImage &img)
     // However alpha exists only in the 32 bit format.
     if ((tga.pixel_size == 32) && (tga.flags & 0xf)) {
         img = QImage(tga.width, tga.height, QImage::Format_ARGB32);
+
+        if (numAlphaBits > 8) {
+            return false;
+        }
     }
 
     uint pixel_size = (tga.pixel_size / 8);
-    uint size = tga.width * tga.height * pixel_size;
+    qint64 size = qint64(tga.width) * qint64(tga.height) * pixel_size;
 
     if (size < 1) {
 //          qDebug() << "This TGA file is broken with size " << size;
@@ -206,24 +204,45 @@ static bool LoadTGA(QDataStream &s, const TgaHeader &tga, QImage &img)
     char palette[768];
     if (info.pal) {
         // @todo Support palettes in other formats!
-        s.readRawData(palette, 3 * tga.colormap_length);
+        const int size = 3 * tga.colormap_length;
+        const int dataRead = s.readRawData(palette, size);
+        if (dataRead < 0) {
+            return false;
+        }
+        if (dataRead < size) {
+            memset(&palette[dataRead], 0, size - dataRead);
+        }
     }
 
     // Allocate image.
-    uchar *const image = new uchar[size];
+    uchar *const image = reinterpret_cast<uchar*>(malloc(size));
+    if (!image) {
+        return false;
+    }
+
+    bool valid = true;
 
     if (info.rle) {
         // Decode image.
         char *dst = (char *)image;
-        int num = size;
+        qint64 num = size;
 
         while (num > 0) {
+            if (s.atEnd()) {
+                valid = false;
+                break;
+            }
+
             // Get packet header.
             uchar c;
             s >> c;
 
             uint count = (c & 0x7f) + 1;
             num -= count * pixel_size;
+            if (num < 0) {
+                valid = false;
+                break;
+            }
 
             if (c & 0x80) {
                 // RLE pixels.
@@ -243,7 +262,19 @@ static bool LoadTGA(QDataStream &s, const TgaHeader &tga, QImage &img)
         }
     } else {
         // Read raw image.
-        s.readRawData((char *)image, size);
+        const int dataRead = s.readRawData((char *)image, size);
+        if (dataRead < 0) {
+            free(image);
+            return false;
+        }
+        if (dataRead < size) {
+            memset(&image[dataRead], 0, size - dataRead);
+        }
+    }
+
+    if (!valid) {
+        free(image);
+        return false;
     }
 
     // Convert image to internal format.
@@ -300,7 +331,7 @@ static bool LoadTGA(QDataStream &s, const TgaHeader &tga, QImage &img)
     }
 
     // Free image.
-    delete [] image;
+    free(image);
 
     return true;
 }
@@ -423,10 +454,10 @@ QImageIOPlugin::Capabilities TGAPlugin::capabilities(QIODevice *device, const QB
         return Capabilities(CanRead | CanWrite);
     }
     if (!format.isEmpty()) {
-        return nullptr;
+        return {};
     }
     if (!device->isOpen()) {
-        return nullptr;
+        return {};
     }
 
     Capabilities cap;

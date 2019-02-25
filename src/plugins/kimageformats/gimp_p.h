@@ -125,7 +125,8 @@ typedef enum {
     PROP_PARASITES = 21,
     PROP_UNIT = 22,
     PROP_PATHS = 23,
-    PROP_USER_UNIT = 24
+    PROP_USER_UNIT = 24,
+    MAX_SUPPORTED_PROPTYPE // should always be at the end so its value is last + 1
 } PropType;
 
 // From GIMP "xcf.c" v1.2

@@ -12,8 +12,8 @@
 #include "ras_p.h"
 
 #include <QImage>
-#include <QtCore/QDataStream>
-// #include <QDebug>
+#include <QDataStream>
+#include <QDebug>
 
 namespace   // Private.
 {
@@ -102,6 +102,13 @@ static bool IsSupported(const RasHeader &head)
 static bool LoadRAS(QDataStream &s, const RasHeader &ras, QImage &img)
 {
     s.device()->seek(RasHeader::SIZE);
+
+    // QVector uses some extra space for stuff, hence the 32 here suggested by thiago
+    if (ras.ColorMapLength > std::numeric_limits<int>::max() - 32) {
+        qWarning() << "LoadRAS() unsupported image color map length in file header" << ras.ColorMapLength;
+        return false;
+    }
+
     // Read palette if needed.
     QVector<quint8> palette(ras.ColorMapLength);
     if (ras.ColorMapType == 1) {
@@ -110,9 +117,26 @@ static bool LoadRAS(QDataStream &s, const RasHeader &ras, QImage &img)
         }
     }
 
+    const int bpp = ras.Depth / 8;
+    if (ras.Height == 0) {
+        return false;
+    }
+    if (bpp == 0) {
+        return false;
+    }
+    if (ras.Length / ras.Height / bpp < ras.Width) {
+        qWarning() << "LoadRAS() mistmatch between height and width" << ras.Width << ras.Height << ras.Length << ras.Depth;
+        return false;
+    }
+    // QVector uses some extra space for stuff, hence the 32 here suggested by thiago
+    if (ras.Length > std::numeric_limits<int>::max() - 32) {
+        qWarning() << "LoadRAS() unsupported image length in file header" << ras.Length;
+        return false;
+    }
+
     // each line must be a factor of 16 bits, so they may contain padding
     // this will be 1 if padding required, 0 otherwise
-    int paddingrequired = (ras.Width * (ras.Depth / 8) % 2);
+    const int paddingrequired = (ras.Width * bpp % 2);
 
     // qDebug() << "paddingrequired: " << paddingrequired;
     // don't trust ras.Length
@@ -122,7 +146,7 @@ static bool LoadRAS(QDataStream &s, const RasHeader &ras, QImage &img)
     while (! s.atEnd()) {
         s >> input[i];
         // I guess we need to find out if we're at the end of a line
-        if (paddingrequired && i != 0 && !(i % (ras.Width * (ras.Depth / 8)))) {
+        if (paddingrequired && i != 0 && !(i % (ras.Width * bpp))) {
             s >> input[i];
         }
         i++;
@@ -130,6 +154,9 @@ static bool LoadRAS(QDataStream &s, const RasHeader &ras, QImage &img)
 
     // Allocate image
     img = QImage(ras.Width, ras.Height, QImage::Format_ARGB32);
+
+    if (img.isNull())
+        return false;
 
     // Reconstruct image from RGB palette if we have a palette
     // TODO: make generic so it works with 24bit or 32bit palettes
@@ -248,6 +275,10 @@ bool RASHandler::read(QImage *outImage)
     // Read image header.
     RasHeader ras;
     s >> ras;
+
+    if (ras.ColorMapLength > std::numeric_limits<int>::max())
+        return false;
+
     // TODO: add support for old versions of RAS where Length may be zero in header
     s.device()->seek(RasHeader::SIZE + ras.Length + ras.ColorMapLength);
 
@@ -282,10 +313,10 @@ QImageIOPlugin::Capabilities RASPlugin::capabilities(QIODevice *device, const QB
         return Capabilities(CanRead);
     }
     if (!format.isEmpty()) {
-        return nullptr;
+        return {};
     }
     if (!device->isOpen()) {
-        return nullptr;
+        return {};
     }
 
     Capabilities cap;

@@ -11,7 +11,7 @@
 #include "hdr_p.h"
 
 #include <QImage>
-#include <QtCore/QDataStream>
+#include <QDataStream>
 
 #include <QDebug>
 
