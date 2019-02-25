@@ -12,7 +12,8 @@ environment:
       qt: msvc2017_64
 
 init:
-  - set QTDIR=c:\Qt\5.9\%qt%
+  - set Qt5_DIR=c:\Qt\5.12\%qt%\lib\cmake\Qt5\
+  - set QTDIR=c:\Qt\5.12\%qt%
   - set Qt5Core_DIR=%QTDIR%\lib\cmake\Qt5Core\
   - set Qt5Gui_DIR=%QTDIR%\lib\cmake\Qt5Gui\
   - set Qt5Widgets_DIR=%QTDIR%\lib\cmake\Qt5Widgets\
