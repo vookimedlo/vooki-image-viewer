@@ -13,7 +13,7 @@ Expected environment variables
 
 | Environment Variable  | Value                         |
 |-----------------------|-------------------------------|
-| QTDIR                 | c:\Qt\5.10.0\msvc2017_64       |
+| QTDIR                 | c:\Qt\5.12.1\msvc2017_64       |
 | Qt5Core_DIR           | %QTDIR%\lib\cmake\Qt5Core\    |
 | Qt5Gui_DIR            | %QTDIR%\lib\cmake\Qt5Gui\     |
 | Qt5Widgets_DIR        | %QTDIR%\lib\cmake\Qt5Widgets\ |
