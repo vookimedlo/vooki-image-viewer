@@ -19,7 +19,7 @@ env:
   - QT=5.12 RELEASE=bionic DISTRO=ubuntu
   - QT=latestDistroOfficial RELEASE=cosmic DISTRO=ubuntu
   - QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian
-//  - QT=latestDistroOfficial RELEASE=fedora-stable DISTRO=fedora
+#  - QT=latestDistroOfficial RELEASE=fedora-stable DISTRO=fedora
   - BREW=
 
 matrix:
@@ -33,8 +33,8 @@ matrix:
     env: QT=latestDistroOfficial RELEASE=cosmic DISTRO=ubuntu
   - os: osx
     env: QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian
-//  - os: osx
-//    env: QT=latestDistroOfficial RELEASE=fedora-stable DISTRO=fedora   
+#  - os: osx
+#    env: QT=latestDistroOfficial RELEASE=fedora-stable DISTRO=fedora   
     
 install:
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker pull vookimedlo/"$DISTRO"-qt:"$QT"_"$CC"_"$RELEASE"'
