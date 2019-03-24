@@ -23,6 +23,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "support/SettingsStrings.h"
 #include <QColor>
 #include <QDebug>
+#include <QGuiApplication>
 #include <QImage>
 #include <QImageReader>
 #include <QPaintEvent>
@@ -427,10 +428,21 @@ void ImageAreaWidget::wheelEvent(QWheelEvent *event)
     } // Low-res input
     else if (!numDegrees.isNull())
     {
-        QPoint numSteps = numDegrees / 15;
-        numSteps.rx() *= m_imageOffsetStep;
-        numSteps.ry() *= m_imageOffsetStep;
-        scroll(numSteps);
+        // Zoom
+        if (QGuiApplication::keyboardModifiers() & Qt::ControlModifier)
+        {
+            qDebug() << "Wheel zoom: " << numDegrees.rx() << " - " << numDegrees.ry();
+            const int degrees = numDegrees.rx() > 0 || numDegrees.rx() < 0 ? numDegrees.rx() : numDegrees.ry();
+            onZoomImageInTriggered(degrees / 325.0);
+        }
+        // Scroll
+        else
+        {
+            QPoint numSteps = numDegrees / 15;
+            numSteps.rx() *= m_imageOffsetStep;
+            numSteps.ry() *= m_imageOffsetStep;
+            scroll(numSteps);
+        }
     }
 
     event->accept();
