@@ -1,12 +1,17 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
-  <Product Name='VookiImageViewer' Id='28F2F82D-4157-4A7E-9D27-FEEA3C0AEC15' UpgradeCode='91FA8A80-C971-408A-A735-4EB3D230D9F6'
-           Language='1033' Codepage='1252' Version='18.01.19' Manufacturer='Michal Duda'>
+  <Product Name='VookiImageViewer' Id='*' UpgradeCode='91FA8A80-C971-408A-A735-4EB3D230D9F6'
+           Language='1033' Codepage='1252' Version='19.03.24' Manufacturer='Michal Duda'>
 
     <Package Id='*' Keywords='Installer' Description="Michal Duda VookiImageViewer Installer"
              Comments='Lightweight image viewer for a fast image preview.' Manufacturer='Michal Duda'
              InstallerVersion='500' Languages='1033' Compressed='yes' SummaryCodepage='1252'
              Platform="x64" />
+
+    <MajorUpgrade
+        AllowDowngrades="no" DowngradeErrorMessage="A later version of VookiImageViewer is already installed. Setup will now exit."
+        AllowSameVersionUpgrades="no"
+    />
 
     <Media Id='1' Cabinet='VookiImageViewer.cab' EmbedCab='yes' />
 
@@ -314,7 +319,7 @@
       <Merge Id="VCRedist" SourceFile="c:\Program Files (x86)\Common Files\Merge Modules\Microsoft_VC140_CRT_x64.msm" DiskId="1" Language="0"/>
     </DirectoryRef>
 
-    <Feature Id='Complete' Title='VookiImageViewer 1.0' Description='Whole bundle.'
+    <Feature Id='Complete' Title='VookiImageViewer' Description='Whole bundle.'
     Display='expand' Level='1' ConfigurableDirectory='INSTALLDIR'>
       <ComponentRef Id='VookiImageViewer.exe' />
       <ComponentRef Id='QtDLL' />

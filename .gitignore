@@ -52,3 +52,4 @@ build/cmake/mac/package
 *.wixobj
 *.wixpdb
 *.dmg
+build/cmake/windows/support/application.aps
