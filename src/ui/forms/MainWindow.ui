@@ -40,7 +40,7 @@
      <x>0</x>
      <y>0</y>
      <width>810</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -60,6 +60,9 @@
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuView">
+    <property name="tearOffEnabled">
+     <bool>true</bool>
+    </property>
     <property name="title">
      <string>&amp;View</string>
     </property>
@@ -113,7 +116,7 @@
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="tearOffEnabled">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="title">
      <string>&amp;Help</string>
