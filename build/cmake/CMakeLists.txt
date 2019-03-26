@@ -92,7 +92,8 @@ if(APPLE)
         ${UI_HEADERS}
         ${UI_RESOURCES})
 
-    set_target_properties(VookiImageViewer PROPERTIES MACOSX_BUNDLE_INFO_PLIST ../support/MacOSXBundleInfo.plist.in)
+    get_filename_component(PLIST_IN_ABSOLUTE_PATH mac/support/MacOSXBundleInfo.plist.in ABSOLUTE)
+    set_target_properties(VookiImageViewer PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${PLIST_IN_ABSOLUTE_PATH})
 
 elseif(WIN32)
     set(SOURCES

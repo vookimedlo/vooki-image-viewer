@@ -9,9 +9,14 @@
 build/build*
 build/qmake/build*
 build/cmake/windows/build
+build/cmake/windows/support/application.aps
 build/cmake/windows/support/package/SourceDir
 build/cmake/mac/build
 build/cmake/mac/package
+cmake-build-*
+
+# CLion
+.idea
 
 # User settings
 *.user
@@ -32,10 +37,6 @@ build/cmake/mac/package
 *.dylib
 *.dll
 
-# Fortran module files
-*.mod
-*.smod
-
 # Compiled Static libraries
 *.lai
 *.la
@@ -52,4 +53,4 @@ build/cmake/mac/package
 *.wixobj
 *.wixpdb
 *.dmg
-build/cmake/windows/support/application.aps
+
