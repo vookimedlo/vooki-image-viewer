@@ -158,7 +158,106 @@
     <number>1</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents">
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QToolButton" name="homeDirButton">
+         <property name="toolTip">
+          <string>Home Directory</string>
+         </property>
+         <property name="toolTipDuration">
+          <number>1000</number>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../resource/vookiimageviewer.qrc">
+           <normaloff>:/images/homedir</normaloff>:/images/homedir</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="documentsDirButton">
+         <property name="toolTip">
+          <string>Documents Directory</string>
+         </property>
+         <property name="toolTipDuration">
+          <number>1000</number>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../resource/vookiimageviewer.qrc">
+           <normaloff>:/images/docsdir</normaloff>:/images/docsdir</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="picturesDirButton">
+         <property name="toolTip">
+          <string>Pictures Directory</string>
+         </property>
+         <property name="toolTipDuration">
+          <number>1000</number>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../resource/vookiimageviewer.qrc">
+           <normaloff>:/images/picturesdir</normaloff>:/images/picturesdir</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
      <item>
       <widget class="FileSystemTreeView" name="fileSystemTreeView">
        <property name="showDropIndicator" stdset="0">
@@ -1149,6 +1248,54 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>homeDirButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onHomeDirClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>97</x>
+     <y>117</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>404</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>documentsDirButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onDocsDirClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>139</x>
+     <y>117</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>404</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>picturesDirButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onPicturesDirClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>181</x>
+     <y>117</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>404</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onQuitTriggered()</slot>
@@ -1168,5 +1315,8 @@
   <slot>onAboutSupportedImageFormats()</slot>
   <slot>onSettingsTriggered()</slot>
   <slot>onZoomPercentageChanged(qreal)</slot>
+  <slot>onHomeDirClicked()</slot>
+  <slot>onDocsDirClicked()</slot>
+  <slot>onPicturesDirClicked()</slot>
  </slots>
 </ui>

@@ -64,11 +64,14 @@ protected slots:
     void onAboutQtTriggered();
     void onAboutSupportedImageFormats();
     void onClearHistory() const;
+    void onDocsDirClicked() const;
     void onFileSystemTreeViewActivated(const QModelIndex &index);
     void onFitToWindowToggled(const bool toggled) const;
     void onFullScreenToggled(const bool toggled);
+    void onHomeDirClicked() const;
     void onNextImageTriggered();
     void onOriginalSizeTriggered() const;
+    void onPicturesDirClicked() const;
     void onPreviousImageTriggered();
     void onQuitTriggered();
     void onRecentFileTriggered(const QString &filePath);

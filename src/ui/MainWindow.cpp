@@ -35,6 +35,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QImageReader>
 #include <QMessageBox>
 #include <QPainter>
+#include <QStandardPaths>
 #include <vector>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -408,4 +409,26 @@ void MainWindow::onZoomOutTriggered() const
 void MainWindow::onZoomPercentageChanged(const qreal value) const
 {
     m_ui.statusBar->rightLabel().setText(tr("Zoom: ") + QString::number(static_cast<int>(value * 100)) + "%");
+}
+
+void MainWindow::onHomeDirClicked() const
+{
+    m_ui.fileSystemTreeView->collapseAll();
+    m_ui.fileSystemTreeView->setCurrentIndex(m_sortFileSystemModel->mapFromSource(m_fileSystemModel->index(QDir::homePath())));
+}
+
+void MainWindow::onDocsDirClicked() const
+{
+    m_ui.fileSystemTreeView->collapseAll();
+    auto locations = QStandardPaths::standardLocations(QStandardPaths::StandardLocation::DocumentsLocation);
+    if (!locations.isEmpty())
+        m_ui.fileSystemTreeView->setCurrentIndex(m_sortFileSystemModel->mapFromSource(m_fileSystemModel->index(locations.first())));
+}
+
+void MainWindow::onPicturesDirClicked() const
+{
+    m_ui.fileSystemTreeView->collapseAll();
+    auto locations = QStandardPaths::standardLocations(QStandardPaths::StandardLocation::PicturesLocation);
+    if (!locations.isEmpty())
+        m_ui.fileSystemTreeView->setCurrentIndex(m_sortFileSystemModel->mapFromSource(m_fileSystemModel->index(locations.first())));
 }
