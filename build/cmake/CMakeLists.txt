@@ -1,12 +1,17 @@
 cmake_minimum_required(VERSION 3.2)
 
-message("VookiImageViewer - https://vookiimageviewer.cz")
+message("-- VookiImageViewer - https://vookiimageviewer.cz")
 
 set(USE_QT_LIBRARIES
     Core Gui Widgets
    )
 
 find_package(Qt5 REQUIRED ${USE_QT_LIBRARIES})
+
+
+if (Qt5_FOUND)
+    message("-- Qt version is ${Qt5_VERSION}")
+endif()
 
 # std::make_unique is part of c++14
 #
@@ -145,20 +150,27 @@ TARGET_LINK_LIBRARIES(VookiImageViewer ${OS_LIBS})
 add_library(vooki_kimg_psd MODULE ../../src/plugins/kimageformats/psd.cpp)
 TARGET_LINK_LIBRARIES(vooki_kimg_psd Qt5::Gui)
 
-# Gimp (xcf)
-#
-add_library(vooki_kimg_xcf MODULE ../../src/plugins/kimageformats/xcf.cpp)
-TARGET_LINK_LIBRARIES(vooki_kimg_xcf Qt5::Gui)
-
 # Personal Computer Exchange (pcx)
 #
 add_library(vooki_kimg_pcx MODULE ../../src/plugins/kimageformats/pcx.cpp)
 TARGET_LINK_LIBRARIES(vooki_kimg_pcx Qt5::Gui)
 
-# Targa (tga): supports more formats than Qt's version
-#
-add_library(vooki_kimg_tga MODULE ../../src/plugins/kimageformats/tga.cpp)
-TARGET_LINK_LIBRARIES(vooki_kimg_tga Qt5::Gui)
+if (Qt5_FOUND)
+    if (Qt5_VERSION VERSION_GREATER_EQUAL 5.8.0)
+        # Q_FALLTHROUGH was introduced in 5.8.0
+        #
+
+        # Gimp (xcf)
+        #
+        add_library(vooki_kimg_xcf MODULE ../../src/plugins/kimageformats/xcf.cpp)
+        TARGET_LINK_LIBRARIES(vooki_kimg_xcf Qt5::Gui)
+
+        # Targa (tga): supports more formats than Qt's version
+        #
+        add_library(vooki_kimg_tga MODULE ../../src/plugins/kimageformats/tga.cpp)
+        TARGET_LINK_LIBRARIES(vooki_kimg_tga Qt5::Gui)
+    endif()
+endif()
 
 # Sun Raster (ras)
 #
@@ -177,9 +189,9 @@ TARGET_LINK_LIBRARIES(vooki_kimg_rgb Qt5::Gui)
 
 # Camera RAW Thumbnails (raf, mos, cr2, erf, dng, mrw, nef, orf, rw2, pef, x3f, srw, x3f, arw)
 #
-SET(LIBRAW "3rdPartyLibs/LibRaw-0.19.2")
+SET(LIBRAW_LOC "3rdPartyLibs/LibRaw-0.19.2")
 if(APPLE)
-    get_filename_component(LIBRAW mac/${LIBRAW} ABSOLUTE)
+    get_filename_component(LIBRAW mac/${LIBRAW_LOC} ABSOLUTE)
     SET(CMAKE_CXX_FLAGS "-I${LIBRAW} ${CMAKE_CXX_FLAGS}")
     SET(CMAKE_MODULE_LINKER_FLAGS "-L${LIBRAW}/lib ${CMAKE_MODULE_LINKER_FLAGS}")
 
@@ -188,11 +200,11 @@ if(APPLE)
 elseif(WIN32)
     add_definitions(-DLIBRAW_NODLL)
 
-    get_filename_component(LIBRAW windows/${LIBRAW} ABSOLUTE)
+    get_filename_component(LIBRAW windows/${LIBRAW_LOC} ABSOLUTE)
     SET(CMAKE_CXX_FLAGS "-I${LIBRAW} ${CMAKE_CXX_FLAGS}")
 
     add_library(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
-    TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui ../${LIBRAW}/lib/libraw)
+    TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui ${LIBRAW}/lib/libraw)
 else()
     find_library(LIBRAW NAMES libraw_r raw_r)
     add_library(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
