@@ -32,13 +32,13 @@ class SettingsDialog : public QDialog
     Q_OBJECT
 
 public:
-    SettingsDialog(QWidget *parent = Q_NULLPTR);
+    explicit SettingsDialog(QWidget *parent = Q_NULLPTR);
     DISABLE_COPY_MOVE(SettingsDialog);
 
     void populateShortcuts(QMenu *menu) const;
 
 protected:
-    void initializeUI(const std::shared_ptr<QSettings> settings);
+    void initializeUI(std::shared_ptr<QSettings> settings);
 
 protected slots:
     virtual void onAccept();

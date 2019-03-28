@@ -27,8 +27,8 @@ class RecentFileAction : public QAction
     Q_OBJECT
 
 public:
-    RecentFileAction(const QString &text, QObject *parent = nullptr);
-    ~RecentFileAction();
+    explicit RecentFileAction(const QString &text, QObject *parent = nullptr);
+    ~RecentFileAction() override;
     DISABLE_COPY_MOVE(RecentFileAction);
 
 signals:

@@ -20,7 +20,6 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include "../darkmode.h"
 #import <AppKit/NSWindow.h>
-#include <Availability.h>
 
 namespace SystemDependant
 {

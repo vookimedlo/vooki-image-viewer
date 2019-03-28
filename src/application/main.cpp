@@ -21,7 +21,6 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "../abstraction/init.h"
 #include "../ui/MainWindow.h"
 #include "Application.h"
-#include <QApplication>
 #include <iostream>
 
 int main(int argc, char *argv[])
@@ -55,5 +54,5 @@ int main(int argc, char *argv[])
     mainWindow.handleImagePath(requestedPath);
     mainWindow.show();
 
-    return application.exec();
+    return Application::exec();
 }

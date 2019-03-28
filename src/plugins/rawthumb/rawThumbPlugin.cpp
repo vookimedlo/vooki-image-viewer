@@ -20,7 +20,6 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include "rawThumbPlugin.h"
 #include "rawThumbHandler.h"
-#include <QStringList>
 
 QImageIOPlugin::Capabilities RawThumbPlugin::capabilities(QIODevice *device, const QByteArray &format) const
 {
@@ -28,7 +27,7 @@ QImageIOPlugin::Capabilities RawThumbPlugin::capabilities(QIODevice *device, con
 
     if (formats.contains(format))
     {
-        return Capabilities(CanRead);
+        return {CanRead};
     }
 
     if (!format.isEmpty())

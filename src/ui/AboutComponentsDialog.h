@@ -28,7 +28,7 @@ class AboutComponentsDialog : public QDialog
     Q_OBJECT
 
 public:
-    AboutComponentsDialog(QWidget *parent = Q_NULLPTR);
+    explicit AboutComponentsDialog(QWidget *parent = Q_NULLPTR);
     DISABLE_COPY_MOVE(AboutComponentsDialog);
 
 public Q_SLOTS:

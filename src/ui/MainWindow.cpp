@@ -30,13 +30,11 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "support/RecentFileAction.h"
 #include "ui_AboutDialog.h"
 #include "ui_AboutSupportedFormatsDialog.h"
-#include <QDialog>
 #include <QFileSystemModel>
 #include <QImageReader>
 #include <QMessageBox>
 #include <QPainter>
 #include <QStandardPaths>
-#include <vector>
 
 MainWindow::MainWindow(QWidget *parent)
                                         : QMainWindow(parent)
@@ -90,7 +88,7 @@ MainWindow::MainWindow(QWidget *parent)
     restoreRecentFiles();
 }
 
-MainWindow::~MainWindow() {}
+MainWindow::~MainWindow() = default;
 
 MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, const bool addToRecentFiles)
 {
@@ -120,7 +118,7 @@ MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, con
     return HANDLE_RESULT_E_DONT_EXIST;
 }
 
-QString MainWindow::getRecentFile(const int item) const
+QString MainWindow::getRecentFile(int item) const
 {
     const int index = item + 1;
     auto actions = m_ui.menuRecentFiles->actions();
@@ -128,7 +126,7 @@ QString MainWindow::getRecentFile(const int item) const
     // The first two actions are Clear History & Menu Separator, which are out of our interest
     if (2 < actions.size() && index < actions.size())
     {
-        RecentFileAction *recentImage = dynamic_cast<RecentFileAction *>(actions.at(index));
+        auto *recentImage = dynamic_cast<RecentFileAction *>(actions.at(index));
         return recentImage->text();
     }
 
@@ -156,21 +154,23 @@ QString MainWindow::registerProcessedImage(const QString &filePath, const bool a
             m_ui.menuRecentFiles->removeAction(action);
         }
 
-        RecentFileAction *recentImage = new RecentFileAction(filePath, this);
-        recentImage->setStatusTip(filePath);
+        {
+            auto *recentImage = new RecentFileAction(filePath, this);
+            recentImage->setStatusTip(filePath);
 
-        QObject::connect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
+            QObject::connect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
 
-        // Add the action just after the separator
-        actions.insert(2, recentImage);
+            // Add the action just after the separator
+            actions.insert(2, recentImage);
 
-        m_ui.menuRecentFiles->insertActions(nullptr, actions);
+            m_ui.menuRecentFiles->insertActions(nullptr, actions);
+        }
 
         // Remove entry exceeding the allowed limit of menu items in recent files menu
         const int maxRecentFiles = 7;
         if (actions.size() > maxRecentFiles)
         {
-            RecentFileAction *recentImage = dynamic_cast<RecentFileAction *>(actions.at(maxRecentFiles));
+            auto *recentImage = dynamic_cast<RecentFileAction *>(actions.at(maxRecentFiles));
             recentImage->setParent(nullptr);
             QObject::disconnect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
             delete recentImage;
@@ -204,7 +204,7 @@ void MainWindow::restoreRecentFiles()
             if (value.isEmpty())
                 continue;
 
-            RecentFileAction *recentImage = new RecentFileAction(value, this);
+            auto *recentImage = new RecentFileAction(value, this);
             recentImage->setStatusTip(value);
 
             QObject::connect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
@@ -278,7 +278,7 @@ void MainWindow::onClearHistory() const
     // Leave the first two actions intact (Clear History & Menu Separator)
     for (int i = 2; i < actions.size(); i++)
     {
-        RecentFileAction *recentImage = dynamic_cast<RecentFileAction *>(actions.at(i));
+        auto *recentImage = dynamic_cast<RecentFileAction *>(actions.at(i));
         QObject::disconnect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
         m_ui.menuRecentFiles->removeAction(recentImage);
     }

@@ -25,9 +25,9 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 class SettingsShortcutsTableWidget : public QTableWidget
 {
 public:
-    SettingsShortcutsTableWidget(QWidget *parent = nullptr);
-    SettingsShortcutsTableWidget(const int rows, const int columns, QWidget *parent = nullptr);
+    explicit SettingsShortcutsTableWidget(QWidget *parent = nullptr);
+    SettingsShortcutsTableWidget(int rows, int columns, QWidget *parent = nullptr);
 
-    void setItem(const int row, const int column, QTableWidgetItem *item);
+    void setItem(int row, int column, QTableWidgetItem *item);
     void updateShortcuts() const;
 };

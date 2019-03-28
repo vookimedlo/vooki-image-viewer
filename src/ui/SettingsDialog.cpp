@@ -24,7 +24,6 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "../ui/support/SettingsStrings.h"
 #include "support/SettingsShortcutsTableWidgetItem.h"
 #include <QColorDialog>
-#include <QSettings>
 
 SettingsDialog::SettingsDialog(QWidget *parent)
                                         : QDialog(parent)
@@ -60,7 +59,7 @@ void SettingsDialog::populateShortcuts(QMenu *menu) const
         QTableWidgetItem *headerItem = new QTableWidgetItem(action->toolTip());
         m_uiSettingsDialog.tableShortcutsWidget->setVerticalHeaderItem(rowCount, headerItem);
 
-        SettingsShortcutsTableWidgetItem *item = new SettingsShortcutsTableWidgetItem(*action);
+        auto *item = new SettingsShortcutsTableWidgetItem(*action);
         m_uiSettingsDialog.tableShortcutsWidget->setItem(rowCount, 0, item);
     }
 }
@@ -105,7 +104,7 @@ void SettingsDialog::onAccept()
 
         if (item->type() == SettingsShortcutsTableWidgetItem::type)
         {
-            SettingsShortcutsTableWidgetItem *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item);
+            auto *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item);
             settings->setValue(shortcutItem->action().whatsThis(), shortcutItem->keySequence());
         }
     }
@@ -136,7 +135,7 @@ void SettingsDialog::onRejected()
 
         if (item->type() == SettingsShortcutsTableWidgetItem::type)
         {
-            SettingsShortcutsTableWidgetItem *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item);
+            auto *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item);
             shortcutItem->action().setShortcut(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
         }
     }
@@ -156,7 +155,7 @@ void SettingsDialog::onRestoreDefaultsTriggered()
 
         if (item->type() == SettingsShortcutsTableWidgetItem::type)
         {
-            SettingsShortcutsTableWidgetItem *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item);
+            auto *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item);
             shortcutItem->onKeySequenceChanged(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
         }
     }

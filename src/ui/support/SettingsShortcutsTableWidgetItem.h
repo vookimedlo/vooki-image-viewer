@@ -32,7 +32,7 @@ class SettingsShortcutsTableWidgetItem final
     Q_OBJECT
 
 public:
-    SettingsShortcutsTableWidgetItem(QAction &action);
+    explicit SettingsShortcutsTableWidgetItem(QAction &action);
     DISABLE_COPY_MOVE(SettingsShortcutsTableWidgetItem);
 
     QAction &action() const;

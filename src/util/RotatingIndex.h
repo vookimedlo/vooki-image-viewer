@@ -25,7 +25,7 @@ template<typename T>
 class RotatingIndex
 {
 public:
-    RotatingIndex(T initialValue = 0)
+    explicit RotatingIndex(T initialValue = 0)
                                             : RotatingIndex(0, initialValue + 1)
     {
     }
@@ -70,7 +70,7 @@ public:
     }
 
     // Post-increment operator
-    RotatingIndex operator++(int)
+    const RotatingIndex operator++(int)
     {
         const RotatingIndex old(*this);
         operator++();
@@ -78,7 +78,7 @@ public:
     }
 
     // Pre-decrement operator
-    RotatingIndex &operator--()
+    const RotatingIndex &operator--()
     {
         if (m_index == 0)
             m_index = m_maxValuePlus1;
@@ -88,7 +88,7 @@ public:
     }
 
     // Post-decrement operator
-    RotatingIndex operator--(int)
+    const RotatingIndex operator--(int)
     {
         const RotatingIndex old(*this);
         operator--();

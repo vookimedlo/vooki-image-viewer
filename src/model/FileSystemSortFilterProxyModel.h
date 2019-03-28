@@ -25,7 +25,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 class FileSystemSortFilterProxyModel : public QSortFilterProxyModel
 {
 public:
-    FileSystemSortFilterProxyModel(QObject *parent = nullptr);
+    explicit FileSystemSortFilterProxyModel(QObject *parent = nullptr);
     DISABLE_COPY_MOVE(FileSystemSortFilterProxyModel);
 
 protected:

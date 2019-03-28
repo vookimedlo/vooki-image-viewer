@@ -26,7 +26,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 class StatusBar : public QStatusBar
 {
 public:
-    StatusBar(QWidget *parent = nullptr);
+    explicit StatusBar(QWidget *parent = nullptr);
     DISABLE_COPY_MOVE(StatusBar);
 
     QLabel &rightLabel() const;

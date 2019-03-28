@@ -28,11 +28,11 @@ class FileSystemTreeView final : public QTreeView
 
 public:
     explicit FileSystemTreeView(QWidget *parent = nullptr);
-    ~FileSystemTreeView();
+    ~FileSystemTreeView() override;
     DISABLE_COPY_MOVE(FileSystemTreeView);
 
 protected:
-    void keyPressEvent(QKeyEvent *event);
+    void keyPressEvent(QKeyEvent *event) override;
 
 public slots:
     void setCurrentIndex(const QModelIndex &index);

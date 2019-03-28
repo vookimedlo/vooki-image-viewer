@@ -29,23 +29,23 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 class ImageCatalog
 {
 public:
-    ImageCatalog(const QStringList &filter);
+    explicit ImageCatalog(const QStringList &filter);
     DISABLE_COPY_MOVE(ImageCatalog);
 
     void initialize(const QFile &imageFile);
     void initialize(const QDir &imageDir);
 
-    uint64_t getCatalogSize() const;
+    int getCatalogSize() const;
     QString getCurrent() const;
     QString getNext();
     QString getPrevious();
 
 protected:
-    QString getCatalogItem(const RotatingIndex<uint64_t> &catalogIndex) const;
+    QString getCatalogItem(const RotatingIndex<int> &catalogIndex) const;
 
 private:
     QString m_absoluteDir;
     QStringList m_catalog;
-    RotatingIndex<uint64_t> m_catalogIndex;
+    RotatingIndex<int> m_catalogIndex;
     QStringList m_filter;
 };

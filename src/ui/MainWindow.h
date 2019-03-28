@@ -34,7 +34,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    ~MainWindow() override;
     DISABLE_COPY_MOVE(MainWindow);
 
     enum HANDLE_RESULT_E
@@ -45,12 +45,12 @@ public:
         HANDLE_GENERAL_ERROR
     };
 
-    HANDLE_RESULT_E handleImagePath(const QString &path, const bool addToRecentFiles = true);
+    HANDLE_RESULT_E handleImagePath(const QString &path, bool addToRecentFiles = true);
 
 protected:
-    QString getRecentFile(const int item) const;
+    QString getRecentFile(int item) const;
     void propagateBorderSettings() const;
-    QString registerProcessedImage(const QString &filePath, const bool addToRecentFiles = true);
+    QString registerProcessedImage(const QString &filePath, bool addToRecentFiles = true);
     void restoreRecentFiles();
     void showImage(bool addToRecentFiles);
 
@@ -66,8 +66,8 @@ protected slots:
     void onClearHistory() const;
     void onDocsDirClicked() const;
     void onFileSystemTreeViewActivated(const QModelIndex &index);
-    void onFitToWindowToggled(const bool toggled) const;
-    void onFullScreenToggled(const bool toggled);
+    void onFitToWindowToggled(bool toggled) const;
+    void onFullScreenToggled(bool toggled);
     void onHomeDirClicked() const;
     void onNextImageTriggered();
     void onOriginalSizeTriggered() const;
@@ -76,10 +76,10 @@ protected slots:
     void onQuitTriggered();
     void onRecentFileTriggered(const QString &filePath);
     void onSettingsTriggered();
-    void onStatusBarToggled(const bool toggled) const;
+    void onStatusBarToggled(bool toggled) const;
     void onZoomInTriggered() const;
     void onZoomOutTriggered() const;
-    void onZoomPercentageChanged(const qreal value) const;
+    void onZoomPercentageChanged(qreal value) const;
 
 private:
     Ui::MainWindow m_ui;

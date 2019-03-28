@@ -21,14 +21,11 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "ImageAreaWidget.h"
 #include "support/Settings.h"
 #include "support/SettingsStrings.h"
-#include <QColor>
 #include <QDebug>
 #include <QGuiApplication>
-#include <QImage>
 #include <QImageReader>
 #include <QPaintEvent>
 #include <QPainter>
-#include <QRect>
 #include <cmath>
 
 const int ImageAreaWidget::m_imageOffsetStep = 100;
@@ -352,10 +349,8 @@ void ImageAreaWidget::scroll(const QPoint &point)
 
 void ImageAreaWidget::transformImage()
 {
-    QTransform transform;
-    const QTransform trans = transform.rotate(m_rotateIndex * 90);
-    QImage rotatedImage = m_originalImage.transformed(trans, Qt::SmoothTransformation);
     QImage scaledImage;
+    QImage rotatedImage = m_originalImage.transformed(QTransform().rotate(m_rotateIndex * 90), Qt::SmoothTransformation);
 
     // It seems that Qt implementation has swapped the meaning of the vertical and horizontal flip
     // rotatedImage = rotatedImage.mirrored(m_flipHorizontally, m_flipVertically);
@@ -382,7 +377,7 @@ void ImageAreaWidget::transformImage()
             scaledImage = rotatedImage.scaledToHeight(height(), Qt::SmoothTransformation);
     }
     else
-        scaledImage = rotatedImage.scaledToWidth(rotatedImage.width() * m_scaleFactor, Qt::SmoothTransformation);
+        scaledImage = rotatedImage.scaledToWidth((int)(rotatedImage.width() * m_scaleFactor), Qt::SmoothTransformation);
 
     QSize newSize = scaledImage.size().expandedTo(size());
     QImage newImage(newSize, QImage::Format_RGB32);

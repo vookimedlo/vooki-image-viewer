@@ -49,7 +49,7 @@ void ImageCatalog::initialize(const QDir &imageDir)
     m_catalogIndex.set(0, m_catalog.size());
 }
 
-uint64_t ImageCatalog::getCatalogSize() const
+int ImageCatalog::getCatalogSize() const
 {
     return m_catalog.size();
 }
@@ -69,7 +69,7 @@ QString ImageCatalog::getPrevious()
     return getCatalogItem(--m_catalogIndex);
 }
 
-QString ImageCatalog::getCatalogItem(const RotatingIndex<uint64_t> &catalogIndex) const
+QString ImageCatalog::getCatalogItem(const RotatingIndex<int> &catalogIndex) const
 {
     if (m_catalog.isEmpty())
         return QString();

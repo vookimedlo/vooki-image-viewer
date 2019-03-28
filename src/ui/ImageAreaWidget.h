@@ -31,10 +31,9 @@ class QNativeGestureEvent;
 class ImageAreaWidget : public QWidget
 {
     Q_OBJECT
-    typedef QWidget BaseClass;
 
 public:
-    ImageAreaWidget(QWidget *parent = 0);
+    explicit ImageAreaWidget(QWidget *parent = nullptr);
     DISABLE_COPY_MOVE(ImageAreaWidget);
 
     void drawBorder(bool draw, const QColor &color = QColor(Qt::white));
