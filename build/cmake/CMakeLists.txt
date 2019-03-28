@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 
+message("VookiImageViewer - https://vookiimageviewer.cz")
+
 set(USE_QT_LIBRARIES
     Core Gui Widgets
    )
@@ -28,6 +30,11 @@ endif()
 add_definitions(
     -DBUILD_DATE=\"${BUILD_DATE_DOTTED}\"
 )
+
+# Include path to the sources root location
+#
+get_filename_component(SOURCES_ABSOLUTE_PATH ../../src/ ABSOLUTE)
+SET(CMAKE_CXX_FLAGS "-I${SOURCES_ABSOLUTE_PATH} ${CMAKE_CXX_FLAGS}")
 
 set(SOURCES
     ../../src/application/Application.cpp
@@ -83,6 +90,7 @@ if(APPLE)
     set(SOURCES
         ${SOURCES}
         ../../src/abstraction/mac/init.mm
+        ../../src/abstraction/mac/darkmode.mm
     )
 
     add_executable(VookiImageViewer
@@ -99,6 +107,7 @@ elseif(WIN32)
     set(SOURCES
         ${SOURCES}
         ../../src/abstraction/win/init.cpp
+        ../../src/abstraction/win/darkmode.cpp
     )
 
     add_executable(VookiImageViewer
@@ -111,6 +120,7 @@ else()
     set(SOURCES
         ${SOURCES}
         ../../src/abstraction/unix/init.cpp
+        ../../src/abstraction/unix/darkmode.cpp
     )
 
     add_executable(VookiImageViewer

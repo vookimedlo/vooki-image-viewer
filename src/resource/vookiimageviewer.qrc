@@ -22,6 +22,29 @@
         <file alias="homedir">image/Contact-Folder_240px.png</file>
         <file alias="docsdir">image/Documents_240px.png</file>
         <file alias="picturesdir">image/Picture-Folder_240px.png</file>
+
+        <file alias="fullscreen-white">image-white/Full-Screen_240px-white.png</file>
+        <file alias="quit-white">image-white/Power-white.png</file>
+        <file alias="preferences-white">image-white/Preferences 1-white.png</file>
+        <file alias="originalsize-white">image-white/Search-white.png</file>
+        <file alias="zoomin-white">image-white/Zoom In-white.png</file>
+        <file alias="zoomout-white">image-white/Zoom Out-white.png</file>
+        <file alias="previous-white">image-white/Left-9_240px-white.png</file>
+        <file alias="next-white">image-white/Right-9_240px-white.png</file>
+        <file alias="fittowindow-white">image-white/Page-Size_240px-white.png</file>
+        <file alias="rotateleft-white">image-white/Rotate-Left_240px-white.png</file>
+        <file alias="rotateright-white">image-white/Rotate-Right_240px-white.png</file>
+        <file alias="flipvertical-white">image-white/Mirror-2-Vertical_custom-white.png</file>
+        <file alias="fliphorizontal-white">image-white/Mirror-2-Horizontal_custom-white.png</file>
+        <file alias="scrolldown-white">image-white/Scroll-Down_240px-white.png</file>
+        <file alias="scrollup-white">image-white/Scroll-Up_240px-white.png</file>
+        <file alias="scrollleft-white">image-white/Swipe-Left_240px-white.png</file>
+        <file alias="scrollright-white">image-white/Swipe-Right_240px-white.png</file>
+        <file alias="homedir-white">image-white/Contact-Folder_240px-white.png</file>
+        <file alias="docsdir-white">image-white/Documents_240px-white.png</file>
+        <file alias="picturesdir-white">image-white/Picture-Folder_240px-white.png</file>
+
+        <file alias="applogo-white">openclipart-white/abeautifulwomansface-800px-white.png</file>
     </qresource>
     <qresource prefix="/text">
         <file alias="aboutapp">text/about.html</file>

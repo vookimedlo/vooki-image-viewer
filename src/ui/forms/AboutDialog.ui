@@ -137,6 +137,10 @@
    </item>
   </layout>
  </widget>
+ <pixmapfunction>SystemDependant::darkModePixmap</pixmapfunction>
+ <includes>
+  <include location="global">abstraction/darkmode.h</include>
+ </includes>
  <resources>
   <include location="../../resource/vookiimageviewer.qrc"/>
  </resources>

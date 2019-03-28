@@ -815,6 +815,7 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <pixmapfunction>SystemDependant::darkModePixmap</pixmapfunction>
  <customwidgets>
   <customwidget>
    <class>ImageAreaWidget</class>
@@ -844,6 +845,9 @@
    <header>../../src/ui/StatusBar.h</header>
   </customwidget>
  </customwidgets>
+ <includes>
+  <include location="global">abstraction/darkmode.h</include>
+ </includes>
  <resources>
   <include location="../../resource/vookiimageviewer.qrc"/>
  </resources>
