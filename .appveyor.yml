@@ -26,9 +26,17 @@ before_build:
 
 build_script:
   - cd \projects\vooki-image-viewer\build\cmake\windows
-  - generate.bat
-  - cd \projects\vooki-image-viewer\build\cmake\windows\build
-  - msbuild Project.sln /p:Configuration=Release /p:Platform=%platform%
+  - generate.bat no-qt-override
+  - build-release.bat
+  
+after_build:
+  - cd \projects\vooki-image-viewer\build\cmake\windows
+  - deploy-release.bat
+  - package.bat
+
+artifacts:
+  - path: '**\*.msi'
+    name: Testing Installation
 
 test: off
 
