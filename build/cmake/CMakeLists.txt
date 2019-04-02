@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
+project (vookiimageviewer)
 
 message("-- VookiImageViewer - https://vookiimageviewer.cz")
 
@@ -36,7 +37,7 @@ add_definitions(
     -DBUILD_DATE=\"${BUILD_DATE_DOTTED}\"
 )
 
-# Include path to the sources root location
+# Include a path to the sources root location
 #
 get_filename_component(SOURCES_ABSOLUTE_PATH ../../src/ ABSOLUTE)
 SET(CMAKE_CXX_FLAGS "-I${SOURCES_ABSOLUTE_PATH} ${CMAKE_CXX_FLAGS}")
@@ -204,7 +205,13 @@ elseif(WIN32)
     SET(CMAKE_CXX_FLAGS "-I${LIBRAW} ${CMAKE_CXX_FLAGS}")
 
     add_library(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
-    TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui ${LIBRAW}/lib/libraw)
+    TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui ${LIBRAW}/lib/libraw.lib)
+
+    get_filename_component(LIBHEIF "windows/3rdPartyLibs/libHEIF-1.4.0" ABSOLUTE)
+    SET(CMAKE_CXX_FLAGS "-I${LIBHEIF} ${CMAKE_CXX_FLAGS}")
+
+    add_library(vooki_heic_image MODULE ../../src/plugins/heicimage/heicHandler.cpp ../../src/plugins/heicimage/heicPlugin.cpp)
+    TARGET_LINK_LIBRARIES(vooki_heic_image Qt5::Gui ${LIBHEIF}/lib/libheif.lib)
 else()
     find_library(LIBRAW NAMES libraw_r raw_r)
     add_library(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
