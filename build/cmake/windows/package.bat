@@ -1,5 +1,7 @@
 @echo off
 
+cd /D "%~dp0"
+
 robocopy build\Release\ "support\package\SourceDir\PFiles\Michal Duda\VookiImageViewer" * /MIR
 
 cd support\package\
