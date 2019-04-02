@@ -51,7 +51,7 @@ Supported image formats cover the very common formats as well as the rare ones. 
 | RW2                | Panasonic RAW Image File [Inner thumbnail only]  |
 | SRW                | Samsung RAW Image File [Inner thumbnail only]    |
 | X3F                | SIGMA X3F Camera RAW File [Inner thumbnail only] |
-| [MacOS only] HEIC, HEIF| High Efficiency Image File Format            |
+| [MacOS/Windows only] HEIC| High Efficiency Image File Format            |
 
 
 All operations have assigned shortcuts and all of them can be user re-assigned except the one which is used for Preferences on MacOS.
