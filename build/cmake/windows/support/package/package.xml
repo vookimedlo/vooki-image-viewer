@@ -233,6 +233,11 @@
               </ProgId>
             </Component>
 
+            <Component Id="appDLL" Guid="10581E14-D3F7-40A1-A6D1-09F579D548A5">
+              <File Id="libde265.dll" Name="libde265.dll" KeyPath="yes"/>
+              <File Id="libheif.dll" Name="libheif.dll" />
+            </Component>
+
             <Component Id="QtDLL" Guid="35698E30-38DD-40B9-919C-88FCED730285">
               <File Id="Qt5Core.dll" Name="Qt5Core.dll" KeyPath="yes"/>
               <File Id="Qt5Gui.dll" Name="Qt5Gui.dll" />
@@ -270,6 +275,7 @@
                 <File Id="vooki_kimg_rgb.dll" Name="vooki_kimg_rgb.dll" />
                 <File Id="vooki_kimg_tga.dll" Name="vooki_kimg_tga.dll" />
                 <File Id="vooki_kimg_xcf.dll" Name="vooki_kimg_xcf.dll" />
+                <File Id="vooki_heic_image.dll" Name="vooki_heic_image.dll" />
                 <File Id="vooki_raw_thumb.dll" Name="vooki_raw_thumb.dll" KeyPath="yes" />
               </Component>
             </Directory>
@@ -322,6 +328,7 @@
     <Feature Id='Complete' Title='VookiImageViewer' Description='Whole bundle.'
     Display='expand' Level='1' ConfigurableDirectory='INSTALLDIR'>
       <ComponentRef Id='VookiImageViewer.exe' />
+      <ComponentRef Id='appDLL' />
       <ComponentRef Id='QtDLL' />
       <ComponentRef Id='iconenginesDLL' />
       <ComponentRef Id='platformsDLL' />
