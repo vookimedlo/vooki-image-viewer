@@ -65,6 +65,7 @@ qt5_wrap_ui(UI_HEADERS
     ../../src/ui/forms/AboutDialog.ui
     ../../src/ui/forms/AboutSupportedFormatsDialog.ui
     ../../src/ui/forms/MainWindow.ui
+    ../../src/ui/forms/ReleaseNotesDialog.ui
     ../../src/ui/forms/SettingsDialog.ui
 )
 

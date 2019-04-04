@@ -30,6 +30,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "support/RecentFileAction.h"
 #include "ui_AboutDialog.h"
 #include "ui_AboutSupportedFormatsDialog.h"
+#include "ui_ReleaseNotesDialog.h"
 #include <QFileSystemModel>
 #include <QImageReader>
 #include <QMessageBox>
@@ -372,6 +373,15 @@ void MainWindow::onQuitTriggered()
 void MainWindow::onRecentFileTriggered(const QString &filePath)
 {
     handleImagePath(filePath, false);
+}
+
+void MainWindow::onReleaseNotesTriggered()
+{
+    Ui::releaseNotesDialog uiReleaseNotes;
+    QDialog dialog(this);
+    uiReleaseNotes.setupUi(&dialog);
+    dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint & ~Qt::WindowMinMaxButtonsHint);
+    dialog.exec();
 }
 
 void MainWindow::onSettingsTriggered()

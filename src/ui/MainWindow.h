@@ -75,6 +75,7 @@ protected slots:
     void onPreviousImageTriggered();
     void onQuitTriggered();
     void onRecentFileTriggered(const QString &filePath);
+    void onReleaseNotesTriggered();
     void onSettingsTriggered();
     void onStatusBarToggled(bool toggled) const;
     void onZoomInTriggered() const;

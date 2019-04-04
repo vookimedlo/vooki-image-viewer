@@ -127,6 +127,7 @@
     <addaction name="actionAbout"/>
     <addaction name="actionAboutComponents"/>
     <addaction name="actionAboutQt"/>
+    <addaction name="actionReleaseNotes"/>
     <addaction name="actionSupportedImageFormats"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
@@ -813,6 +814,11 @@
     <enum>Qt::ApplicationShortcut</enum>
    </property>
   </action>
+  <action name="actionReleaseNotes">
+   <property name="text">
+    <string>Release Notes...</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <pixmapfunction>SystemDependant::darkModePixmap</pixmapfunction>
@@ -1300,6 +1306,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionReleaseNotes</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onReleaseNotesTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>404</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onQuitTriggered()</slot>
@@ -1322,5 +1344,6 @@
   <slot>onHomeDirClicked()</slot>
   <slot>onDocsDirClicked()</slot>
   <slot>onPicturesDirClicked()</slot>
+  <slot>onReleaseNotesTriggered()</slot>
  </slots>
 </ui>
