@@ -567,7 +567,7 @@
      </item>
      <item row="31" column="0">
       <property name="text">
-       <string>[MacOS only] HEIC, HEIF</string>
+       <string>[MacOS/Win10 only] HEIC</string>
       </property>
      </item>
      <item row="31" column="1">

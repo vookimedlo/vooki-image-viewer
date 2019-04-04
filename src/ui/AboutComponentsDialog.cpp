@@ -46,6 +46,12 @@ void AboutComponentsDialog::onSelectedComponentChanged(const int row)
         case 4:
             m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutlibraw"));
             break;
+        case 5:
+            m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutlibde265"));
+            break;
+        case 6:
+            m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutlibheif"));
+            break;
         default:
             m_uiAboutComponentsDialog.textBrowser->clear();
     }

@@ -53,5 +53,7 @@
         <file alias="abouticon54">text/aboutIcon54.html</file>
         <file alias="aboutkimageformats">text/aboutKImageFormats.html</file>
         <file alias="aboutlibraw">text/aboutLibRaw.html</file>
+        <file alias="aboutlibde265">text/aboutLibde265.html</file>
+        <file alias="aboutlibheif">text/aboutLibheif.html</file>
     </qresource>
 </RCC>

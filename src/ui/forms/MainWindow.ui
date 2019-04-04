@@ -714,7 +714,7 @@
     <string notr="true">viv/shortcut/app/about/components</string>
    </property>
    <property name="menuRole">
-    <enum>QAction::ApplicationSpecificRole</enum>
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionScrollLeft">

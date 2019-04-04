@@ -59,6 +59,16 @@
          <string>LibRAW</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>Libde265</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Libheif</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item>
