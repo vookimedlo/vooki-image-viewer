@@ -77,6 +77,7 @@
               <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".x3f" Value="" Type="string" />
               <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".srw" Value="" Type="string" />
               <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".arw" Value="" Type="string" />
+              <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".heic" Value="" Type="string" />
 
               <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.jpg\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
               <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.png\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
@@ -115,6 +116,7 @@
               <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.x3f\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
               <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.srw\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
               <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.arw\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+              <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.heic\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
 
               <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\shell\open" Name="FriendlyAppName" Value="VookiImageViewer" Type="string" />
 
@@ -228,6 +230,9 @@
                   <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
                 </Extension>
                 <Extension Id="arw">
+                  <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+                </Extension>
+                <Extension Id="heic">
                   <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
                 </Extension>
               </ProgId>
