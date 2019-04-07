@@ -90,8 +90,14 @@ All code developed during this project is [GPLv3][2] licensed. Images as well as
 -----------------
 
 ## Releases
-Prebuilt binaries for Windows 7, Windows 10 and MacOS as well as sources are available [here.][5]
+[Prebuilt binaries][5] for Windows 7, Windows 10 and MacOS as well as sources are available [here.][5]
 Unix binaries are not prebuilt and can be easily built from sources.
+
+Mac users can install the VookiImageViewer by Homebrew.
+```
+brew tap vookimedlo/homebrew-vookiimageviewer
+brew cask install vookiimageviewer-macos
+```
 
 -----------------
 
