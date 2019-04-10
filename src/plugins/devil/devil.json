@@ -1,0 +1,37 @@
+{
+    "Keys":
+	[
+		"cut",
+		"dcx",
+		"dicom",
+		"dcm",
+		"dds",
+		"exr",
+		"fits",
+		"fit",
+		"ftx",
+		"hdr",
+		"ico",
+		"cur",
+		"iff",
+		"iwi",
+		"jp2",
+		"lbm",
+		"lif",
+		"mdl",
+		"pal",
+		"pcd",
+		"pix",
+		"psp",
+		"pxr",
+		"rot",
+		"texture",
+		"tpl",
+		"utx",
+		"wal",
+		"vtf",
+		"wdp,",
+		"hdp",
+		"xpm"
+	]
+}

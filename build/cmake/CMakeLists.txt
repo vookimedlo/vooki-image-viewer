@@ -199,6 +199,16 @@ if(APPLE)
 
     add_library(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
     TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui libraw_r.a)
+
+    SET(DEVIL_LOC "3rdPartyLibs/DevIL-1.8.0")
+    get_filename_component(DEVIL mac/${DEVIL_LOC} ABSOLUTE)
+    SET(CMAKE_CXX_FLAGS "-I${DEVIL} ${CMAKE_CXX_FLAGS}")
+    SET(CMAKE_MODULE_LINKER_FLAGS "-L${DEVIL}/lib ${CMAKE_MODULE_LINKER_FLAGS}")
+
+    add_library(vooki_devil MODULE ../../src/plugins/devil/devilHandler.cpp ../../src/plugins/devil/devilPlugin.cpp)
+    TARGET_LINK_LIBRARIES(vooki_devil Qt5::Gui libIL.a)
+
+
 elseif(WIN32)
     add_definitions(-DLIBRAW_NODLL)
 
