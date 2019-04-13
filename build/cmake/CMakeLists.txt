@@ -217,4 +217,14 @@ else()
     find_library(LIBRAW NAMES libraw_r raw_r)
     add_library(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
     TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui ${LIBRAW})
+
+    install(TARGETS VookiImageViewer vooki_kimg_psd vooki_kimg_pcx vooki_kimg_ras vooki_kimg_pic vooki_kimg_rgb vooki_raw_thumb
+            RUNTIME DESTINATION bin
+            LIBRARY DESTINATION lib/vookiimageviewer)
+
+    if (TARGET vooki_kimg_xcf)
+        install(TARGETS vooki_kimg_xcf vooki_kimg_tga
+                LIBRARY DESTINATION lib/vookiimageviewer)
+    endif()
+
 endif()
