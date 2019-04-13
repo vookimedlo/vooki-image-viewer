@@ -54,3 +54,11 @@ cmake-build-*
 *.wixpdb
 *.dmg
 
+# DEB packages
+Makefile
+debian/files
+debian/debhelper-build-stamp
+debian/.debhelper/
+debian/vookiimageviewer/
+debian/vookiimageviewer.substvars
+

@@ -214,6 +214,12 @@ elseif(WIN32)
     add_library(vooki_heic_image MODULE ../../src/plugins/heicimage/heicHandler.cpp ../../src/plugins/heicimage/heicPlugin.cpp)
     TARGET_LINK_LIBRARIES(vooki_heic_image Qt5::Gui ${LIBHEIF}/lib/libheif.lib)
 else()
+
+
+    add_definitions(
+        -DUNIX_LIKE
+    )
+
     find_library(LIBRAW NAMES libraw_r raw_r)
     add_library(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
     TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui ${LIBRAW})
