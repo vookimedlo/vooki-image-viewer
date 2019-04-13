@@ -1,48 +1,65 @@
-cmake_minimum_required(VERSION 3.2)
-project (vookiimageviewer)
+# VookiImageViewer - tool to showing images.
+# Copyright(C) 2017-2019 Michal Duda <github@vookimedlo.cz>
+#
+# https://github.com/vookimedlo/vooki-image-viewer
+#
+# This program is free software : you can redistribute it and / or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.If not, see <http://www.gnu.org/licenses/>.
 
-message("-- VookiImageViewer - https://vookiimageviewer.cz")
+CMAKE_MINIMUM_REQUIRED(VERSION 3.2)
+PROJECT(vookiimageviewer)
 
-set(USE_QT_LIBRARIES
-    Core Gui Widgets
-   )
+MESSAGE("-- VookiImageViewer - https://vookiimageviewer.cz")
 
-find_package(Qt5 REQUIRED ${USE_QT_LIBRARIES})
+SET(USE_QT_LIBRARIES
+    Core Gui Widgets)
+
+FIND_PACKAGE(Qt5 REQUIRED ${USE_QT_LIBRARIES})
 
 
 if (Qt5_FOUND)
-    message("-- Qt version is ${Qt5_VERSION}")
+    MESSAGE("-- Qt version is ${Qt5_VERSION}")
 endif()
 
 # std::make_unique is part of c++14
 #
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
+SET(CMAKE_CXX_STANDARD 14)
+SET(CMAKE_CXX_STANDARD_REQUIRED ON)
+SET(CMAKE_CXX_EXTENSIONS OFF)
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_AUTOMOC ON)
+SET(CMAKE_INCLUDE_CURRENT_DIR ON)
+SET(CMAKE_AUTOMOC ON)
 
-if(NOT WIN32)
-    set(CMAKE_CXX_FLAGS "-Wall -Wextra")
-    set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+if (NOT WIN32)
+    SET(CMAKE_CXX_FLAGS "-Wall -Wextra")
+    SET(CMAKE_CXX_FLAGS_RELEASE "-O3")
 endif()
 
-if(NOT BUILD_DATE)
-    string(TIMESTAMP BUILD_DATE "%Y-%m-%d")
-    string(TIMESTAMP BUILD_DATE_DOTTED "%Y.%m.%d")
+if (NOT BUILD_DATE)
+    STRING(TIMESTAMP BUILD_DATE "%Y-%m-%d")
+    STRING(TIMESTAMP BUILD_DATE_DOTTED "%Y.%m.%d")
 endif()
 
-add_definitions(
+ADD_DEFINITIONS(
     -DBUILD_DATE=\"${BUILD_DATE_DOTTED}\"
 )
 
 # Include a path to the sources root location
 #
-get_filename_component(SOURCES_ABSOLUTE_PATH ../../src/ ABSOLUTE)
+GET_FILENAME_COMPONENT(SOURCES_ABSOLUTE_PATH ../../src/ ABSOLUTE)
 SET(CMAKE_CXX_FLAGS "-I${SOURCES_ABSOLUTE_PATH} ${CMAKE_CXX_FLAGS}")
 
-set(SOURCES
+SET(SOURCES
     ../../src/application/Application.cpp
     ../../src/application/main.cpp
     ../../src/model/FileSystemSortFilterProxyModel.cpp
@@ -60,7 +77,7 @@ set(SOURCES
     ../../src/util/misc.cpp
 )
 
-qt5_wrap_ui(UI_HEADERS
+QT5_WRAP_UI(UI_HEADERS
     ../../src/ui/forms/AboutComponentsDialog.ui
     ../../src/ui/forms/AboutDialog.ui
     ../../src/ui/forms/AboutSupportedFormatsDialog.ui
@@ -71,72 +88,72 @@ qt5_wrap_ui(UI_HEADERS
 
 # Satisfy new Policy CMP0071
 #
-set_property(SOURCE "ui_AboutComponentsDialog.h" PROPERTY SKIP_AUTOMOC ON)
-set_property(SOURCE "ui_AboutDialog.h" PROPERTY SKIP_AUTOMOC ON)
-set_property(SOURCE "ui_AboutSupportedFormatsDialog.h" PROPERTY SKIP_AUTOMOC ON)
-set_property(SOURCE "ui_MainWindow.h" PROPERTY SKIP_AUTOMOC ON)
-set_property(SOURCE "ui_SettingsDialog.h" PROPERTY SKIP_AUTOMOC ON)
-set_property(SOURCE "qrc_vookiimageviewer.cpp" PROPERTY SKIP_AUTOMOC ON)
+SET_PROPERTY(SOURCE "ui_AboutComponentsDialog.h" PROPERTY SKIP_AUTOMOC ON)
+SET_PROPERTY(SOURCE "ui_AboutDialog.h" PROPERTY SKIP_AUTOMOC ON)
+SET_PROPERTY(SOURCE "ui_AboutSupportedFormatsDialog.h" PROPERTY SKIP_AUTOMOC ON)
+SET_PROPERTY(SOURCE "ui_MainWindow.h" PROPERTY SKIP_AUTOMOC ON)
+SET_PROPERTY(SOURCE "ui_SettingsDialog.h" PROPERTY SKIP_AUTOMOC ON)
+SET_PROPERTY(SOURCE "qrc_vookiimageviewer.cpp" PROPERTY SKIP_AUTOMOC ON)
 
-qt5_add_resources(UI_RESOURCES ../../src/resource/vookiimageviewer.qrc)
+QT5_ADD_RESOURCES(UI_RESOURCES ../../src/resource/vookiimageviewer.qrc)
 
-if(APPLE)
-    find_library(APPKIT AppKit)
-    set(OS_LIBS ${APPKIT})
+if (APPLE)
+    FIND_LIBRARY(APPKIT AppKit)
+    SET(OS_LIBS ${APPKIT})
 
-    set(MACOSX_BUNDLE_EXECUTABLE_NAME VookiImageViewer)
-    set(MACOSX_BUNDLE_ICON_FILE vookiimageviewericon.icns)
-    set(MACOSX_BUNDLE_BUNDLE_NAME VookiImageViewer)
-    set(MACOSX_BUNDLE_COPYRIGHT "(C) 2019 Michal Duda")
-    set(MACOSX_BUNDLE_INFO_STRING "Lightweight image viewer")
-    set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${BUILD_DATE_DOTTED})
-    set(MACOSX_BUNDLE_GUI_IDENTIFIER "cz.VookiImageViewer")
+    SET(MACOSX_BUNDLE_EXECUTABLE_NAME VookiImageViewer)
+    SET(MACOSX_BUNDLE_ICON_FILE vookiimageviewericon.icns)
+    SET(MACOSX_BUNDLE_BUNDLE_NAME VookiImageViewer)
+    SET(MACOSX_BUNDLE_COPYRIGHT "(C) 2019 Michal Duda")
+    SET(MACOSX_BUNDLE_INFO_STRING "Lightweight image viewer")
+    SET(MACOSX_BUNDLE_SHORT_VERSION_STRING ${BUILD_DATE_DOTTED})
+    SET(MACOSX_BUNDLE_GUI_IDENTIFIER "cz.VookiImageViewer")
 
-    set_source_files_properties(../../src/resource/openclipart/vookiimageviewericon.icns PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+    SET_SOURCE_FILES_PROPERTIES(../../src/resource/openclipart/vookiimageviewericon.icns PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
-    set(SOURCES
+    SET(SOURCES
         ${SOURCES}
         ../../src/abstraction/mac/init.mm
         ../../src/abstraction/mac/darkmode.mm
     )
 
-    add_executable(VookiImageViewer
+    ADD_EXECUTABLE(VookiImageViewer
         MACOSX_BUNDLE
         ../../src/resource/openclipart/vookiimageviewericon.icns
         ${SOURCES}
         ${UI_HEADERS}
         ${UI_RESOURCES})
 
-    get_filename_component(PLIST_IN_ABSOLUTE_PATH mac/support/MacOSXBundleInfo.plist.in ABSOLUTE)
-    set_target_properties(VookiImageViewer PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${PLIST_IN_ABSOLUTE_PATH})
+    GET_FILENAME_COMPONENT(PLIST_IN_ABSOLUTE_PATH mac/support/MacOSXBundleInfo.plist.in ABSOLUTE)
+    SET_TARGET_PROPERTIES(VookiImageViewer PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${PLIST_IN_ABSOLUTE_PATH})
 
 elseif(WIN32)
-    set(SOURCES
+    SET(SOURCES
         ${SOURCES}
         ../../src/abstraction/win/init.cpp
         ../../src/abstraction/win/darkmode.cpp
     )
 
-    add_executable(VookiImageViewer
+    ADD_EXECUTABLE(VookiImageViewer
         WIN32
         windows/support/application.rc
         ${SOURCES}
         ${UI_HEADERS}
         ${UI_RESOURCES})
 else()
-    set(SOURCES
+    SET(SOURCES
         ${SOURCES}
         ../../src/abstraction/unix/init.cpp
         ../../src/abstraction/unix/darkmode.cpp
     )
 
-    add_executable(VookiImageViewer
+    ADD_EXECUTABLE(VookiImageViewer
         ${SOURCES}
         ${UI_HEADERS}
         ${UI_RESOURCES})
 endif()
 
-target_link_libraries(VookiImageViewer
+TARGET_LINK_LIBRARIES(VookiImageViewer
     Qt5::Core
     Qt5::Gui
     Qt5::Widgets)
@@ -149,12 +166,12 @@ TARGET_LINK_LIBRARIES(VookiImageViewer ${OS_LIBS})
 
 # Photoshop documents (psd)
 #
-add_library(vooki_kimg_psd MODULE ../../src/plugins/kimageformats/psd.cpp)
+ADD_LIBRARY(vooki_kimg_psd MODULE ../../src/plugins/kimageformats/psd.cpp)
 TARGET_LINK_LIBRARIES(vooki_kimg_psd Qt5::Gui)
 
 # Personal Computer Exchange (pcx)
 #
-add_library(vooki_kimg_pcx MODULE ../../src/plugins/kimageformats/pcx.cpp)
+ADD_LIBRARY(vooki_kimg_pcx MODULE ../../src/plugins/kimageformats/pcx.cpp)
 TARGET_LINK_LIBRARIES(vooki_kimg_pcx Qt5::Gui)
 
 if (Qt5_FOUND)
@@ -164,73 +181,89 @@ if (Qt5_FOUND)
 
         # Gimp (xcf)
         #
-        add_library(vooki_kimg_xcf MODULE ../../src/plugins/kimageformats/xcf.cpp)
+        ADD_LIBRARY(vooki_kimg_xcf MODULE ../../src/plugins/kimageformats/xcf.cpp)
         TARGET_LINK_LIBRARIES(vooki_kimg_xcf Qt5::Gui)
 
         # Targa (tga): supports more formats than Qt's version
         #
-        add_library(vooki_kimg_tga MODULE ../../src/plugins/kimageformats/tga.cpp)
+        ADD_LIBRARY(vooki_kimg_tga MODULE ../../src/plugins/kimageformats/tga.cpp)
         TARGET_LINK_LIBRARIES(vooki_kimg_tga Qt5::Gui)
     endif()
 endif()
 
 # Sun Raster (ras)
 #
-add_library(vooki_kimg_ras MODULE ../../src/plugins/kimageformats/ras.cpp)
+ADD_LIBRARY(vooki_kimg_ras MODULE ../../src/plugins/kimageformats/ras.cpp)
 TARGET_LINK_LIBRARIES(vooki_kimg_ras Qt5::Gui)
 
 # Softimage PIC (pic)
 #
-add_library(vooki_kimg_pic MODULE ../../src/plugins/kimageformats/pic.cpp)
+ADD_LIBRARY(vooki_kimg_pic MODULE ../../src/plugins/kimageformats/pic.cpp)
 TARGET_LINK_LIBRARIES(vooki_kimg_pic Qt5::Gui)
 
 # SGI images (rgb, rgba, sgi, bw)
 #
-add_library(vooki_kimg_rgb MODULE ../../src/plugins/kimageformats/rgb.cpp)
+ADD_LIBRARY(vooki_kimg_rgb MODULE ../../src/plugins/kimageformats/rgb.cpp)
 TARGET_LINK_LIBRARIES(vooki_kimg_rgb Qt5::Gui)
 
 # Camera RAW Thumbnails (raf, mos, cr2, erf, dng, mrw, nef, orf, rw2, pef, x3f, srw, x3f, arw)
+# Prebuilt library for the MacOS/Windows only, Linux uses a distro package
 #
 SET(LIBRAW_LOC "3rdPartyLibs/LibRaw-0.19.2")
-if(APPLE)
-    get_filename_component(LIBRAW mac/${LIBRAW_LOC} ABSOLUTE)
+if (APPLE)
+    # MacOS
+    #
+    GET_FILENAME_COMPONENT(LIBRAW mac/${LIBRAW_LOC} ABSOLUTE)
     SET(CMAKE_CXX_FLAGS "-I${LIBRAW} ${CMAKE_CXX_FLAGS}")
     SET(CMAKE_MODULE_LINKER_FLAGS "-L${LIBRAW}/lib ${CMAKE_MODULE_LINKER_FLAGS}")
 
-    add_library(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
+    ADD_LIBRARY(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
     TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui libraw_r.a)
 elseif(WIN32)
-    add_definitions(-DLIBRAW_NODLL)
+    # Windows
+    #
+    ADD_DEFINITIONS(-DLIBRAW_NODLL)
 
-    get_filename_component(LIBRAW windows/${LIBRAW_LOC} ABSOLUTE)
+    GET_FILENAME_COMPONENT(LIBRAW windows/${LIBRAW_LOC} ABSOLUTE)
     SET(CMAKE_CXX_FLAGS "-I${LIBRAW} ${CMAKE_CXX_FLAGS}")
 
-    add_library(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
+    ADD_LIBRARY(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
     TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui ${LIBRAW}/lib/libraw.lib)
 
-    get_filename_component(LIBHEIF "windows/3rdPartyLibs/libHEIF-1.4.0" ABSOLUTE)
+    GET_FILENAME_COMPONENT(LIBHEIF "windows/3rdPartyLibs/libHEIF-1.4.0" ABSOLUTE)
     SET(CMAKE_CXX_FLAGS "-I${LIBHEIF} ${CMAKE_CXX_FLAGS}")
 
-    add_library(vooki_heic_image MODULE ../../src/plugins/heicimage/heicHandler.cpp ../../src/plugins/heicimage/heicPlugin.cpp)
+    ADD_LIBRARY(vooki_heic_image MODULE ../../src/plugins/heicimage/heicHandler.cpp ../../src/plugins/heicimage/heicPlugin.cpp)
     TARGET_LINK_LIBRARIES(vooki_heic_image Qt5::Gui ${LIBHEIF}/lib/libheif.lib)
 else()
+    # Unix-like systems
+    #
+    MESSAGE("-- VookiImageViewer expects its plugins located either in /usr/lib/vookiimageviewer/imageformats or /usr/local/lib/vookiimageviewer/imageformats")
+    SET(PLUGINS "lib/vookiimageviewer/imageformats")
+    ADD_DEFINITIONS(-DUNIX_LIKE)
 
-
-    add_definitions(
-        -DUNIX_LIKE
-    )
-
-    find_library(LIBRAW NAMES libraw_r raw_r)
-    add_library(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
-    TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui ${LIBRAW})
-
-    install(TARGETS VookiImageViewer vooki_kimg_psd vooki_kimg_pcx vooki_kimg_ras vooki_kimg_pic vooki_kimg_rgb vooki_raw_thumb
-            RUNTIME DESTINATION bin
-            LIBRARY DESTINATION lib/vookiimageviewer)
-
-    if (TARGET vooki_kimg_xcf)
-        install(TARGETS vooki_kimg_xcf vooki_kimg_tga
-                LIBRARY DESTINATION lib/vookiimageviewer)
+    FIND_LIBRARY(LIBRAW NAMES libraw_r raw_r)
+    if (LIBRAW)
+        ADD_LIBRARY(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
+        TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui ${LIBRAW})
     endif()
 
+    INSTALL(TARGETS VookiImageViewer vooki_kimg_psd vooki_kimg_pcx vooki_kimg_ras vooki_kimg_pic vooki_kimg_rgb
+            RUNTIME DESTINATION bin
+            LIBRARY DESTINATION ${PLUGINS})
+
+    if (TARGET vooki_kimg_xcf)
+        INSTALL(TARGETS vooki_kimg_xcf
+                LIBRARY DESTINATION ${PLUGINS})
+    endif()
+
+    if (TARGET vooki_kimg_tga)
+        INSTALL(TARGETS vooki_kimg_tga
+                LIBRARY DESTINATION ${PLUGINS})
+    endif()
+
+    if (TARGET vooki_raw_thumb)
+        INSTALL(TARGETS vooki_raw_thumb
+                LIBRARY DESTINATION ${PLUGINS})
+    endif()
 endif()
