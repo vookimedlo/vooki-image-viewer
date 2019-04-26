@@ -2,7 +2,7 @@ Source: vookiimageviewer
 Section: contrib
 Priority: optional
 Maintainer: Michal Duda <github@vookimedlo.cz>
-Build-Depends: debhelper (>= 10), software-properties-common, g++, gcc, make, cmake, git, qt5-default, qt5-image-formats-plugins, libraw16
+Build-Depends: debhelper (>= 10), software-properties-common, g++, gcc, make, cmake, git, qt5-default, qt5-image-formats-plugins, libraw-dev
 Standards-Version: 4.1.2
 Homepage: https://github.com/vookimedlo/vooki-image-viewer
 Vcs-Git: https://github.com/vookimedlo/vooki-image-viewer.git
