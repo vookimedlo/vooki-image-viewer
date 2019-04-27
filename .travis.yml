@@ -16,31 +16,32 @@ compiler:
   - gcc
 
 env:
-  - QT=5.12 RELEASE=bionic DISTRO=ubuntu
-  - QT=latestDistroOfficial RELEASE=cosmic DISTRO=ubuntu
-  - QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian
-  - QT=latestDistroOfficial RELEASE=fedora-stable DISTRO=fedora
+  - QT=5.12 RELEASE=bionic DISTRO=ubuntu DEB=no
+  - QT=latestDistroOfficial RELEASE=cosmic DISTRO=ubuntu DEB=yes
+  - QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian DEB=yes
+  - QT=latestDistroOfficial RELEASE=fedora-stable DISTRO=fedora DEB=no
   - BREW=
 
 matrix:
   exclude:
   - os: linux
     env: BREW=
-    
+
   - os: osx
-    env: QT=5.12 RELEASE=bionic DISTRO=ubuntu
+    env: QT=5.12 RELEASE=bionic DISTRO=ubuntu DEB=no
   - os: osx
-    env: QT=latestDistroOfficial RELEASE=cosmic DISTRO=ubuntu
+    env: QT=latestDistroOfficial RELEASE=cosmic DISTRO=ubuntu DEB=yes
   - os: osx
-    env: QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian
+    env: QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian DEB=yes
   - os: osx
-    env: QT=latestDistroOfficial RELEASE=fedora-stable DISTRO=fedora   
-    
+    env: QT=latestDistroOfficial RELEASE=fedora-stable DISTRO=fedora DEB=no
+
 install:
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker pull vookimedlo/"$DISTRO"-qt:"$QT"_"$CC"_"$RELEASE"'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker run -d --name linux_docker --rm -ti vookimedlo/"$DISTRO"-qt:"$QT"_"$CC"_"$RELEASE" bash'
   - '[ "$TRAVIS_OS_NAME" != linux ] || ([ "$DISTRO" != ubuntu ] && [ "$DISTRO" != debian ]) || docker exec linux_docker apt-get update -qq'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || ([ "$DISTRO" != ubuntu ] && [ "$DISTRO" != debian ]) || docker exec linux_docker apt-get -y install libraw-dev moreutils qt5-image-formats-plugins'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || ([ "$DISTRO" != ubuntu ] && [ "$DISTRO" != debian ]) || docker exec linux_docker apt-get -y install libraw-dev moreutils'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || [ "$QT" != latestDistroOfficial ] ||  ([ "$DISTRO" != ubuntu ] && [ "$DISTRO" != debian ]) || docker exec linux_docker apt-get -y install qt5-image-formats-plugins'
   - '[ "$TRAVIS_OS_NAME" != linux ] || [ "$DISTRO" != fedora ] || docker exec linux_docker yum -y install LibRaw LibRaw-devel'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker mkdir -p /root/sources/vooki-image-viewer'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker cp -L ./ linux_docker:/root/sources/vooki-image-viewer'
@@ -50,16 +51,16 @@ install:
   - '[ "$TRAVIS_OS_NAME" != osx ] || brew link --force qt$BREW'
   - '[ "$TRAVIS_OS_NAME" != osx ] || export CMAKE_PREFIX_PATH=/usr/local/opt/qt/'
 
-before_script: 
+before_script:
   - '[ "$TRAVIS_OS_NAME" != osx ] || qmake -v'
   - '[ "$TRAVIS_OS_NAME" != osx ] || cmake --version'
   - '[ "$TRAVIS_OS_NAME" != osx ] || uname -a'
-  
+
   - '[ "$TRAVIS_OS_NAME" != linux ] || ([ "$DISTRO" != ubuntu ] && [ "$DISTRO" != debian ]) || docker exec linux_docker bash -c "source /etc/profile && qmake -v"'
   - '[ "$TRAVIS_OS_NAME" != linux ] || [ "$DISTRO" != fedora ] || docker exec linux_docker bash -c "source /etc/profile && qmake-qt5 -v"'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker cmake --version'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker uname -a'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker cat /etc/issue.net' 
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker exec linux_docker cat /etc/issue.net'
 
 script:
   - '[ "$TRAVIS_OS_NAME" != osx ] || cd build/cmake/mac'
@@ -67,9 +68,9 @@ script:
   - '[ "$TRAVIS_OS_NAME" != osx ] || cd build'
   - '[ "$TRAVIS_OS_NAME" != osx ] || bash -c "source /etc/profile && cmake -DCMAKE_BUILD_TYPE=Release ../../"'
   - '[ "$TRAVIS_OS_NAME" != osx ] || make'
-  
-  - '[ "$TRAVIS_OS_NAME" != linux ] || [ "$DISTRO" != fedora ] || docker exec linux_docker bash -c "source /etc/profile && cd /root/sources/vooki-image-viewer/build/cmake/unix && ./generate.sh && cd build && make"'
-  - '[ "$TRAVIS_OS_NAME" != linux ] || ([ "$DISTRO" != ubuntu ] && [ "$DISTRO" != debian ]) || docker exec linux_docker bash -c "source /etc/profile && cd /root/sources/vooki-image-viewer/ && ./debian/create-deb-snapshot.sh"'
+
+  - '[ "$TRAVIS_OS_NAME" != linux ] || [ "$DEB" != no ] || docker exec linux_docker bash -c "source /etc/profile && cd /root/sources/vooki-image-viewer/build/cmake/unix && ./generate.sh && cd build && make"'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || [ "$DEB" != yes ] || docker exec linux_docker bash -c "source /etc/profile && cd /root/sources/vooki-image-viewer/ && ./debian/create-deb-snapshot.sh"'
 
 after_script:
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker stop linux_docker'
