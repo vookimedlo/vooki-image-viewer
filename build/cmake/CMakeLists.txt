@@ -41,13 +41,17 @@ SET(CMAKE_INCLUDE_CURRENT_DIR ON)
 SET(CMAKE_AUTOMOC ON)
 
 if (NOT WIN32)
-    SET(CMAKE_CXX_FLAGS "-Wall -Wextra")
-    SET(CMAKE_CXX_FLAGS_RELEASE "-O3")
+    SET(CMAKE_CXX_FLAGS "-Wall -Wextra -g ${CMAKE_CXX_FLAGS}")
+    SET(CMAKE_CXX_FLAGS_RELEASE "-O3 -g ${CMAKE_CXX_FLAGS}")
 endif()
 
 if (NOT BUILD_DATE)
     STRING(TIMESTAMP BUILD_DATE "%Y-%m-%d")
     STRING(TIMESTAMP BUILD_DATE_DOTTED "%Y.%m.%d")
+endif()
+
+if (NOT LIB_INSTALL_DIR)
+    set(LIB_INSTALL_DIR lib)
 endif()
 
 ADD_DEFINITIONS(
@@ -239,7 +243,7 @@ else()
     # Unix-like systems
     #
     MESSAGE("-- VookiImageViewer expects its plugins located either in /usr/lib/vookiimageviewer/imageformats or /usr/local/lib/vookiimageviewer/imageformats")
-    SET(PLUGINS "lib/vookiimageviewer/imageformats")
+    SET(PLUGINS "${LIB_INSTALL_DIR}/vookiimageviewer/imageformats")
     ADD_DEFINITIONS(-DUNIX_LIKE)
 
     FIND_LIBRARY(LIBRAW NAMES libraw_r raw_r)
