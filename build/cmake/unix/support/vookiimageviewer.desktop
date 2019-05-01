@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=VookiImageViewer
+GenericName=Image Viewer
+Comment=View images
+Exec=VookiImageViewer
+Icon=vookiimageviewericon
+Terminal=false
+Type=Application
+Categories=Graphics;

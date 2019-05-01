@@ -264,6 +264,12 @@ else()
                   ${TOP_LEVEL_ABSOLUTE_PATH}/README.md
             DESTINATION share/doc/vookiimageviewer)
 
+    INSTALL(FILES ${TOP_LEVEL_ABSOLUTE_PATH}/build/cmake/unix/support/vookiimageviewer.desktop
+            DESTINATION share/applications)
+
+    INSTALL(FILES ${TOP_LEVEL_ABSOLUTE_PATH}/src/resource/openclipart/vookiimageviewericon.png
+            DESTINATION share/pixmaps)
+
     if (TARGET vooki_kimg_xcf)
         INSTALL(TARGETS vooki_kimg_xcf
                 LIBRARY DESTINATION ${PLUGINS})

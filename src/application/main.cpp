@@ -46,13 +46,15 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName("Michal Duda");
     QCoreApplication::setOrganizationDomain("VookiImageViewer.cz");
     QCoreApplication::setApplicationName("VookiImageViewer");
-    
+
 #ifdef UNIX_LIKE
     // Unix-like systems shall have our plugins located in the one of the following locations + /imageformats
     QCoreApplication::addLibraryPath("/usr/lib/vookiimageviewer");
     QCoreApplication::addLibraryPath("/usr/local/lib/vookiimageviewer");
+    QCoreApplication::addLibraryPath("/usr/lib64/vookiimageviewer");
+    QCoreApplication::addLibraryPath("/usr/local/lib64/vookiimageviewer");
 #endif // UNIX_LIKE
-    
+
     SystemDependant::Init();
     MainWindow mainWindow;
     QObject::connect(&application, &Application::aboutToQuit, &mainWindow, &MainWindow::onAboutToQuit);
