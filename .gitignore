@@ -63,3 +63,4 @@ debian/vookiimageviewer/
 debian/vookiimageviewer.substvars
 build-deb/
 
+build/cmake/unix/support/package/rpm/vookiimageviewer-patched.spec
