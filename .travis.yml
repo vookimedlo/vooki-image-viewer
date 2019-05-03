@@ -68,7 +68,9 @@ script:
   - '[ "$TRAVIS_OS_NAME" != osx ] || bash -c "source /etc/profile && cmake -DCMAKE_BUILD_TYPE=Release ../../"'
   - '[ "$TRAVIS_OS_NAME" != osx ] || make'
 
-  - '[ "$TRAVIS_OS_NAME" != linux ] || [ "$DEB" != no ] || docker exec linux_docker bash -c "source /etc/profile && cd /root/sources/vooki-image-viewer/build/cmake/unix && ./generate.sh && cd build && make"'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || [ "$DISTRO" != fedora ] || [ "$CC" != gcc ] || docker exec linux_docker bash -c "source /etc/profile && cd /root/sources/vooki-image-viewer/build/cmake/unix && ./support/package/rpm/create-rpm-snapshot.sh"'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || [ "$DISTRO" != fedora ] || [ "$CC" != clang ] || docker exec linux_docker bash -c "source /etc/profile && cd /root/sources/vooki-image-viewer/build/cmake/unix && ./generate.sh && cd build && make"'
+  - '[ "$TRAVIS_OS_NAME" != linux ] || [ "$DEB" != no ] || ([ "$DISTRO" != ubuntu ] && [ "$DISTRO" != debian ]) || docker exec linux_docker bash -c "source /etc/profile && cd /root/sources/vooki-image-viewer/build/cmake/unix && ./generate.sh && cd build && make"'
   - '[ "$TRAVIS_OS_NAME" != linux ] || [ "$DEB" != yes ] || docker exec linux_docker bash -c "source /etc/profile && cd /root/sources/vooki-image-viewer/ && ./debian/create-deb-snapshot.sh"'
 
 after_script:
