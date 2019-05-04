@@ -5,6 +5,9 @@ set -e
 cd $(dirname "$0")
 readonly SCRIPT_LOCATION=`pwd`
 
+`rm changelog/git2changelog/scripts/git2changelog.py || true`
+ln -s ../src/git2changelog.py changelog/git2changelog/scripts/git2changelog.py
+
 readonly SNAP_GIT_RELEASE=`git rev-parse --short HEAD`
 readonly SNAP_DATE_RELEASE=`date +%Y%m%d`
 readonly SNAP_RELEASE="${SNAP_DATE_RELEASE}git${SNAP_GIT_RELEASE}"
@@ -18,6 +21,7 @@ rpmdev-setuptree
 
 echo -e  "\n\n** Creating a changelog file - all tagged releases"
 #./debian/generate-changelog.sh
+python ./changelog/git2changelog/scripts/git2changelog.py -b v2017.10.27 -r .
 
 echo -e  "\n\n** Creating a changelog file - latest tagged release to the head"
 #./debian/generate-changelog-snapshot.sh
