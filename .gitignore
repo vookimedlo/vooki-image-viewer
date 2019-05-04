@@ -64,3 +64,6 @@ debian/vookiimageviewer.substvars
 build-deb/
 
 build/cmake/unix/support/package/rpm/vookiimageviewer-patched.spec
+build/cmake/unix/support/package/rpm/git2changelog.py
+build/cmake/unix/support/package/rpm/git2changelog
+build/cmake/unix/support/package/rpm/git2changelog.pyc
