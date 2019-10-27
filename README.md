@@ -14,6 +14,7 @@ The main goal is to have a free of charge cross-platform viewer with a simple de
 - Supports Apple high definition trackpad gestures.
 
 ![Application screenshot](src/resource/readme/screenshot_2017-10-19_21-24-02.png?raw=true "")
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fvookimedlo%2Fvooki-image-viewer.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fvookimedlo%2Fvooki-image-viewer?ref=badge_shield)
 
 Supported image formats cover the very common formats as well as the rare ones. Viewer does not intentionally [demosaic][1] the RAW images, but only displays the embedded thumbnail.
 
@@ -117,3 +118,7 @@ Homepage: [https://vookiimageviewer.cz/][4]
 [3]: https://github.com/vookimedlo/vooki-image-viewer/
 [4]: https://vookiimageviewer.cz/
 [5]: https://github.com/vookimedlo/vooki-image-viewer/releases/latest
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fvookimedlo%2Fvooki-image-viewer.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fvookimedlo%2Fvooki-image-viewer?ref=badge_large)
