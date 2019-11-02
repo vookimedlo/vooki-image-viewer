@@ -1,6 +1,6 @@
 # https://VookiImageViewer.cz
 
-image: Visual Studio 2017
+image: Visual Studio 2019
 
 version: build{build}
 
@@ -12,8 +12,8 @@ environment:
       qt: msvc2017_64
 
 init:
-  - set Qt5_DIR=c:\Qt\5.12\%qt%\lib\cmake\Qt5\
-  - set QTDIR=c:\Qt\5.12\%qt%
+  - set Qt5_DIR=c:\Qt\5.13\%qt%\lib\cmake\Qt5\
+  - set QTDIR=c:\Qt\5.13\%qt%
   - set Qt5Core_DIR=%QTDIR%\lib\cmake\Qt5Core\
   - set Qt5Gui_DIR=%QTDIR%\lib\cmake\Qt5Gui\
   - set Qt5Widgets_DIR=%QTDIR%\lib\cmake\Qt5Widgets\
