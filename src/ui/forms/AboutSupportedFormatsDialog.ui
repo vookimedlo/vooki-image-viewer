@@ -52,7 +52,7 @@
       <enum>Qt::DashDotLine</enum>
      </property>
      <property name="rowCount">
-      <number>32</number>
+      <number>33</number>
      </property>
      <attribute name="horizontalHeaderDefaultSectionSize">
       <number>180</number>
@@ -63,6 +63,11 @@
      <attribute name="verticalHeaderVisible">
       <bool>false</bool>
      </attribute>
+     <row>
+      <property name="text">
+       <string/>
+      </property>
+     </row>
      <row>
       <property name="text">
        <string/>
@@ -387,190 +392,200 @@
      </item>
      <item row="13" column="0">
       <property name="text">
-       <string>PCX</string>
+       <string>HDR</string>
       </property>
      </item>
      <item row="13" column="1">
       <property name="text">
-       <string>Personal Computer Exchange</string>
+       <string>Radiance HDR</string>
       </property>
      </item>
      <item row="14" column="0">
       <property name="text">
-       <string>RGB, RGBA, SGI, BW</string>
+       <string>PCX</string>
       </property>
      </item>
      <item row="14" column="1">
       <property name="text">
-       <string>SGI Images</string>
+       <string>Personal Computer Exchange</string>
       </property>
      </item>
      <item row="15" column="0">
       <property name="text">
-       <string>PIC</string>
+       <string>RGB, RGBA, SGI, BW</string>
       </property>
      </item>
      <item row="15" column="1">
       <property name="text">
-       <string>Softimage</string>
+       <string>SGI Images</string>
       </property>
      </item>
      <item row="16" column="0">
       <property name="text">
-       <string>TGA</string>
+       <string>PIC</string>
       </property>
      </item>
      <item row="16" column="1">
       <property name="text">
-       <string>Targa</string>
+       <string>Softimage</string>
       </property>
      </item>
      <item row="17" column="0">
       <property name="text">
-       <string>ARW</string>
+       <string>TGA</string>
       </property>
      </item>
      <item row="17" column="1">
       <property name="text">
-       <string>Sony Alpha Raw [Inner thumbnail only]</string>
+       <string>Targa</string>
       </property>
      </item>
      <item row="18" column="0">
       <property name="text">
-       <string>CR2</string>
+       <string>ARW</string>
       </property>
      </item>
      <item row="18" column="1">
       <property name="text">
-       <string>Canon Raw Version 2 [Inner thumbnail only]</string>
+       <string>Sony Alpha Raw [Inner thumbnail only]</string>
       </property>
      </item>
      <item row="19" column="0">
       <property name="text">
-       <string>DNG</string>
+       <string>CR2</string>
       </property>
      </item>
      <item row="19" column="1">
       <property name="text">
-       <string>Digital Negative [Inner thumbnail only]</string>
+       <string>Canon Raw Version 2 [Inner thumbnail only]</string>
       </property>
      </item>
      <item row="20" column="0">
       <property name="text">
-       <string>ERF</string>
+       <string>DNG</string>
       </property>
      </item>
      <item row="20" column="1">
       <property name="text">
-       <string>Epson RAW File [Inner thumbnail only]</string>
+       <string>Digital Negative [Inner thumbnail only]</string>
       </property>
      </item>
      <item row="21" column="0">
       <property name="text">
-       <string>MOS</string>
+       <string>ERF</string>
       </property>
      </item>
      <item row="21" column="1">
       <property name="text">
-       <string>Leaf Raw Image File [Inner thumbnail only]</string>
+       <string>Epson RAW File [Inner thumbnail only]</string>
       </property>
      </item>
      <item row="22" column="0">
       <property name="text">
-       <string>MRW</string>
+       <string>MOS</string>
       </property>
      </item>
      <item row="22" column="1">
       <property name="text">
-       <string>Konica Minolta RAW [Inner thumbnail only]</string>
+       <string>Leaf Raw Image File [Inner thumbnail only]</string>
       </property>
      </item>
      <item row="23" column="0">
       <property name="text">
-       <string>NEF</string>
+       <string>MRW</string>
       </property>
      </item>
      <item row="23" column="1">
       <property name="text">
-       <string>Nikon Raw Image File [Inner thumbnail only]</string>
+       <string>Konica Minolta RAW [Inner thumbnail only]</string>
       </property>
      </item>
      <item row="24" column="0">
       <property name="text">
-       <string>ORF</string>
+       <string>NEF</string>
       </property>
      </item>
      <item row="24" column="1">
       <property name="text">
-       <string>Olympus Raw Image File [Inner thumbnail only]</string>
+       <string>Nikon Raw Image File [Inner thumbnail only]</string>
       </property>
      </item>
      <item row="25" column="0">
       <property name="text">
-       <string>PEF</string>
+       <string>ORF</string>
       </property>
      </item>
      <item row="25" column="1">
       <property name="text">
-       <string>Pentax Raw Image File [Inner thumbnail only]</string>
+       <string>Olympus Raw Image File [Inner thumbnail only]</string>
       </property>
      </item>
      <item row="26" column="0">
       <property name="text">
-       <string>RAF</string>
+       <string>PEF</string>
       </property>
      </item>
      <item row="26" column="1">
       <property name="text">
-       <string>Fuji Raw Image File [Inner thumbnail only]</string>
+       <string>Pentax Raw Image File [Inner thumbnail only]</string>
       </property>
      </item>
      <item row="27" column="0">
       <property name="text">
-       <string>RW2</string>
+       <string>RAF</string>
       </property>
      </item>
      <item row="27" column="1">
       <property name="text">
-       <string>Panasonic RAW Image File [Inner thumbnail only]</string>
+       <string>Fuji Raw Image File [Inner thumbnail only]</string>
       </property>
      </item>
      <item row="28" column="0">
       <property name="text">
-       <string>SRW</string>
+       <string>RW2</string>
       </property>
      </item>
      <item row="28" column="1">
       <property name="text">
-       <string>Samsung RAW Image File [Inner thumbnail only]</string>
+       <string>Panasonic RAW Image File [Inner thumbnail only]</string>
       </property>
      </item>
      <item row="29" column="0">
       <property name="text">
-       <string>X3F</string>
+       <string>SRW</string>
       </property>
      </item>
      <item row="29" column="1">
       <property name="text">
-       <string>SIGMA X3F Camera RAW File [Inner thumbnail only]</string>
+       <string>Samsung RAW Image File [Inner thumbnail only]</string>
       </property>
      </item>
      <item row="30" column="0">
       <property name="text">
-       <string>TIFF</string>
+       <string>X3F</string>
       </property>
      </item>
      <item row="30" column="1">
       <property name="text">
-       <string>Tagged Image File Format</string>
+       <string>SIGMA X3F Camera RAW File [Inner thumbnail only]</string>
       </property>
      </item>
      <item row="31" column="0">
       <property name="text">
-       <string>[MacOS/Win10 only] HEIC</string>
+       <string>TIFF</string>
       </property>
      </item>
      <item row="31" column="1">
+      <property name="text">
+       <string>Tagged Image File Format</string>
+      </property>
+     </item>
+     <item row="32" column="0">
+      <property name="text">
+       <string>[MacOS/Win10 only] HEIC</string>
+      </property>
+     </item>
+     <item row="32" column="1">
       <property name="text">
        <string>High Efficiency Image File Format</string>
       </property>
