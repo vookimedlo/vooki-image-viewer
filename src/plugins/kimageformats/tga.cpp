@@ -201,16 +201,20 @@ static bool LoadTGA(QDataStream &s, const TgaHeader &tga, QImage &img)
     }
 
     // Read palette.
-    char palette[768];
+    static const int max_palette_size = 768;
+    char palette[max_palette_size];
     if (info.pal) {
         // @todo Support palettes in other formats!
-        const int size = 3 * tga.colormap_length;
-        const int dataRead = s.readRawData(palette, size);
+        const int palette_size = 3 * tga.colormap_length;
+        if (palette_size > max_palette_size) {
+            return false;
+        }
+        const int dataRead = s.readRawData(palette, palette_size);
         if (dataRead < 0) {
             return false;
         }
-        if (dataRead < size) {
-            memset(&palette[dataRead], 0, size - dataRead);
+        if (dataRead < max_palette_size) {
+            memset(&palette[dataRead], 0, max_palette_size - dataRead);
         }
     }
 
@@ -248,7 +252,10 @@ static bool LoadTGA(QDataStream &s, const TgaHeader &tga, QImage &img)
                 // RLE pixels.
                 assert(pixel_size <= 8);
                 char pixel[8];
-                s.readRawData(pixel, pixel_size);
+                const int dataRead = s.readRawData(pixel, pixel_size);
+                if (dataRead < (int)pixel_size) {
+                    memset(&pixel[dataRead], 0, pixel_size - dataRead);
+                }
                 do {
                     memcpy(dst, pixel, pixel_size);
                     dst += pixel_size;
@@ -256,7 +263,14 @@ static bool LoadTGA(QDataStream &s, const TgaHeader &tga, QImage &img)
             } else {
                 // Raw pixels.
                 count *= pixel_size;
-                s.readRawData(dst, count);
+                const int dataRead = s.readRawData(dst, count);
+                if (dataRead < 0) {
+                    free(image);
+                    return false;
+                }
+                if ((uint)dataRead < count) {
+                    memset(&dst[dataRead], 0, count - dataRead);
+                }
                 dst += count;
             }
         }

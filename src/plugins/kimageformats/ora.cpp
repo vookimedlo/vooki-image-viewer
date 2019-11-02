@@ -17,6 +17,9 @@
 
 #include <kzip.h>
 
+static constexpr char s_magic[] = "image/openraster";
+static constexpr int s_magic_size = sizeof(s_magic) - 1; // -1 to remove the last \0
+
 OraHandler::OraHandler()
 {
 }
@@ -35,7 +38,7 @@ bool OraHandler::read(QImage *image)
     KZip zip(device());
     if (!zip.open(QIODevice::ReadOnly)) return false;
 
-    const KArchiveEntry *entry = zip.directory()->entry(QLatin1String("mergedimage.png"));
+    const KArchiveEntry *entry = zip.directory()->entry(QStringLiteral("mergedimage.png"));
     if (!entry || !entry->isFile()) return false;
 
     const KZipFileEntry* fileZipEntry = static_cast<const KZipFileEntry*>(entry);
@@ -54,7 +57,7 @@ bool OraHandler::canRead(QIODevice *device)
 
     char buff[54];
     if (device->peek(buff, sizeof(buff)) == sizeof(buff))
-        return qstrcmp(buff + 0x26, "image/openraster") == 0;
+        return memcmp(buff + 0x26, s_magic, s_magic_size) == 0;
 
     return false;
 }

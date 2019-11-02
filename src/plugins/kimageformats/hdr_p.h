@@ -10,12 +10,27 @@
 #ifndef KIMG_HDR_P_H
 #define KIMG_HDR_P_H
 
-class QImageIO;
+#include <QImageIOPlugin>
 
-extern "C" {
-    void kimgio_hdr_read(QImageIO *);
-    void kimgio_hdr_write(QImageIO *);
-}
+class HDRHandler : public QImageIOHandler
+{
+public:
+    HDRHandler();
 
-#endif
+    bool canRead() const override;
+    bool read(QImage *outImage) override;
 
+    static bool canRead(QIODevice *device);
+};
+
+class HDRPlugin : public QImageIOPlugin
+{
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QImageIOHandlerFactoryInterface" FILE "hdr.json")
+
+public:
+    Capabilities capabilities(QIODevice *device, const QByteArray &format) const override;
+    QImageIOHandler *create(QIODevice *device, const QByteArray &format = QByteArray()) const override;
+};
+
+#endif // KIMG_HDR_P_H

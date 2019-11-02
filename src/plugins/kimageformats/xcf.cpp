@@ -167,11 +167,11 @@ private:
 
     //! The bottom-most layer is copied into the final QImage by this
     //! routine.
-    typedef void (*PixelCopyOperation)(Layer &layer, uint i, uint j, int k, int l,
+    typedef void (*PixelCopyOperation)(const Layer &layer, uint i, uint j, int k, int l,
                                        QImage &image, int m, int n);
 
     //! Higher layers are merged into the final QImage by this routine.
-    typedef void (*PixelMergeOperation)(Layer &layer, uint i, uint j, int k, int l,
+    typedef void (*PixelMergeOperation)(const Layer &layer, uint i, uint j, int k, int l,
                                         QImage &image, int m, int n);
 
     //! Layer mode static data.
@@ -201,37 +201,37 @@ private:
                      int data_length, qint32 bpp);
 
     static void copyLayerToImage(XCFImage &xcf_image);
-    static void copyRGBToRGB(Layer &layer, uint i, uint j, int k, int l,
+    static void copyRGBToRGB(const Layer &layer, uint i, uint j, int k, int l,
                              QImage &image, int m, int n);
-    static void copyGrayToGray(Layer &layer, uint i, uint j, int k, int l,
+    static void copyGrayToGray(const Layer &layer, uint i, uint j, int k, int l,
                                QImage &image, int m, int n);
-    static void copyGrayToRGB(Layer &layer, uint i, uint j, int k, int l,
+    static void copyGrayToRGB(const Layer &layer, uint i, uint j, int k, int l,
                               QImage &image, int m, int n);
-    static void copyGrayAToRGB(Layer &layer, uint i, uint j, int k, int l,
+    static void copyGrayAToRGB(const Layer &layer, uint i, uint j, int k, int l,
                                QImage &image, int m, int n);
-    static void copyIndexedToIndexed(Layer &layer, uint i, uint j, int k, int l,
+    static void copyIndexedToIndexed(const Layer &layer, uint i, uint j, int k, int l,
                                      QImage &image, int m, int n);
-    static void copyIndexedAToIndexed(Layer &layer, uint i, uint j, int k, int l,
+    static void copyIndexedAToIndexed(const Layer &layer, uint i, uint j, int k, int l,
                                       QImage &image, int m, int n);
-    static void copyIndexedAToRGB(Layer &layer, uint i, uint j, int k, int l,
+    static void copyIndexedAToRGB(const Layer &layer, uint i, uint j, int k, int l,
                                   QImage &image, int m, int n);
 
     static void mergeLayerIntoImage(XCFImage &xcf_image);
-    static void mergeRGBToRGB(Layer &layer, uint i, uint j, int k, int l,
+    static void mergeRGBToRGB(const Layer &layer, uint i, uint j, int k, int l,
                               QImage &image, int m, int n);
-    static void mergeGrayToGray(Layer &layer, uint i, uint j, int k, int l,
+    static void mergeGrayToGray(const Layer &layer, uint i, uint j, int k, int l,
                                 QImage &image, int m, int n);
-    static void mergeGrayAToGray(Layer &layer, uint i, uint j, int k, int l,
+    static void mergeGrayAToGray(const Layer &layer, uint i, uint j, int k, int l,
                                  QImage &image, int m, int n);
-    static void mergeGrayToRGB(Layer &layer, uint i, uint j, int k, int l,
+    static void mergeGrayToRGB(const Layer &layer, uint i, uint j, int k, int l,
                                QImage &image, int m, int n);
-    static void mergeGrayAToRGB(Layer &layer, uint i, uint j, int k, int l,
+    static void mergeGrayAToRGB(const Layer &layer, uint i, uint j, int k, int l,
                                 QImage &image, int m, int n);
-    static void mergeIndexedToIndexed(Layer &layer, uint i, uint j, int k, int l,
+    static void mergeIndexedToIndexed(const Layer &layer, uint i, uint j, int k, int l,
                                       QImage &image, int m, int n);
-    static void mergeIndexedAToIndexed(Layer &layer, uint i, uint j, int k, int l,
+    static void mergeIndexedAToIndexed(const Layer &layer, uint i, uint j, int k, int l,
                                        QImage &image, int m, int n);
-    static void mergeIndexedAToRGB(Layer &layer, uint i, uint j, int k, int l,
+    static void mergeIndexedAToRGB(const Layer &layer, uint i, uint j, int k, int l,
                                    QImage &image, int m, int n);
 
     static void initializeRandomTable();
@@ -243,6 +243,12 @@ int XCFImageFormat::random_table[RANDOM_TABLE_SIZE];
 bool XCFImageFormat::random_table_initialized;
 
 QVector<QRgb> XCFImageFormat::grayTable;
+
+template <typename T, size_t N>
+constexpr size_t countof(T(&)[N])
+{
+    return N;
+}
 
 const XCFImageFormat::LayerModes XCFImageFormat::layer_modes[] = {
     {true},     // NORMAL_MODE
@@ -270,7 +276,7 @@ const XCFImageFormat::LayerModes XCFImageFormat::layer_modes[] = {
 };
 
 //! Change a QRgb value's alpha only.
-inline QRgb qRgba(const QRgb &rgb, int a)
+inline QRgb qRgba(const QRgb rgb, int a)
 {
     return ((a & 0xff) << 24 | (rgb & RGB_MASK));
 }
@@ -408,6 +414,7 @@ bool XCFImageFormat::loadImageProperties(QDataStream &xcf_io, XCFImage &xcf_imag
             break;
 
         case PROP_RESOLUTION:
+            property.setFloatingPointPrecision(QDataStream::SinglePrecision);
             property >> xcf_image.x_resolution >> xcf_image.y_resolution;
             break;
 
@@ -478,9 +485,15 @@ bool XCFImageFormat::loadImageProperties(QDataStream &xcf_io, XCFImage &xcf_imag
  * \return true if there were no IO errors.  */
 bool XCFImageFormat::loadProperty(QDataStream &xcf_io, PropType &type, QByteArray &bytes, quint32 &rawType)
 {
+    quint32 size;
+
     xcf_io >> rawType;
     if (rawType >= MAX_SUPPORTED_PROPTYPE) {
         type = MAX_SUPPORTED_PROPTYPE;
+        // we don't support the property, but we still need to read from the device, assume it's like all the
+        // non custom properties that is data_length + data
+        xcf_io >> size;
+        xcf_io.skipRawData(size);
         // return true because we don't really want to totally fail on an unsupported property since it may not be fatal
         return true;
     }
@@ -488,7 +501,6 @@ bool XCFImageFormat::loadProperty(QDataStream &xcf_io, PropType &type, QByteArra
     type = PropType(rawType);
 
     char *data = nullptr;
-    quint32 size;
 
     // The colormap property size is not the correct number of bytes:
     // The GIMP source xcf.c has size = 4 + ncolors, but it should be
@@ -709,6 +721,10 @@ bool XCFImageFormat::loadLayerProperties(QDataStream &xcf_io, Layer &layer)
 
         case PROP_MODE:
             property >> layer.mode;
+            if (layer.mode >= countof(layer_modes)) {
+                qWarning() << "Found layer with unsupported mode" << layer.mode << "Defaulting to mode 0";
+                layer.mode = 0;
+            }
             break;
 
         case PROP_TATTOO:
@@ -1068,6 +1084,9 @@ bool XCFImageFormat::loadLevel(QDataStream &xcf_io, Layer &layer, qint32 bpp)
         for (uint j = 0; j < layer.nrows; j++) {
             for (uint i = 0; i < layer.ncols; i++) {
                 layer.image_tiles[j][i].fill(Qt::transparent);
+                if (layer.type == GRAYA_GIMAGE || layer.type == INDEXEDA_GIMAGE) {
+                    layer.alpha_tiles[j][i].fill(Qt::transparent);
+                }
             }
         }
         return true;
@@ -1630,7 +1649,7 @@ void XCFImageFormat::copyLayerToImage(XCFImage &xcf_image)
  * \param m x pixel of destination image.
  * \param n y pixel of destination image.
  */
-void XCFImageFormat::copyRGBToRGB(Layer &layer, uint i, uint j, int k, int l,
+void XCFImageFormat::copyRGBToRGB(const Layer &layer, uint i, uint j, int k, int l,
                                   QImage &image, int m, int n)
 {
     QRgb src = layer.image_tiles[j][i].pixel(k, l);
@@ -1661,7 +1680,7 @@ void XCFImageFormat::copyRGBToRGB(Layer &layer, uint i, uint j, int k, int l,
  * \param m x pixel of destination image.
  * \param n y pixel of destination image.
  */
-void XCFImageFormat::copyGrayToGray(Layer &layer, uint i, uint j, int k, int l,
+void XCFImageFormat::copyGrayToGray(const Layer &layer, uint i, uint j, int k, int l,
                                     QImage &image, int m, int n)
 {
     int src = layer.image_tiles[j][i].pixelIndex(k, l);
@@ -1681,7 +1700,7 @@ void XCFImageFormat::copyGrayToGray(Layer &layer, uint i, uint j, int k, int l,
  * \param m x pixel of destination image.
  * \param n y pixel of destination image.
  */
-void XCFImageFormat::copyGrayToRGB(Layer &layer, uint i, uint j, int k, int l,
+void XCFImageFormat::copyGrayToRGB(const Layer &layer, uint i, uint j, int k, int l,
                                    QImage &image, int m, int n)
 {
     QRgb src = layer.image_tiles[j][i].pixel(k, l);
@@ -1702,7 +1721,7 @@ void XCFImageFormat::copyGrayToRGB(Layer &layer, uint i, uint j, int k, int l,
  * \param m x pixel of destination image.
  * \param n y pixel of destination image.
  */
-void XCFImageFormat::copyGrayAToRGB(Layer &layer, uint i, uint j, int k, int l,
+void XCFImageFormat::copyGrayAToRGB(const Layer &layer, uint i, uint j, int k, int l,
                                     QImage &image, int m, int n)
 {
     QRgb src = layer.image_tiles[j][i].pixel(k, l);
@@ -1730,7 +1749,7 @@ void XCFImageFormat::copyGrayAToRGB(Layer &layer, uint i, uint j, int k, int l,
  * \param m x pixel of destination image.
  * \param n y pixel of destination image.
  */
-void XCFImageFormat::copyIndexedToIndexed(Layer &layer, uint i, uint j, int k, int l,
+void XCFImageFormat::copyIndexedToIndexed(const Layer &layer, uint i, uint j, int k, int l,
         QImage &image, int m, int n)
 {
     int src = layer.image_tiles[j][i].pixelIndex(k, l);
@@ -1748,7 +1767,7 @@ void XCFImageFormat::copyIndexedToIndexed(Layer &layer, uint i, uint j, int k, i
  * \param m x pixel of destination image.
  * \param n y pixel of destination image.
  */
-void XCFImageFormat::copyIndexedAToIndexed(Layer &layer, uint i, uint j, int k, int l,
+void XCFImageFormat::copyIndexedAToIndexed(const Layer &layer, uint i, uint j, int k, int l,
         QImage &image, int m, int n)
 {
     uchar src = layer.image_tiles[j][i].pixelIndex(k, l);
@@ -1783,7 +1802,7 @@ void XCFImageFormat::copyIndexedAToIndexed(Layer &layer, uint i, uint j, int k, 
  * \param m x pixel of destination image.
  * \param n y pixel of destination image.
  */
-void XCFImageFormat::copyIndexedAToRGB(Layer &layer, uint i, uint j, int k, int l,
+void XCFImageFormat::copyIndexedAToRGB(const Layer &layer, uint i, uint j, int k, int l,
                                        QImage &image, int m, int n)
 {
     QRgb src = layer.image_tiles[j][i].pixel(k, l);
@@ -1920,7 +1939,7 @@ void XCFImageFormat::mergeLayerIntoImage(XCFImage &xcf_image)
  * \param m x pixel of destination image.
  * \param n y pixel of destination image.
  */
-void XCFImageFormat::mergeRGBToRGB(Layer &layer, uint i, uint j, int k, int l,
+void XCFImageFormat::mergeRGBToRGB(const Layer &layer, uint i, uint j, int k, int l,
                                    QImage &image, int m, int n)
 {
     QRgb src = layer.image_tiles[j][i].pixel(k, l);
@@ -2246,7 +2265,7 @@ void XCFImageFormat::mergeRGBToRGB(Layer &layer, uint i, uint j, int k, int l,
  * \param m x pixel of destination image.
  * \param n y pixel of destination image.
  */
-void XCFImageFormat::mergeGrayToGray(Layer &layer, uint i, uint j, int k, int l,
+void XCFImageFormat::mergeGrayToGray(const Layer &layer, uint i, uint j, int k, int l,
                                      QImage &image, int m, int n)
 {
     int src = layer.image_tiles[j][i].pixelIndex(k, l);
@@ -2264,7 +2283,7 @@ void XCFImageFormat::mergeGrayToGray(Layer &layer, uint i, uint j, int k, int l,
  * \param m x pixel of destination image.
  * \param n y pixel of destination image.
  */
-void XCFImageFormat::mergeGrayAToGray(Layer &layer, uint i, uint j, int k, int l,
+void XCFImageFormat::mergeGrayAToGray(const Layer &layer, uint i, uint j, int k, int l,
                                       QImage &image, int m, int n)
 {
     int src = qGray(layer.image_tiles[j][i].pixel(k, l));
@@ -2401,7 +2420,7 @@ void XCFImageFormat::mergeGrayAToGray(Layer &layer, uint i, uint j, int k, int l
  * \param m x pixel of destination image.
  * \param n y pixel of destination image.
  */
-void XCFImageFormat::mergeGrayToRGB(Layer &layer, uint i, uint j, int k, int l,
+void XCFImageFormat::mergeGrayToRGB(const Layer &layer, uint i, uint j, int k, int l,
                                     QImage &image, int m, int n)
 {
     QRgb src = layer.image_tiles[j][i].pixel(k, l);
@@ -2422,7 +2441,7 @@ void XCFImageFormat::mergeGrayToRGB(Layer &layer, uint i, uint j, int k, int l,
  * \param m x pixel of destination image.
  * \param n y pixel of destination image.
  */
-void XCFImageFormat::mergeGrayAToRGB(Layer &layer, uint i, uint j, int k, int l,
+void XCFImageFormat::mergeGrayAToRGB(const Layer &layer, uint i, uint j, int k, int l,
                                      QImage &image, int m, int n)
 {
     int src = qGray(layer.image_tiles[j][i].pixel(k, l));
@@ -2576,7 +2595,7 @@ void XCFImageFormat::mergeGrayAToRGB(Layer &layer, uint i, uint j, int k, int l,
  * \param m x pixel of destination image.
  * \param n y pixel of destination image.
  */
-void XCFImageFormat::mergeIndexedToIndexed(Layer &layer, uint i, uint j, int k, int l,
+void XCFImageFormat::mergeIndexedToIndexed(const Layer &layer, uint i, uint j, int k, int l,
         QImage &image, int m, int n)
 {
     int src = layer.image_tiles[j][i].pixelIndex(k, l);
@@ -2594,7 +2613,7 @@ void XCFImageFormat::mergeIndexedToIndexed(Layer &layer, uint i, uint j, int k, 
  * \param m x pixel of destination image.
  * \param n y pixel of destination image.
  */
-void XCFImageFormat::mergeIndexedAToIndexed(Layer &layer, uint i, uint j, int k, int l,
+void XCFImageFormat::mergeIndexedAToIndexed(const Layer &layer, uint i, uint j, int k, int l,
         QImage &image, int m, int n)
 {
     uchar src = layer.image_tiles[j][i].pixelIndex(k, l);
@@ -2626,7 +2645,7 @@ void XCFImageFormat::mergeIndexedAToIndexed(Layer &layer, uint i, uint j, int k,
  * \param m x pixel of destination image.
  * \param n y pixel of destination image.
  */
-void XCFImageFormat::mergeIndexedAToRGB(Layer &layer, uint i, uint j, int k, int l,
+void XCFImageFormat::mergeIndexedAToRGB(const Layer &layer, uint i, uint j, int k, int l,
                                         QImage &image, int m, int n)
 {
     QRgb src = layer.image_tiles[j][i].pixel(k, l);

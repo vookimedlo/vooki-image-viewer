@@ -23,7 +23,7 @@ public:
     quint8 g;
     quint8 b;
 
-    static RGB from(const QRgb &color)
+    static RGB from(const QRgb color)
     {
         RGB c;
         c.r = qRed(color);
@@ -169,7 +169,7 @@ static QDataStream &operator>>(QDataStream &s, PCXHEADER &ph)
     return s;
 }
 
-static QDataStream &operator<<(QDataStream &s, const RGB &rgb)
+static QDataStream &operator<<(QDataStream &s, const RGB rgb)
 {
     s << rgb.r << rgb.g << rgb.b;
 

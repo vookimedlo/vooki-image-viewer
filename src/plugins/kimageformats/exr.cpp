@@ -82,7 +82,7 @@ void K_IStream::clear()
  * format into the normal 32 bit pixel format. Process is from the
  * ILM code.
  */
-QRgb RgbaToQrgba(struct Imf::Rgba imagePixel)
+QRgb RgbaToQrgba(struct Imf::Rgba &imagePixel)
 {
     float r, g, b, a;
 

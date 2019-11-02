@@ -15,7 +15,7 @@
 
 #include <QDebug>
 
-typedef Q_UINT8 uchar;
+typedef unsigned char uchar;
 
 namespace   // Private.
 {
@@ -93,19 +93,22 @@ static bool LoadHDR(QDataStream &s, const int width, const int height, QImage &i
     uchar val, code;
 
     // Create dst image.
-    if (!img.create(width, height, 32)) {
+    img = QImage(width, height, QImage::Format_RGB32);
+    if (img.isNull()) {
         return false;
     }
 
-    QMemArray<uchar> image(width * 4);
+    QByteArray lineArray;
+    lineArray.resize(4 * width);
+    uchar *image = (uchar *) lineArray.data();
 
     for (int cline = 0; cline < height; cline++) {
         QRgb *scanline = (QRgb *) img.scanLine(cline);
 
         // determine scanline type
         if ((width < MINELEN) || (MAXELEN < width)) {
-            Read_Old_Line(image.data(), width, s);
-            RGBE_To_QRgbLine(image.data(), scanline, width);
+            Read_Old_Line(image, width, s);
+            RGBE_To_QRgbLine(image, scanline, width);
             continue;
         }
 
@@ -116,9 +119,9 @@ static bool LoadHDR(QDataStream &s, const int width, const int height, QImage &i
         }
 
         if (val != 2) {
-            s.device()->at(s.device()->at() - 1);
-            Read_Old_Line(image.data(), width, s);
-            RGBE_To_QRgbLine(image.data(), scanline, width);
+            s.device()->ungetChar(val);
+            Read_Old_Line(image, width, s);
+            RGBE_To_QRgbLine(image, scanline, width);
             continue;
         }
 
@@ -132,8 +135,8 @@ static bool LoadHDR(QDataStream &s, const int width, const int height, QImage &i
 
         if ((image[1] != 2) || (image[2] & 128)) {
             image[0] = 2;
-            Read_Old_Line(image.data() + 4, width - 1, s);
-            RGBE_To_QRgbLine(image.data(), scanline, width);
+            Read_Old_Line(image + 4, width - 1, s);
+            RGBE_To_QRgbLine(image, scanline, width);
             continue;
         }
 
@@ -168,7 +171,7 @@ static bool LoadHDR(QDataStream &s, const int width, const int height, QImage &i
             }
         }
 
-        RGBE_To_QRgbLine(image.data(), scanline, width);
+        RGBE_To_QRgbLine(image, scanline, width);
     }
 
     return true;
@@ -176,7 +179,7 @@ static bool LoadHDR(QDataStream &s, const int width, const int height, QImage &i
 
 } // namespace
 
-Q_DECL_EXPORT void kimgio_hdr_read(QImageIO *io)
+bool HDRHandler::read(QImage *outImage)
 {
     int len;
     char line[MAXLINE];
@@ -185,7 +188,7 @@ Q_DECL_EXPORT void kimgio_hdr_read(QImageIO *io)
 
     // Parse header
     do {
-        len = io->ioDevice()->readLine(line, MAXLINE);
+        len = device()->readLine(line, MAXLINE);
 
         /*if (strcmp(line, "#?RADIANCE\n") == 0 || strcmp(line, "#?RGBE\n") == 0)
         {
@@ -199,12 +202,10 @@ Q_DECL_EXPORT void kimgio_hdr_read(QImageIO *io)
 
     if (/*!validHeader ||*/ !validFormat) {
         // qDebug() << "Unknown HDR format.";
-        io->setImage(0);
-        io->setStatus(-1);
-        return;
+        return false;
     }
 
-    io->ioDevice()->readLine(line, MAXLINE);
+    device()->readLine(line, MAXLINE);
 
     char s1[3], s2[3];
     int width, height;
@@ -212,27 +213,67 @@ Q_DECL_EXPORT void kimgio_hdr_read(QImageIO *io)
         //if( sscanf(line, "-Y %d +X %d", &height, &width) < 2 )
     {
         // qDebug() << "Invalid HDR file.";
-        io->setImage(0);
-        io->setStatus(-1);
-        return;
+        return false;
     }
 
-    QDataStream s(io->ioDevice());
+    QDataStream s(device());
 
     QImage img;
     if (!LoadHDR(s, width, height, img)) {
         // qDebug() << "Error loading HDR file.";
-        io->setImage(0);
-        io->setStatus(-1);
-        return;
+        return false;
     }
 
-    io->setImage(img);
-    io->setStatus(0);
+    *outImage = img;
+    return true;
 }
 
-Q_DECL_EXPORT void kimgio_hdr_write(QImageIO *)
+HDRHandler::HDRHandler()
 {
-    // intentionally not implemented (since writing low dynamic range data to a HDR file is nonsense.)
 }
 
+bool HDRHandler::canRead() const
+{
+    if (canRead(device())) {
+        setFormat("hdr");
+        return true;
+    }
+    return false;
+}
+
+bool HDRHandler::canRead(QIODevice *device)
+{
+    if (!device) {
+        qWarning("HDRHandler::canRead() called with no device");
+        return false;
+    }
+
+    return device->peek(11) == "#?RADIANCE\n" || device->peek(7) == "#?RGBE\n";
+}
+
+QImageIOPlugin::Capabilities HDRPlugin::capabilities(QIODevice *device, const QByteArray &format) const
+{
+    if (format == "hdr") {
+        return Capabilities(CanRead);
+    }
+    if (!format.isEmpty()) {
+        return {};
+    }
+    if (!device->isOpen()) {
+        return {};
+    }
+
+    Capabilities cap;
+    if (device->isReadable() && HDRHandler::canRead(device)) {
+        cap |= CanRead;
+    }
+    return cap;
+}
+
+QImageIOHandler *HDRPlugin::create(QIODevice *device, const QByteArray &format) const
+{
+    QImageIOHandler *handler = new HDRHandler;
+    handler->setDevice(device);
+    handler->setFormat(format);
+    return handler;
+}

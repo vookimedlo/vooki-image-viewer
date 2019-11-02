@@ -143,7 +143,7 @@ static bool LoadRAS(QDataStream &s, const RasHeader &ras, QImage &img)
     QVector<quint8> input(ras.Length);
 
     int i = 0;
-    while (! s.atEnd()) {
+    while (! s.atEnd() && i < input.size()) {
         s >> input[i];
         // I guess we need to find out if we're at the end of a line
         if (paddingrequired && i != 0 && !(i % (ras.Width * bpp))) {
@@ -164,9 +164,9 @@ static bool LoadRAS(QDataStream &s, const RasHeader &ras, QImage &img)
         quint8 red, green, blue;
         for (quint32 y = 0; y < ras.Height; y++) {
             for (quint32 x = 0; x < ras.Width; x++) {
-                red = palette[(int)input[y * ras.Width + x]];
-                green = palette[(int)input[y * ras.Width + x] + (ras.ColorMapLength / 3)];
-                blue = palette[(int)input[y * ras.Width + x] + 2 * (ras.ColorMapLength / 3)];
+                red = palette.value((int)input[y * ras.Width + x]);
+                green = palette.value((int)input[y * ras.Width + x] + (ras.ColorMapLength / 3));
+                blue = palette.value((int)input[y * ras.Width + x] + 2 * (ras.ColorMapLength / 3));
                 img.setPixel(x, y, qRgb(red, green, blue));
             }
         }

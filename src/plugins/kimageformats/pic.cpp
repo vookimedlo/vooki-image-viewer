@@ -173,9 +173,9 @@ static QDataStream &operator<< (QDataStream &s, const QList<PicChannel> &channel
     return s;
 }
 
-static bool readRow(QDataStream &stream, QRgb *row, quint16 width, QList<PicChannel> channels)
+static bool readRow(QDataStream &stream, QRgb *row, quint16 width, const QList<PicChannel> &channels)
 {
-    Q_FOREACH(const PicChannel &channel, channels) {
+    for(const PicChannel &channel : channels) {
         auto readPixel = [&] (QDataStream &str) -> QRgb {
             quint8 red = 0;
             if (channel.code & RED) {
@@ -242,7 +242,7 @@ bool SoftimagePICHandler::read(QImage *image)
     }
 
     QImage::Format fmt = QImage::Format_RGB32;
-    Q_FOREACH(const PicChannel &channel, m_channels) {
+    for (const PicChannel &channel : qAsConst(m_channels)) {
         if (channel.size != 8) {
             // we cannot read images that do not come in bytes
             qDebug() << "Channel size was" << channel.size;
@@ -388,8 +388,8 @@ void SoftimagePICHandler::setOption(ImageOption option, const QVariant &value)
             break;
         case Description: {
             m_description.clear();
-            QStringList entries = value.toString().split(QStringLiteral("\n\n"));
-            Q_FOREACH(const QString entry, entries) {
+            const QStringList entries = value.toString().split(QStringLiteral("\n\n"));
+            for (const QString &entry : entries) {
                 if (entry.startsWith(QStringLiteral("Description: "))) {
                     m_description = entry.mid(13).simplified().toUtf8();
                 }
@@ -425,7 +425,7 @@ QVariant SoftimagePICHandler::option(ImageOption option) const
             return QString();
         case ImageFormat:
             if (const_cast<SoftimagePICHandler*>(this)->readChannels()) {
-                Q_FOREACH (const PicChannel &channel, m_channels) {
+                for (const PicChannel &channel : qAsConst(m_channels)) {
                     if (channel.code & ALPHA) {
                         return QImage::Format_ARGB32;
                     }
