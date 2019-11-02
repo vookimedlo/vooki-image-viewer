@@ -195,6 +195,11 @@ if (Qt5_FOUND)
     endif()
 endif()
 
+# Radiance HDR (hdr)
+#
+ADD_LIBRARY(vooki_kimg_hdr MODULE ../../src/plugins/kimageformats/hdr.cpp)
+TARGET_LINK_LIBRARIES(vooki_kimg_hdr Qt5::Gui)
+
 # Sun Raster (ras)
 #
 ADD_LIBRARY(vooki_kimg_ras MODULE ../../src/plugins/kimageformats/ras.cpp)
@@ -252,7 +257,7 @@ else()
         TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui ${LIBRAW})
     endif()
 
-    INSTALL(TARGETS VookiImageViewer vooki_kimg_psd vooki_kimg_pcx vooki_kimg_ras vooki_kimg_pic vooki_kimg_rgb
+    INSTALL(TARGETS VookiImageViewer vooki_kimg_psd vooki_kimg_pcx vooki_kimg_ras vooki_kimg_pic vooki_kimg_rgb vooki_kimg_hdr
             RUNTIME DESTINATION bin
             LIBRARY DESTINATION ${PLUGINS})
 
