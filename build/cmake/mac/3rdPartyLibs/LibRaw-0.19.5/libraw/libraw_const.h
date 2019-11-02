@@ -1,6 +1,6 @@
 /* -*- C++ -*-
  * File: libraw_const.h
- * Copyright 2008-2018 LibRaw LLC (info@libraw.org)
+ * Copyright 2008-2019 LibRaw LLC (info@libraw.org)
  * Created: Sat Mar  8 , 2008
  * LibRaw error codes
 LibRaw is free software; you can redistribute it and/or modify
@@ -24,6 +24,12 @@ it under the terms of the one of two licenses as you choose:
 #define LIBRAW_MAX_ALLOC_MB 2048L
 #endif
 
+/* Change to non-zero to allow (broken) CRW (and other) files metadata 
+   loop prevention */
+#ifndef LIBRAW_METADATA_LOOP_PREVENTION
+#define LIBRAW_METADATA_LOOP_PREVENTION 0
+#endif
+
 /* Check if enough file space exists before tag read */
 #ifndef LIBRAW_NO_IOSPACE_CHECK
 #define LIBRAW_IOSPACE_CHECK
@@ -38,6 +44,7 @@ LIBRAW_MEMPOOL_CHECK define will result in error on pool overflow */
 #endif
 
 #define LIBRAW_IFD_MAXCOUNT 10
+#define LIBRAW_MAX_METADATA_BLOCKS 1024
 
 enum LibRaw_openbayer_patterns
 {
@@ -103,7 +110,7 @@ enum LibRaw_whitebalance_code
   LIBRAW_WBI_Auto4 = 88,
   LIBRAW_WBI_Custom1 = 90,
   LIBRAW_WBI_Custom2 = 91,
-  LIBRAW_WBI_Custom3 = 93,
+  LIBRAW_WBI_Custom3 = 92,
   LIBRAW_WBI_Custom4 = 93,
   LIBRAW_WBI_Custom5 = 94,
   LIBRAW_WBI_Custom6 = 95,

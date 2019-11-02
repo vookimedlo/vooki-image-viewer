@@ -1,6 +1,6 @@
 /* -*- C++ -*-
  * File: libraw.h
- * Copyright 2008-2018 LibRaw LLC (info@libraw.org)
+ * Copyright 2008-2019 LibRaw LLC (info@libraw.org)
  * Created: Sat Mar  8, 2008
  *
  * LibRaw C++ interface
@@ -375,6 +375,9 @@ protected:
 
 #ifdef LIBRAW_LIBRARY_BUILD
 #include "internal/libraw_internal_funcs.h"
+#endif
+#if LIBRAW_METADATA_LOOP_PREVENTION
+  unsigned metadata_blocks; /* This changes ABI, but offsets to prev.defined variables has not changed */
 #endif
 };
 

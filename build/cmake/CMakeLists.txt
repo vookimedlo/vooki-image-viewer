@@ -213,7 +213,7 @@ TARGET_LINK_LIBRARIES(vooki_kimg_rgb Qt5::Gui)
 # Camera RAW Thumbnails (raf, mos, cr2, erf, dng, mrw, nef, orf, rw2, pef, x3f, srw, x3f, arw)
 # Prebuilt library for the MacOS/Windows only, Linux uses a distro package
 #
-SET(LIBRAW_LOC "3rdPartyLibs/LibRaw-0.19.2")
+SET(LIBRAW_LOC "3rdPartyLibs/LibRaw-0.19.5")
 if (APPLE)
     # MacOS
     #
