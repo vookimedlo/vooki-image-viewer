@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
   <Product Name='VookiImageViewer' Id='*' UpgradeCode='91FA8A80-C971-408A-A735-4EB3D230D9F6'
-           Language='1033' Codepage='1252' Version='19.04.07' Manufacturer='Michal Duda'>
+           Language='1033' Codepage='1252' Version='19.11.03' Manufacturer='Michal Duda'>
 
     <Package Id='*' Keywords='Installer' Description="Michal Duda VookiImageViewer Installer"
              Comments='Lightweight image viewer for a fast image preview.' Manufacturer='Michal Duda'
@@ -327,7 +327,7 @@
     </Directory>
 
     <DirectoryRef Id="TARGETDIR">
-      <Merge Id="VCRedist" SourceFile="c:\Program Files (x86)\Common Files\Merge Modules\Microsoft_VC140_CRT_x64.msm" DiskId="1" Language="0"/>
+      <Merge Id="VCRedist" SourceFile="c:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Redist\MSVC\14.23.27820\MergeModules\Microsoft_VC142_CRT_x64.msm" DiskId="1" Language="0"/>
     </DirectoryRef>
 
     <Feature Id='Complete' Title='VookiImageViewer' Description='Whole bundle.'
