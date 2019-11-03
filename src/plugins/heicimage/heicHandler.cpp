@@ -177,7 +177,7 @@ bool HeicHandler::read(QImage *destImage)
 
     // decode image
     heif_image *srcImagePtr = nullptr;
-    error = heif_decode_image(handle.get(), &srcImagePtr, heif_colorspace_RGB, heif_chroma_interleaved_RGBA, nullptr);
+    error = heif_decode_image(handle.get(), &srcImagePtr, heif_colorspace_RGB, heif_chroma_interleaved_RGB, nullptr);
 
     auto srcImage = wrapPointer(srcImagePtr, heif_image_release);
     if (error.code || !srcImage)
@@ -218,7 +218,7 @@ bool HeicHandler::read(QImage *destImage)
       imgSize.width(),
       imgSize.height(),
       stride,
-      QImage::Format_RGBA8888,
+      QImage::Format_RGB888,
       [](void *img) { heif_image_release(static_cast<heif_image *>(img)); },
       dataImage);
 
