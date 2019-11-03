@@ -1,6 +1,9 @@
 #!/bin/sh
+cd $(dirname "$0")
 
 set -e;
+
+rm VookiImageViewer.dmg || true
 
 VOLUME_NAME="VookiImageViewer"
 DMG_NAME="VookiImageViewer.dmg"
@@ -17,7 +20,7 @@ rm -rf "$TARGET" || true
 mkdir "$TARGET" || true
 
 echo "Creating disk image"
-cp -rf ./build/VookiImageViewer.app "$TARGET/"
+cp -Rf ./build/VookiImageViewer.app "$TARGET/"
 ln -s /Applications "$TARGET/Applications"
 hdiutil create -volname "$VOLUME_NAME" -srcfolder "$TARGET/" -nocrossdev -ov -fs HFS+ -fsargs "-c c=64,a=16,e=16" -format UDRW "$DMG_TEMP_NAME"
 
@@ -75,7 +78,7 @@ EOF
 
 echo "Setting custom volume icon"
 cp -f "$VOLUME_ICON_FILE" "$MOUNT_DIR/.VolumeIcon.icns"
-SetFile -c nC "$MOUNT_DIR/.VolumeIcon.icns"
+SetFile -a nC "$MOUNT_DIR/.VolumeIcon.icns"
 SetFile -a C "$MOUNT_DIR"
 
 echo "Fixing permissions"
