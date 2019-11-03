@@ -1,8 +1,8 @@
 #!/bin/sh
+cd $(dirname "$0")
 
 set -e
 
-cd $(dirname "$0")
 readonly SCRIPT_LOCATION=`pwd`
 
 cp -f changelog/git2changelog/scripts/git2changelog .
