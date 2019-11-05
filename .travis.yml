@@ -17,7 +17,7 @@ compiler:
 
 env:
   - QT=5.12 RELEASE=bionic DISTRO=ubuntu DEB=no
-  - QT=latestDistroOfficial RELEASE=cosmic DISTRO=ubuntu DEB=yes
+  - QT=latestDistroOfficial RELEASE=eoan DISTRO=ubuntu DEB=yes
   - QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian DEB=yes
   - QT=latestDistroOfficial RELEASE=fedora-stable DISTRO=fedora DEB=no
   - BREW=
@@ -30,7 +30,7 @@ matrix:
   - os: osx
     env: QT=5.12 RELEASE=bionic DISTRO=ubuntu DEB=no
   - os: osx
-    env: QT=latestDistroOfficial RELEASE=cosmic DISTRO=ubuntu DEB=yes
+    env: QT=latestDistroOfficial RELEASE=eoan DISTRO=ubuntu DEB=yes
   - os: osx
     env: QT=latestDistroOfficial RELEASE=debian-stable DISTRO=debian DEB=yes
   - os: osx
