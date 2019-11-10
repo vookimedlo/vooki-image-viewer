@@ -90,13 +90,30 @@ All code developed during this project is [GPLv3][2] licensed. Images as well as
 -----------------
 
 ## Releases
-[Prebuilt binaries][5] for Windows 7, Windows 10 and MacOS as well as sources are available [here.][5]
-Unix binaries are not prebuilt and can be easily built from sources.
+[Prebuilt binaries][5] for Windows 7, Windows 10, Debian, Fedora, Ubuntu and MacOS as well as sources are available [here.][5]
 
-Mac users can install the VookiImageViewer by Homebrew.
+Mac users can install the VookiImageViewer by the Homebrew.
 ```
 brew tap vookimedlo/homebrew-vookiimageviewer
 brew cask install vookiimageviewer-macos
+```
+
+Debian Buster users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
+```
+apt-get install -y debian-keyring
+apt-get install -y debian-archive-keyring
+apt-get install -y apt-transport-https
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/cfg/gpg/gpg.EF5E62B51DE78AFF.key' | apt-key add -
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/cfg/setup/config.deb.txt?distro=debian&codename=buster' > /etc/apt/sources.list.d/michal-duda-vookiimageviewer.list
+apt-get update
+```
+
+Ubuntu Eoan users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
+```
+apt-get install -y apt-transport-https
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/cfg/gpg/gpg.EF5E62B51DE78AFF.key' | apt-key add -
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/cfg/setup/config.deb.txt?distro=ubuntu&codename=eoan' > /etc/apt/sources.list.d/michal-duda-vookiimageviewer.list
+apt-get update
 ```
 
 -----------------
@@ -117,3 +134,4 @@ Homepage: [https://vookiimageviewer.cz/][4]
 [3]: https://github.com/vookimedlo/vooki-image-viewer/
 [4]: https://vookiimageviewer.cz/
 [5]: https://github.com/vookimedlo/vooki-image-viewer/releases/latest
+[6]: https://cloudsmith.io/
