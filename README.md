@@ -1,7 +1,7 @@
 # VookiImageViewer
 Lightweight image viewer for a fast image preview. It has been developed to have the same viewer available for all major operating systems - Microsoft Windows 10, MacOS and GNU/Linux.
 
-The main goal is to have a free of charge cross-platform viewer with a simple design and minimum functions which are commonly used.
+The main goal is to have a free of charge cross-platform viewer with a simple design and minimum functions that are commonly used.
 
 - Transformations
   - Flip _(horizontal, vertical)._
@@ -11,11 +11,11 @@ The main goal is to have a free of charge cross-platform viewer with a simple de
 - Custom background color.
 - Custom image border color.
 - Remembers recent files.
-- Supports Apple high definition trackpad gestures.
+- Supports Apple's high definition trackpad gestures.
 
 ![Application screenshot](src/resource/readme/screenshot_2017-10-19_21-24-02.png?raw=true "")
 
-Supported image formats cover the very common formats as well as the rare ones. Viewer does not intentionally [demosaic][1] the RAW images, but only displays the embedded thumbnail.
+Supported image formats cover the very common formats as well as the rare ones. The viewer does not intentionally [demosaic][1] the RAW images, but only displays the embedded thumbnail.
 
 
 | FORMAT             | DESCRIPTION                                      |
@@ -51,7 +51,7 @@ Supported image formats cover the very common formats as well as the rare ones. 
 | RW2                | Panasonic RAW Image File [Inner thumbnail only]  |
 | SRW                | Samsung RAW Image File [Inner thumbnail only]    |
 | X3F                | SIGMA X3F Camera RAW File [Inner thumbnail only] |
-| [MacOS/Windows only] HEIC| High Efficiency Image File Format            |
+| [MacOS/Windows only] HEIC| High-Efficiency Image File Format            |
 
 
 All operations have assigned shortcuts and all of them can be user re-assigned except the one which is used for Preferences on MacOS.
@@ -90,7 +90,7 @@ All code developed during this project is [GPLv3][2] licensed. Images as well as
 -----------------
 
 ## Releases
-[Prebuilt binaries][5] for Windows 7, Windows 10, Debian, Fedora, Ubuntu and MacOS as well as sources are available [here.][5]
+[Prebuilt binaries][5] for Windows 7, Windows 10, Debian, Fedora, Ubuntu, and MacOS, as well as sources, are available [here.][5]
 
 Mac users can install the VookiImageViewer by the Homebrew.
 ```
@@ -119,7 +119,7 @@ apt-get update
 -----------------
 
 ## Builds
-All binaries could be built easily. For your convenience, travis-ci is used to continuously check if current source code is buildable on Linux and MacOS.
+All binaries could be built easily. For your convenience, travis-ci is used to continuously check if the current source code is buildable on Linux and MacOS.
 
 And the result is: 
  - Linux and MacOS: [![Build Status](https://travis-ci.org/vookimedlo/vooki-image-viewer.svg?branch=master)](https://travis-ci.org/vookimedlo/vooki-image-viewer)
