@@ -106,6 +106,7 @@ apt-get install -y apt-transport-https
 curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/cfg/gpg/gpg.EF5E62B51DE78AFF.key' | apt-key add -
 curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/cfg/setup/config.deb.txt?distro=debian&codename=buster' > /etc/apt/sources.list.d/michal-duda-vookiimageviewer.list
 apt-get update
+apt-get install vookiimageviewer
 ```
 
 Ubuntu Eoan users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
@@ -114,6 +115,7 @@ apt-get install -y apt-transport-https
 curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/cfg/gpg/gpg.EF5E62B51DE78AFF.key' | apt-key add -
 curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/cfg/setup/config.deb.txt?distro=ubuntu&codename=eoan' > /etc/apt/sources.list.d/michal-duda-vookiimageviewer.list
 apt-get update
+apt-get install vookiimageviewer
 ```
 
 -----------------
