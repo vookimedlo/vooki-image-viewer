@@ -18,17 +18,26 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
+#include <QSettings>
 #include "../darkmode.h"
 
 namespace SystemDependant
 {
+    static QSettings settings("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", QSettings::NativeFormat);
+
     QPixmap darkModePixmap(const QString &fileName)
     {
-        return QPixmap(fileName);
+        if(isDarkMode()) {
+            return QPixmap(fileName + "-white");
+        }
+        else {
+            return QPixmap(fileName);
+        }
     }
 
     bool isDarkMode()
     {
-        return false;
+        static const bool result = settings.contains("AppsUseLightTheme") && settings.contains("AppsUseLightTheme") != 0;
+        return result;
     }
 }
