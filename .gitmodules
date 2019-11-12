@@ -5,3 +5,4 @@
 [submodule "src/update/github-releases-autoupdater"]
 	path = src/update/github-releases-autoupdater
 	url = https://github.com/vookimedlo/github-releases-autoupdater
+	branch = vookiimageviewer
