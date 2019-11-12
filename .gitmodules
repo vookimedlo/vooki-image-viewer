@@ -2,3 +2,6 @@
 	path = build/cmake/unix/support/package/rpm/changelog/git2changelog
 	url = https://github.com/vookimedlo/git2changelog
 	branch = python3
+[submodule "src/update/github-releases-autoupdater"]
+	path = src/update/github-releases-autoupdater
+	url = https://github.com/vookimedlo/github-releases-autoupdater
