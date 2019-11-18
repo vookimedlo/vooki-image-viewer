@@ -127,6 +127,10 @@ if (APPLE)
         ../../src/update/github-releases-autoupdater/src/updateinstaller_mac.cpp
     )
 
+    ADD_DEFINITIONS(
+        -DUPDATE_FILE_EXTENSION=QLatin1String\(\".dmg\"\)
+    )
+
     ADD_EXECUTABLE(VookiImageViewer
         MACOSX_BUNDLE
         ../../src/resource/openclipart/vookiimageviewericon.icns
@@ -143,6 +147,10 @@ elseif(WIN32)
         ../../src/abstraction/win/init.cpp
         ../../src/abstraction/win/darkmode.cpp
         ../../src/update/github-releases-autoupdater/src/updateinstaller_win.cpp
+    )
+
+    ADD_DEFINITIONS(
+        -DUPDATE_FILE_EXTENSION=QLatin1String\(\".msi\"\)
     )
 
     ADD_EXECUTABLE(VookiImageViewer

@@ -129,6 +129,8 @@
     <addaction name="actionAboutQt"/>
     <addaction name="actionReleaseNotes"/>
     <addaction name="actionSupportedImageFormats"/>
+    <addaction name="separator"/>
+    <addaction name="actionCheckforUpdates"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
@@ -819,6 +821,14 @@
     <string>Release Notes...</string>
    </property>
   </action>
+  <action name="actionCheckforUpdates">
+   <property name="text">
+    <string>Check for Updates...</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::ApplicationSpecificRole</enum>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <pixmapfunction>SystemDependant::darkModePixmap</pixmapfunction>
@@ -1322,6 +1332,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionCheckforUpdates</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onCheckForUpdatesTriggered()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>404</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onQuitTriggered()</slot>
@@ -1345,5 +1371,6 @@
   <slot>onDocsDirClicked()</slot>
   <slot>onPicturesDirClicked()</slot>
   <slot>onReleaseNotesTriggered()</slot>
+  <slot>onCheckForUpdatesTriggered()</slot>
  </slots>
 </ui>
