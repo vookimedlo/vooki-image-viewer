@@ -1,0 +1,12 @@
+{
+    "Windows": {
+        "version": "2019.11.10",
+        "url": "https://github.com/vookimedlo/vooki-image-viewer/releases/download/v2019.11.10/VookiImageViewer-x64-win10.msi",
+        "changelog": " - Components: updated to latest versions."
+    },
+    "MacOS": {
+        "version": "2019.11.10",
+        "url": "https://github.com/vookimedlo/vooki-image-viewer/releases/download/v2019.11.10/VookiImageViewer.dmg",
+        "changelog": " - Components: updated to latest versions.\n - Notarization: MacOS application and distribution DMG package is signed and notarized."
+    }
+}
