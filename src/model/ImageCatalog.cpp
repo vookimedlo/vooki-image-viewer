@@ -20,9 +20,11 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include "ImageCatalog.h"
 
-ImageCatalog::ImageCatalog(const QStringList &filter)
+#include <utility>
+
+ImageCatalog::ImageCatalog(QStringList filter)
                                         : m_catalogIndex()
-                                        , m_filter(filter)
+                                        , m_filter(std::move(filter))
 {
 }
 
