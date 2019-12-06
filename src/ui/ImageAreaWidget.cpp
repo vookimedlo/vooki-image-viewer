@@ -99,7 +99,7 @@ void ImageAreaWidget::onFlipHorizontallyTriggered()
 
     if (m_flipHorizontally && m_flipVertically)
     {
-        // Simultanous vertical and horizontal flip is equal to the PI RAD (180degress) rotation
+        // Simultaneous vertical and horizontal flip is equal to the PI RAD (180 degrees) rotation
         m_flipHorizontally = m_flipVertically = false;
         ++m_rotateIndex;
         ++m_rotateIndex;
@@ -115,7 +115,7 @@ void ImageAreaWidget::onFlipVerticallyTriggered()
 
     if (m_flipHorizontally && m_flipVertically)
     {
-        // Simultanous vertical and horizontal flip is equal to the PI RAD (180degress) rotation
+        // Simultaneous vertical and horizontal flip is equal to the PI RAD (180 degrees) rotation
         m_flipHorizontally = m_flipVertically = false;
         ++m_rotateIndex;
         ++m_rotateIndex;
