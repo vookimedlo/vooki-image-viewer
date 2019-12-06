@@ -237,7 +237,7 @@ bool ImageAreaWidget::event(QEvent *ev)
     switch (ev->type())
     {
         case QEvent::NativeGesture:
-            nativeGestureEvent(static_cast<QNativeGestureEvent *>(ev));
+            nativeGestureEvent(dynamic_cast<QNativeGestureEvent *>(ev));
             break;
         default:
             return QWidget::event(ev);

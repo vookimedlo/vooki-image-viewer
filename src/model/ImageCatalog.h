@@ -29,7 +29,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 class ImageCatalog
 {
 public:
-    explicit ImageCatalog(const QStringList &filter);
+    explicit ImageCatalog(QStringList filter);
     DISABLE_COPY_MOVE(ImageCatalog);
 
     void initialize(const QFile &imageFile);
