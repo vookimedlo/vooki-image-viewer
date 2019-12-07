@@ -12,4 +12,7 @@ IF %%ERRORLEVEL%% GEQ 4 EXIT /b %%ERRORLEVEL%%
 (robocopy 3rdPartyLibs\LibDe265-1.0.3\lib\ build\Release\ *.dll /IS /IT)
 IF %%ERRORLEVEL%% GEQ 4 EXIT /b %%ERRORLEVEL%%
 
+(robocopy 3rdPartyLibs\OpenSSL\lib\ build\Release\ *.dll /IS /IT)
+IF %%ERRORLEVEL%% GEQ 4 EXIT /b %%ERRORLEVEL%%
+
 EXIT /B 0
