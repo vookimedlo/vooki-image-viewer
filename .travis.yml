@@ -15,6 +15,10 @@ compiler:
   - clang
   - gcc
 
+arch:
+  - amd64
+  - arm64
+
 env:
   - QT=latestDistroOfficial RELEASE=bionic DISTRO=ubuntu DEB=no
   - QT=latestDistroOfficial RELEASE=eoan DISTRO=ubuntu DEB=yes
@@ -24,6 +28,9 @@ env:
 
 matrix:
   exclude:
+  - os: osx
+    arch: arm64
+
   - os: linux
     env: BREW=
 
@@ -35,7 +42,7 @@ matrix:
     env: QT=latestDistroOfficial RELEASE=stable DISTRO=debian DEB=yes
   - os: osx
     env: QT=latestDistroOfficial RELEASE=stable DISTRO=fedora DEB=no
-  
+
 install:
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker login docker.pkg.github.com --username vookimedlo --password "$packages_read_token"'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker pull docker.pkg.github.com/vookimedlo/docker-images/"$DISTRO"-qt:"$QT"_"$CC"_"$RELEASE"'
