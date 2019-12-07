@@ -23,6 +23,9 @@ init:
 before_build:
   - qmake -v
   - cmake --version
+  - cd \projects\vooki-image-viewer\build\cmake\windows
+  - git submodule init
+  - git submodule update
 
 build_script:
   - cd \projects\vooki-image-viewer\build\cmake\windows
