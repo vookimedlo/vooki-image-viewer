@@ -5,7 +5,7 @@ if "%~1"=="no-qt-override" (
   echo Don't forget to set proper Qt env. variables
 ) else (
   echo Setting the Qt env. variables
-  set QTDIR=c:\Qt\5.13.2\msvc2017_64
+  set QTDIR=c:\Qt\5.14.0\msvc2017_64
   set Qt5Core_DIR=%QTDIR%\lib\cmake\Qt5Core\
   set Qt5Gui_DIR=%QTDIR%\lib\cmake\Qt5Gui\
   set Qt5Widgets_DIR=%QTDIR%\lib\cmake\Qt5Widgets\

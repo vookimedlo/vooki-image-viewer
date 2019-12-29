@@ -249,8 +249,9 @@
             </Component>
 
             <Component Id="QtDLL" Guid="35698E30-38DD-40B9-919C-88FCED730285">
-              <File Id="Qt5Core.dll" Name="Qt5Core.dll" KeyPath="yes"/>
+              <File Id="Qt5Core.dll" Name="Qt5Core.dll" KeyPath="yes" />
               <File Id="Qt5Gui.dll" Name="Qt5Gui.dll" />
+              <File Id="Qt5Network.dll" Name="Qt5Network.dll" />
               <File Id="Qt5Svg.dll" Name="Qt5Svg.dll" />
               <File Id="Qt5Widgets.dll" Name="Qt5Widgets.dll" />
             </Component>
