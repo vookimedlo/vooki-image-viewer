@@ -67,7 +67,7 @@ bool HeicHandler::canRead(QIODevice *device)
         return false;
 
     // brand follows box name, determines format
-    return (w2 == "heic" || w2 == "heix");
+    return (w2 == "heic" || w2 == "heix" || w2 == "mif1");
 }
 
 bool HeicHandler::canRead() const
