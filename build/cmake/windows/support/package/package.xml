@@ -268,6 +268,12 @@
               </Component>
             </Directory>
 
+            <Directory Id='bearer' Name='bearer'>
+              <Component Id="bearerDLL" Guid="4B5A61CC-3D7B-49F4-A1F8-2E252E4E00CA">
+                <File Id="qgenericbearer.dll" Name="qgenericbearer.dll" KeyPath="yes"/>
+              </Component>
+            </Directory>
+
             <Directory Id='imageformats' Name='imageformats'>
               <Component Id="imageformatsDLL" Guid="2D11724C-4320-4DD9-8280-F65D55838A08">
                 <File Id="qgif.dll" Name="qgif.dll" />
@@ -279,6 +285,7 @@
                 <File Id="qtiff.dll" Name="qtiff.dll" />
                 <File Id="qwbmp.dll" Name="qwbmp.dll" />
                 <File Id="qwebp.dll" Name="qwebp.dll" />
+                <File Id="vooki_kimg_hdr.dll" Name="vooki_kimg_hdr.dll" />
                 <File Id="vooki_kimg_pcx.dll" Name="vooki_kimg_pcx.dll" />
                 <File Id="vooki_kimg_pic.dll" Name="vooki_kimg_pic.dll" />
                 <File Id="vooki_kimg_psd.dll" Name="vooki_kimg_psd.dll" />
@@ -344,6 +351,7 @@
       <ComponentRef Id='QtDLL' />
       <ComponentRef Id='iconenginesDLL' />
       <ComponentRef Id='platformsDLL' />
+      <ComponentRef Id='bearerDLL' />
       <ComponentRef Id='imageformatsDLL' />
       <ComponentRef Id='translationsDLL' />
       <ComponentRef Id='ProgramMenuDir' />
