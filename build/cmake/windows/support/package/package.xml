@@ -240,7 +240,7 @@
 
             <Component Id="appDLL" Guid="10581E14-D3F7-40A1-A6D1-09F579D548A5">
               <File Id="libde265.dll" Name="libde265.dll" KeyPath="yes"/>
-              <File Id="libheif.dll" Name="libheif.dll" />
+              <File Id="heif.dll" Name="heif.dll" />
             </Component>
 
             <Component Id="opensslDLL" Guid="E468622A-B12D-4024-B8D2-CCA7AE72AC48">
