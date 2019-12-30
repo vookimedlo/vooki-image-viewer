@@ -22,7 +22,6 @@
         <file alias="homedir">image/Contact-Folder_240px.png</file>
         <file alias="docsdir">image/Documents_240px.png</file>
         <file alias="picturesdir">image/Picture-Folder_240px.png</file>
-
         <file alias="fullscreen-white">image-white/Full-Screen_240px-white.png</file>
         <file alias="quit-white">image-white/Power-white.png</file>
         <file alias="preferences-white">image-white/Preferences 1-white.png</file>
@@ -43,7 +42,6 @@
         <file alias="homedir-white">image-white/Contact-Folder_240px-white.png</file>
         <file alias="docsdir-white">image-white/Documents_240px-white.png</file>
         <file alias="picturesdir-white">image-white/Picture-Folder_240px-white.png</file>
-
         <file alias="applogo-white">openclipart-white/abeautifulwomansface-800px-white.png</file>
     </qresource>
     <qresource prefix="/text">
@@ -55,5 +53,6 @@
         <file alias="aboutlibraw">text/aboutLibRaw.html</file>
         <file alias="aboutlibde265">text/aboutLibde265.html</file>
         <file alias="aboutlibheif">text/aboutLibheif.html</file>
+        <file alias="aboutopenssl">text/aboutOpenSSL.html</file>
     </qresource>
 </RCC>

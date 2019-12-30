@@ -52,6 +52,9 @@ void AboutComponentsDialog::onSelectedComponentChanged(const int row)
         case 6:
             m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutlibheif"));
             break;
+        case 7:
+            m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutopenssl"));
+            break;
         default:
             m_uiAboutComponentsDialog.textBrowser->clear();
     }
