@@ -31,6 +31,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "ui_AboutDialog.h"
 #include "ui_AboutSupportedFormatsDialog.h"
 #include "ui_ReleaseNotesDialog.h"
+#include <QAction>
 #include <QFileSystemModel>
 #include <QImageReader>
 #include <QMessageBox>
@@ -89,6 +90,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     propagateBorderSettings();
     restoreRecentFiles();
+
+#if !defined UPDATER_ALLOWED || defined HOMEBREW
+    m_ui.actionCheckforUpdates->setDisabled(true);
+    m_ui.actionCheckforUpdates->setVisible(false);
+#endif // UPDATER_ALLOWED
 }
 
 MainWindow::~MainWindow() = default;
@@ -446,6 +452,8 @@ void MainWindow::onPicturesDirClicked() const
 }
 
 void MainWindow::onCheckForUpdatesTriggered() {
+#if defined UPDATER_ALLOWED && !defined HOMEBREW
     CUpdaterDialog updaterDialog(this, "https://raw.githubusercontent.com/vookimedlo/vooki-image-viewer/github-releases-autoupdater/update/RELEASES.json", BUILD_DATE);
     updaterDialog.exec();
+#endif // UPDATER_ALLOWED
 }

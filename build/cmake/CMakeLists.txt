@@ -128,6 +128,7 @@ if (APPLE)
     )
 
     ADD_DEFINITIONS(
+        -DUPDATER_ALLOWED
         -DUPDATE_FILE_EXTENSION=QLatin1String\(\".dmg\"\)
     )
 
@@ -150,6 +151,7 @@ elseif(WIN32)
     )
 
     ADD_DEFINITIONS(
+        -DUPDATER_ALLOWED
         -DUPDATE_FILE_EXTENSION=QLatin1String\(\".msi\"\)
     )
 
