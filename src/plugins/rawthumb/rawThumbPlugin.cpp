@@ -32,12 +32,12 @@ QImageIOPlugin::Capabilities RawThumbPlugin::capabilities(QIODevice *device, con
 
     if (!format.isEmpty())
     {
-        return nullptr;
+        return Capabilities();
     }
 
     if (!device || !device->isOpen())
     {
-        return nullptr;
+        return Capabilities();
     }
 
     Capabilities capabilities;
