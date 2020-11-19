@@ -6,10 +6,10 @@ cd /D "%~dp0"
 (robocopy build\Release\ build\Release\imageformats\ vooki_*.dll /MOV /IS /IT)
 IF %%ERRORLEVEL%% GEQ 4 EXIT /b %%ERRORLEVEL%%
 
-(robocopy 3rdPartyLibs\LibHEIF-1.6.1\lib\ build\Release\ *.dll /IS /IT)
+(robocopy 3rdPartyLibs\LibHEIF-1.9.1\lib\ build\Release\ *.dll /IS /IT)
 IF %%ERRORLEVEL%% GEQ 4 EXIT /b %%ERRORLEVEL%%
 
-(robocopy 3rdPartyLibs\LibDe265-1.0.4\lib\ build\Release\ *.dll /IS /IT)
+(robocopy 3rdPartyLibs\LibDe265-1.0.8\lib\ build\Release\ *.dll /IS /IT)
 IF %%ERRORLEVEL%% GEQ 4 EXIT /b %%ERRORLEVEL%%
 
 EXIT /B 0
