@@ -1,25 +1,13 @@
+/* -*- c++ -*-
+    gimp.h: Header for a Qt 3 plug-in for reading GIMP XCF image files
+    SPDX-FileCopyrightText: 2001 lignum Computing Inc. <allen@lignumcomputing.com>
+    SPDX-FileCopyrightText: 2004 Melchior FRANZ <mfranz@kde.org>
+
+    SPDX-License-Identifier: LGPL-2.1-or-later
+*/
+
 #ifndef GIMP_H
 #define GIMP_H
-/* -*- c++ -*-
- * gimp.h: Header for a Qt 3 plug-in for reading GIMP XCF image files
- * Copyright (C) 2001 lignum Computing, Inc. <allen@lignumcomputing.com>
- * Copyright (C) 2004 Melchior FRANZ <mfranz@kde.org>
- *
- * This plug-in is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- *
- */
 
 typedef unsigned char uchar;
 
@@ -56,16 +44,6 @@ typedef enum {
     INDEXED
 } GimpImageBaseType;
 
-//! Type of individual layers in an XCF file.
-
-typedef enum {
-    RGB_GIMAGE,
-    RGBA_GIMAGE,
-    GRAY_GIMAGE,
-    GRAYA_GIMAGE,
-    INDEXED_GIMAGE,
-    INDEXEDA_GIMAGE
-} GimpImageType;
 
 // From GIMP "libgimp/gimpenums.h" v2.4
 
@@ -96,49 +74,6 @@ typedef enum {
     GRAIN_MERGE_MODE
 } LayerModeEffects;
 
-// From GIMP "xcf.c" v1.2
-
-//! Properties which can be stored in an XCF file.
-
-typedef enum {
-    PROP_END = 0,
-    PROP_COLORMAP = 1,
-    PROP_ACTIVE_LAYER = 2,
-    PROP_ACTIVE_CHANNEL = 3,
-    PROP_SELECTION = 4,
-    PROP_FLOATING_SELECTION = 5,
-    PROP_OPACITY = 6,
-    PROP_MODE = 7,
-    PROP_VISIBLE = 8,
-    PROP_LINKED = 9,
-    PROP_PRESERVE_TRANSPARENCY = 10,
-    PROP_APPLY_MASK = 11,
-    PROP_EDIT_MASK = 12,
-    PROP_SHOW_MASK = 13,
-    PROP_SHOW_MASKED = 14,
-    PROP_OFFSETS = 15,
-    PROP_COLOR = 16,
-    PROP_COMPRESSION = 17,
-    PROP_GUIDES = 18,
-    PROP_RESOLUTION = 19,
-    PROP_TATTOO = 20,
-    PROP_PARASITES = 21,
-    PROP_UNIT = 22,
-    PROP_PATHS = 23,
-    PROP_USER_UNIT = 24,
-    MAX_SUPPORTED_PROPTYPE // should always be at the end so its value is last + 1
-} PropType;
-
-// From GIMP "xcf.c" v1.2
-
-//! Compression type used in layer tiles.
-
-typedef enum {
-    COMPRESS_NONE = 0,
-    COMPRESS_RLE = 1,
-    COMPRESS_ZLIB = 2,
-    COMPRESS_FRACTAL = 3  /* Unused. */
-} CompressionType;
 
 // From GIMP "paint_funcs.c" v1.2
 

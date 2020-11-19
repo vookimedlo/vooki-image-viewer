@@ -1,10 +1,8 @@
-/* This file is part of the KDE project
-   Copyright (C) 2002-2005 Nadeem Hasan <nhasan@kde.org>
+/*
+    This file is part of the KDE project
+    SPDX-FileCopyrightText: 2002-2005 Nadeem Hasan <nhasan@kde.org>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Lesser General Public
-   License (LGPL) as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
+    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
 #include "pcx_p.h"
@@ -253,8 +251,10 @@ static void readImage1(QImage &img, QDataStream &s, const PCXHEADER &header)
     img = QImage(header.width(), header.height(), QImage::Format_Mono);
     img.setColorCount(2);
 
-    if (img.isNull())
+    if (img.isNull()) {
+        qWarning() << "Failed to allocate image, invalid dimensions?" << QSize(header.width(), header.height());
         return;
+    }
 
     for (int y = 0; y < header.height(); ++y) {
         if (s.atEnd()) {
@@ -282,6 +282,10 @@ static void readImage4(QImage &img, QDataStream &s, const PCXHEADER &header)
 
     img = QImage(header.width(), header.height(), QImage::Format_Indexed8);
     img.setColorCount(16);
+    if (img.isNull()) {
+        qWarning() << "Failed to allocate image, invalid dimensions?" << QSize(header.width(), header.height());
+        return;
+    }
 
     for (int y = 0; y < header.height(); ++y) {
         if (s.atEnd()) {
@@ -301,6 +305,9 @@ static void readImage4(QImage &img, QDataStream &s, const PCXHEADER &header)
         }
 
         uchar *p = img.scanLine(y);
+        if (!p) {
+            qWarning() << "Failed to get scanline for" << y << "might be out of bounds";
+        }
         for (int x = 0; x < header.width(); ++x) {
             p[ x ] = pixbuf[ x ];
         }
@@ -318,6 +325,11 @@ static void readImage8(QImage &img, QDataStream &s, const PCXHEADER &header)
 
     img = QImage(header.width(), header.height(), QImage::Format_Indexed8);
     img.setColorCount(256);
+
+    if (img.isNull()) {
+        qWarning() << "Failed to allocate image, invalid dimensions?" << QSize(header.width(), header.height());
+        return;
+    }
 
     for (int y = 0; y < header.height(); ++y) {
         if (s.atEnd()) {
@@ -359,6 +371,11 @@ static void readImage24(QImage &img, QDataStream &s, const PCXHEADER &header)
     QByteArray b_buf(header.BytesPerLine, 0);
 
     img = QImage(header.width(), header.height(), QImage::Format_RGB32);
+
+    if (img.isNull()) {
+        qWarning() << "Failed to allocate image, invalid dimensions?" << QSize(header.width(), header.height());
+        return;
+    }
 
     for (int y = 0; y < header.height(); ++y) {
         if (s.atEnd()) {

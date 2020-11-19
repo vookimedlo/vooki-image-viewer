@@ -1,22 +1,9 @@
 /*
- * Run-Length Encoding utilities.
- * Copyright 2014-2015 Alex Merry <alex.merry@kde.org>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * ----------------------------------------------------------------------------
- */
+    Run-Length Encoding utilities.
+    SPDX-FileCopyrightText: 2014-2015 Alex Merry <alex.merry@kde.org>
+
+    SPDX-License-Identifier: LGPL-2.0-or-later
+*/
 
 #ifndef KIMAGEFORMATS_RLE_P_H
 #define KIMAGEFORMATS_RLE_P_H
@@ -37,6 +24,11 @@ enum class RLEVariant {
      * of size 2, 130 of size 3, up to 255 of size 128.
      */
     PackBits,
+    /**
+     * Same as PackBits, but treat unpacked data as
+     * 16-bit integers.
+     */
+    PackBits16,
     /**
      * PIC-style RLE
      *
@@ -80,6 +72,8 @@ static inline bool decodeRLEData(RLEVariant variant,
                                  Func2 updateItem)
 {
     unsigned offset = 0; // in dest
+    bool is_msb = true; // only used for 16-bit PackBits, data is big-endian
+    quint16 temp_data = 0;
     while (offset < length) {
         unsigned remaining = length - offset;
         quint8 count1;
@@ -98,7 +92,7 @@ static inline bool decodeRLEData(RLEVariant variant,
                     // 2 to 128 repetitions
                     length = count1 - 127u;
                 }
-            } else if (variant == RLEVariant::PackBits) {
+            } else if (variant == RLEVariant::PackBits || variant == RLEVariant::PackBits16) {
                 if (count1 == 128u) {
                     // Ignore value 128
                     continue;
@@ -115,7 +109,18 @@ static inline bool decodeRLEData(RLEVariant variant,
             }
             auto datum = readData(stream);
             for (unsigned i = offset; i < offset + length; ++i) {
-                dest[i] = updateItem(dest[i], datum);
+                if (variant == RLEVariant::PackBits16) {
+                    if (is_msb) {
+                        temp_data = datum << 8;
+                        is_msb = false;
+                    } else {
+                        temp_data |= datum;
+                        dest[i >> 1] = updateItem(dest[i >> 1], temp_data);
+                        is_msb = true;
+                    }
+                } else {
+                    dest[i] = updateItem(dest[i], datum);
+                }
             }
             offset += length;
         } else {
@@ -127,7 +132,18 @@ static inline bool decodeRLEData(RLEVariant variant,
             }
             for (unsigned i = offset; i < offset + length; ++i) {
                 auto datum = readData(stream);
-                dest[i] = updateItem(dest[i], datum);
+                if (variant == RLEVariant::PackBits16) {
+                    if (is_msb) {
+                        temp_data = datum << 8;
+                        is_msb = false;
+                    } else {
+                        temp_data |= datum;
+                        dest[i >> 1] = updateItem(dest[i >> 1], temp_data);
+                        is_msb = true;
+                    }
+                } else {
+                    dest[i] = updateItem(dest[i], datum);
+                }
             }
             offset += length;
         }

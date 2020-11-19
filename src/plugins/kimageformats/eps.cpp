@@ -1,10 +1,11 @@
 /*
-* QImageIO Routines to read/write EPS images.
-* copyright (c) 1998 Dirk Schoenberger <dirk.schoenberger@freenet.de>
-* Copyright (c) 2013 Alex Merry <alex.merry@kdemail.net>
-* Includes code by Sven Wiegand <SWiegand@tfh-berlin.de> from KSnapshot
-*
-* This library is distributed under the conditions of the GNU LGPL.
+    QImageIO Routines to read/write EPS images.
+    SPDX-FileCopyrightText: 1998 Dirk Schoenberger <dirk.schoenberger@freenet.de>
+    SPDX-FileCopyrightText: 2013 Alex Merry <alex.merry@kdemail.net>
+
+    Includes code by Sven Wiegand <SWiegand@tfh-berlin.de> from KSnapshot
+
+    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 #include "eps_p.h"
 
@@ -17,7 +18,7 @@
 #include <QCoreApplication>
 
 // logging category for this framework, default: log stuff >= warning
-Q_LOGGING_CATEGORY(EPSPLUGIN, "epsplugin", QtWarningMsg)
+Q_LOGGING_CATEGORY(EPSPLUGIN, "kf.imageformats.plugins.eps", QtWarningMsg)
 
 //#define EPS_PERFORMANCE_DEBUG 1
 
@@ -178,7 +179,7 @@ bool EPSHandler::read(QImage *image)
     QStringList gsArgs;
     gsArgs << QLatin1String("-sOutputFile=") + tmpFile.fileName()
            << QStringLiteral("-q")
-           << QString(QStringLiteral("-g%1x%2")).arg(wantedWidth).arg(wantedHeight)
+           << QStringLiteral("-g%1x%2").arg(wantedWidth).arg(wantedHeight)
            << QStringLiteral("-dSAFER")
            << QStringLiteral("-dPARANOIDSAFER")
            << QStringLiteral("-dNOPAUSE")

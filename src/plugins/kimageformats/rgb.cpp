@@ -1,11 +1,9 @@
-// kimgio module for SGI images
-//
-// Copyright (C) 2004  Melchior FRANZ  <mfranz@kde.org>
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the Lesser GNU General Public License as
-// published by the Free Software Foundation; either version 2 of the
-// License, or (at your option) any later version.
+/*
+    kimgio module for SGI images
+    SPDX-FileCopyrightText: 2004 Melchior FRANZ <mfranz@kde.org>
+
+    SPDX-License-Identifier: LGPL-2.0-or-later
+*/
 
 /* this code supports:
  * reading:
@@ -313,6 +311,10 @@ bool SGIImage::readImage(QImage &img)
     }
 
     img = QImage(_xsize, _ysize, QImage::Format_RGB32);
+    if (img.isNull()) {
+        qWarning() << "Failed to allocate image, invalid dimensions?" << QSize(_xsize, _ysize);
+        return false;
+    }
 
     if (_zsize == 0 )
         return false;
@@ -470,7 +472,14 @@ bool SGIImage::scanData(const QImage &img)
     uint len;
 
     for (y = 0; y < _ysize; y++) {
-        c = reinterpret_cast<const QRgb *>(img.scanLine(_ysize - y - 1));
+        const int yPos = _ysize - y - 1; // scanline doesn't do any sanity checking
+        if (yPos >= img.height()) {
+            qWarning() << "Failed to get scanline for" << yPos;
+            return false;
+        }
+
+        c = reinterpret_cast<const QRgb *>(img.scanLine(yPos));
+
         for (x = 0; x < _xsize; x++) {
             buf[x] = intensity(qRed(*c++));
         }
@@ -484,7 +493,13 @@ bool SGIImage::scanData(const QImage &img)
 
     if (_zsize != 2) {
         for (y = 0; y < _ysize; y++) {
-            c = reinterpret_cast<const QRgb *>(img.scanLine(_ysize - y - 1));
+            const int yPos = _ysize - y - 1;
+            if (yPos >= img.height()) {
+                qWarning() << "Failed to get scanline for" << yPos;
+                return false;
+            }
+
+            c = reinterpret_cast<const QRgb *>(img.scanLine(yPos));
             for (x = 0; x < _xsize; x++) {
                 buf[x] = intensity(qGreen(*c++));
             }
@@ -493,7 +508,13 @@ bool SGIImage::scanData(const QImage &img)
         }
 
         for (y = 0; y < _ysize; y++) {
-            c = reinterpret_cast<const QRgb *>(img.scanLine(_ysize - y - 1));
+            const int yPos = _ysize - y - 1;
+            if (yPos >= img.height()) {
+                qWarning() << "Failed to get scanline for" << yPos;
+                return false;
+            }
+
+            c = reinterpret_cast<const QRgb *>(img.scanLine(yPos));
             for (x = 0; x < _xsize; x++) {
                 buf[x] = intensity(qBlue(*c++));
             }
@@ -507,7 +528,13 @@ bool SGIImage::scanData(const QImage &img)
     }
 
     for (y = 0; y < _ysize; y++) {
-        c = reinterpret_cast<const QRgb *>(img.scanLine(_ysize - y - 1));
+        const int yPos = _ysize - y - 1;
+        if (yPos >= img.height()) {
+            qWarning() << "Failed to get scanline for" << yPos;
+            return false;
+        }
+
+        c = reinterpret_cast<const QRgb *>(img.scanLine(yPos));
         for (x = 0; x < _xsize; x++) {
             buf[x] = intensity(qAlpha(*c++));
         }

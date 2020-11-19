@@ -1,21 +1,23 @@
-/* This file is part of the KDE project
-   Copyright (C) 2005 Christoph Hormann <chris_hormann@gmx.de>
-   Copyright (C) 2005 Ignacio Castaño <castanyo@yahoo.es>
+/*
+    This file is part of the KDE project
+    SPDX-FileCopyrightText: 2005 Christoph Hormann <chris_hormann@gmx.de>
+    SPDX-FileCopyrightText: 2005 Ignacio Castaño <castanyo@yahoo.es>
 
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the Lesser GNU General Public
-   License as published by the Free Software Foundation; either
-   version 2 of the License, or (at your option) any later version.
+    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
 #include "hdr_p.h"
 
 #include <QImage>
 #include <QDataStream>
+#include <QLoggingCategory>
+#include <QRegularExpressionMatch>
 
 #include <QDebug>
 
 typedef unsigned char uchar;
+
+Q_LOGGING_CATEGORY(HDRPLUGIN, "kf.imageformats.plugins.hdr", QtWarningMsg)
 
 namespace   // Private.
 {
@@ -95,6 +97,7 @@ static bool LoadHDR(QDataStream &s, const int width, const int height, QImage &i
     // Create dst image.
     img = QImage(width, height, QImage::Format_RGB32);
     if (img.isNull()) {
+        qCDebug(HDRPLUGIN) << "Couldn't create image with size" << width << height << "and format RGB32";
         return false;
     }
 
@@ -141,6 +144,7 @@ static bool LoadHDR(QDataStream &s, const int width, const int height, QImage &i
         }
 
         if ((image[2] << 8 | image[3]) != width) {
+            qCDebug(HDRPLUGIN) << "Line of pixels had width" << (image[2] << 8 | image[3]) << "instead of" << width;
             return false;
         }
 
@@ -149,6 +153,7 @@ static bool LoadHDR(QDataStream &s, const int width, const int height, QImage &i
             for (int j = 0; j < width;) {
                 s >> code;
                 if (s.atEnd()) {
+                    qCDebug(HDRPLUGIN) << "Truncated HDR file";
                     return false;
                 }
                 if (code > 128) {
@@ -182,39 +187,48 @@ static bool LoadHDR(QDataStream &s, const int width, const int height, QImage &i
 bool HDRHandler::read(QImage *outImage)
 {
     int len;
-    char line[MAXLINE];
-    //bool validHeader = false;
-    bool validFormat = false;
+    QByteArray line(MAXLINE + 1, Qt::Uninitialized);
+    QByteArray format;
 
     // Parse header
     do {
-        len = device()->readLine(line, MAXLINE);
+        len = device()->readLine(line.data(), MAXLINE);
 
-        /*if (strcmp(line, "#?RADIANCE\n") == 0 || strcmp(line, "#?RGBE\n") == 0)
-        {
-            validHeader = true;
-        }*/
-        if (strcmp(line, "FORMAT=32-bit_rle_rgbe\n") == 0) {
-            validFormat = true;
+        if (line.startsWith("FORMAT=")) {
+            format = line.mid(7, len - 7 - 1 /*\n*/);
         }
 
     } while ((len > 0) && (line[0] != '\n'));
 
-    if (/*!validHeader ||*/ !validFormat) {
-        // qDebug() << "Unknown HDR format.";
+    if (format != "32-bit_rle_rgbe") {
+        qCDebug(HDRPLUGIN) << "Unknown HDR format:" << format;
         return false;
     }
 
-    device()->readLine(line, MAXLINE);
+    len = device()->readLine(line.data(), MAXLINE);
+    line.resize(len);
 
-    char s1[3], s2[3];
-    int width, height;
-    if (sscanf(line, "%2[+-XY] %d %2[+-XY] %d\n", s1, &height, s2, &width) != 4)
-        //if( sscanf(line, "-Y %d +X %d", &height, &width) < 2 )
-    {
-        // qDebug() << "Invalid HDR file.";
+    /*
+       TODO: handle flipping and rotation, as per the spec below
+       The single resolution line consists of 4 values, a X and Y label each followed by a numerical
+       integer value. The X and Y are immediately preceded by a sign which can be used to indicate
+       flipping, the order of the X and Y indicate rotation. The standard coordinate system for
+       Radiance images would have the following resolution string -Y N +X N. This indicates that the
+       vertical axis runs down the file and the X axis is to the right (imagining the image as a
+       rectangular block of data). A -X would indicate a horizontal flip of the image. A +Y would
+       indicate a vertical flip. If the X value appears before the Y value then that indicates that
+       the image is stored in column order rather than row order, that is, it is rotated by 90 degrees.
+       The reader can convince themselves that the 8 combinations cover all the possible image orientations
+       and rotations.
+    */
+    QRegularExpression resolutionRegExp(QStringLiteral("([+\\-][XY]) ([0-9]+) ([+\\-][XY]) ([0-9]+)\n"));
+    QRegularExpressionMatch match = resolutionRegExp.match(QString::fromLatin1(line));
+    if (!match.hasMatch()) {
+        qCDebug(HDRPLUGIN) << "Invalid HDR file, the first line after the header didn't have the expected format:" << line;
         return false;
     }
+    const int width = match.captured(2).toInt();
+    const int height = match.captured(4).toInt();
 
     QDataStream s(device());
 

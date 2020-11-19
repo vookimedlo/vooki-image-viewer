@@ -1,8 +1,8 @@
 /*
-* QImageIO Routines to read/write EPS images.
-* copyright (c) 1998 Dirk Schoenberger <dirk.schoenberger@freenet.de>
-*
-* This library is distributed under the conditions of the GNU LGPL.
+    QImageIO Routines to read/write EPS images.
+    SPDX-FileCopyrightText: 1998 Dirk Schoenberger <dirk.schoenberger@freenet.de>
+
+    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 #ifndef KIMG_EPS_P_H
 #define KIMG_EPS_P_H

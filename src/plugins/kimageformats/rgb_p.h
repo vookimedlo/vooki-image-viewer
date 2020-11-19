@@ -1,11 +1,9 @@
-// kimgio module for SGI images
-//
-// Copyright (C) 2004  Melchior FRANZ  <mfranz@kde.org>
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the Lesser GNU General Public License as
-// published by the Free Software Foundation; either version 2 of the
-// License, or (at your option) any later version.
+/*
+    kimgio module for SGI images
+    SPDX-FileCopyrightText: 2004 Melchior FRANZ <mfranz@kde.org>
+
+    SPDX-License-Identifier: LGPL-2.0-or-later
+*/
 
 #ifndef KIMG_RGB_P_H
 #define KIMG_RGB_P_H

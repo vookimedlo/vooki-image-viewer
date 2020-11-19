@@ -1,23 +1,11 @@
 /*
- * Photoshop File Format support for QImage.
- *
- * Copyright 2003 Ignacio Castaño <castano@ludicon.com>
- * Copyright 2015 Alex Merry <alex.merry@kde.org>
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- */
+    Photoshop File Format support for QImage.
+
+    SPDX-FileCopyrightText: 2003 Ignacio Castaño <castano@ludicon.com>
+    SPDX-FileCopyrightText: 2015 Alex Merry <alex.merry@kde.org>
+
+    SPDX-License-Identifier: LGPL-2.0-or-later
+*/
 
 /*
  * This code is based on Thacher Ulrich PSD loading code released
@@ -99,7 +87,7 @@ static bool IsSupported(const PSDHeader &header)
     if (header.channel_count > 16) {
         return false;
     }
-    if (header.depth != 8) {
+    if (header.depth != 8 && header.depth != 16) {
         return false;
     }
     if (header.color_mode != CM_RGB) {
@@ -116,11 +104,13 @@ static void skip_section(QDataStream &s)
     s.skipRawData(section_length);
 }
 
-static quint8 readPixel(QDataStream &stream) {
-    quint8 pixel;
+template <class Trait>
+static Trait readPixel(QDataStream &stream) {
+    Trait pixel;
     stream >> pixel;
     return pixel;
 }
+
 static QRgb updateRed(QRgb oldPixel, quint8 redPixel) {
     return qRgba(redPixel, qGreen(oldPixel), qBlue(oldPixel), qAlpha(oldPixel));
 }
@@ -161,19 +151,33 @@ static bool LoadPSD(QDataStream &stream, const PSDHeader &header, QImage &img)
 
     quint32 channel_num = header.channel_count;
 
-    QImage::Format fmt = QImage::Format_RGB32;
+    QImage::Format fmt = header.depth == 8 ? QImage::Format_RGB32
+                                           : QImage::Format_RGBX64;
     // Clear the image.
     if (channel_num >= 4) {
         // Enable alpha.
-        fmt = QImage::Format_ARGB32;
+        fmt = header.depth == 8 ? QImage::Format_ARGB32
+                                : QImage::Format_RGBA64;
 
         // Ignore the other channels.
         channel_num = 4;
     }
+
     img = QImage(header.width, header.height, fmt);
+    if (img.isNull()) {
+        qWarning() << "Failed to allocate image, invalid dimensions?" << QSize(header.width, header.height);
+        return false;
+    }
     img.fill(qRgb(0,0,0));
 
     const quint32 pixel_count = header.height * header.width;
+    const quint32 channel_size = pixel_count * header.depth / 8;
+
+    // Verify this, as this is used to write into the memory of the QImage
+    if (pixel_count > img.sizeInBytes() / (header.depth == 8 ? sizeof(QRgb) : sizeof(QRgba64))) {
+        qWarning() << "Invalid pixel count!" << pixel_count << "bytes available:" << img.sizeInBytes();
+        return false;
+    }
 
     QRgb *image_data = reinterpret_cast<QRgb*>(img.bits());
 
@@ -188,6 +192,14 @@ static bool LoadPSD(QDataStream &stream, const PSDHeader &header, QImage &img)
         updateAlpha
     };
 
+    typedef QRgba64(*channelUpdater16)(QRgba64, quint16);
+    static const channelUpdater16 updaters64[4] = {
+        [](QRgba64 oldPixel, quint16 redPixel)  {return qRgba64((oldPixel & ~(0xFFFFull <<  0)) | (quint64(  redPixel) <<  0));},
+        [](QRgba64 oldPixel, quint16 greenPixel){return qRgba64((oldPixel & ~(0xFFFFull << 16)) | (quint64(greenPixel) << 16));},
+        [](QRgba64 oldPixel, quint16 bluePixel) {return qRgba64((oldPixel & ~(0xFFFFull << 32)) | (quint64( bluePixel) << 32));},
+        [](QRgba64 oldPixel, quint16 alphaPixel){return qRgba64((oldPixel & ~(0xFFFFull << 48)) | (quint64(alphaPixel) << 48));}
+    };
+
     if (compression) {
         // Skip row lengths.
         int skip_count = header.height * header.channel_count * sizeof(quint16);
@@ -196,9 +208,18 @@ static bool LoadPSD(QDataStream &stream, const PSDHeader &header, QImage &img)
         }
 
         for (unsigned short channel = 0; channel < channel_num; channel++) {
-            bool success = decodeRLEData(RLEVariant::PackBits, stream,
-			                 image_data, pixel_count,
-					 &readPixel, updaters[channel]);
+            bool success = false;
+            if (header.depth == 8) {
+                success = decodeRLEData(RLEVariant::PackBits, stream,
+                                         image_data, channel_size,
+                                         &readPixel<quint8>, updaters[channel]);
+            } else if (header.depth == 16) {
+                QRgba64 *image_data = reinterpret_cast<QRgba64*>(img.bits());
+                success = decodeRLEData(RLEVariant::PackBits16, stream,
+                                         image_data, channel_size,
+                                         &readPixel<quint8>, updaters64[channel]);
+            }
+
             if (!success) {
                 qDebug() << "decodeRLEData on channel" << channel << "failed";
                 return false;
@@ -206,8 +227,15 @@ static bool LoadPSD(QDataStream &stream, const PSDHeader &header, QImage &img)
         }
     } else {
         for (unsigned short channel = 0; channel < channel_num; channel++) {
-            for (unsigned i = 0; i < pixel_count; ++i) {
-                image_data[i] = updaters[channel](image_data[i], readPixel(stream));
+            if (header.depth == 8) {
+                for (unsigned i = 0; i < pixel_count; ++i) {
+                    image_data[i] = updaters[channel](image_data[i], readPixel<quint8>(stream));
+                }
+            } else if (header.depth == 16) {
+                QRgba64 *image_data = reinterpret_cast<QRgba64*>(img.bits());
+                for (unsigned i = 0; i < pixel_count; ++i) {
+                    image_data[i] = updaters64[channel](image_data[i], readPixel<quint16>(stream));
+                }
             }
             // make sure we didn't try to read past the end of the stream
             if (stream.status() != QDataStream::Ok) {
@@ -276,6 +304,11 @@ bool PSDHandler::canRead(QIODevice *device)
 
     char head[4];
     qint64 readBytes = device->read(head, sizeof(head));
+    if (readBytes < 0) {
+        qWarning() << "Read failed" << device->errorString();
+        return false;
+    }
+
     if (readBytes != sizeof(head)) {
         if (device->isSequential()) {
             while (readBytes > 0) {

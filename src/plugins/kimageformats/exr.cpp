@@ -1,10 +1,10 @@
-
 /*
-* KImageIO Routines to read (and perhaps in the future, write) images
-* in the high dynamic range EXR format.
-* Copyright (c) 2003, Brad Hards <bradh@frogmouth.net>
-*
-* This library is distributed under the conditions of the GNU LGPL.
+    KImageIO Routines to read (and perhaps in the future, write) images
+    in the high dynamic range EXR format.
+
+    SPDX-FileCopyrightText: 2003 Brad Hards <bradh@frogmouth.net>
+
+    SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
 #include "exr_p.h"
@@ -172,16 +172,17 @@ bool EXRHandler::read(QImage *outImage)
         width  = dw.max.x - dw.min.x + 1;
         height = dw.max.y - dw.min.y + 1;
 
+        QImage image(width, height, QImage::Format_RGB32);
+        if (image.isNull()) {
+            qWarning() << "Failed to allocate image, invalid size?" << QSize(width, height);
+            return false;
+        }
+
         Imf::Array2D<Imf::Rgba> pixels;
         pixels.resizeErase(height, width);
 
         file.setFrameBuffer(&pixels[0][0] - dw.min.x - dw.min.y * width, 1, width);
         file.readPixels(dw.min.y, dw.max.y);
-
-        QImage image(width, height, QImage::Format_RGB32);
-        if (image.isNull()) {
-            return false;
-        }
 
         // somehow copy pixels into image
         for (int y = 0; y < height; y++) {
