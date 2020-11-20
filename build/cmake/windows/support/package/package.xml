@@ -246,7 +246,6 @@
             <Component Id="QtDLL" Guid="35698E30-38DD-40B9-919C-88FCED730285">
               <File Id="Qt5Core.dll" Name="Qt5Core.dll" KeyPath="yes" />
               <File Id="Qt5Gui.dll" Name="Qt5Gui.dll" />
-              <File Id="Qt5Network.dll" Name="Qt5Network.dll" />
               <File Id="Qt5Svg.dll" Name="Qt5Svg.dll" />
               <File Id="Qt5Widgets.dll" Name="Qt5Widgets.dll" />
             </Component>
@@ -260,12 +259,6 @@
             <Directory Id='platforms' Name='platforms'>
               <Component Id="platformsDLL" Guid="DE03B6D6-B7A1-4687-BD49-EE1ED902E43F">
                 <File Id="qwindows.dll" Name="qwindows.dll" KeyPath="yes"/>
-              </Component>
-            </Directory>
-
-            <Directory Id='bearer' Name='bearer'>
-              <Component Id="bearerDLL" Guid="4B5A61CC-3D7B-49F4-A1F8-2E252E4E00CA">
-                <File Id="qgenericbearer.dll" Name="qgenericbearer.dll" KeyPath="yes"/>
               </Component>
             </Directory>
 
@@ -335,7 +328,7 @@
     </Directory>
 
     <DirectoryRef Id="TARGETDIR">
-      <Merge Id="VCRedist" SourceFile="c:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Redist\MSVC\14.23.27820\MergeModules\Microsoft_VC142_CRT_x64.msm" DiskId="1" Language="0"/>
+      <Merge Id="VCRedist" SourceFile="c:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Redist\MSVC\v142\MergeModules\Microsoft_VC142_CRT_x64.msm" DiskId="1" Language="0"/>
     </DirectoryRef>
 
     <Feature Id='Complete' Title='VookiImageViewer' Description='Whole bundle.'
@@ -345,7 +338,6 @@
       <ComponentRef Id='QtDLL' />
       <ComponentRef Id='iconenginesDLL' />
       <ComponentRef Id='platformsDLL' />
-      <ComponentRef Id='bearerDLL' />
       <ComponentRef Id='imageformatsDLL' />
       <ComponentRef Id='translationsDLL' />
       <ComponentRef Id='ProgramMenuDir' />
@@ -356,7 +348,6 @@
     <WixVariable Id="WixUILicenseRtf" Value="gpl-3.0.rtf" />
     <WixVariable Id="WixUIBannerBmp" Value="wix-vookiimageviewer-banner.png" />
     <WixVariable Id="WixUIDialogBmp" Value="wix-vookiimageviewer-dialog.png" />
-
 
     <UIRef Id="WixUI_InstallDir" />
     <UIRef Id="WixUI_ErrorProgressText" />
