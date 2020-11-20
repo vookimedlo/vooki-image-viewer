@@ -231,7 +231,7 @@ if (APPLE)
 elseif(WIN32)
     # Windows
     #
-    SET(LIBRAW_LOC "3rdPartyLibs/LibRaw-0.19.5")
+    SET(LIBRAW_LOC "3rdPartyLibs/LibRaw-0.20.2")
     ADD_DEFINITIONS(-DLIBRAW_NODLL)
 
     GET_FILENAME_COMPONENT(LIBRAW windows/${LIBRAW_LOC} ABSOLUTE)
