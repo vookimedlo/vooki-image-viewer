@@ -168,11 +168,6 @@ TARGET_LINK_LIBRARIES(VookiImageViewer ${OS_LIBS})
 #### Plugins ####
 #
 
-# Photoshop documents (psd)
-#
-ADD_LIBRARY(vooki_kimg_psd MODULE ../../src/plugins/kimageformats/psd.cpp)
-TARGET_LINK_LIBRARIES(vooki_kimg_psd Qt5::Gui)
-
 # Personal Computer Exchange (pcx)
 #
 ADD_LIBRARY(vooki_kimg_pcx MODULE ../../src/plugins/kimageformats/pcx.cpp)
@@ -192,6 +187,16 @@ if (Qt5_FOUND)
         #
         ADD_LIBRARY(vooki_kimg_tga MODULE ../../src/plugins/kimageformats/tga.cpp)
         TARGET_LINK_LIBRARIES(vooki_kimg_tga Qt5::Gui)
+    endif()
+
+    if (Qt5_VERSION VERSION_GREATER_EQUAL 5.12.0)
+       # Format_RGBA64 was introduced in 5.12.0
+       #
+
+       # Photoshop documents (psd)
+       #
+       ADD_LIBRARY(vooki_kimg_psd MODULE ../../src/plugins/kimageformats/psd.cpp)
+       TARGET_LINK_LIBRARIES(vooki_kimg_psd Qt5::Gui)
     endif()
 endif()
 
@@ -258,7 +263,7 @@ else()
         TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui ${LIBRAW})
     endif()
 
-    INSTALL(TARGETS VookiImageViewer vooki_kimg_psd vooki_kimg_pcx vooki_kimg_ras vooki_kimg_pic vooki_kimg_rgb vooki_kimg_hdr
+    INSTALL(TARGETS VookiImageViewer vooki_kimg_pcx vooki_kimg_ras vooki_kimg_pic vooki_kimg_rgb vooki_kimg_hdr
             RUNTIME DESTINATION bin
             LIBRARY DESTINATION ${PLUGINS})
 
@@ -275,6 +280,11 @@ else()
 
     INSTALL(FILES ${TOP_LEVEL_ABSOLUTE_PATH}/src/resource/openclipart/vookiimageviewericon.png
             DESTINATION share/pixmaps)
+
+    if (TARGET vooki_kimg_psd)
+        INSTALL(TARGETS vooki_kimg_psd
+                LIBRARY DESTINATION ${PLUGINS})
+    endif()
 
     if (TARGET vooki_kimg_xcf)
         INSTALL(TARGETS vooki_kimg_xcf
