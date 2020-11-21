@@ -5,8 +5,8 @@ os:
   - linux
   - osx
 
-sudo: false
-dist: trusty
+dist: focal
+osx_image: xcode12.2
 
 services:
   - docker
