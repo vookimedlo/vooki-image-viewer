@@ -243,11 +243,6 @@
               <File Id="heif.dll" Name="heif.dll" />
             </Component>
 
-            <Component Id="opensslDLL" Guid="E468622A-B12D-4024-B8D2-CCA7AE72AC48">
-              <File Id="libcrypto.dll" Name="libcrypto-1_1-x64.dll" KeyPath="yes"/>
-              <File Id="libssl.dll" Name="libssl-1_1-x64.dll" />
-            </Component>
-
             <Component Id="QtDLL" Guid="35698E30-38DD-40B9-919C-88FCED730285">
               <File Id="Qt5Core.dll" Name="Qt5Core.dll" KeyPath="yes" />
               <File Id="Qt5Gui.dll" Name="Qt5Gui.dll" />
@@ -340,14 +335,13 @@
     </Directory>
 
     <DirectoryRef Id="TARGETDIR">
-      <Merge Id="VCRedist" SourceFile="c:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Redist\MSVC\14.24.28127\MergeModules\Microsoft_VC142_CRT_x64.msm" DiskId="1" Language="0"/>
+      <Merge Id="VCRedist" SourceFile="c:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Redist\MSVC\14.23.27820\MergeModules\Microsoft_VC142_CRT_x64.msm" DiskId="1" Language="0"/>
     </DirectoryRef>
 
     <Feature Id='Complete' Title='VookiImageViewer' Description='Whole bundle.'
     Display='expand' Level='1' ConfigurableDirectory='INSTALLDIR'>
       <ComponentRef Id='VookiImageViewer.exe' />
       <ComponentRef Id='appDLL' />
-      <ComponentRef Id='opensslDLL' />
       <ComponentRef Id='QtDLL' />
       <ComponentRef Id='iconenginesDLL' />
       <ComponentRef Id='platformsDLL' />

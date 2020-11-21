@@ -22,7 +22,7 @@ PROJECT(vookiimageviewer)
 MESSAGE("-- VookiImageViewer - https://vookiimageviewer.cz")
 
 SET(USE_QT_LIBRARIES
-    Core Gui Network Widgets)
+    Core Gui Widgets)
 
 FIND_PACKAGE(Qt5 REQUIRED ${USE_QT_LIBRARIES})
 
@@ -79,8 +79,6 @@ SET(SOURCES
     ../../src/ui/support/Settings.cpp
     ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp
     ../../src/util/misc.cpp
-    ../../src/update/github-releases-autoupdater/src/cautoupdatergithub.cpp
-    ../../src/update/github-releases-autoupdater/src/updaterUI/cupdaterdialog.cpp
 )
 
 QT5_WRAP_UI(UI_HEADERS
@@ -90,7 +88,6 @@ QT5_WRAP_UI(UI_HEADERS
     ../../src/ui/forms/MainWindow.ui
     ../../src/ui/forms/ReleaseNotesDialog.ui
     ../../src/ui/forms/SettingsDialog.ui
-    ../../src/update/github-releases-autoupdater/src/updaterUI/cupdaterdialog.ui
 )
 
 # Satisfy new Policy CMP0071
@@ -99,9 +96,7 @@ SET_PROPERTY(SOURCE "ui_AboutComponentsDialog.h" PROPERTY SKIP_AUTOMOC ON)
 SET_PROPERTY(SOURCE "ui_AboutDialog.h" PROPERTY SKIP_AUTOMOC ON)
 SET_PROPERTY(SOURCE "ui_AboutSupportedFormatsDialog.h" PROPERTY SKIP_AUTOMOC ON)
 SET_PROPERTY(SOURCE "ui_MainWindow.h" PROPERTY SKIP_AUTOMOC ON)
-SET_PROPERTY(SOURCE "ui_ReleaseNotesDialog.h" PROPERTY SKIP_AUTOMOC ON)
 SET_PROPERTY(SOURCE "ui_SettingsDialog.h" PROPERTY SKIP_AUTOMOC ON)
-SET_PROPERTY(SOURCE "ui_cupdaterdialog.h" PROPERTY SKIP_AUTOMOC ON)
 SET_PROPERTY(SOURCE "qrc_vookiimageviewer.cpp" PROPERTY SKIP_AUTOMOC ON)
 
 QT5_ADD_RESOURCES(UI_RESOURCES ../../src/resource/vookiimageviewer.qrc)
@@ -124,12 +119,6 @@ if (APPLE)
         ${SOURCES}
         ../../src/abstraction/mac/init.mm
         ../../src/abstraction/mac/darkmode.mm
-        ../../src/update/github-releases-autoupdater/src/updateinstaller_mac.cpp
-    )
-
-    ADD_DEFINITIONS(
-        -DUPDATER_ALLOWED
-        -DUPDATE_FILE_EXTENSION=QLatin1String\(\".dmg\"\)
     )
 
     ADD_EXECUTABLE(VookiImageViewer
@@ -147,12 +136,6 @@ elseif(WIN32)
         ${SOURCES}
         ../../src/abstraction/win/init.cpp
         ../../src/abstraction/win/darkmode.cpp
-        ../../src/update/github-releases-autoupdater/src/updateinstaller_win.cpp
-    )
-
-    ADD_DEFINITIONS(
-        -DUPDATER_ALLOWED
-        -DUPDATE_FILE_EXTENSION=QLatin1String\(\".msi\"\)
     )
 
     ADD_EXECUTABLE(VookiImageViewer
@@ -166,7 +149,6 @@ else()
         ${SOURCES}
         ../../src/abstraction/unix/init.cpp
         ../../src/abstraction/unix/darkmode.cpp
-        ../../src/update/github-releases-autoupdater/src/updateinstaller_linux.cpp
     )
 
     ADD_EXECUTABLE(VookiImageViewer
@@ -178,7 +160,6 @@ endif()
 TARGET_LINK_LIBRARIES(VookiImageViewer
     Qt5::Core
     Qt5::Gui
-    Qt5::Network
     Qt5::Widgets)
 
 TARGET_LINK_LIBRARIES(VookiImageViewer ${OS_LIBS})

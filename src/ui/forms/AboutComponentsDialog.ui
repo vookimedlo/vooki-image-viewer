@@ -69,11 +69,6 @@
          <string>Libheif</string>
         </property>
        </item>
-       <item>
-        <property name="text">
-         <string>OpenSSL</string>
-        </property>
-       </item>
       </widget>
      </item>
      <item>

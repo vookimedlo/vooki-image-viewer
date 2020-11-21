@@ -63,7 +63,6 @@ protected slots:
     void onAboutComponentsTriggered();
     void onAboutQtTriggered();
     void onAboutSupportedImageFormats();
-    void onCheckForUpdatesTriggered();
     void onClearHistory() const;
     void onDocsDirClicked() const;
     void onFileSystemTreeViewActivated(const QModelIndex &index);

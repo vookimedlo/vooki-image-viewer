@@ -38,8 +38,6 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QPainter>
 #include <QStandardPaths>
 
-#include "../update/github-releases-autoupdater/src/updaterUI/cupdaterdialog.h"
-
 MainWindow::MainWindow(QWidget *parent)
                                         : QMainWindow(parent)
                                         , m_fileSystemModel(new QFileSystemModel(this))
@@ -90,11 +88,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     propagateBorderSettings();
     restoreRecentFiles();
-
-#if !defined UPDATER_ALLOWED || defined HOMEBREW
-    m_ui.actionCheckforUpdates->setDisabled(true);
-    m_ui.actionCheckforUpdates->setVisible(false);
-#endif // UPDATER_ALLOWED
 }
 
 MainWindow::~MainWindow() = default;
@@ -449,11 +442,4 @@ void MainWindow::onPicturesDirClicked() const
     auto locations = QStandardPaths::standardLocations(QStandardPaths::StandardLocation::PicturesLocation);
     if (!locations.isEmpty())
         m_ui.fileSystemTreeView->setCurrentIndex(m_sortFileSystemModel->mapFromSource(m_fileSystemModel->index(locations.first())));
-}
-
-void MainWindow::onCheckForUpdatesTriggered() {
-#if defined UPDATER_ALLOWED && !defined HOMEBREW
-    CUpdaterDialog updaterDialog(this, "https://raw.githubusercontent.com/vookimedlo/vooki-image-viewer/github-releases-autoupdater/update/RELEASES.json", BUILD_DATE);
-    updaterDialog.exec();
-#endif // UPDATER_ALLOWED
 }
