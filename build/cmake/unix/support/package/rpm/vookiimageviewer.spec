@@ -15,7 +15,7 @@ Source0: %{name}-%{version}.tar.bz2
 # gcc, gcc-c++, clang packages are omitted intentionally, because we don't know if clang or gcc is installed
 # and we don't require to be both installed at the same time
 #
-BuildRequires: LibRaw-devel, cmake, git, make, qt5, qt5-qtbase-devel, desktop-file-utils
+BuildRequires: LibRaw-devel, cmake, git, make, qt5-qtbase, qt5-qtbase-devel, desktop-file-utils
 Suggests: qt5-qtimageformats
 
 %description
