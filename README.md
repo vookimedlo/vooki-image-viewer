@@ -1,4 +1,8 @@
 # VookiImageViewer
+
+[![Code Quality Score](https://www.code-inspector.com/project/16614/score/svg)](https://frontend.code-inspector.com/public/project/16614/vooki-image-viewer/dashboard)
+[![Code Grade](https://www.code-inspector.com/project/16614/status/svg)](https://frontend.code-inspector.com/public/project/16614/vooki-image-viewer/dashboard)
+
 Lightweight image viewer for a fast image preview. It has been developed to have the same viewer available for all major operating systems - Microsoft Windows 10, MacOS and GNU/Linux.
 
 The main goal is to have a free of charge cross-platform viewer with a simple design and minimum functions that are commonly used.
