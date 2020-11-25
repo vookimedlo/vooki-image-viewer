@@ -150,7 +150,7 @@ apt-get update
 apt-get install vookiimageviewer
 ```
 
-Fedora 33 users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
+Fedora 33 users can install the VookiImageViewer from the repository hosted by the [cloudsmith.io][6] for free.
 ```
 yum install yum-utils pygpgme
 rpm --import 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/cfg/gpg/gpg.EF5E62B51DE78AFF.key'
