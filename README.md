@@ -109,6 +109,15 @@ apt-get update
 apt-get install vookiimageviewer
 ```
 
+Ubuntu Bionic users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
+```
+apt-get install -y apt-transport-https
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/cfg/gpg/gpg.EF5E62B51DE78AFF.key' | apt-key add -
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/cfg/setup/config.deb.txt?distro=ubuntu&codename=bionic' > /etc/apt/sources.list.d/michal-duda-vookiimageviewer.list
+apt-get update
+apt-get install vookiimageviewer
+```
+
 Ubuntu Eoan users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
 ```
 apt-get install -y apt-transport-https
@@ -116,6 +125,33 @@ curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/cfg/gpg
 curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/cfg/setup/config.deb.txt?distro=ubuntu&codename=eoan' > /etc/apt/sources.list.d/michal-duda-vookiimageviewer.list
 apt-get update
 apt-get install vookiimageviewer
+```
+
+Ubuntu Focal users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
+```
+apt-get install -y apt-transport-https
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/cfg/gpg/gpg.EF5E62B51DE78AFF.key' | apt-key add -
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/cfg/setup/config.deb.txt?distro=ubuntu&codename=focal' > /etc/apt/sources.list.d/michal-duda-vookiimageviewer.list
+apt-get update
+apt-get install vookiimageviewer
+```
+
+Ubuntu Groovy users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
+```
+apt-get install -y apt-transport-https
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/cfg/gpg/gpg.EF5E62B51DE78AFF.key' | apt-key add -
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/cfg/setup/config.deb.txt?distro=ubuntu&codename=groovy' > /etc/apt/sources.list.d/michal-duda-vookiimageviewer.list
+apt-get update
+apt-get install vookiimageviewer
+```
+
+Fedora 33 users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
+```
+yum install yum-utils pygpgme
+rpm --import 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/cfg/gpg/gpg.EF5E62B51DE78AFF.key'
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/cfg/setup/config.rpm.txt?distro=fedora&codename=33' > /tmp/michal-duda-vookiimageviewer.repo
+yum-config-manager --add-repo '/tmp/michal-duda-vookiimageviewer.repo'
+yum -q makecache -y --disablerepo='*' --enablerepo='michal-duda-vookiimageviewer'
 ```
 
 -----------------
