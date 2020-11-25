@@ -1,7 +1,7 @@
 #!/bin/sh
 cd $(dirname "$0")
 
-xcrun stapler staple VookiImageViewer.dmg
+xcrun stapler staple build/VookiImageViewer.App
 
 # Check the DMG
 #
