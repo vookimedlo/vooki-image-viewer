@@ -1,5 +1,6 @@
 # VookiImageViewer
 
+![alt text](https://img.shields.io/static/v1?label=Platforms&message=linux|macos|windows&color=blueviolet "Supported Platforms")
 [![Code Quality Score](https://www.code-inspector.com/project/16614/score/svg)](https://frontend.code-inspector.com/public/project/16614/vooki-image-viewer/dashboard)
 [![Code Grade](https://www.code-inspector.com/project/16614/status/svg)](https://frontend.code-inspector.com/public/project/16614/vooki-image-viewer/dashboard)
 
