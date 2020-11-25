@@ -2,7 +2,7 @@ Summary: Cross-platform lightweight image viewer for a fast image preview
 Url: https://github.com/vookimedlo/vooki-image-viewer
 Name: vookiimageviewer
 Group: Applications/Multimedia
-Version: 2019.11.10
+Version: 2020.11.25
 Release: 1%{?dist}
 License: GPLv3+
 BuildRoot: %{_tmppath}/%name-%version-%release

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
   <Product Name='VookiImageViewer' Id='*' UpgradeCode='91FA8A80-C971-408A-A735-4EB3D230D9F6'
-           Language='1033' Codepage='1252' Version='19.11.10' Manufacturer='Michal Duda'>
+           Language='1033' Codepage='1252' Version='20.11.25' Manufacturer='Michal Duda'>
 
     <Package Id='*' Keywords='Installer' Description="Michal Duda VookiImageViewer Installer"
              Comments='Lightweight image viewer for a fast image preview.' Manufacturer='Michal Duda'
