@@ -22,13 +22,48 @@ PROJECT(vookiimageviewer)
 MESSAGE("-- VookiImageViewer - https://vookiimageviewer.cz")
 
 SET(USE_QT_LIBRARIES
-    Core Gui Widgets)
+    Core
+    Gui
+    Widgets)
 
-FIND_PACKAGE(Qt5 REQUIRED ${USE_QT_LIBRARIES})
+FIND_PACKAGE(Qt6 QUIET COMPONENTS ${USE_QT_LIBRARIES})
 
+if (Qt6_FOUND)
+    MESSAGE("-- Qt version is ${Qt6_VERSION}")
 
-if (Qt5_FOUND)
+    SET(QT_UI_LIB Qt6::Gui)
+
+    SET(QT_ALL_LIBS
+        Qt6::Core
+        Qt6::Gui
+        Qt6::Widgets)
+
+    macro(QT_RESOURCES FIRST SECOND)
+        QT6_ADD_RESOURCES(${FIRST} ${SECOND})
+    endmacro()
+
+    macro(QT_WRAP_UIS)
+        QT6_WRAP_UI(UI_HEADERS
+                   ${UIS})
+    endmacro()
+else()
+    FIND_PACKAGE(Qt5 REQUIRED ${USE_QT_LIBRARIES})
     MESSAGE("-- Qt version is ${Qt5_VERSION}")
+    SET(QT_UI_LIB Qt5::Gui)
+
+    SET(QT_ALL_LIBS
+        Qt5::Core
+        Qt5::Gui
+        Qt5::Widgets)
+
+    macro(QT_RESOURCES FIRST SECOND)
+        QT5_ADD_RESOURCES(${FIRST} ${SECOND})
+    endmacro()
+
+    macro(QT_WRAP_UIS)
+        QT5_WRAP_UI(UI_HEADERS
+                   ${UIS})
+    endmacro()
 endif()
 
 # std::make_unique is part of c++14
@@ -81,7 +116,7 @@ SET(SOURCES
     ../../src/util/misc.cpp
 )
 
-QT5_WRAP_UI(UI_HEADERS
+SET(UIS
     ../../src/ui/forms/AboutComponentsDialog.ui
     ../../src/ui/forms/AboutDialog.ui
     ../../src/ui/forms/AboutSupportedFormatsDialog.ui
@@ -89,6 +124,8 @@ QT5_WRAP_UI(UI_HEADERS
     ../../src/ui/forms/ReleaseNotesDialog.ui
     ../../src/ui/forms/SettingsDialog.ui
 )
+
+QT_WRAP_UIS()
 
 # Satisfy new Policy CMP0071
 #
@@ -99,7 +136,7 @@ SET_PROPERTY(SOURCE "ui_MainWindow.h" PROPERTY SKIP_AUTOMOC ON)
 SET_PROPERTY(SOURCE "ui_SettingsDialog.h" PROPERTY SKIP_AUTOMOC ON)
 SET_PROPERTY(SOURCE "qrc_vookiimageviewer.cpp" PROPERTY SKIP_AUTOMOC ON)
 
-QT5_ADD_RESOURCES(UI_RESOURCES ../../src/resource/vookiimageviewer.qrc)
+QT_RESOURCES(UI_RESOURCES ../../src/resource/vookiimageviewer.qrc)
 
 if (APPLE)
     FIND_LIBRARY(APPKIT AppKit)
@@ -157,13 +194,8 @@ else()
         ${UI_RESOURCES})
 endif()
 
-TARGET_LINK_LIBRARIES(VookiImageViewer
-    Qt5::Core
-    Qt5::Gui
-    Qt5::Widgets)
-
+TARGET_LINK_LIBRARIES(VookiImageViewer ${QT_ALL_LIBS})
 TARGET_LINK_LIBRARIES(VookiImageViewer ${OS_LIBS})
-
 
 #### Plugins ####
 #
@@ -171,7 +203,7 @@ TARGET_LINK_LIBRARIES(VookiImageViewer ${OS_LIBS})
 # Personal Computer Exchange (pcx)
 #
 ADD_LIBRARY(vooki_kimg_pcx MODULE ../../src/plugins/kimageformats/pcx.cpp)
-TARGET_LINK_LIBRARIES(vooki_kimg_pcx Qt5::Gui)
+TARGET_LINK_LIBRARIES(vooki_kimg_pcx ${QT_UI_LIB})
 
 if (Qt5_FOUND)
     if (Qt5_VERSION VERSION_GREATER_EQUAL 5.8.0)
@@ -181,12 +213,12 @@ if (Qt5_FOUND)
         # Gimp (xcf)
         #
         ADD_LIBRARY(vooki_kimg_xcf MODULE ../../src/plugins/kimageformats/xcf.cpp)
-        TARGET_LINK_LIBRARIES(vooki_kimg_xcf Qt5::Gui)
+        TARGET_LINK_LIBRARIES(vooki_kimg_xcf ${QT_UI_LIB})
 
         # Targa (tga): supports more formats than Qt's version
         #
         ADD_LIBRARY(vooki_kimg_tga MODULE ../../src/plugins/kimageformats/tga.cpp)
-        TARGET_LINK_LIBRARIES(vooki_kimg_tga Qt5::Gui)
+        TARGET_LINK_LIBRARIES(vooki_kimg_tga ${QT_UI_LIB})
     endif()
 
     if (Qt5_VERSION VERSION_GREATER_EQUAL 5.12.0)
@@ -196,29 +228,46 @@ if (Qt5_FOUND)
        # Photoshop documents (psd)
        #
        ADD_LIBRARY(vooki_kimg_psd MODULE ../../src/plugins/kimageformats/psd.cpp)
-       TARGET_LINK_LIBRARIES(vooki_kimg_psd Qt5::Gui)
+       TARGET_LINK_LIBRARIES(vooki_kimg_psd ${QT_UI_LIB})
     endif()
+endif()
+
+if (Qt6_FOUND)
+    # Gimp (xcf)
+    #
+    ADD_LIBRARY(vooki_kimg_xcf MODULE ../../src/plugins/kimageformats/xcf.cpp)
+    TARGET_LINK_LIBRARIES(vooki_kimg_xcf ${QT_UI_LIB})
+
+    # Targa (tga): supports more formats than Qt's version
+    #
+    ADD_LIBRARY(vooki_kimg_tga MODULE ../../src/plugins/kimageformats/tga.cpp)
+    TARGET_LINK_LIBRARIES(vooki_kimg_tga ${QT_UI_LIB})
+
+    # Photoshop documents (psd)
+    #
+    ADD_LIBRARY(vooki_kimg_psd MODULE ../../src/plugins/kimageformats/psd.cpp)
+    TARGET_LINK_LIBRARIES(vooki_kimg_psd ${QT_UI_LIB})
 endif()
 
 # Radiance HDR (hdr)
 #
 ADD_LIBRARY(vooki_kimg_hdr MODULE ../../src/plugins/kimageformats/hdr.cpp)
-TARGET_LINK_LIBRARIES(vooki_kimg_hdr Qt5::Gui)
+TARGET_LINK_LIBRARIES(vooki_kimg_hdr ${QT_UI_LIB})
 
 # Sun Raster (ras)
 #
 ADD_LIBRARY(vooki_kimg_ras MODULE ../../src/plugins/kimageformats/ras.cpp)
-TARGET_LINK_LIBRARIES(vooki_kimg_ras Qt5::Gui)
+TARGET_LINK_LIBRARIES(vooki_kimg_ras ${QT_UI_LIB})
 
 # Softimage PIC (pic)
 #
 ADD_LIBRARY(vooki_kimg_pic MODULE ../../src/plugins/kimageformats/pic.cpp)
-TARGET_LINK_LIBRARIES(vooki_kimg_pic Qt5::Gui)
+TARGET_LINK_LIBRARIES(vooki_kimg_pic ${QT_UI_LIB})
 
 # SGI images (rgb, rgba, sgi, bw)
 #
 ADD_LIBRARY(vooki_kimg_rgb MODULE ../../src/plugins/kimageformats/rgb.cpp)
-TARGET_LINK_LIBRARIES(vooki_kimg_rgb Qt5::Gui)
+TARGET_LINK_LIBRARIES(vooki_kimg_rgb ${QT_UI_LIB})
 
 # Camera RAW Thumbnails (raf, mos, cr2, erf, dng, mrw, nef, orf, rw2, pef, x3f, srw, x3f, arw)
 # Prebuilt library for the MacOS/Windows only, Linux uses a distro package
@@ -232,7 +281,7 @@ if (APPLE)
     SET(CMAKE_MODULE_LINKER_FLAGS "-L${LIBRAW}/lib ${CMAKE_MODULE_LINKER_FLAGS}")
 
     ADD_LIBRARY(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
-    TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui libraw_r.a)
+    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_r.a)
 elseif(WIN32)
     # Windows
     #
@@ -243,13 +292,13 @@ elseif(WIN32)
     SET(CMAKE_CXX_FLAGS "-I${LIBRAW} ${CMAKE_CXX_FLAGS}")
 
     ADD_LIBRARY(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
-    TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui ${LIBRAW}/lib/libraw.lib)
+    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} ${LIBRAW}/lib/libraw.lib)
 
     GET_FILENAME_COMPONENT(LIBHEIF "windows/3rdPartyLibs/libHEIF-1.9.1" ABSOLUTE)
     SET(CMAKE_CXX_FLAGS "-I${LIBHEIF} ${CMAKE_CXX_FLAGS}")
 
     ADD_LIBRARY(vooki_heic_image MODULE ../../src/plugins/heicimage/heicHandler.cpp ../../src/plugins/heicimage/heicPlugin.cpp)
-    TARGET_LINK_LIBRARIES(vooki_heic_image Qt5::Gui ${LIBHEIF}/lib/heif.lib)
+    TARGET_LINK_LIBRARIES(vooki_heic_image ${QT_UI_LIB} ${LIBHEIF}/lib/heif.lib)
 else()
     # Unix-like systems
     #
@@ -260,7 +309,7 @@ else()
     FIND_LIBRARY(LIBRAW NAMES libraw_r raw_r)
     if (LIBRAW)
         ADD_LIBRARY(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
-        TARGET_LINK_LIBRARIES(vooki_raw_thumb Qt5::Gui ${LIBRAW})
+        TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} ${LIBRAW})
     endif()
 
     INSTALL(TARGETS VookiImageViewer vooki_kimg_pcx vooki_kimg_ras vooki_kimg_pic vooki_kimg_rgb vooki_kimg_hdr
