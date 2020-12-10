@@ -272,7 +272,6 @@
                 <File Id="qtga.dll" Name="qtga.dll" />
                 <File Id="qtiff.dll" Name="qtiff.dll" />
                 <File Id="qwbmp.dll" Name="qwbmp.dll" />
-                <File Id="qwebp.dll" Name="qwebp.dll" />
                 <File Id="vooki_kimg_hdr.dll" Name="vooki_kimg_hdr.dll" />
                 <File Id="vooki_kimg_pcx.dll" Name="vooki_kimg_pcx.dll" />
                 <File Id="vooki_kimg_pic.dll" Name="vooki_kimg_pic.dll" />
