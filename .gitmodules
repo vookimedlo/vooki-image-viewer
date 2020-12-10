@@ -2,3 +2,6 @@
 	path = build/cmake/unix/support/package/rpm/changelog/git2changelog
 	url = https://github.com/vookimedlo/git2changelog
 	branch = python3
+[submodule "build/cmake/prebuilt/qtimageformats"]
+	path = build/cmake/prebuilt/qtimageformats
+	url = https://github.com/vookimedlo/qtimageformats-qt6.git
