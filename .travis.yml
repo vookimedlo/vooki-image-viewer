@@ -21,7 +21,6 @@ arch:
 
 env:
   - QT=latestDistroOfficial RELEASE=bionic DISTRO=ubuntu DEB=no
-  - QT=latestDistroOfficial RELEASE=eoan   DISTRO=ubuntu DEB=yes
   - QT=latestDistroOfficial RELEASE=focal  DISTRO=ubuntu DEB=yes
   - QT=latestDistroOfficial RELEASE=groovy DISTRO=ubuntu DEB=yes
   - QT=latestDistroOfficial RELEASE=stable DISTRO=debian DEB=yes
@@ -38,8 +37,6 @@ matrix:
 
   - os: osx
     env: QT=latestDistroOfficial RELEASE=bionic DISTRO=ubuntu DEB=no
-  - os: osx
-    env: QT=latestDistroOfficial RELEASE=eoan DISTRO=ubuntu DEB=yes
   - os: osx
     env: QT=latestDistroOfficial RELEASE=focal DISTRO=ubuntu DEB=yes
   - os: osx
