@@ -47,6 +47,7 @@ matrix:
     env: QT=latestDistroOfficial RELEASE=stable DISTRO=fedora DEB=no
 
 install:
+  - '[ "$TRAVIS_OS_NAME" != linux ] || docker login -u vookimedlo -p $hub_token
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker pull vookimedlo/"$DISTRO"-qt:"$QT"_"$CC"_"$RELEASE"'
   - '[ "$TRAVIS_OS_NAME" != linux ] || docker run -d --name linux_docker --rm -ti vookimedlo/"$DISTRO"-qt:"$QT"_"$CC"_"$RELEASE" bash'
   - '[ "$TRAVIS_OS_NAME" != linux ] || ([ "$DISTRO" != ubuntu ] && [ "$DISTRO" != debian ]) || docker exec linux_docker apt-get update -qq'
