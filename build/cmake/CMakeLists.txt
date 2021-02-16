@@ -17,6 +17,11 @@
 # along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 CMAKE_MINIMUM_REQUIRED(VERSION 3.2)
+
+set(CMAKE_OSX_ARCHITECTURES "x86_64" CACHE STRING "") # for x86_64
+#set(CMAKE_OSX_ARCHITECTURES "arm64" CACHE STRING "") # for arm64
+#set(CMAKE_OSX_ARCHITECTURES "x86_64;amr64" CACHE STRING "") # for universal
+
 PROJECT(vookiimageviewer)
 
 MESSAGE("-- VookiImageViewer - https://vookiimageviewer.cz")
