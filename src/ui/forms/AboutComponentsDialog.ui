@@ -69,6 +69,11 @@
          <string>Libheif</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>KDMacTouchBar</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item>

@@ -18,9 +18,11 @@
 
 CMAKE_MINIMUM_REQUIRED(VERSION 3.2)
 
-set(CMAKE_OSX_ARCHITECTURES "x86_64" CACHE STRING "") # for x86_64
-#set(CMAKE_OSX_ARCHITECTURES "arm64" CACHE STRING "") # for arm64
-#set(CMAKE_OSX_ARCHITECTURES "x86_64;amr64" CACHE STRING "") # for universal
+if (APPLE)
+    set(CMAKE_OSX_ARCHITECTURES "x86_64" CACHE STRING "") # for x86_64
+    #set(CMAKE_OSX_ARCHITECTURES "arm64" CACHE STRING "") # for arm64
+    #set(CMAKE_OSX_ARCHITECTURES "x86_64;amr64" CACHE STRING "") # for universal
+endif()
 
 PROJECT(vookiimageviewer)
 
@@ -124,7 +126,11 @@ if (APPLE)
         ${SOURCES}
         ../../src/abstraction/mac/init.mm
         ../../src/abstraction/mac/darkmode.mm
+        ../../components/KDMacTouchBar/src/kdmactouchbar.mm
     )
+
+    GET_FILENAME_COMPONENT(COMPONENTS_ABSOLUTE_PATH ../../components/KDMacTouchBar/src ABSOLUTE)
+    SET(CMAKE_CXX_FLAGS "-I${COMPONENTS_ABSOLUTE_PATH} ${CMAKE_CXX_FLAGS}")
 
     ADD_EXECUTABLE(VookiImageViewer
         MACOSX_BUNDLE
