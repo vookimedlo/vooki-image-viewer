@@ -58,11 +58,11 @@ cat <<EOF | /usr/bin/osascript -l JavaScript
     disk.items["Applications"].position = {"x":580, "y":130};
 
     disk.update({registeringApplications: false});
-    delay(2);
+    delay(3);
     window.bounds = {"x":31, "y":50, "width":550+135, "height":450};
     window.bounds = {"x":30, "y":50, "width":550+135, "height":450};
     disk.update({registeringApplications: false});
-    delay(2);
+    delay(3);
 
     disk.close();
 
@@ -72,9 +72,11 @@ cat <<EOF | /usr/bin/osascript -l JavaScript
 
     while (!ObjC.unwrap(fileManager.fileExistsAtPath("$MOUNT_DIR/.DS_Store"))) {
         // give the finder time to write the .DS_Store file
-        delay(1);
+        delay(3);
     }
 EOF
+
+sleep 25;
 
 echo "Setting custom volume icon"
 cp -f "$VOLUME_ICON_FILE" "$MOUNT_DIR/.VolumeIcon.icns"
