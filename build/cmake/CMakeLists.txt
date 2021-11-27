@@ -16,7 +16,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.If not, see <http://www.gnu.org/licenses/>.
 
-CMAKE_MINIMUM_REQUIRED(VERSION 3.2)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.22)
+
+if (APPLE)
+    set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "")
+endif()
+
+
 PROJECT(vookiimageviewer)
 
 MESSAGE("-- VookiImageViewer - https://vookiimageviewer.cz")
