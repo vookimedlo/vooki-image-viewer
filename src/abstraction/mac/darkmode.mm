@@ -35,7 +35,10 @@ namespace SystemDependant
 
     bool isDarkMode()
     {
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_14
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_11_0
+        NSAppearance *appearance = NSAppearance.currentDrawingAppearance;
+        return appearance.name == NSAppearanceNameDarkAqua;
+#elif MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_14
         NSAppearance *appearance = NSAppearance.currentAppearance;
         if (@available(*, macOS 10.14)) {
             return appearance.name == NSAppearanceNameDarkAqua;
