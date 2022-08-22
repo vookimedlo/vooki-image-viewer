@@ -87,7 +87,7 @@ echo "Fixing permissions"
 chmod -Rf go-w "$MOUNT_DIR" || true
 
 echo "Blessing image"
-bless --folder "$MOUNT_DIR" --openfolder "$MOUNT_DIR"
+bless --folder "$MOUNT_DIR"
 
 echo "Unmounting disk image"
 hdiutil detach "$DEV_NAME"

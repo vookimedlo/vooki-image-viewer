@@ -3,4 +3,4 @@ cd $(dirname "$0")
 
 cd build
 
-make -j
+make -j install

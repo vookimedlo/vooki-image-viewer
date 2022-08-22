@@ -16,16 +16,34 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.If not, see <http://www.gnu.org/licenses/>.
 
+PROJECT(vookiimageviewer)
+
 CMAKE_MINIMUM_REQUIRED(VERSION 3.22)
+
+set(APPLICATION_NAME VookiImageViewer)
+MESSAGE("-- ${APPLICATION_NAME} - https://vookiimageviewer.cz")
+
 
 if (APPLE)
     set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "")
+    MESSAGE("-- Requested architectures are x86_64 & arm64")
 endif()
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+SET(CMAKE_CXX_EXTENSIONS OFF)
 
-PROJECT(vookiimageviewer)
+SET(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+SET(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+set(CMAKE_MACOSX_RPATH ON)
+set(CMAKE_VERBOSE_MAKEFILE OFF)
 
-MESSAGE("-- VookiImageViewer - https://vookiimageviewer.cz")
+if (NOT WIN32)
+    SET(CMAKE_CXX_FLAGS "-Wall -Wextra ${CMAKE_CXX_FLAGS}")
+    SET(CMAKE_CXX_FLAGS_RELEASE "-O2 ${CMAKE_CXX_FLAGS}")
+endif()
 
 SET(USE_QT_LIBRARIES
     Core
@@ -72,19 +90,6 @@ else()
     endmacro()
 endif()
 
-# std::make_unique is part of c++14
-#
-SET(CMAKE_CXX_STANDARD 14)
-SET(CMAKE_CXX_STANDARD_REQUIRED ON)
-SET(CMAKE_CXX_EXTENSIONS OFF)
-
-SET(CMAKE_INCLUDE_CURRENT_DIR ON)
-SET(CMAKE_AUTOMOC ON)
-
-if (NOT WIN32)
-    SET(CMAKE_CXX_FLAGS "-Wall -Wextra ${CMAKE_CXX_FLAGS}")
-    SET(CMAKE_CXX_FLAGS_RELEASE "-O3 ${CMAKE_CXX_FLAGS}")
-endif()
 
 if (NOT BUILD_DATE)
     STRING(TIMESTAMP BUILD_DATE "%Y-%m-%d")
@@ -148,9 +153,9 @@ if (APPLE)
     FIND_LIBRARY(APPKIT AppKit)
     SET(OS_LIBS ${APPKIT})
 
-    SET(MACOSX_BUNDLE_EXECUTABLE_NAME VookiImageViewer)
+    SET(MACOSX_BUNDLE_EXECUTABLE_NAME ${APPLICATION_NAME})
     SET(MACOSX_BUNDLE_ICON_FILE vookiimageviewericon.icns)
-    SET(MACOSX_BUNDLE_BUNDLE_NAME VookiImageViewer)
+    SET(MACOSX_BUNDLE_BUNDLE_NAME ${APPLICATION_NAME})
     SET(MACOSX_BUNDLE_COPYRIGHT "(C) 2019 Michal Duda")
     SET(MACOSX_BUNDLE_INFO_STRING "Lightweight image viewer")
     SET(MACOSX_BUNDLE_SHORT_VERSION_STRING ${BUILD_DATE_DOTTED})
@@ -164,7 +169,7 @@ if (APPLE)
         ../../src/abstraction/mac/darkmode.mm
     )
 
-    ADD_EXECUTABLE(VookiImageViewer
+    ADD_EXECUTABLE(${APPLICATION_NAME}
         MACOSX_BUNDLE
         ../../src/resource/openclipart/vookiimageviewericon.icns
         ${SOURCES}
@@ -172,7 +177,7 @@ if (APPLE)
         ${UI_RESOURCES})
 
     GET_FILENAME_COMPONENT(PLIST_IN_ABSOLUTE_PATH mac/support/MacOSXBundleInfo.plist.in ABSOLUTE)
-    SET_TARGET_PROPERTIES(VookiImageViewer PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${PLIST_IN_ABSOLUTE_PATH})
+    SET_TARGET_PROPERTIES(${APPLICATION_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${PLIST_IN_ABSOLUTE_PATH})
 
 elseif(WIN32)
     SET(SOURCES
@@ -181,7 +186,7 @@ elseif(WIN32)
         ../../src/abstraction/win/darkmode.cpp
     )
 
-    ADD_EXECUTABLE(VookiImageViewer
+    ADD_EXECUTABLE(${APPLICATION_NAME}
         WIN32
         windows/support/application.rc
         ${SOURCES}
@@ -288,6 +293,17 @@ if (APPLE)
 
     ADD_LIBRARY(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
     TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_r.a)
+    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_r.a)
+
+    include(mac/MacdeployQt.cmake)
+    deployqt()
+
+    SET(PLUGINS "$<TARGET_FILE_DIR:${APPLICATION_NAME}>/../PlugIns/imageformats")
+
+    INSTALL(TARGETS  vooki_kimg_pcx vooki_kimg_ras vooki_kimg_pic
+                     vooki_kimg_rgb vooki_kimg_hdr vooki_kimg_psd
+                     vooki_kimg_tga vooki_kimg_xcf vooki_raw_thumb
+            LIBRARY DESTINATION ${PLUGINS})
 elseif(WIN32)
     # Windows
     #
@@ -308,7 +324,7 @@ elseif(WIN32)
 else()
     # Unix-like systems
     #
-    MESSAGE("-- VookiImageViewer expects its plugins located either in /usr/lib/vookiimageviewer/imageformats or /usr/local/lib/vookiimageviewer/imageformats")
+    MESSAGE("-- ${APPLICATION_NAME} expects its plugins located either in /usr/lib/vookiimageviewer/imageformats or /usr/local/lib/vookiimageviewer/imageformats")
     SET(PLUGINS "${LIB_INSTALL_DIR}/vookiimageviewer/imageformats")
     ADD_DEFINITIONS(-DUNIX_LIKE)
 
@@ -318,7 +334,7 @@ else()
         TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} ${LIBRAW})
     endif()
 
-    INSTALL(TARGETS VookiImageViewer vooki_kimg_pcx vooki_kimg_ras vooki_kimg_pic vooki_kimg_rgb vooki_kimg_hdr
+    INSTALL(TARGETS ${APPLICATION_NAME} vooki_kimg_pcx vooki_kimg_ras vooki_kimg_pic vooki_kimg_rgb vooki_kimg_hdr
             RUNTIME DESTINATION bin
             LIBRARY DESTINATION ${PLUGINS})
 
