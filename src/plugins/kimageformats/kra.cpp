@@ -12,9 +12,9 @@
 
 #include <kzip.h>
 
-#include <QImage>
-#include <QIODevice>
 #include <QFile>
+#include <QIODevice>
+#include <QImage>
 
 static constexpr char s_magic[] = "application/x-krita";
 static constexpr int s_magic_size = sizeof(s_magic) - 1; // -1 to remove the last \0
@@ -35,12 +35,16 @@ bool KraHandler::canRead() const
 bool KraHandler::read(QImage *image)
 {
     KZip zip(device());
-    if (!zip.open(QIODevice::ReadOnly)) return false;
+    if (!zip.open(QIODevice::ReadOnly)) {
+        return false;
+    }
 
     const KArchiveEntry *entry = zip.directory()->entry(QStringLiteral("mergedimage.png"));
-    if (!entry || !entry->isFile()) return false;
+    if (!entry || !entry->isFile()) {
+        return false;
+    }
 
-    const KZipFileEntry* fileZipEntry = static_cast<const KZipFileEntry*>(entry);
+    const KZipFileEntry *fileZipEntry = static_cast<const KZipFileEntry *>(entry);
 
     image->loadFromData(fileZipEntry->data(), "PNG");
 
@@ -55,8 +59,9 @@ bool KraHandler::canRead(QIODevice *device)
     }
 
     char buff[57];
-    if (device->peek(buff, sizeof(buff)) == sizeof(buff))
+    if (device->peek(buff, sizeof(buff)) == sizeof(buff)) {
         return memcmp(buff + 0x26, s_magic, s_magic_size) == 0;
+    }
 
     return false;
 }

@@ -8,8 +8,8 @@
 #ifndef KIMG_PIC_P_H
 #define KIMG_PIC_P_H
 
-#include <QImageIOPlugin>
 #include <QDataStream>
+#include <QImageIOPlugin>
 
 /**
  * The magic number at the start of a SoftImage PIC file.
@@ -25,7 +25,7 @@ enum PicFields {
     NoPicture = 0, /**< No picture */
     OddScanlines = 1, /**< Odd scanlines */
     EvenScanlines = 2, /**< Even scanlines */
-    BothScanlines = 3 /**< Every scanline */
+    BothScanlines = 3, /**< Every scanline */
 };
 
 /**
@@ -33,7 +33,7 @@ enum PicFields {
  */
 enum PicChannelEncoding {
     Uncompressed = 0, /**< Image is uncompressed */
-    MixedRLE = 2 /**< Run length compression */
+    MixedRLE = 2, /**< Run length compression */
 };
 
 /**
@@ -43,7 +43,7 @@ enum PicChannelCode {
     RED = 0x80, /**< Red channel */
     GREEN = 0x40, /**< Green channel */
     BLUE = 0x20, /**< Blue channel */
-    ALPHA = 0x10 /**< Alpha channel */
+    ALPHA = 0x10, /**< Alpha channel */
 };
 
 /**
@@ -70,9 +70,12 @@ struct PicHeader {
         , height(_height)
         , ratio(1.0f)
         , fields(BothScanlines)
-    {}
+    {
+    }
     /** Construct an invalid header. */
-    PicHeader() {}
+    PicHeader()
+    {
+    }
 
     quint32 magic; /**< Should be PIC_MAGIC_NUMBER */
     float version; /**< Version of something (header? file format?) (ignored) */
@@ -88,9 +91,9 @@ struct PicHeader {
     /**
      * Returns true if the @p magic and @p id fields are set correctly.
      */
-    bool isValid() const {
-        return magic == PIC_MAGIC_NUMBER
-            && id == "PICT";
+    bool isValid() const
+    {
+        return magic == PIC_MAGIC_NUMBER && id == "PICT";
     }
 
     /**
@@ -123,7 +126,8 @@ struct PicChannel {
         : size(_size)
         , encoding(_encoding)
         , code(_code)
-    {}
+    {
+    }
     /**
      * Constructs a default channel description for a SoftImage PIC file.
      *
@@ -135,7 +139,8 @@ struct PicChannel {
      */
     PicChannel()
         : size(8)
-    {}
+    {
+    }
 };
 
 class SoftimagePICHandler : public QImageIOHandler
@@ -155,13 +160,14 @@ public:
         Error,
         Ready,
         ReadHeader,
-        ReadChannels
+        ReadChannels,
     };
 
     SoftimagePICHandler()
         : m_state(Ready)
         , m_compression(true)
-    {}
+    {
+    }
 
     bool readHeader();
     bool readChannels();

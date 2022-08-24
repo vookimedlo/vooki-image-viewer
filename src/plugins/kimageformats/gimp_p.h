@@ -20,13 +20,13 @@ typedef unsigned char uchar;
 // From GIMP "tile.h" v1.2
 
 const uint TILE_WIDTH = 64; //!< Width of a tile in the XCF file.
-const uint TILE_HEIGHT = 64;    //!< Height of a tile in the XCF file.
+const uint TILE_HEIGHT = 64; //!< Height of a tile in the XCF file.
 
 // From GIMP "paint_funcs.c" v1.2
 
 const int RANDOM_TABLE_SIZE = 4096; //!< Size of dissolve random number table.
 const int RANDOM_SEED = 314159265; //!< Seed for dissolve random number table.
-const double EPSILON = 0.0001;  //!< Roundup in alpha blending.
+const double EPSILON = 0.0001; //!< Roundup in alpha blending.
 
 // From GIMP "paint_funcs.h" v1.2
 
@@ -41,9 +41,8 @@ const uchar OPAQUE_OPACITY = 255; //!< Opaque value for 8-bit alpha component.
 typedef enum {
     RGB,
     GRAY,
-    INDEXED
+    INDEXED,
 } GimpImageBaseType;
-
 
 // From GIMP "libgimp/gimpenums.h" v2.4
 
@@ -73,7 +72,6 @@ typedef enum {
     GRAIN_EXTRACT_MODE,
     GRAIN_MERGE_MODE
 } LayerModeEffects;
-
 
 // From GIMP "paint_funcs.c" v1.2
 
@@ -163,9 +161,9 @@ static void RGBTOHSV(uchar &red, uchar &green, uchar &blue)
         }
     }
 
-    red   = (uchar)h;
+    red = (uchar)h;
     green = (uchar)s;
-    blue  = (uchar)v;
+    blue = (uchar)v;
 }
 
 /*!
@@ -177,9 +175,9 @@ static void RGBTOHSV(uchar &red, uchar &green, uchar &blue)
 static void HSVTORGB(uchar &hue, uchar &saturation, uchar &value)
 {
     if (saturation == 0) {
-        hue        = value;
+        hue = value;
         saturation = value;
-        //value      = value;
+        // value      = value;
     } else {
         double h = hue * 6. / 255.;
         double s = saturation / 255.;
@@ -195,34 +193,34 @@ static void HSVTORGB(uchar &hue, uchar &saturation, uchar &value)
 
         switch ((int)h) {
         case 0:
-            hue        = (uchar)(v * 255);
+            hue = (uchar)(v * 255);
             saturation = (uchar)(t * 255);
-            value      = (uchar)(p * 255);
+            value = (uchar)(p * 255);
             break;
         case 1:
-            hue        = (uchar)(q * 255);
+            hue = (uchar)(q * 255);
             saturation = (uchar)(v * 255);
-            value      = (uchar)(p * 255);
+            value = (uchar)(p * 255);
             break;
         case 2:
-            hue        = (uchar)(p * 255);
+            hue = (uchar)(p * 255);
             saturation = (uchar)(v * 255);
-            value      = (uchar)(t * 255);
+            value = (uchar)(t * 255);
             break;
         case 3:
-            hue        = (uchar)(p * 255);
+            hue = (uchar)(p * 255);
             saturation = (uchar)(q * 255);
-            value      = (uchar)(v * 255);
+            value = (uchar)(v * 255);
             break;
         case 4:
-            hue        = (uchar)(t * 255);
+            hue = (uchar)(t * 255);
             saturation = (uchar)(p * 255);
-            value      = (uchar)(v * 255);
+            value = (uchar)(v * 255);
             break;
         case 5:
-            hue        = (uchar)(v * 255);
+            hue = (uchar)(v * 255);
             saturation = (uchar)(p * 255);
-            value      = (uchar)(q * 255);
+            value = (uchar)(q * 255);
         }
     }
 }
@@ -282,9 +280,9 @@ static void RGBTOHLS(uchar &red, uchar &green, uchar &blue)
         }
     }
 
-    red   = (uchar)h;
+    red = (uchar)h;
     green = (uchar)l;
-    blue  = (uchar)s;
+    blue = (uchar)s;
 }
 
 /*!
@@ -330,8 +328,8 @@ static void HLSTORGB(uchar &hue, uchar &lightness, uchar &saturation)
     double s = saturation;
 
     if (s == 0) {
-        hue        = (uchar)l;
-        lightness  = (uchar)l;
+        hue = (uchar)l;
+        lightness = (uchar)l;
         saturation = (uchar)l;
     } else {
         double m1, m2;
@@ -344,8 +342,8 @@ static void HLSTORGB(uchar &hue, uchar &lightness, uchar &saturation)
 
         m1 = (l / 127.5) - m2;
 
-        hue        = HLSVALUE(m1, m2, h + 85);
-        lightness  = HLSVALUE(m1, m2, h);
+        hue = HLSVALUE(m1, m2, h + 85);
+        lightness = HLSVALUE(m1, m2, h);
         saturation = HLSVALUE(m1, m2, h - 85);
     }
 }

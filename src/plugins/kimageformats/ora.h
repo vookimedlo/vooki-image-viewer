@@ -16,11 +16,10 @@ public:
     OraHandler();
 
     bool canRead() const override;
-    bool read(QImage *image)  override;
+    bool read(QImage *image) override;
 
     static bool canRead(QIODevice *device);
 };
-
 
 class OraPlugin : public QImageIOPlugin
 {
@@ -31,6 +30,4 @@ public:
     QImageIOHandler *create(QIODevice *device, const QByteArray &format = QByteArray()) const override;
 };
 
-
 #endif
-

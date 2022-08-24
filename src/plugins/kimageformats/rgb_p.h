@@ -33,4 +33,3 @@ public:
 };
 
 #endif // KIMG_RGB_P_H
-

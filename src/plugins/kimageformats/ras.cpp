@@ -9,11 +9,13 @@
 
 #include "ras_p.h"
 
-#include <QImage>
+#include "util_p.h"
+
 #include <QDataStream>
 #include <QDebug>
+#include <QImage>
 
-namespace   // Private.
+namespace // Private.
 {
 // format info from http://www.fileformat.info/format/sunraster/egff.htm
 
@@ -22,19 +24,19 @@ quint32 rasMagicBigEndian = 0x59a66a95;
 // quint32 rasMagicLittleEndian = 0x956aa659; # used to support wrong encoded files
 
 enum RASType {
-    RAS_TYPE_OLD            = 0x0,
-    RAS_TYPE_STANDARD       = 0x1,
-    RAS_TYPE_BYTE_ENCODED       = 0x2,
-    RAS_TYPE_RGB_FORMAT     = 0x3,
-    RAS_TYPE_TIFF_FORMAT        = 0x4,
-    RAS_TYPE_IFF_FORMAT     = 0x5,
-    RAS_TYPE_EXPERIMENTAL       = 0xFFFF
+    RAS_TYPE_OLD = 0x0,
+    RAS_TYPE_STANDARD = 0x1,
+    RAS_TYPE_BYTE_ENCODED = 0x2,
+    RAS_TYPE_RGB_FORMAT = 0x3,
+    RAS_TYPE_TIFF_FORMAT = 0x4,
+    RAS_TYPE_IFF_FORMAT = 0x5,
+    RAS_TYPE_EXPERIMENTAL = 0xFFFF,
 };
 
 enum RASColorMapType {
-    RAS_COLOR_MAP_TYPE_NONE     = 0x0,
-    RAS_COLOR_MAP_TYPE_RGB      = 0x1,
-    RAS_COLOR_MAP_TYPE_RAW      = 0x2
+    RAS_COLOR_MAP_TYPE_NONE = 0x0,
+    RAS_COLOR_MAP_TYPE_RGB = 0x1,
+    RAS_COLOR_MAP_TYPE_RAW = 0x2,
 };
 
 struct RasHeader {
@@ -46,10 +48,12 @@ struct RasHeader {
     quint32 Type;
     quint32 ColorMapType;
     quint32 ColorMapLength;
-    enum { SIZE = 32 }; // 8 fields of four bytes each
+    enum {
+        SIZE = 32,
+    }; // 8 fields of four bytes each
 };
 
-static QDataStream &operator>> (QDataStream &s, RasHeader &head)
+static QDataStream &operator>>(QDataStream &s, RasHeader &head)
 {
     s >> head.MagicNumber;
     s >> head.Width;
@@ -79,8 +83,7 @@ static bool IsSupported(const RasHeader &head)
     // check for an appropriate depth
     // we support 8bit+palette, 24bit and 32bit ONLY!
     // TODO: add support for 1bit
-    if (!((head.Depth == 8 && head.ColorMapType == 1)
-            || head.Depth == 24 || head.Depth == 32)) {
+    if (!((head.Depth == 8 && head.ColorMapType == 1) || head.Depth == 24 || head.Depth == 32)) {
         return false;
     }
     // the Type field adds support for RLE(BGR), RGB and other encodings
@@ -101,8 +104,7 @@ static bool LoadRAS(QDataStream &s, const RasHeader &ras, QImage &img)
 {
     s.device()->seek(RasHeader::SIZE);
 
-    // QVector uses some extra space for stuff, hence the 32 here suggested by thiago
-    if (ras.ColorMapLength > std::numeric_limits<int>::max() - 32) {
+    if (ras.ColorMapLength > kMaxQVectorSize) {
         qWarning() << "LoadRAS() unsupported image color map length in file header" << ras.ColorMapLength;
         return false;
     }
@@ -126,8 +128,7 @@ static bool LoadRAS(QDataStream &s, const RasHeader &ras, QImage &img)
         qWarning() << "LoadRAS() mistmatch between height and width" << ras.Width << ras.Height << ras.Length << ras.Depth;
         return false;
     }
-    // QVector uses some extra space for stuff, hence the 32 here suggested by thiago
-    if (ras.Length > std::numeric_limits<int>::max() - 32) {
+    if (ras.Length > kMaxQVectorSize) {
         qWarning() << "LoadRAS() unsupported image length in file header" << ras.Length;
         return false;
     }
@@ -141,7 +142,7 @@ static bool LoadRAS(QDataStream &s, const RasHeader &ras, QImage &img)
     QVector<quint8> input(ras.Length);
 
     int i = 0;
-    while (! s.atEnd() && i < input.size()) {
+    while (!s.atEnd() && i < input.size()) {
         s >> input[i];
         // I guess we need to find out if we're at the end of a line
         if (paddingrequired && i != 0 && !(i % (ras.Width * bpp))) {
@@ -153,13 +154,16 @@ static bool LoadRAS(QDataStream &s, const RasHeader &ras, QImage &img)
     // Allocate image
     img = QImage(ras.Width, ras.Height, QImage::Format_ARGB32);
 
-    if (img.isNull())
+    if (img.isNull()) {
         return false;
+    }
 
     // Reconstruct image from RGB palette if we have a palette
     // TODO: make generic so it works with 24bit or 32bit palettes
     if (ras.ColorMapType == 1 && ras.Depth == 8) {
-        quint8 red, green, blue;
+        quint8 red;
+        quint8 green;
+        quint8 blue;
         for (quint32 y = 0; y < ras.Height; y++) {
             for (quint32 x = 0; x < ras.Width; x++) {
                 red = palette.value((int)input[y * ras.Width + x]);
@@ -168,11 +172,12 @@ static bool LoadRAS(QDataStream &s, const RasHeader &ras, QImage &img)
                 img.setPixel(x, y, qRgb(red, green, blue));
             }
         }
-
     }
 
     if (ras.ColorMapType == 0 && ras.Depth == 24 && (ras.Type == 1 || ras.Type == 2)) {
-        quint8 red, green, blue;
+        quint8 red;
+        quint8 green;
+        quint8 blue;
         for (quint32 y = 0; y < ras.Height; y++) {
             for (quint32 x = 0; x < ras.Width; x++) {
                 red = input[y * 3 * ras.Width + x * 3 + 2];
@@ -184,7 +189,9 @@ static bool LoadRAS(QDataStream &s, const RasHeader &ras, QImage &img)
     }
 
     if (ras.ColorMapType == 0 && ras.Depth == 24 && ras.Type == 3) {
-        quint8 red, green, blue;
+        quint8 red;
+        quint8 green;
+        quint8 blue;
         for (quint32 y = 0; y < ras.Height; y++) {
             for (quint32 x = 0; x < ras.Width; x++) {
                 red = input[y * 3 * ras.Width + x * 3];
@@ -196,7 +203,9 @@ static bool LoadRAS(QDataStream &s, const RasHeader &ras, QImage &img)
     }
 
     if (ras.ColorMapType == 0 && ras.Depth == 32 && (ras.Type == 1 || ras.Type == 2)) {
-        quint8 red, green, blue;
+        quint8 red;
+        quint8 green;
+        quint8 blue;
         for (quint32 y = 0; y < ras.Height; y++) {
             for (quint32 x = 0; x < ras.Width; x++) {
                 red = input[y * 4 * ras.Width + x * 4 + 3];
@@ -208,7 +217,9 @@ static bool LoadRAS(QDataStream &s, const RasHeader &ras, QImage &img)
     }
 
     if (ras.ColorMapType == 0 && ras.Depth == 32 && ras.Type == 3) {
-        quint8 red, green, blue;
+        quint8 red;
+        quint8 green;
+        quint8 blue;
         for (quint32 y = 0; y < ras.Height; y++) {
             for (quint32 x = 0; x < ras.Width; x++) {
                 red = input[y * 4 * ras.Width + x * 4 + 1];
@@ -274,21 +285,22 @@ bool RASHandler::read(QImage *outImage)
     RasHeader ras;
     s >> ras;
 
-    if (ras.ColorMapLength > std::numeric_limits<int>::max())
+    if (ras.ColorMapLength > std::numeric_limits<int>::max()) {
         return false;
+    }
 
     // TODO: add support for old versions of RAS where Length may be zero in header
     s.device()->seek(RasHeader::SIZE + ras.Length + ras.ColorMapLength);
 
     // Check image file format. Type 2 is RLE, which causing seeking to be silly.
     if (!s.atEnd() && ras.Type != 2) {
-//         qDebug() << "This RAS file is not valid, or an older version of the format.";
+        //         qDebug() << "This RAS file is not valid, or an older version of the format.";
         return false;
     }
 
     // Check supported file types.
     if (!IsSupported(ras)) {
-//         qDebug() << "This RAS file is not supported.";
+        //         qDebug() << "This RAS file is not supported.";
         return false;
     }
 
@@ -296,7 +308,7 @@ bool RASHandler::read(QImage *outImage)
     bool result = LoadRAS(s, ras, img);
 
     if (result == false) {
-//         qDebug() << "Error loading RAS file.";
+        //         qDebug() << "Error loading RAS file.";
         return false;
     }
 
@@ -306,7 +318,6 @@ bool RASHandler::read(QImage *outImage)
 
 QImageIOPlugin::Capabilities RASPlugin::capabilities(QIODevice *device, const QByteArray &format) const
 {
-
     if (format == "ras") {
         return Capabilities(CanRead);
     }

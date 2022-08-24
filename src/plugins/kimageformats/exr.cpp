@@ -9,41 +9,48 @@
 
 #include "exr_p.h"
 
-#include <ImfRgbaFile.h>
-#include <ImfStandardAttributes.h>
+#include <IexThrowErrnoExc.h>
 #include <ImathBox.h>
-#include <ImfInputFile.h>
+#include <ImfArray.h>
 #include <ImfBoxAttribute.h>
 #include <ImfChannelListAttribute.h>
 #include <ImfCompressionAttribute.h>
+#include <ImfConvert.h>
 #include <ImfFloatAttribute.h>
+#include <ImfInputFile.h>
+#include <ImfInt64.h>
 #include <ImfIntAttribute.h>
 #include <ImfLineOrderAttribute.h>
+#include <ImfRgbaFile.h>
+#include <ImfStandardAttributes.h>
 #include <ImfStringAttribute.h>
 #include <ImfVecAttribute.h>
-#include <ImfArray.h>
-#include <ImfConvert.h>
 #include <ImfVersion.h>
-#include <IexThrowErrnoExc.h>
 
 #include <iostream>
 
-#include <QImage>
 #include <QDataStream>
 #include <QDebug>
+#include <QImage>
 #include <QImageIOPlugin>
 
-class K_IStream: public Imf::IStream
+class K_IStream : public Imf::IStream
 {
 public:
-    K_IStream(QIODevice *dev, const QByteArray &fileName):
-        IStream(fileName.data()), m_dev(dev)
+    K_IStream(QIODevice *dev, const QByteArray &fileName)
+        : IStream(fileName.data())
+        , m_dev(dev)
     {
     }
 
-    bool  read(char c[], int n) override;
+    bool read(char c[], int n) override;
+#if OPENEXR_VERSION_MAJOR > 2
+    uint64_t tellg() override;
+    void seekg(uint64_t pos) override;
+#else
     Imf::Int64 tellg() override;
     void seekg(Imf::Int64 pos) override;
+#endif
     void clear() override;
 
 private:
@@ -63,12 +70,20 @@ bool K_IStream::read(char c[], int n)
     return false;
 }
 
+#if OPENEXR_VERSION_MAJOR > 2
+uint64_t K_IStream::tellg()
+#else
 Imf::Int64 K_IStream::tellg()
+#endif
 {
     return m_dev->pos();
 }
 
+#if OPENEXR_VERSION_MAJOR > 2
+void K_IStream::seekg(uint64_t pos)
+#else
 void K_IStream::seekg(Imf::Int64 pos)
+#endif
 {
     m_dev->seek(pos);
 }
@@ -84,7 +99,10 @@ void K_IStream::clear()
  */
 QRgb RgbaToQrgba(struct Imf::Rgba &imagePixel)
 {
-    float r, g, b, a;
+    float r;
+    float g;
+    float b;
+    float a;
 
     //  1) Compensate for fogging by subtracting defog
     //     from the raw pixel values.
@@ -117,30 +135,30 @@ QRgb RgbaToQrgba(struct Imf::Rgba &imagePixel)
     //     maximum intensity).
     // Response: kneeLow = 0.0 (2^0.0 => 1); kneeHigh = 5.0 (2^5 =>32)
     if (r > 1.0) {
-        r = 1.0 + Imath::Math<float>::log((r - 1.0) * 0.184874 + 1) / 0.184874;
+        r = 1.0 + std::log((r - 1.0) * 0.184874 + 1) / 0.184874;
     }
     if (g > 1.0) {
-        g = 1.0 + Imath::Math<float>::log((g - 1.0) * 0.184874 + 1) / 0.184874;
+        g = 1.0 + std::log((g - 1.0) * 0.184874 + 1) / 0.184874;
     }
     if (b > 1.0) {
-        b = 1.0 + Imath::Math<float>::log((b - 1.0) * 0.184874 + 1) / 0.184874;
+        b = 1.0 + std::log((b - 1.0) * 0.184874 + 1) / 0.184874;
     }
     if (a > 1.0) {
-        a = 1.0 + Imath::Math<float>::log((a - 1.0) * 0.184874 + 1) / 0.184874;
+        a = 1.0 + std::log((a - 1.0) * 0.184874 + 1) / 0.184874;
     }
-//
-//  5) Gamma-correct the pixel values, assuming that the
-//     screen's gamma is 0.4545 (or 1/2.2).
-    r = Imath::Math<float>::pow(r, 0.4545);
-    g = Imath::Math<float>::pow(g, 0.4545);
-    b = Imath::Math<float>::pow(b, 0.4545);
-    a = Imath::Math<float>::pow(a, 0.4545);
+    //
+    //  5) Gamma-correct the pixel values, assuming that the
+    //     screen's gamma is 0.4545 (or 1/2.2).
+    r = std::pow(r, 0.4545);
+    g = std::pow(g, 0.4545);
+    b = std::pow(b, 0.4545);
+    a = std::pow(a, 0.4545);
 
-//  6) Scale the values such that pixels middle gray
-//     pixels are mapped to 84.66 (or 3.5 f-stops below
-//     the display's maximum intensity).
-//
-//  7) Clamp the values to [0, 255].
+    //  6) Scale the values such that pixels middle gray
+    //     pixels are mapped to 84.66 (or 3.5 f-stops below
+    //     the display's maximum intensity).
+    //
+    //  7) Clamp the values to [0, 255].
     return qRgba((unsigned char)(Imath::clamp(r * 84.66f, 0.f, 255.f)),
                  (unsigned char)(Imath::clamp(g * 84.66f, 0.f, 255.f)),
                  (unsigned char)(Imath::clamp(b * 84.66f, 0.f, 255.f)),
@@ -163,13 +181,14 @@ bool EXRHandler::canRead() const
 bool EXRHandler::read(QImage *outImage)
 {
     try {
-        int width, height;
+        int width;
+        int height;
 
         K_IStream istr(device(), QByteArray());
         Imf::RgbaInputFile file(istr);
         Imath::Box2i dw = file.dataWindow();
 
-        width  = dw.max.x - dw.min.x + 1;
+        width = dw.max.x - dw.min.x + 1;
         height = dw.max.y - dw.min.y + 1;
 
         QImage image(width, height, QImage::Format_RGB32);
@@ -196,7 +215,7 @@ bool EXRHandler::read(QImage *outImage)
 
         return true;
     } catch (const std::exception &exc) {
-//      qDebug() << exc.what();
+        //      qDebug() << exc.what();
         return false;
     }
 }

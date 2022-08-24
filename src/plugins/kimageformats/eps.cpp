@@ -9,13 +9,14 @@
 */
 #include "eps_p.h"
 
+#include <QCoreApplication>
 #include <QImage>
 #include <QImageReader>
 #include <QPainter>
 #include <QPrinter>
 #include <QProcess>
+#include <QStandardPaths>
 #include <QTemporaryFile>
-#include <QCoreApplication>
 
 // logging category for this framework, default: log stuff >= warning
 Q_LOGGING_CATEGORY(EPSPLUGIN, "kf.imageformats.plugins.eps", QtWarningMsg)
@@ -51,19 +52,13 @@ static bool seekToCodeStart(QIODevice *io, qint64 &ps_offset, qint64 &ps_size)
                 return false;
             }
             ps_offset // Offset is in little endian
-                = qint64(((unsigned char)buf[0])
-                         + ((unsigned char)buf[1] << 8)
-                         + ((unsigned char)buf[2] << 16)
-                         + ((unsigned char)buf[3] << 24));
+                = qint64(((unsigned char)buf[0]) + ((unsigned char)buf[1] << 8) + ((unsigned char)buf[2] << 16) + ((unsigned char)buf[3] << 24));
             if (io->read(buf, 4) != 4) { // Get size of PostScript code in the MS-DOS EPS file.
                 qCDebug(EPSPLUGIN) << "cannot read size of MS-DOS EPS file";
                 return false;
             }
             ps_size // Size is in little endian
-                = qint64(((unsigned char)buf[0])
-                         + ((unsigned char)buf[1] << 8)
-                         + ((unsigned char)buf[2] << 16)
-                         + ((unsigned char)buf[3] << 24));
+                = qint64(((unsigned char)buf[0]) + ((unsigned char)buf[1] << 8) + ((unsigned char)buf[2] << 16) + ((unsigned char)buf[3] << 24));
             qCDebug(EPSPLUGIN) << "Offset: " << ps_offset << " Size: " << ps_size;
             if (!io->seek(ps_offset)) { // Get offset of PostScript code in the MS-DOS EPS file.
                 qCDebug(EPSPLUGIN) << "cannot seek in MS-DOS EPS file";
@@ -100,9 +95,11 @@ static bool bbox(QIODevice *io, int *x1, int *y1, int *x2, int *y2)
         if (strncmp(buf, BBOX, BBOX_LEN) == 0) {
             // Some EPS files have non-integer values for the bbox
             // We don't support that currently, but at least we parse it
-            float _x1, _y1, _x2, _y2;
-            if (sscanf(buf, "%*s %f %f %f %f",
-                       &_x1, &_y1, &_x2, &_y2) == 4) {
+            float _x1;
+            float _y1;
+            float _x2;
+            float _y2;
+            if (sscanf(buf, "%*s %f %f %f %f", &_x1, &_y1, &_x2, &_y2) == 4) {
                 qCDebug(EPSPLUGIN) << "BBOX: " << _x1 << " " << _y1 << " " << _x2 << " " << _y2;
                 *x1 = int(_x1);
                 *y1 = int(_y1);
@@ -134,14 +131,18 @@ bool EPSHandler::read(QImage *image)
 {
     qCDebug(EPSPLUGIN) << "starting...";
 
-    int x1, y1, x2, y2;
+    int x1;
+    int y1;
+    int x2;
+    int y2;
 #ifdef EPS_PERFORMANCE_DEBUG
     QTime dt;
     dt.start();
 #endif
 
     QIODevice *io = device();
-    qint64 ps_offset, ps_size;
+    qint64 ps_offset;
+    qint64 ps_size;
 
     // find start of PostScript code
     if (!seekToCodeStart(io, ps_offset, ps_size)) {
@@ -176,29 +177,29 @@ bool EPSHandler::read(QImage *image)
 
     // create GS command line
 
+    const QString gsExec = QStandardPaths::findExecutable(QStringLiteral("gs"));
+    if (gsExec.isEmpty()) {
+        qCWarning(EPSPLUGIN) << "Couldn't find gs exectuable (from GhostScript) in PATH.";
+        return false;
+    }
+
     QStringList gsArgs;
-    gsArgs << QLatin1String("-sOutputFile=") + tmpFile.fileName()
-           << QStringLiteral("-q")
-           << QStringLiteral("-g%1x%2").arg(wantedWidth).arg(wantedHeight)
-           << QStringLiteral("-dSAFER")
-           << QStringLiteral("-dPARANOIDSAFER")
-           << QStringLiteral("-dNOPAUSE")
-           << QStringLiteral("-sDEVICE=ppm")
+    gsArgs << QLatin1String("-sOutputFile=") + tmpFile.fileName() << QStringLiteral("-q") << QStringLiteral("-g%1x%2").arg(wantedWidth).arg(wantedHeight)
+           << QStringLiteral("-dSAFER") << QStringLiteral("-dPARANOIDSAFER") << QStringLiteral("-dNOPAUSE") << QStringLiteral("-sDEVICE=ppm")
            << QStringLiteral("-c")
-           << QStringLiteral("0 0 moveto "
-                             "1000 0 lineto "
-                             "1000 1000 lineto "
-                             "0 1000 lineto "
-                             "1 1 254 255 div setrgbcolor fill "
-                             "0 0 0 setrgbcolor")
-           << QStringLiteral("-")
-           << QStringLiteral("-c")
-           << QStringLiteral("showpage quit");
+           << QStringLiteral(
+                  "0 0 moveto "
+                  "1000 0 lineto "
+                  "1000 1000 lineto "
+                  "0 1000 lineto "
+                  "1 1 254 255 div setrgbcolor fill "
+                  "0 0 0 setrgbcolor")
+           << QStringLiteral("-") << QStringLiteral("-c") << QStringLiteral("showpage quit");
     qCDebug(EPSPLUGIN) << "Running gs with args" << gsArgs;
 
     QProcess converter;
     converter.setProcessChannelMode(QProcess::ForwardedErrorChannel);
-    converter.start(QStringLiteral("gs"), gsArgs);
+    converter.start(gsExec, gsArgs);
     if (!converter.waitForStarted(3000)) {
         qCWarning(EPSPLUGIN) << "Reading EPS files requires gs (from GhostScript)";
         return false;
@@ -264,7 +265,8 @@ bool EPSHandler::write(const QImage &image)
     psOut.setOutputFileName(tmpFile.fileName());
     psOut.setOutputFormat(QPrinter::PdfFormat);
     psOut.setFullPage(true);
-    psOut.setPaperSize(image.size(), QPrinter::DevicePixel);
+    const double multiplier = psOut.resolution() <= 0 ? 1.0 : 72.0 / psOut.resolution();
+    psOut.setPageSize(QPageSize(image.size() * multiplier, QPageSize::Point));
 
     // painting the pixmap to the "printer" which is a file
     p.begin(&psOut);
@@ -277,24 +279,16 @@ bool EPSHandler::write(const QImage &image)
 
     // pdftops comes with Poppler and produces much smaller EPS files than GhostScript
     QStringList pdftopsArgs;
-    pdftopsArgs << QStringLiteral("-eps")
-                << tmpFile.fileName()
-                << QStringLiteral("-");
+    pdftopsArgs << QStringLiteral("-eps") << tmpFile.fileName() << QStringLiteral("-");
     qCDebug(EPSPLUGIN) << "Running pdftops with args" << pdftopsArgs;
     converter.start(QStringLiteral("pdftops"), pdftopsArgs);
 
     if (!converter.waitForStarted()) {
         // GhostScript produces huge files, and takes a long time doing so
         QStringList gsArgs;
-        gsArgs << QStringLiteral("-q") << QStringLiteral("-P-")
-               << QStringLiteral("-dNOPAUSE") << QStringLiteral("-dBATCH")
-               << QStringLiteral("-dSAFER")
-               << QStringLiteral("-sDEVICE=epswrite")
-               << QStringLiteral("-sOutputFile=-")
-               << QStringLiteral("-c")
-               << QStringLiteral("save") << QStringLiteral("pop")
-               << QStringLiteral("-f")
-               << tmpFile.fileName();
+        gsArgs << QStringLiteral("-q") << QStringLiteral("-P-") << QStringLiteral("-dNOPAUSE") << QStringLiteral("-dBATCH") << QStringLiteral("-dSAFER")
+               << QStringLiteral("-sDEVICE=epswrite") << QStringLiteral("-sOutputFile=-") << QStringLiteral("-c") << QStringLiteral("save")
+               << QStringLiteral("pop") << QStringLiteral("-f") << tmpFile.fileName();
         qCDebug(EPSPLUGIN) << "Failed to start pdftops; trying gs with args" << gsArgs;
         converter.start(QStringLiteral("gs"), gsArgs);
 

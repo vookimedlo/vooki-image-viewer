@@ -34,12 +34,16 @@ bool OraHandler::canRead() const
 bool OraHandler::read(QImage *image)
 {
     KZip zip(device());
-    if (!zip.open(QIODevice::ReadOnly)) return false;
+    if (!zip.open(QIODevice::ReadOnly)) {
+        return false;
+    }
 
     const KArchiveEntry *entry = zip.directory()->entry(QStringLiteral("mergedimage.png"));
-    if (!entry || !entry->isFile()) return false;
+    if (!entry || !entry->isFile()) {
+        return false;
+    }
 
-    const KZipFileEntry* fileZipEntry = static_cast<const KZipFileEntry*>(entry);
+    const KZipFileEntry *fileZipEntry = static_cast<const KZipFileEntry *>(entry);
 
     image->loadFromData(fileZipEntry->data(), "PNG");
 
@@ -54,8 +58,9 @@ bool OraHandler::canRead(QIODevice *device)
     }
 
     char buff[54];
-    if (device->peek(buff, sizeof(buff)) == sizeof(buff))
+    if (device->peek(buff, sizeof(buff)) == sizeof(buff)) {
         return memcmp(buff + 0x26, s_magic, s_magic_size) == 0;
+    }
 
     return false;
 }
