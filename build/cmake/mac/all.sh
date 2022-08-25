@@ -16,7 +16,7 @@ echo "\n == Creating DMG ..."
 echo "\n == Signing DMG ..."
 ./sign-package.sh
 
-echo "\n == Notarazing and stapling ..."
+echo "\n == Notarizing and stapling ..."
 ./notarize.sh
 
 echo "\n == Creating ZIP ..."
