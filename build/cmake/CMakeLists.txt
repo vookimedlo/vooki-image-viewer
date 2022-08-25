@@ -260,6 +260,11 @@ if (Qt6_FOUND)
     TARGET_LINK_LIBRARIES(vooki_kimg_psd ${QT_UI_LIB})
 endif()
 
+# Windows Animated Cursor (ani)
+#
+ADD_LIBRARY(vooki_kimg_ani MODULE ../../src/plugins/kimageformats/ani.cpp)
+TARGET_LINK_LIBRARIES(vooki_kimg_ani ${QT_UI_LIB})
+
 # Radiance HDR (hdr)
 #
 ADD_LIBRARY(vooki_kimg_hdr MODULE ../../src/plugins/kimageformats/hdr.cpp)
@@ -302,7 +307,8 @@ if (APPLE)
 
     INSTALL(TARGETS  vooki_kimg_pcx vooki_kimg_ras vooki_kimg_pic
                      vooki_kimg_rgb vooki_kimg_hdr vooki_kimg_psd
-                     vooki_kimg_tga vooki_kimg_xcf vooki_raw_thumb
+                     vooki_kimg_tga vooki_kimg_xcf vooki_kimg_ani
+                     vooki_raw_thumb
             LIBRARY DESTINATION ${PLUGINS})
 elseif(WIN32)
     # Windows
@@ -334,7 +340,7 @@ else()
         TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} ${LIBRAW})
     endif()
 
-    INSTALL(TARGETS ${APPLICATION_NAME} vooki_kimg_pcx vooki_kimg_ras vooki_kimg_pic vooki_kimg_rgb vooki_kimg_hdr
+    INSTALL(TARGETS ${APPLICATION_NAME} vooki_kimg_pcx vooki_kimg_ras vooki_kimg_pic vooki_kimg_rgb vooki_kimg_hdr vooki_kimg_ani
             RUNTIME DESTINATION bin
             LIBRARY DESTINATION ${PLUGINS})
 
