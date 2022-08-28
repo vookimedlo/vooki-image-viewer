@@ -211,11 +211,16 @@ TARGET_LINK_LIBRARIES(VookiImageViewer ${OS_LIBS})
 #### Plugins ####
 #
 
+function(ADD_IMAGE_PLUGIN name source)
+    ADD_LIBRARY(${name} MODULE ${source} ${ARGN})
+    TARGET_LINK_LIBRARIES(${name} ${QT_UI_LIB})
+    SET(IMAGE_PLUGINS ${IMAGE_PLUGINS} ${name} PARENT_SCOPE)
+endfunction()
+
+
 # Personal Computer Exchange (pcx)
 #
-ADD_LIBRARY(vooki_kimg_pcx MODULE ../../src/plugins/kimageformats/pcx.cpp)
-TARGET_LINK_LIBRARIES(vooki_kimg_pcx ${QT_UI_LIB})
-SET(IMAGE_PLUGINS ${IMAGE_PLUGINS} vooki_kimg_pcx)
+ADD_IMAGE_PLUGIN(vooki_kimg_pcx ../../src/plugins/kimageformats/pcx.cpp)
 
 if (Qt5_FOUND)
     if (Qt5_VERSION VERSION_GREATER_EQUAL 5.8.0)
@@ -224,15 +229,11 @@ if (Qt5_FOUND)
 
         # Gimp (xcf)
         #
-        ADD_LIBRARY(vooki_kimg_xcf MODULE ../../src/plugins/kimageformats/xcf.cpp)
-        TARGET_LINK_LIBRARIES(vooki_kimg_xcf ${QT_UI_LIB})
-        SET(IMAGE_PLUGINS ${IMAGE_PLUGINS} vooki_kimg_xcf)
+        ADD_IMAGE_PLUGIN(vooki_kimg_xcf ../../src/plugins/kimageformats/xcf.cpp)
 
         # Targa (tga): supports more formats than Qt's version
         #
-        ADD_LIBRARY(vooki_kimg_tga MODULE ../../src/plugins/kimageformats/tga.cpp)
-        TARGET_LINK_LIBRARIES(vooki_kimg_tga ${QT_UI_LIB})
-        SET(IMAGE_PLUGINS ${IMAGE_PLUGINS} vooki_kimg_tga)
+        ADD_IMAGE_PLUGIN(vooki_kimg_tga ../../src/plugins/kimageformats/tga.cpp)
     endif()
 
     if (Qt5_VERSION VERSION_GREATER_EQUAL 5.12.0)
@@ -241,61 +242,43 @@ if (Qt5_FOUND)
 
        # Photoshop documents (psd)
        #
-       ADD_LIBRARY(vooki_kimg_psd MODULE ../../src/plugins/kimageformats/psd.cpp)
-       TARGET_LINK_LIBRARIES(vooki_kimg_psd ${QT_UI_LIB})
-       SET(IMAGE_PLUGINS ${IMAGE_PLUGINS} vooki_kimg_psd)
+       ADD_IMAGE_PLUGIN(vooki_kimg_psd ../../src/plugins/kimageformats/psd.cpp)
     endif()
 endif()
 
 if (Qt6_FOUND)
     # Gimp (xcf)
     #
-    ADD_LIBRARY(vooki_kimg_xcf MODULE ../../src/plugins/kimageformats/xcf.cpp)
-    TARGET_LINK_LIBRARIES(vooki_kimg_xcf ${QT_UI_LIB})
-    SET(IMAGE_PLUGINS ${IMAGE_PLUGINS} vooki_kimg_xcf)
+    ADD_IMAGE_PLUGIN(vooki_kimg_xcf ../../src/plugins/kimageformats/xcf.cpp)
 
     # Targa (tga): supports more formats than Qt's version
     #
-    ADD_LIBRARY(vooki_kimg_tga MODULE ../../src/plugins/kimageformats/tga.cpp)
-    TARGET_LINK_LIBRARIES(vooki_kimg_tga ${QT_UI_LIB})
-    SET(IMAGE_PLUGINS ${IMAGE_PLUGINS} vooki_kimg_tga)
+    ADD_IMAGE_PLUGIN(vooki_kimg_tga ../../src/plugins/kimageformats/tga.cpp)
 
     # Photoshop documents (psd)
     #
-    ADD_LIBRARY(vooki_kimg_psd MODULE ../../src/plugins/kimageformats/psd.cpp)
-    TARGET_LINK_LIBRARIES(vooki_kimg_psd ${QT_UI_LIB})
-    SET(IMAGE_PLUGINS ${IMAGE_PLUGINS} vooki_kimg_psd)
+    ADD_IMAGE_PLUGIN(vooki_kimg_psd ../../src/plugins/kimageformats/psd.cpp)
 endif()
 
 # Windows Animated Cursor (ani)
 #
-ADD_LIBRARY(vooki_kimg_ani MODULE ../../src/plugins/kimageformats/ani.cpp)
-TARGET_LINK_LIBRARIES(vooki_kimg_ani ${QT_UI_LIB})
-SET(IMAGE_PLUGINS ${IMAGE_PLUGINS} vooki_kimg_ani)
+ADD_IMAGE_PLUGIN(vooki_kimg_ani ../../src/plugins/kimageformats/ani.cpp)
 
 # Radiance HDR (hdr)
 #
-ADD_LIBRARY(vooki_kimg_hdr MODULE ../../src/plugins/kimageformats/hdr.cpp)
-TARGET_LINK_LIBRARIES(vooki_kimg_hdr ${QT_UI_LIB})
-SET(IMAGE_PLUGINS ${IMAGE_PLUGINS} vooki_kimg_hdr)
+ADD_IMAGE_PLUGIN(vooki_kimg_hdr ../../src/plugins/kimageformats/hdr.cpp)
 
 # Sun Raster (ras)
 #
-ADD_LIBRARY(vooki_kimg_ras MODULE ../../src/plugins/kimageformats/ras.cpp)
-TARGET_LINK_LIBRARIES(vooki_kimg_ras ${QT_UI_LIB})
-SET(IMAGE_PLUGINS ${IMAGE_PLUGINS} vooki_kimg_ras)
+ADD_IMAGE_PLUGIN(vooki_kimg_ras ../../src/plugins/kimageformats/ras.cpp)
 
 # Softimage PIC (pic)
 #
-ADD_LIBRARY(vooki_kimg_pic MODULE ../../src/plugins/kimageformats/pic.cpp)
-TARGET_LINK_LIBRARIES(vooki_kimg_pic ${QT_UI_LIB})
-SET(IMAGE_PLUGINS ${IMAGE_PLUGINS} vooki_kimg_pic)
+ADD_IMAGE_PLUGIN(vooki_kimg_pic ../../src/plugins/kimageformats/pic.cpp)
 
 # SGI images (rgb, rgba, sgi, bw)
 #
-ADD_LIBRARY(vooki_kimg_rgb MODULE ../../src/plugins/kimageformats/rgb.cpp)
-TARGET_LINK_LIBRARIES(vooki_kimg_rgb ${QT_UI_LIB})
-SET(IMAGE_PLUGINS ${IMAGE_PLUGINS} vooki_kimg_rgb)
+ADD_IMAGE_PLUGIN(vooki_kimg_rgb ../../src/plugins/kimageformats/rgb.cpp)
 
 # Camera RAW Thumbnails (raf, mos, cr2, erf, dng, mrw, nef, orf, rw2, pef, x3f, srw, x3f, arw)
 # Prebuilt library for the MacOS/Windows only, Linux uses a distro package
@@ -308,9 +291,8 @@ if (APPLE)
     SET(CMAKE_CXX_FLAGS "-I${LIBRAW} ${CMAKE_CXX_FLAGS}")
     SET(CMAKE_MODULE_LINKER_FLAGS "-L${LIBRAW}/lib ${CMAKE_MODULE_LINKER_FLAGS}")
 
-    ADD_LIBRARY(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
+    ADD_IMAGE_PLUGIN(vooki_raw_thumb ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
     TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_r.a)
-    SET(IMAGE_PLUGINS ${IMAGE_PLUGINS} vooki_raw_thumb)
 
     include(mac/MacdeployQt.cmake)
     deployqt()
@@ -328,16 +310,14 @@ elseif(WIN32)
     GET_FILENAME_COMPONENT(LIBRAW windows/${LIBRAW_LOC} ABSOLUTE)
     SET(CMAKE_CXX_FLAGS "-I${LIBRAW} ${CMAKE_CXX_FLAGS}")
 
-    ADD_LIBRARY(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
+    ADD_IMAGE_PLUGIN(vooki_raw_thumb ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
     TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} ${LIBRAW}/lib/libraw.lib)
-    SET(IMAGE_PLUGINS ${IMAGE_PLUGINS} vooki_raw_thumb)
 
     GET_FILENAME_COMPONENT(LIBHEIF "windows/3rdPartyLibs/libHEIF-1.9.1" ABSOLUTE)
     SET(CMAKE_CXX_FLAGS "-I${LIBHEIF} ${CMAKE_CXX_FLAGS}")
 
-    ADD_LIBRARY(vooki_heic_image MODULE ../../src/plugins/heicimage/heicHandler.cpp ../../src/plugins/heicimage/heicPlugin.cpp)
+    ADD_IMAGE_PLUGIN(vooki_heic_image ../../src/plugins/heicimage/heicHandler.cpp ../../src/plugins/heicimage/heicPlugin.cpp)
     TARGET_LINK_LIBRARIES(vooki_heic_image ${QT_UI_LIB} ${LIBHEIF}/lib/heif.lib)
-    SET(IMAGE_PLUGINS ${IMAGE_PLUGINS} vooki_heic_image)
 
     include(windows/WindeployQt.cmake)
     deployqt()
@@ -357,9 +337,8 @@ else()
 
     FIND_LIBRARY(LIBRAW NAMES libraw_r raw_r)
     if (LIBRAW)
-        ADD_LIBRARY(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
+        ADD_IMAGE_PLUGIN(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
         TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} ${LIBRAW})
-        SET(IMAGE_PLUGINS ${IMAGE_PLUGINS} vooki_raw_thumb)
     endif()
 
     INSTALL(TARGETS ${APPLICATION_NAME} ${IMAGE_PLUGINS}
