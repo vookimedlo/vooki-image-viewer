@@ -23,40 +23,41 @@ The main goal is to have a free of charge cross-platform viewer with a simple de
 Supported image formats cover the very common formats as well as the rare ones. The viewer does not intentionally [demosaic][1] the RAW images, but only displays the embedded thumbnail.
 
 
-| FORMAT             | DESCRIPTION                                      |
-|--------------------|--------------------------------------------------|
-| GIF                | Graphic Interchange Format                       |
-| JPG                | Joint Photographic Experts Group                 |
-| PNG                | Portable Network Graphics                        |
-| PBM                | Portable Bitmap                                  |
-| PGM                | Portable Graymap                                 |
-| PPM                | Portable Pixmap                                  |
-| XBM                | X11 Bitmap                                       |
-| XPM                | X11 Pixmap                                       |
-| SVG                | Scalable Vector Graphics                         |
-| BMP                | Windows Bitmap                                   |
-| XCF                | Gimp                                             |
-| PSD                | Photoshop Documents                              |
-| RAS                | Sun Raster                                       |
-| PCX                | Personal Computer Exchange                       |
-| RGB, RGBA, SGI, BW | SGI Images                                       |
-| PIC                | Softimage                                        |
-| TGA                | Targa                                            |
-| TIFF               | Tagged Image File Format
-| ARW                | Sony Alpha Raw [Inner thumbnail only]            |
-| CR2                | Canon Raw Version 2 [Inner thumbnail only]       |
-| DNG                | Digital Negative [Inner thumbnail only]          |
-| ERF                | Epson RAW File [Inner thumbnail only]            |
-| MOS                | Leaf Raw Image File [Inner thumbnail only]       |
-| MRW                | Konica Minolta RAW [Inner thumbnail only]        |
-| NEF                | Nikon Raw Image File [Inner thumbnail only]      |
-| ORF                | Olympus Raw Image File [Inner thumbnail only]    |
-| PEF                | Pentax Raw Image File [Inner thumbnail only]     |
-| RAF                | Fuji Raw Image File [Inner thumbnail only]       |
-| RW2                | Panasonic RAW Image File [Inner thumbnail only]  |
-| SRW                | Samsung RAW Image File [Inner thumbnail only]    |
-| X3F                | SIGMA X3F Camera RAW File [Inner thumbnail only] |
-| [MacOS/Windows only] HEIC| High-Efficiency Image File Format            |
+| FORMAT                    | DESCRIPTION                                      |
+|---------------------------|--------------------------------------------------|
+| ANI                       | Windows Animated Cursor                          |
+| GIF                       | Graphic Interchange Format                       |
+| JPG                       | Joint Photographic Experts Group                 |
+| PNG                       | Portable Network Graphics                        |
+| PBM                       | Portable Bitmap                                  |
+| PGM                       | Portable Graymap                                 |
+| PPM                       | Portable Pixmap                                  |
+| XBM                       | X11 Bitmap                                       |
+| XPM                       | X11 Pixmap                                       |
+| SVG                       | Scalable Vector Graphics                         |
+| BMP                       | Windows Bitmap                                   |
+| XCF                       | Gimp                                             |
+| PSD                       | Photoshop Documents                              |
+| RAS                       | Sun Raster                                       |
+| PCX                       | Personal Computer Exchange                       |
+| RGB, RGBA, SGI, BW        | SGI Images                                       |
+| PIC                       | Softimage                                        |
+| TGA                       | Targa                                            |
+| TIFF                      | Tagged Image File Format                         |
+| ARW                       | Sony Alpha Raw [Inner thumbnail only]            |
+| CR2                       | Canon Raw Version 2 [Inner thumbnail only]       |
+| DNG                       | Digital Negative [Inner thumbnail only]          |
+| ERF                       | Epson RAW File [Inner thumbnail only]            |
+| MOS                       | Leaf Raw Image File [Inner thumbnail only]       |
+| MRW                       | Konica Minolta RAW [Inner thumbnail only]        |
+| NEF                       | Nikon Raw Image File [Inner thumbnail only]      |
+| ORF                       | Olympus Raw Image File [Inner thumbnail only]    |
+| PEF                       | Pentax Raw Image File [Inner thumbnail only]     |
+| RAF                       | Fuji Raw Image File [Inner thumbnail only]       |
+| RW2                       | Panasonic RAW Image File [Inner thumbnail only]  |
+| SRW                       | Samsung RAW Image File [Inner thumbnail only]    |
+| X3F                       | SIGMA X3F Camera RAW File [Inner thumbnail only] |
+| [MacOS/Windows only] HEIC | High-Efficiency Image File Format                |
 
 
 All operations have assigned shortcuts and all of them can be user re-assigned except the one which is used for Preferences on MacOS.
