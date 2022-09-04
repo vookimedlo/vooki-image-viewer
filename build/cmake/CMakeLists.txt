@@ -156,7 +156,7 @@ if (APPLE)
     SET(MACOSX_BUNDLE_EXECUTABLE_NAME ${APPLICATION_NAME})
     SET(MACOSX_BUNDLE_ICON_FILE vookiimageviewericon.icns)
     SET(MACOSX_BUNDLE_BUNDLE_NAME ${APPLICATION_NAME})
-    SET(MACOSX_BUNDLE_COPYRIGHT "(C) 2019 Michal Duda")
+    SET(MACOSX_BUNDLE_COPYRIGHT "Michal Duda")
     SET(MACOSX_BUNDLE_INFO_STRING "Lightweight image viewer")
     SET(MACOSX_BUNDLE_SHORT_VERSION_STRING ${BUILD_DATE_DOTTED})
     SET(MACOSX_BUNDLE_GUI_IDENTIFIER "cz.VookiImageViewer")
@@ -313,18 +313,26 @@ elseif(WIN32)
     ADD_IMAGE_PLUGIN(vooki_raw_thumb ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
     TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} ${LIBRAW}/lib/libraw.lib)
 
-    GET_FILENAME_COMPONENT(LIBHEIF "windows/3rdPartyLibs/libHEIF-1.9.1" ABSOLUTE)
+    GET_FILENAME_COMPONENT(LIBHEIF "windows/3rdPartyLibs/LibHEIF-1.13.0" ABSOLUTE)
     SET(CMAKE_CXX_FLAGS "-I${LIBHEIF} ${CMAKE_CXX_FLAGS}")
 
-    ADD_IMAGE_PLUGIN(vooki_heic_image ../../src/plugins/heicimage/heicHandler.cpp ../../src/plugins/heicimage/heicPlugin.cpp)
-    TARGET_LINK_LIBRARIES(vooki_heic_image ${QT_UI_LIB} ${LIBHEIF}/lib/heif.lib)
-
-    include(windows/WindeployQt.cmake)
-    deployqt()
+    ADD_IMAGE_PLUGIN(vooki_kimg_heif ../../src/plugins/kimageformats/heif.cpp)
+    TARGET_LINK_LIBRARIES(vooki_kimg_heif ${QT_UI_LIB} ${LIBHEIF}/lib/heif.lib)
 
     SET(PLUGINS "$<TARGET_FILE_DIR:${APPLICATION_NAME}>/imageformats")
     SET_TARGET_PROPERTIES(${IMAGE_PLUGINS}
             PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PLUGINS})
+
+    ADD_CUSTOM_TARGET(copy-heif-deps)
+    GET_FILENAME_COMPONENT(LIBDE265 "windows/3rdPartyLibs/LibDe265-1.0.8/lib/libde265.dll" ABSOLUTE)
+    GET_FILENAME_COMPONENT(LIBHEIF "windows/3rdPartyLibs/LibHEIF-1.13.0/lib/heif.dll" ABSOLUTE)
+    ADD_CUSTOM_COMMAND(TARGET copy-heif-deps POST_BUILD
+                       COMMAND ${CMAKE_COMMAND} -E copy ${LIBDE265} ${LIBHEIF} $<TARGET_FILE_DIR:${APPLICATION_NAME}>)
+    ADD_DEPENDENCIES(vooki_kimg_heif copy-heif-deps)
+    ADD_DEPENDENCIES(copy-heif-deps ${APPLICATION_NAME})
+
+    include(windows/WindeployQt.cmake)
+    deployqt()
 
     INSTALL(TARGETS ${IMAGE_PLUGINS}
             LIBRARY DESTINATION ${PLUGINS})
