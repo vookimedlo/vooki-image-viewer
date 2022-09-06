@@ -1,4 +1,4 @@
-# VookiImageViewer - tool to showing images.
+# VookiImageViewer - tool for showing images.
 # Copyright(C) 2017-2022 Michal Duda <github@vookimedlo.cz>
 #
 # https://github.com/vookimedlo/vooki-image-viewer
@@ -304,6 +304,8 @@ if (APPLE)
 elseif(WIN32)
     # Windows
     #
+    ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS)
+
     SET(LIBRAW_LOC "3rdPartyLibs/LibRaw-0.20.2")
     ADD_DEFINITIONS(-DLIBRAW_NODLL)
 
@@ -334,8 +336,7 @@ elseif(WIN32)
     include(windows/WindeployQt.cmake)
     deployqt()
 
-    INSTALL(TARGETS ${IMAGE_PLUGINS}
-            LIBRARY DESTINATION ${PLUGINS})
+    INCLUDE(windows/CPack.cmake)
 else()
     # Unix-like systems
     #

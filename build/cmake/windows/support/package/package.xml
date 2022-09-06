@@ -3,7 +3,7 @@
   <Product Name='VookiImageViewer' Id='*' UpgradeCode='91FA8A80-C971-408A-A735-4EB3D230D9F6'
            Language='1033' Codepage='1252' Version='20.11.25' Manufacturer='Michal Duda'>
 
-    <Package Id='*' Keywords='Installer' Description="Michal Duda VookiImageViewer Installer"
+    <Package Id='*' Keywords='Installer' Description="VookiImageViewer Installer"
              Comments='Lightweight image viewer for a fast image preview.' Manufacturer='Michal Duda'
              InstallerVersion='500' Languages='1033' Compressed='yes' SummaryCodepage='1252'
              Platform="x64" />
@@ -78,6 +78,8 @@
               <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".srw" Value="" Type="string" />
               <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".arw" Value="" Type="string" />
               <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".heic" Value="" Type="string" />
+              <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".heif" Value="" Type="string" />
+              <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".ani" Value="" Type="string" />
 
               <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.jpg\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
               <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.png\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
@@ -117,6 +119,8 @@
               <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.srw\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
               <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.arw\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
               <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.heic\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+              <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.heif\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+              <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.ani\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
 
               <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\shell\open" Name="FriendlyAppName" Value="VookiImageViewer" Type="string" />
 
@@ -235,6 +239,12 @@
                 <Extension Id="heic">
                   <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
                 </Extension>
+                <Extension Id="heif">
+                  <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+                </Extension>
+                <Extension Id="ani">
+                  <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+                </Extension>
               </ProgId>
             </Component>
 
@@ -272,6 +282,9 @@
                 <File Id="qtga.dll" Name="qtga.dll" />
                 <File Id="qtiff.dll" Name="qtiff.dll" />
                 <File Id="qwbmp.dll" Name="qwbmp.dll" />
+                <File Id="qwebp.dll" Name="qwebp.dll" />
+                <File Id="vooki_kimg_ani.dll" Name="vooki_kimg_ani.dll" />
+                <File Id="vooki_kimg_heif.dll" Name="vooki_kimg_heif.dll" />
                 <File Id="vooki_kimg_hdr.dll" Name="vooki_kimg_hdr.dll" />
                 <File Id="vooki_kimg_pcx.dll" Name="vooki_kimg_pcx.dll" />
                 <File Id="vooki_kimg_pic.dll" Name="vooki_kimg_pic.dll" />
@@ -280,7 +293,6 @@
                 <File Id="vooki_kimg_rgb.dll" Name="vooki_kimg_rgb.dll" />
                 <File Id="vooki_kimg_tga.dll" Name="vooki_kimg_tga.dll" />
                 <File Id="vooki_kimg_xcf.dll" Name="vooki_kimg_xcf.dll" />
-                <File Id="vooki_heic_image.dll" Name="vooki_heic_image.dll" />
                 <File Id="vooki_raw_thumb.dll" Name="vooki_raw_thumb.dll" KeyPath="yes" />
               </Component>
             </Directory>
@@ -327,7 +339,7 @@
     </Directory>
 
     <DirectoryRef Id="TARGETDIR">
-      <Merge Id="VCRedist" SourceFile="c:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Redist\MSVC\v142\MergeModules\Microsoft_VC142_CRT_x64.msm" DiskId="1" Language="0"/>
+      <Merge Id="VCRedist" SourceFile="C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Redist\MSVC\14.32.31326\MergeModules\Microsoft_VC143_CRT_x64.msm " DiskId="1" Language="0"/>
     </DirectoryRef>
 
     <Feature Id='Complete' Title='VookiImageViewer' Description='Whole bundle.'
