@@ -176,7 +176,7 @@ if (APPLE)
         ${UI_HEADERS}
         ${UI_RESOURCES})
 
-    GET_FILENAME_COMPONENT(PLIST_IN_ABSOLUTE_PATH mac/support/MacOSXBundleInfo.plist.in ABSOLUTE)
+    GET_FILENAME_COMPONENT(PLIST_IN_ABSOLUTE_PATH platform/mac/support/MacOSXBundleInfo.plist.in ABSOLUTE)
     SET_TARGET_PROPERTIES(${APPLICATION_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${PLIST_IN_ABSOLUTE_PATH})
 
 elseif(WIN32)
@@ -188,7 +188,7 @@ elseif(WIN32)
 
     ADD_EXECUTABLE(${APPLICATION_NAME}
         WIN32
-        windows/support/application.rc
+            platform/windows/support/application.rc
         ${SOURCES}
         ${UI_HEADERS}
         ${UI_RESOURCES})
@@ -287,14 +287,14 @@ if (APPLE)
     # MacOS
     #
     SET(LIBRAW_LOC "3rdPartyLibs/LibRaw-0.20.2")
-    GET_FILENAME_COMPONENT(LIBRAW mac/${LIBRAW_LOC} ABSOLUTE)
+    GET_FILENAME_COMPONENT(LIBRAW platform/mac/${LIBRAW_LOC} ABSOLUTE)
     SET(CMAKE_CXX_FLAGS "-I${LIBRAW} ${CMAKE_CXX_FLAGS}")
     SET(CMAKE_MODULE_LINKER_FLAGS "-L${LIBRAW}/lib ${CMAKE_MODULE_LINKER_FLAGS}")
 
     ADD_IMAGE_PLUGIN(vooki_raw_thumb ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
     TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_r.a)
 
-    include(mac/MacdeployQt.cmake)
+    include(platform/mac/MacdeployQt.cmake)
     deployqt()
 
     SET(PLUGINS "$<TARGET_FILE_DIR:${APPLICATION_NAME}>/../PlugIns/imageformats")
@@ -309,13 +309,13 @@ elseif(WIN32)
     SET(LIBRAW_LOC "3rdPartyLibs/LibRaw-0.20.2")
     ADD_DEFINITIONS(-DLIBRAW_NODLL)
 
-    GET_FILENAME_COMPONENT(LIBRAW windows/${LIBRAW_LOC} ABSOLUTE)
+    GET_FILENAME_COMPONENT(LIBRAW platform/windows/${LIBRAW_LOC} ABSOLUTE)
     SET(CMAKE_CXX_FLAGS "-I${LIBRAW} ${CMAKE_CXX_FLAGS}")
 
     ADD_IMAGE_PLUGIN(vooki_raw_thumb ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
     TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} ${LIBRAW}/lib/libraw.lib)
 
-    GET_FILENAME_COMPONENT(LIBHEIF "windows/3rdPartyLibs/LibHEIF-1.13.0" ABSOLUTE)
+    GET_FILENAME_COMPONENT(LIBHEIF "platform/windows/3rdPartyLibs/LibHEIF-1.13.0" ABSOLUTE)
     SET(CMAKE_CXX_FLAGS "-I${LIBHEIF} ${CMAKE_CXX_FLAGS}")
 
     ADD_IMAGE_PLUGIN(vooki_kimg_heif ../../src/plugins/kimageformats/heif.cpp)
@@ -326,17 +326,17 @@ elseif(WIN32)
             PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PLUGINS})
 
     ADD_CUSTOM_TARGET(copy-heif-deps)
-    GET_FILENAME_COMPONENT(LIBDE265 "windows/3rdPartyLibs/LibDe265-1.0.8/lib/libde265.dll" ABSOLUTE)
-    GET_FILENAME_COMPONENT(LIBHEIF "windows/3rdPartyLibs/LibHEIF-1.13.0/lib/heif.dll" ABSOLUTE)
+    GET_FILENAME_COMPONENT(LIBDE265 "platform/windows/3rdPartyLibs/LibDe265-1.0.8/lib/libde265.dll" ABSOLUTE)
+    GET_FILENAME_COMPONENT(LIBHEIF "platform/windows/3rdPartyLibs/LibHEIF-1.13.0/lib/heif.dll" ABSOLUTE)
     ADD_CUSTOM_COMMAND(TARGET copy-heif-deps POST_BUILD
                        COMMAND ${CMAKE_COMMAND} -E copy ${LIBDE265} ${LIBHEIF} $<TARGET_FILE_DIR:${APPLICATION_NAME}>)
     ADD_DEPENDENCIES(vooki_kimg_heif copy-heif-deps)
     ADD_DEPENDENCIES(copy-heif-deps ${APPLICATION_NAME})
 
-    include(windows/WindeployQt.cmake)
+    include(platform/windows/WindeployQt.cmake)
     deployqt()
 
-    INCLUDE(windows/CPack.cmake)
+    INCLUDE(platform/windows/CPack.cmake)
 else()
     # Unix-like systems
     #
@@ -362,7 +362,7 @@ else()
                   ${TOP_LEVEL_ABSOLUTE_PATH}/README.md
             DESTINATION share/doc/vookiimageviewer)
 
-    INSTALL(FILES ${TOP_LEVEL_ABSOLUTE_PATH}/build/cmake/unix/support/vookiimageviewer.desktop
+    INSTALL(FILES ${TOP_LEVEL_ABSOLUTE_PATH}/build/cmake/platform/unix/support/vookiimageviewer.desktop
             DESTINATION share/applications)
 
     INSTALL(FILES ${TOP_LEVEL_ABSOLUTE_PATH}/src/resource/openclipart/vookiimageviewericon.png

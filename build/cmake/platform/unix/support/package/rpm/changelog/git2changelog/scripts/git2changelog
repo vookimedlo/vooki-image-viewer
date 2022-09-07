@@ -1,0 +1,64 @@
+#!/usr/bin/env python
+# -*- coding: iso-8859-15 -*-
+# Copyright (C) 2014  Jamie Duncan (jduncan@redhat.com)
+
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+# File Name : git2changelog
+# Creation Date : 06-07-2014
+# Created By : Jamie Duncan
+# Last Modified : Fri 29 Sep 2017 15:56:02 AM BST
+# Purpose : executable for converting a git log stanza into a usable spec file changelog
+
+import argparse
+import git2changelog
+import os
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description='Generate changelog from Git history')
+    parser.add_argument("-b", "--begin_tag", dest="t_start",
+                      help="Tag to start data collection from.",
+                      required=True, metavar="BEGIN_TAG")
+    parser.add_argument("-e", "--end_tag", default='HEAD', dest="t_end",
+                      help="Tag to end the data collection. defaults to "
+                           "HEAD.",
+                      metavar="END_TAG")
+    parser.add_argument("-f", "--log_format", default="rpm", dest="log_format",
+                      help="Format to Generate Changelog. defaults to rpm")
+    parser.add_argument("-s", "--search", default=None, dest="search_term",
+                      help="Commit Search Criteria. optional.",
+                      metavar="SEARCH_TERM")
+    parser.add_argument("-n", "--name", default=None, dest="tag_name",
+                      help="New Tag Name for untagged commits. optional.",
+                      metavar="TAG_NAME")
+    parser.add_argument("-r", "--repo", default=None, dest="repo",
+                      help="Repository to Scan. defaults to current "
+                           "directory.",
+                      metavar="REPO")
+    return parser.parse_args()
+
+
+def main():
+    options = parse_args()
+    if options.repo is None:
+        options.repo = os.getcwd()
+    clog = git2changelog.CLData(options)
+    clog.format_changelog()
+
+
+if __name__ == '__main__':
+    main()

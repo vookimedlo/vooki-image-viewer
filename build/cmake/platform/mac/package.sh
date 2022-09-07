@@ -8,7 +8,7 @@ rm VookiImageViewer.dmg || true
 VOLUME_NAME="VookiImageViewer"
 DMG_NAME="VookiImageViewer.dmg"
 DMG_TEMP_NAME="tmp-$DMG_NAME"
-VOLUME_ICON_FILE="../../../src/resource/openclipart/vookiimageviewericon.icns"
+VOLUME_ICON_FILE="../../../../src/resource/openclipart/vookiimageviewericon.icns"
 BACKGROUND_FILE="support/vookiimageviewer-dmg-bg.png"
 
 TARGET=package

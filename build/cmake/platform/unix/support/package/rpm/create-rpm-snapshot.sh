@@ -25,12 +25,12 @@ git tag -n
 
 echo -e  "\n\n** Creating a changelog file - all tagged releases up to the HEAD"
 echo -e  "%changelog" >> vookiimageviewer-patched.spec
-python ./git2changelog -b v2017.10.27 -r ../../../../../.. >> vookiimageviewer-patched.spec
+python ./git2changelog -b v2017.10.27 -r ../../../../../../.. >> vookiimageviewer-patched.spec
 
 echo -e  "\n\n** Creating a changelog file - latest tagged release to the head"
 
 SPEC_VERSION=`grep 'Version:' vookiimageviewer-patched.spec | cut -d' ' -f2`
-cd ../../../../../../../
+cd ../../../../../../../../
 
 echo -e  "\n\n** Creating an original package"
 tar cjvf vookiimageviewer-${SPEC_VERSION}.tar.bz2 vooki-image-viewer

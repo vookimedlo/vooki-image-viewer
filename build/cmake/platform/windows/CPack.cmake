@@ -4,7 +4,7 @@ INSTALL(TARGETS ${IMAGE_PLUGINS}
         LIBRARY DESTINATION "imageformats")
 INSTALL(FILES ${LIBDE265} ${LIBHEIF}
         DESTINATION ".")
-INSTALL(FILES windows/support/package/gpl-3.0.rtf
+INSTALL(FILES platform/windows/support/package/gpl-3.0.rtf
         DESTINATION ".")
 
 SET(CMAKE_INSTALL_SYSTEM_RUNTIME_DESTINATION ".")
@@ -12,7 +12,7 @@ INCLUDE(InstallRequiredSystemLibraries)
 SET(CMAKE_INSTALL_UCRT_LIBRARIES TRUE)
 
 FIND_PROGRAM(WINDEPLOYQT windeployqt HINTS "${_qt_bin_dir}")
-CONFIGURE_FILE("Windows/WindeployQt-CPack.cmake.in" "${CMAKE_BINARY_DIR}/WindeployQt-CPack.cmake" @ONLY)
+CONFIGURE_FILE("platform/Windows/WindeployQt-CPack.cmake.in" "${CMAKE_BINARY_DIR}/WindeployQt-CPack.cmake" @ONLY)
 
 SET(CPACK_PRE_BUILD_SCRIPTS ${CMAKE_BINARY_DIR}/WindeployQt-CPack.cmake)
 

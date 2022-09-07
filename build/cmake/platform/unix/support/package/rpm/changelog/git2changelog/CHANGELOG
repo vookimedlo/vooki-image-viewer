@@ -1,0 +1,29 @@
+* Fri Sep 29 2017 Waldek Maleska <w.maleska@gmail.com> - 0.2-1
+- PEP-8 cleanup
+- switch to argparse module from optparse (obsolete)
+- remove RPM spec file in preparation to build with setuptools instead
+
+* Mon Jun 09 2014 Jamie Duncan <jduncan@redhat.com> - 0.1-6
+- updated spec file to reflect r6
+- added functionality to be able to parse files in different formats and updated docs. fixes #6 : Commit 42f6e76
+- Merge branch 'master' of github.com:jduncan-rva/git2changelog : Commit ad8a24f
+- updated docs and help to reflect new option. updates #5 : Commit 6f9ece3
+- updated docs and help to reflect new option. updates #4 : Commit 009d3f9
+- added -n flag for release name and confirmed it works. fixes #5 : Commit e04c7e7
+
+* Mon Jun 09 2014 Jamie Duncan <jduncan@redhat.com> - 0.1-5
+- allows for multiple search terms cleanly. fixes #3 : Commit 8aab0c7
+- adding content to README.md : Commit ce03be7
+- updating spec file to reflect r4 : Commit 723577c
+
+* Sun Jun 08 2014 Jamie Duncan <jduncan@redhat.com> - 0.1-4
+- 08c27e2 =refactored to handle condition where tag was at HEAD properly. fixes #4
+
+* Sun Jun 08 2014 Jamie Duncan <jduncan@redhat.com> - 0.1-3
+- 869cb42 =set default for repository to the cwd. fixes #2
+
+* Sun Jun 08 2014 Jamie Duncan <jduncan@redhat.com> - 0.1-2
+- d5f16db =typo. fixes #1
+
+* Sun Jun 08 2014 Jamie Duncan <jduncan@redhat.com> 0.1-1
+- initial buildout and testing build
