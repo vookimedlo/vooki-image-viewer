@@ -75,6 +75,7 @@
           <string>arw</string>
           <string>heic</string>
           <string>heif</string>
+          <string>ani</string>
         </array>
         <key>CFBundleTypeRole</key>
         <string>Viewer</string>
