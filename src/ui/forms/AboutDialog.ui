@@ -64,19 +64,6 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QLabel" name="versionLabel">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Version: </string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
      <item>
@@ -113,6 +100,19 @@
      <property name="bottomMargin">
       <number>0</number>
      </property>
+     <item>
+      <widget class="QLabel" name="versionLabel">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Version: </string>
+       </property>
+      </widget>
+     </item>
      <item>
       <spacer>
        <property name="orientation">

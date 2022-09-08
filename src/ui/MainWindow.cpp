@@ -24,7 +24,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "../ui/support/Settings.h"
 #include "../ui/support/SettingsStrings.h"
 #include "../util/misc.h"
-#include "../util/version.h"
+#include "version.h"
 #include "AboutComponentsDialog.h"
 #include "SettingsDialog.h"
 #include "support/RecentFileAction.h"

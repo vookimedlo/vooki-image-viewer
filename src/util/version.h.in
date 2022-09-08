@@ -25,10 +25,6 @@ namespace Util
 {
     QString getVersionString()
     {
-#if defined BUILD_DATE
-        return BUILD_DATE;
-#else
-        return QString("Dev[").append(__DATE__).append("]");
-#endif
+        return "@VERSION@";
     }
 }
