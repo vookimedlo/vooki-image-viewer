@@ -1,5 +1,4 @@
-[submodule "build/cmake/unix/support/package/rpm/changelog/git2changelog"]
-	path = build/cmake/unix/support/package/rpm/changelog/git2changelog
+[submodule "git2changelog"]
+	path = build/cmake/platform/unix/support/package/rpm/changelog/git2changelog
 	url = https://github.com/vookimedlo/git2changelog
 	branch = python3
-
