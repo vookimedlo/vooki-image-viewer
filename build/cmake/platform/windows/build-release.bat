@@ -1,10 +1,7 @@
 @echo off
 cd /D "%~dp0"
 
-cmake --build build --config Release
-
-cd build
-cpack -C Release --config ./CPackConfig.cmake
+cmake --build build --config Release --target package
 
 cd /D "%~dp0"
 

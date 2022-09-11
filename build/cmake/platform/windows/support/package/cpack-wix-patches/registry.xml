@@ -1,0 +1,223 @@
+<CPackWiXPatch>
+    <CPackWiXFragment Id="CM_CP_VookiImageViewer.exe">
+        <!-- Capabilities keys for Vista/7 "Set Program Access and Defaults" -->
+        <RegistryValue Root="HKLM" Key="SOFTWARE\VookiImageViewer\Capabilities" Name="ApplicationDescription" Value="Lightweight image viewer for a fast image preview." Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\VookiImageViewer\Capabilities" Name="ApplicationIcon" Value="[INSTALL_ROOT]VookiImageViewer.exe,0" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\VookiImageViewer\Capabilities" Name="ApplicationName" Value="VookiImageViewer" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\VookiImageViewer\Capabilities\DefaultIcon" Value="[INSTALL_ROOT]VookiImageViewer.exe,1" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\VookiImageViewer\Capabilities\shell\Open\command" Value="&quot;[INSTALL_ROOT]VookiImageViewer.exe&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\RegisteredApplications" Name="VookiImageViewer" Value="SOFTWARE\VookiImageViewer\Capabilities" Type="string" />
+
+        <!-- App Paths to support Start,Run -> "myapp" -->
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\VookiImageViewer.exe" Value="[!VookiImageViewer.exe]" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\VookiImageViewer.exe" Name="Path" Value="[INSTALL_ROOT]" Type="string" />
+
+        <!-- Extend to the "open with" list + Win7 jump menu pinning  -->
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".jpg" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".png" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".jpeg" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".bmp" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".gif" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".pbm" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".pgm" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".ppm" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".xbm" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".xpm" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".tif" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".tiff" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".webp" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".tga" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".wbmp" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".pcx" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".pic" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".psd" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".ras" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".rgb" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".rgba" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".bw" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".sgi" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".xcf" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".raf" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".mos" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".cr2" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".erf" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".dng" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".mrw" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".nef" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".orf" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".rw2" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".pef" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".x3f" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".srw" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".arw" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".heic" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".heif" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".ani" Value="" Type="string" />
+
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.jpg\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.png\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.jpeg\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.bmp\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.gif\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.pbm\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.pgm\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.ppm\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.xbm\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.xpm\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.tif\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.tiff\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.webp\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.tga\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.wbmp\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.pcx\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.pic\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.psd\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.ras\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.rgb\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.rgba\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.bw\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.sgi\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.xcf\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.raf\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.mos\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.cr2\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.erf\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.dng\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.mrw\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.nef\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.orf\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.rw2\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.pef\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.x3f\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.srw\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.arw\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.heic\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.heif\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.ani\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\shell\open" Name="FriendlyAppName" Value="VookiImageViewer" Type="string" />
+
+        <ProgId Id="VookiImageViewer.Image"  Advertise="yes">
+            <Extension Id="jpg">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="png">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="jpeg">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="bmp">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="gif">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="pbm">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="pgm">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="ppm">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="xbm">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="xpm">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="tif">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="tiff">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="webp">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="tga">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="wbmp">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="pcx">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="pic">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="psd">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="ras">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="rgb">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="rgba">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="bw">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="sgi">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="xcf">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="raf">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="mos">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="cr2">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="erf">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="dng">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="mrw">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="nef">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="orf">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="rw2">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="pef">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="x3f">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="srw">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="arw">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="heic">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="heif">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="ani">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+        </ProgId>
+    </CPackWiXFragment>
+</CPackWiXPatch>
