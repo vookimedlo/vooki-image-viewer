@@ -52,7 +52,7 @@
       <enum>Qt::DashDotLine</enum>
      </property>
      <property name="rowCount">
-      <number>33</number>
+      <number>34</number>
      </property>
      <attribute name="horizontalHeaderDefaultSectionSize">
       <number>180</number>
@@ -63,6 +63,11 @@
      <attribute name="verticalHeaderVisible">
       <bool>false</bool>
      </attribute>
+     <row>
+      <property name="text">
+       <string>New Row</string>
+      </property>
+     </row>
      <row>
       <property name="text">
        <string/>
@@ -232,10 +237,20 @@
      </column>
      <item row="0" column="0">
       <property name="text">
-       <string>GIF</string>
+       <string>ANI</string>
       </property>
      </item>
      <item row="0" column="1">
+      <property name="text">
+       <string>Windows Animated Cursor</string>
+      </property>
+     </item>
+     <item row="1" column="0">
+      <property name="text">
+       <string>GIF</string>
+      </property>
+     </item>
+     <item row="1" column="1">
       <property name="text">
        <string>Graphic Interchange Format</string>
       </property>
@@ -243,12 +258,12 @@
        <set>ItemIsEnabled</set>
       </property>
      </item>
-     <item row="1" column="0">
+     <item row="2" column="0">
       <property name="text">
        <string>JPG</string>
       </property>
      </item>
-     <item row="1" column="1">
+     <item row="2" column="1">
       <property name="text">
        <string>Joint Photographic Experts Group</string>
       </property>
@@ -256,12 +271,12 @@
        <set>ItemIsEnabled</set>
       </property>
      </item>
-     <item row="2" column="0">
+     <item row="3" column="0">
       <property name="text">
        <string>PNG</string>
       </property>
      </item>
-     <item row="2" column="1">
+     <item row="3" column="1">
       <property name="text">
        <string>Portable Network Graphics</string>
       </property>
@@ -269,12 +284,12 @@
        <set>ItemIsEnabled</set>
       </property>
      </item>
-     <item row="3" column="0">
+     <item row="4" column="0">
       <property name="text">
        <string>PBM</string>
       </property>
      </item>
-     <item row="3" column="1">
+     <item row="4" column="1">
       <property name="text">
        <string>Portable Bitmap</string>
       </property>
@@ -282,12 +297,12 @@
        <set>ItemIsEnabled</set>
       </property>
      </item>
-     <item row="4" column="0">
+     <item row="5" column="0">
       <property name="text">
        <string>PGM</string>
       </property>
      </item>
-     <item row="4" column="1">
+     <item row="5" column="1">
       <property name="text">
        <string>Portable Graymap</string>
       </property>
@@ -295,12 +310,12 @@
        <set>ItemIsEnabled</set>
       </property>
      </item>
-     <item row="5" column="0">
+     <item row="6" column="0">
       <property name="text">
        <string>PPM</string>
       </property>
      </item>
-     <item row="5" column="1">
+     <item row="6" column="1">
       <property name="text">
        <string>Portable Pixmap</string>
       </property>
@@ -308,12 +323,12 @@
        <set>ItemIsEnabled</set>
       </property>
      </item>
-     <item row="6" column="0">
+     <item row="7" column="0">
       <property name="text">
        <string>XBM</string>
       </property>
      </item>
-     <item row="6" column="1">
+     <item row="7" column="1">
       <property name="text">
        <string>X11 Bitmap</string>
       </property>
@@ -321,12 +336,12 @@
        <set>ItemIsEnabled</set>
       </property>
      </item>
-     <item row="7" column="0">
+     <item row="8" column="0">
       <property name="text">
        <string>XPM</string>
       </property>
      </item>
-     <item row="7" column="1">
+     <item row="8" column="1">
       <property name="text">
        <string>X11 Pixmap</string>
       </property>
@@ -334,12 +349,12 @@
        <set>ItemIsEnabled</set>
       </property>
      </item>
-     <item row="8" column="0">
+     <item row="9" column="0">
       <property name="text">
        <string>SVG</string>
       </property>
      </item>
-     <item row="8" column="1">
+     <item row="9" column="1">
       <property name="text">
        <string>Scalable Vector Graphics</string>
       </property>
@@ -347,12 +362,12 @@
        <set>ItemIsEnabled</set>
       </property>
      </item>
-     <item row="9" column="0">
+     <item row="10" column="0">
       <property name="text">
        <string>BMP</string>
       </property>
      </item>
-     <item row="9" column="1">
+     <item row="10" column="1">
       <property name="text">
        <string>Windows Bitmap</string>
       </property>
@@ -360,232 +375,232 @@
        <set>ItemIsEnabled</set>
       </property>
      </item>
-     <item row="10" column="0">
+     <item row="11" column="0">
       <property name="text">
        <string>XCF</string>
       </property>
      </item>
-     <item row="10" column="1">
+     <item row="11" column="1">
       <property name="text">
        <string>Gimp</string>
       </property>
      </item>
-     <item row="11" column="0">
+     <item row="12" column="0">
       <property name="text">
        <string>PSD</string>
       </property>
      </item>
-     <item row="11" column="1">
+     <item row="12" column="1">
       <property name="text">
        <string>Photoshop Documents</string>
       </property>
      </item>
-     <item row="12" column="0">
+     <item row="13" column="0">
       <property name="text">
        <string>RAS</string>
       </property>
      </item>
-     <item row="12" column="1">
+     <item row="13" column="1">
       <property name="text">
        <string>Sun Raster</string>
       </property>
      </item>
-     <item row="13" column="0">
+     <item row="14" column="0">
       <property name="text">
        <string>HDR</string>
       </property>
      </item>
-     <item row="13" column="1">
+     <item row="14" column="1">
       <property name="text">
        <string>Radiance HDR</string>
       </property>
      </item>
-     <item row="14" column="0">
+     <item row="15" column="0">
       <property name="text">
        <string>PCX</string>
       </property>
      </item>
-     <item row="14" column="1">
+     <item row="15" column="1">
       <property name="text">
        <string>Personal Computer Exchange</string>
       </property>
      </item>
-     <item row="15" column="0">
+     <item row="16" column="0">
       <property name="text">
        <string>RGB, RGBA, SGI, BW</string>
       </property>
      </item>
-     <item row="15" column="1">
+     <item row="16" column="1">
       <property name="text">
        <string>SGI Images</string>
       </property>
      </item>
-     <item row="16" column="0">
+     <item row="17" column="0">
       <property name="text">
        <string>PIC</string>
       </property>
      </item>
-     <item row="16" column="1">
+     <item row="17" column="1">
       <property name="text">
        <string>Softimage</string>
       </property>
      </item>
-     <item row="17" column="0">
+     <item row="18" column="0">
       <property name="text">
        <string>TGA</string>
       </property>
      </item>
-     <item row="17" column="1">
+     <item row="18" column="1">
       <property name="text">
        <string>Targa</string>
       </property>
      </item>
-     <item row="18" column="0">
+     <item row="19" column="0">
       <property name="text">
        <string>ARW</string>
       </property>
      </item>
-     <item row="18" column="1">
+     <item row="19" column="1">
       <property name="text">
        <string>Sony Alpha Raw [Inner thumbnail only]</string>
       </property>
      </item>
-     <item row="19" column="0">
+     <item row="20" column="0">
       <property name="text">
        <string>CR2</string>
       </property>
      </item>
-     <item row="19" column="1">
+     <item row="20" column="1">
       <property name="text">
        <string>Canon Raw Version 2 [Inner thumbnail only]</string>
       </property>
      </item>
-     <item row="20" column="0">
+     <item row="21" column="0">
       <property name="text">
        <string>DNG</string>
       </property>
      </item>
-     <item row="20" column="1">
+     <item row="21" column="1">
       <property name="text">
        <string>Digital Negative [Inner thumbnail only]</string>
       </property>
      </item>
-     <item row="21" column="0">
+     <item row="22" column="0">
       <property name="text">
        <string>ERF</string>
       </property>
      </item>
-     <item row="21" column="1">
+     <item row="22" column="1">
       <property name="text">
        <string>Epson RAW File [Inner thumbnail only]</string>
       </property>
      </item>
-     <item row="22" column="0">
+     <item row="23" column="0">
       <property name="text">
        <string>MOS</string>
       </property>
      </item>
-     <item row="22" column="1">
+     <item row="23" column="1">
       <property name="text">
        <string>Leaf Raw Image File [Inner thumbnail only]</string>
       </property>
      </item>
-     <item row="23" column="0">
+     <item row="24" column="0">
       <property name="text">
        <string>MRW</string>
       </property>
      </item>
-     <item row="23" column="1">
+     <item row="24" column="1">
       <property name="text">
        <string>Konica Minolta RAW [Inner thumbnail only]</string>
       </property>
      </item>
-     <item row="24" column="0">
+     <item row="25" column="0">
       <property name="text">
        <string>NEF</string>
       </property>
      </item>
-     <item row="24" column="1">
+     <item row="25" column="1">
       <property name="text">
        <string>Nikon Raw Image File [Inner thumbnail only]</string>
       </property>
      </item>
-     <item row="25" column="0">
+     <item row="26" column="0">
       <property name="text">
        <string>ORF</string>
       </property>
      </item>
-     <item row="25" column="1">
+     <item row="26" column="1">
       <property name="text">
        <string>Olympus Raw Image File [Inner thumbnail only]</string>
       </property>
      </item>
-     <item row="26" column="0">
+     <item row="27" column="0">
       <property name="text">
        <string>PEF</string>
       </property>
      </item>
-     <item row="26" column="1">
+     <item row="27" column="1">
       <property name="text">
        <string>Pentax Raw Image File [Inner thumbnail only]</string>
       </property>
      </item>
-     <item row="27" column="0">
+     <item row="28" column="0">
       <property name="text">
        <string>RAF</string>
       </property>
      </item>
-     <item row="27" column="1">
+     <item row="28" column="1">
       <property name="text">
        <string>Fuji Raw Image File [Inner thumbnail only]</string>
       </property>
      </item>
-     <item row="28" column="0">
+     <item row="29" column="0">
       <property name="text">
        <string>RW2</string>
       </property>
      </item>
-     <item row="28" column="1">
+     <item row="29" column="1">
       <property name="text">
        <string>Panasonic RAW Image File [Inner thumbnail only]</string>
       </property>
      </item>
-     <item row="29" column="0">
+     <item row="30" column="0">
       <property name="text">
        <string>SRW</string>
       </property>
      </item>
-     <item row="29" column="1">
+     <item row="30" column="1">
       <property name="text">
        <string>Samsung RAW Image File [Inner thumbnail only]</string>
       </property>
      </item>
-     <item row="30" column="0">
+     <item row="31" column="0">
       <property name="text">
        <string>X3F</string>
       </property>
      </item>
-     <item row="30" column="1">
+     <item row="31" column="1">
       <property name="text">
        <string>SIGMA X3F Camera RAW File [Inner thumbnail only]</string>
       </property>
      </item>
-     <item row="31" column="0">
+     <item row="32" column="0">
       <property name="text">
        <string>TIFF</string>
       </property>
      </item>
-     <item row="31" column="1">
+     <item row="32" column="1">
       <property name="text">
        <string>Tagged Image File Format</string>
       </property>
      </item>
-     <item row="32" column="0">
+     <item row="33" column="0">
       <property name="text">
        <string>[MacOS/Win10 only] HEIC</string>
       </property>
      </item>
-     <item row="32" column="1">
+     <item row="33" column="1">
       <property name="text">
        <string>High Efficiency Image File Format</string>
       </property>
