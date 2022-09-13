@@ -5,3 +5,4 @@
 [submodule "components/KDMacTouchBar"]
 	path = components/KDMacTouchBar
 	url = https://github.com/vookimedlo/KDMacTouchBar
+	branch = qt6
