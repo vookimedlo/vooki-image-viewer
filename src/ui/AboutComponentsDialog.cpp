@@ -56,8 +56,8 @@ void AboutComponentsDialog::onSelectedComponentChanged(const int row)
             m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutx265"));
             break;
         case 8:
-            break;
             m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutkdmactouchbar"));
+            break;
         default:
             m_uiAboutComponentsDialog.textBrowser->clear();
     }
