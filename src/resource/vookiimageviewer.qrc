@@ -54,5 +54,6 @@
         <file alias="aboutlibde265">text/aboutLibde265.html</file>
         <file alias="aboutlibheif">text/aboutLibheif.html</file>
         <file alias="aboutx265">text/aboutX265.html</file>
+        <file alias="aboutkdmactouchbar">text/aboutKDMacTouchBar.html</file>
     </qresource>
 </RCC>

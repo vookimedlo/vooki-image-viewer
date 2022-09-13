@@ -26,6 +26,9 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "../util/misc.h"
 #include "version.h"
 #include "AboutComponentsDialog.h"
+#if defined  __APPLE__
+#include "kdmactouchbar.h"
+#endif // __APPLE__
 #include "SettingsDialog.h"
 #include "support/RecentFileAction.h"
 #include "ui_AboutDialog.h"
@@ -45,6 +48,21 @@ MainWindow::MainWindow(QWidget *parent)
                                         , m_catalog(Util::convertFormatsToFilters(QImageReader::supportedImageFormats()))
 {
     m_ui.setupUi(this);
+    
+#if defined  __APPLE__
+    KDMacTouchBar *touchBar = new KDMacTouchBar(this);
+    touchBar->setTouchButtonStyle(KDMacTouchBar::IconOnly);
+    touchBar->addAction(m_ui.actionZoomIn);
+    touchBar->addAction(m_ui.actionZoomOut);
+    touchBar->addAction(m_ui.actionOriginalSize);
+    touchBar->addAction(m_ui.actionRotateLeft);
+    touchBar->addAction(m_ui.actionRotateRight);
+    touchBar->addAction(m_ui.actionFlipHorizontally);
+    touchBar->addAction(m_ui.actionFlipVertically);
+    touchBar->addAction(m_ui.actionPreviousImage);
+    touchBar->addAction(m_ui.actionNextImage);
+#endif // __APPLE__
+    
     m_ui.toolBar->toggleViewAction()->setShortcut(QKeySequence(Qt::Key_T));
     m_ui.toolBar->toggleViewAction()->setWhatsThis("viv/shortcut/window/toolbar");
     m_ui.menuShow->addAction(m_ui.toolBar->toggleViewAction());
