@@ -61,6 +61,7 @@ MainWindow::MainWindow(QWidget *parent)
     touchBar->addAction(m_ui.actionFlipVertically);
     touchBar->addAction(m_ui.actionPreviousImage);
     touchBar->addAction(m_ui.actionNextImage);
+    touchBar->setHidden(true);
 #endif // __APPLE__
     
     m_ui.toolBar->toggleViewAction()->setShortcut(QKeySequence(Qt::Key_T));
