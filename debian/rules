@@ -14,8 +14,6 @@
 # package maintainers to append LDFLAGS
 #export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 
-export QMAKESPEC=/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
-
 %:
 	dh $@
 
@@ -24,7 +22,7 @@ override_dh_auto_clean:
 	rm -rf build-deb || true
 
 override_dh_auto_configure:
-	ln -s build/cmake/unix/support/package/deb/Makefile Makefile
+	ln -s build/cmake/platform/unix/support/package/deb/Makefile Makefile
 	mkdir build-deb
 	cd build-deb && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr ../build/cmake/
 

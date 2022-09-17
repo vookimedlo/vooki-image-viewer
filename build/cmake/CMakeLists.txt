@@ -74,7 +74,7 @@ SET(USE_QT_LIBRARIES
     Gui
     Widgets)
 
-FIND_PACKAGE(Qt6 QUIET COMPONENTS ${USE_QT_LIBRARIES})
+FIND_PACKAGE(Qt6 REQUIRED COMPONENTS ${USE_QT_LIBRARIES})
 
 if (Qt6_FOUND)
     MESSAGE("-- Qt version is ${Qt6_VERSION}")
@@ -92,24 +92,6 @@ if (Qt6_FOUND)
 
     macro(QT_WRAP_UIS)
         QT6_WRAP_UI(UI_HEADERS
-                   ${UIS})
-    endmacro()
-else()
-    FIND_PACKAGE(Qt5 REQUIRED ${USE_QT_LIBRARIES})
-    MESSAGE("-- Qt version is ${Qt5_VERSION}")
-    SET(QT_UI_LIB Qt5::Gui)
-
-    SET(QT_ALL_LIBS
-        Qt5::Core
-        Qt5::Gui
-        Qt5::Widgets)
-
-    macro(QT_RESOURCES FIRST SECOND)
-        QT5_ADD_RESOURCES(${FIRST} ${SECOND})
-    endmacro()
-
-    macro(QT_WRAP_UIS)
-        QT5_WRAP_UI(UI_HEADERS
                    ${UIS})
     endmacro()
 endif()

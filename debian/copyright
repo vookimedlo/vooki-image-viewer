@@ -3,7 +3,7 @@ Upstream-Name: vookiimageviewer
 Source: https://github.com/vookimedlo/vooki-image-viewer
 
 Files: *
-Copyright: 2017-2019 Michal Duda <github@vookimedlo.cz>
+Copyright: 2017-2022 Michal Duda <github@vookimedlo.cz>
 License: GPL-3.0+
 
 Files: debian/*
