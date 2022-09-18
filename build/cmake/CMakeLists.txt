@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.If not, see <http://www.gnu.org/licenses/>.
 
-PROJECT(vookiimageviewer)
+PROJECT(vookiimageviewer HOMEPAGE_URL "https://vookiimageviewer.cz")
 
 CMAKE_MINIMUM_REQUIRED(VERSION 3.22)
 
@@ -340,8 +340,7 @@ elseif(WIN32)
 else()
     # Unix-like systems
     #
-    MESSAGE("-- ${APPLICATION_NAME} expects its plugins located either in /usr/lib/vookiimageviewer/imageformats or /usr/local/lib/vookiimageviewer/imageformats")
-    SET(PLUGINS "${LIB_INSTALL_DIR}/vookiimageviewer/imageformats")
+    MESSAGE("-- ${APPLICATION_NAME} expects its plugins located either in /usr/lib/vookiimageviewer/imageformats or in /usr/local/lib/vookiimageviewer/imageformats")
     ADD_DEFINITIONS(-DUNIX_LIKE)
 
     FIND_LIBRARY(LIBRAW NAMES libraw_r raw_r)
@@ -350,22 +349,5 @@ else()
         TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} ${LIBRAW})
     endif()
 
-    INSTALL(TARGETS ${APPLICATION_NAME} ${IMAGE_PLUGINS}
-            RUNTIME DESTINATION bin
-            LIBRARY DESTINATION ${PLUGINS})
-
-    GET_FILENAME_COMPONENT(TOP_LEVEL_ABSOLUTE_PATH ../../ ABSOLUTE)
-    INSTALL(FILES ${TOP_LEVEL_ABSOLUTE_PATH}/LICENSE
-                  ${TOP_LEVEL_ABSOLUTE_PATH}/LICENSE-IMAGES
-                  ${TOP_LEVEL_ABSOLUTE_PATH}/LICENSE-OPENCLIPART
-                  ${TOP_LEVEL_ABSOLUTE_PATH}/LICENSE-PLUGINS-KIMAGEFORMATS
-                  ${TOP_LEVEL_ABSOLUTE_PATH}/README.md
-            DESTINATION share/doc/vookiimageviewer)
-
-    INSTALL(FILES ${TOP_LEVEL_ABSOLUTE_PATH}/build/cmake/platform/unix/support/vookiimageviewer.desktop
-            DESTINATION share/applications)
-
-    INSTALL(FILES ${TOP_LEVEL_ABSOLUTE_PATH}/src/resource/openclipart/vookiimageviewericon.png
-            DESTINATION share/pixmaps)
-
+    INCLUDE(platform/unix/CPack.cmake)
 endif()

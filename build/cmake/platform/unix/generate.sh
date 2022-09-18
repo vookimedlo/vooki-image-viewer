@@ -1,6 +1,5 @@
 #!/bin/sh
 cd $(dirname "$0")
 
-mkdir build
-cd build
-cmake -DCMAKE_BUILD_TYPE=Release ../../../
+rm -rf build || true
+cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild ../..
