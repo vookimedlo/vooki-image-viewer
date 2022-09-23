@@ -19,7 +19,6 @@ BuildRequires: LibRaw-devel, cmake, git, make, qt5-qtbase, qt5-qtbase-devel, des
 Suggests: qt5-qtimageformats
 
 %description
-Cross-platform lightweight image viewer for a fast image preview.
 Lightweight image viewer for a fast image preview. It has been developed to have
 the same viewer available for all major operating systems - Windows 10, MacOS and
 GNU/Linux.

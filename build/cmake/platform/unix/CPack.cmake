@@ -1,3 +1,6 @@
+INCLUDE(GNUInstallDirs)
+INCLUDE(CPack.cmake)
+
 SET(PLUGINS "${LIB_INSTALL_DIR}/vookiimageviewer/imageformats")
 
 INSTALL(TARGETS ${APPLICATION_NAME} ${IMAGE_PLUGINS}
@@ -18,10 +21,18 @@ INSTALL(FILES ${TOP_LEVEL_ABSOLUTE_PATH}/build/cmake/platform/unix/support/vooki
 INSTALL(FILES ${TOP_LEVEL_ABSOLUTE_PATH}/src/resource/openclipart/vookiimageviewericon.png
         DESTINATION share/pixmaps)
 
-INCLUDE(CPack.cmake)
+FILE(STRINGS /etc/os-release DISTRIBUTION REGEX "^ID=")
+STRING(REGEX REPLACE "ID=\"?(.+)\"?" "\\1" DISTRIBUTION "${DISTRIBUTION}")
+MESSAGE("-- Distribution ${DISTRIBUTION} found")
 
 if(NOT CPACK_GENERATOR)
-    SET(CPACK_GENERATOR DEB)
+    if (DISTRIBUTION MATCHES "^(debian|ubuntu)$")
+        SET(CPACK_GENERATOR DEB)
+    elseif(${DISTRIBUTION} MATCHES "^(fedora|redhat)$")
+        SET(CPACK_GENERATOR RPM)
+    else()
+        SET(CPACK_GENERATOR ZIP)
+    endif()
 endif()
 
 foreach(GENERATOR IN LISTS CPACK_GENERATOR)
@@ -39,6 +50,29 @@ foreach(GENERATOR IN LISTS CPACK_GENERATOR)
         SET(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
         SET(CPACK_DEBIAN_PACKAGE_RECOMMENDS "qt6-image-formats-plugins")
         SET(CPACK_DEBIAN_DEBUGINFO_PACKAGE OFF)
+    elseif(GENERATOR MATCHES "RPM")
+        SET(CPACK_VERBATIM_VARIABLES YES)
+
+        SET(CPACK_RPM_FILE_NAME RPM-DEFAULT)
+        SET(CPACK_RPM_PACKAGE_RELEASE_DIST ON)
+        SET(CPACK_RPM_PACKAGE_LICENSE "GPLv3+")
+        SET(CPACK_RPM_PACKAGE_GROUP Applications/Multimedia)
+        SET(CPACK_RPM_PACKAGE_SUMMARY "Cross-platform lightweight image viewer for a fast image preview.")
+        SET(CPACK_RPM_PACKAGE_DESCRIPTION "Lightweight image viewer for a fast image preview. It has been developed to have
+ the same viewer available for all major operating systems - Windows 11, MacOS and
+ GNU/Linux.
+
+ The main goal is to have a free of charge cross-platform viewer with a simple design
+ and minimum functions which are commonly used.")
+        SET(CPACK_RPM_PACKAGE_AUTOREQ ON)
+        SET(CPACK_RPM_PACKAGE_RELOCATABLE ON)
+        SET(CPACK_RPM_PACKAGE_REQUIRES_POST "qt6-qtimageformats")
+        set(CPACK_RPM_SPEC_MORE_DEFINE "%global __provides_exclude_from /%{name}/imageformats/.*\\\\.so.*$")
+
+        SET(CPACK_RPM_BUILDREQUIRES "LibRaw-devel, cmake, git, make, qt6-qtbase, qt6-qtbase-devel, desktop-file-utils")
+        SET(CPACK_RPM_PACKAGE_SOURCES OFF)
+
+        #CPACK_RPM_CHANGELOG_FILE
     endif()
 
 endforeach()
