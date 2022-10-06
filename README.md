@@ -1,10 +1,13 @@
 # VookiImageViewer
 
 ![alt text](https://img.shields.io/static/v1?label=Platforms&message=linux|macos|windows&color=blueviolet "Supported Platforms")
-[![Code Quality Score](https://www.code-inspector.com/project/16614/score/svg)](https://frontend.code-inspector.com/public/project/16614/vooki-image-viewer/dashboard)
-[![Code Grade](https://www.code-inspector.com/project/16614/status/svg)](https://frontend.code-inspector.com/public/project/16614/vooki-image-viewer/dashboard)
 
-Lightweight image viewer for a fast image preview. It has been developed to have the same viewer available for all major operating systems - Microsoft Windows 10, MacOS and GNU/Linux.
+
+[![Linux Builds](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/linux-build.yml/badge.svg)](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/linux-build.yml)
+[![Windows Builds](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/win-build.yml/badge.svg)](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/win-build.yml)
+[![MacOS Builds](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/macos-build.yml/badge.svg)](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/macos-build.yml)
+
+A lightweight image viewer for a fast image preview. It has been developed to have the same viewer available for all major operating systems - Microsoft Windows 11, macOS and GNU/Linux.
 
 The main goal is to have a free of charge cross-platform viewer with a simple design and minimum functions that are commonly used.
 
@@ -163,11 +166,11 @@ yum -q makecache -y --disablerepo='*' --enablerepo='michal-duda-vookiimageviewer
 -----------------
 
 ## Builds
-All binaries could be built easily. For your convenience, travis-ci is used to continuously check if the current source code is buildable on Linux and MacOS.
+All binaries could be built easily. For your convenience, GitHub's Actions are used to continuously check if the current source code is buildable on Linux and MacOS.
 
-And the result is: 
- - Linux and MacOS: [![Build Status](https://travis-ci.org/vookimedlo/vooki-image-viewer.svg?branch=master)](https://travis-ci.org/vookimedlo/vooki-image-viewer)
- - Windows: [![Build status](https://ci.appveyor.com/api/projects/status/a0ots8hy6d8lutdv/branch/master?svg=true)](https://ci.appveyor.com/project/vookimedlo/vooki-image-viewer/branch/master)
+[![Linux Builds](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/linux-build.yml/badge.svg)](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/linux-build.yml)
+[![Windows Builds](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/win-build.yml/badge.svg)](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/win-build.yml)
+[![MacOS Builds](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/macos-build.yml/badge.svg)](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/macos-build.yml)
  
 -----------------
 
