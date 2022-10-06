@@ -1,0 +1,71 @@
+name: Reusable Linux Build
+on:
+  workflow_call:
+    inputs:
+      docker_image:
+        description: 'What docker image is used for building.'
+        required: true
+        type: string
+      artifact_name:
+        description: 'How the artifact is called.'
+        required: true
+        type: string
+      artifact_retention_days:
+        description: 'How long the stored artifact is kept.'
+        default: 5
+        required: false
+        type: number
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Prepare git
+      run: |-
+        git config --global core.autocrlf false
+        git config --global core.eol lf
+    - name: checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: docker [pull a build image]
+      run: docker pull ${{ inputs.docker_image }}
+    - name: docker [run a container]
+      run: docker run -d --name linux_docker --rm -ti ${{ inputs.docker_image }} bash
+    - name: docker [copy sources]
+      run: |
+        docker exec linux_docker mkdir -p /root/sources/vooki-image-viewer
+        docker cp -L ./ linux_docker:/root/sources/vooki-image-viewer  
+        docker exec linux_docker git config --global core.autocrlf false
+        docker exec linux_docker git config --global core.eof lf
+        docker exec linux_docker git config --global --add safe.directory /root/sources/vooki-image-viewer
+    - name: docker [build sources]
+      run: |
+        docker exec linux_docker ls -la /root/sources/vooki-image-viewer
+        docker exec linux_docker bash -c 'source /etc/profile && cd /root/sources/ && cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild vooki-image-viewer/build/cmake && cmake --build build --config Release --target package'
+    - name: docker [collect artifacts]
+      run: |
+        docker exec linux_docker /bin/sh -c 'cd /root/sources/build/ && tar -cf - *.deb *.rpm' | tar -xvf -
+        echo "artifact_name=`ls *.deb *.rpm`" >> $GITHUB_ENV
+    - name: archive artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ inputs.artifact_name }}_${{ env.artifact_name }}
+        path: |
+          *.deb
+          *.rpm
+        retention-days: ${{ inputs.artifact_retention_days }}
+    - name: docker [stop]
+      run: docker stop linux_docker || true
+    - name: release [artifacts preparation]
+      if: startsWith(github.ref, 'refs/tags/')
+      run: |
+        zip ${{ inputs.artifact_name }}_${{ env.artifact_name }}.zip *.deb *.rpm
+    - name: release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        draft: true
+        files: |
+          ${{ inputs.artifact_name }}_${{ env.artifact_name }}.zip
