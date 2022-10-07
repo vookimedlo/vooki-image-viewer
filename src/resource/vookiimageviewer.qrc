@@ -13,7 +13,7 @@
         <file alias="rotateright">image/Rotate-Right_240px.png</file>
         <file alias="flipvertical">image/Mirror-2-Vertical_custom.png</file>
         <file alias="fliphorizontal">image/Mirror-2-Horizontal_custom.png</file>
-        <file alias="applogo">openclipart/abeautifulwomansface-800px.png</file>
+        <file alias="applogo">openclipart/vookiimageviewericon-banner.png</file>
         <file alias="scrolldown">image/Scroll-Down_240px.png</file>
         <file alias="scrollup">image/Scroll-Up_240px.png</file>
         <file alias="scrollleft">image/Swipe-Left_240px.png</file>
@@ -42,7 +42,6 @@
         <file alias="homedir-white">image-white/Contact-Folder_240px-white.png</file>
         <file alias="docsdir-white">image-white/Documents_240px-white.png</file>
         <file alias="picturesdir-white">image-white/Picture-Folder_240px-white.png</file>
-        <file alias="applogo-white">openclipart-white/abeautifulwomansface-800px-white.png</file>
     </qresource>
     <qresource prefix="/text">
         <file alias="aboutapp">text/about.html</file>

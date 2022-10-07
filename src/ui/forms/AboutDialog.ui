@@ -57,13 +57,6 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="Line" name="line">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
      <item>
@@ -104,7 +97,6 @@
       <widget class="QLabel" name="versionLabel">
        <property name="font">
         <font>
-         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
@@ -137,10 +129,6 @@
    </item>
   </layout>
  </widget>
- <pixmapfunction>SystemDependant::darkModePixmap</pixmapfunction>
- <includes>
-  <include location="global">abstraction/darkmode.h</include>
- </includes>
  <resources>
   <include location="../../resource/vookiimageviewer.qrc"/>
  </resources>
