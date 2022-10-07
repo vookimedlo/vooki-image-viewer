@@ -21,7 +21,7 @@ The main goal is to have a free of charge cross-platform viewer with a simple de
 - Remembers recent files.
 - Supports Apple's high definition trackpad gestures.
 
-![Application screenshot](src/resource/readme/screenshot_2017-10-19_21-24-02.png?raw=true "")
+![Application screenshot](src/resource/readme/screenshot_2022-10-07_21-59-01.png?raw=true "")
 
 Supported image formats cover the very common formats as well as the rare ones. The viewer does not intentionally [demosaic][1] the RAW images, but only displays the embedded thumbnail.
 
