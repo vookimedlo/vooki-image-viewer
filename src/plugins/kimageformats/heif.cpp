@@ -9,6 +9,7 @@
 
 #include "heif_p.h"
 #include "libheif/heif_cxx.h"
+#include "util_p.h"
 
 #include <QColorSpace>
 #include <QDebug>
@@ -432,7 +433,7 @@ bool HEIFHandler::ensureDecoder()
             return false;
         }
 
-        m_current_image = QImage(imageSize, target_image_format);
+        m_current_image = imageAlloc(imageSize, target_image_format);
         if (m_current_image.isNull()) {
             m_parseState = ParseHeicError;
             qWarning() << "Unable to allocate memory!";

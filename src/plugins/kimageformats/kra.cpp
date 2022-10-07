@@ -57,6 +57,9 @@ bool KraHandler::canRead(QIODevice *device)
         qWarning("KraHandler::canRead() called with no device");
         return false;
     }
+    if (device->isSequential()) {
+        return false;
+    }
 
     char buff[57];
     if (device->peek(buff, sizeof(buff)) == sizeof(buff)) {

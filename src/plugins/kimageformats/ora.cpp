@@ -56,6 +56,9 @@ bool OraHandler::canRead(QIODevice *device)
         qWarning("OraHandler::canRead() called with no device");
         return false;
     }
+    if (device->isSequential()) {
+        return false;
+    }
 
     char buff[54];
     if (device->peek(buff, sizeof(buff)) == sizeof(buff)) {

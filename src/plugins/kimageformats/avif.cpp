@@ -12,6 +12,8 @@
 #include <QColorSpace>
 
 #include "avif_p.h"
+#include "util_p.h"
+
 #include <cfloat>
 
 QAVIFHandler::QAVIFHandler()
@@ -235,8 +237,8 @@ bool QAVIFHandler::decode_one_frame()
             resultformat = QImage::Format_RGB32;
         }
     }
-    QImage result(m_decoder->image->width, m_decoder->image->height, resultformat);
 
+    QImage result = imageAlloc(m_decoder->image->width, m_decoder->image->height, resultformat);
     if (result.isNull()) {
         qWarning("Memory cannot be allocated");
         return false;
@@ -334,7 +336,7 @@ bool QAVIFHandler::decode_one_frame()
         rgb.format = AVIF_RGB_FORMAT_ARGB;
 #endif
 
-#if AVIF_VERSION >= 80400
+#if (AVIF_VERSION >= 80400) && (AVIF_VERSION <= 100100)
         if (m_decoder->imageCount > 1) {
             /* accelerate animated AVIF */
             rgb.chromaUpsampling = AVIF_CHROMA_UPSAMPLING_FASTEST;
@@ -349,7 +351,12 @@ bool QAVIFHandler::decode_one_frame()
     rgb.rowBytes = result.bytesPerLine();
     rgb.pixels = result.bits();
 
+#if AVIF_VERSION >= 100101
+    // use faster decoding for animations
+    avifResult res = avifImageYUVToRGB(m_decoder->image, &rgb, (m_decoder->imageCount > 1) ? AVIF_CHROMA_UPSAMPLING_NEAREST : AVIF_YUV_TO_RGB_DEFAULT);
+#else
     avifResult res = avifImageYUVToRGB(m_decoder->image, &rgb);
+#endif
     if (res != AVIF_RESULT_OK) {
         qWarning("ERROR in avifImageYUVToRGB: %s", avifResultToString(res));
         return false;
@@ -775,7 +782,11 @@ bool QAVIFHandler::write(const QImage &image)
             }
         }
 
+#if AVIF_VERSION >= 100101
+        res = avifImageRGBToYUV(avif, &rgb, AVIF_RGB_TO_YUV_DEFAULT);
+#else
         res = avifImageRGBToYUV(avif, &rgb);
+#endif
         if (res != AVIF_RESULT_OK) {
             qWarning("ERROR in avifImageRGBToYUV: %s", avifResultToString(res));
             return false;
@@ -800,7 +811,7 @@ bool QAVIFHandler::write(const QImage &image)
     avifImageDestroy(avif);
 
     if (res == AVIF_RESULT_OK) {
-        qint64 status = device()->write((const char *)raw.data, raw.size);
+        qint64 status = device()->write(reinterpret_cast<const char *>(raw.data), raw.size);
         avifRWDataFree(&raw);
 
         if (status > 0) {
