@@ -70,8 +70,10 @@ bool ImageAreaWidget::showImage(const QString &fileName)
     m_reader.setQuality(100);
     m_originalImage = m_reader.read();
 
-    if (m_originalImage.isNull())
+    if (m_originalImage.isNull()) {
+        update();
         return false;
+    }
 
     m_flipHorizontally = m_flipVertically = false;
     m_imageOffsetX = m_imageOffsetY = 0;
@@ -383,6 +385,9 @@ void ImageAreaWidget::scroll(const QPoint &point)
 
 void ImageAreaWidget::transformImage()
 {
+    if (m_originalImage.isNull())
+        return;
+
     QImage scaledImage;
     QImage rotatedImage = m_originalImage.transformed(QTransform().rotate(m_rotateIndex * 90), Qt::SmoothTransformation);
 
