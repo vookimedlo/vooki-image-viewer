@@ -73,7 +73,8 @@ void Settings::initializeSettings(QMenu *menu)
             continue;
 
         defaultSettings.setValue(action->whatsThis(), action->shortcut());
-        action->setShortcut(defaultSettings.value(action->whatsThis()).value<QKeySequence>());
+        action->setShortcut(userSettings.value(action->whatsThis(),
+                                               defaultSettings.value(action->whatsThis())).value<QKeySequence>());
     }
 }
 
