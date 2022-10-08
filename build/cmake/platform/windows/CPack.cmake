@@ -8,6 +8,7 @@ INSTALL(FILES platform/windows/support/package/gpl-3.0.rtf
         DESTINATION ".")
 
 if(INSTALL_SYSTEM_RUNTIME)
+    MESSAGE("-- Runtime installation requested")
     SET(CMAKE_INSTALL_SYSTEM_RUNTIME_DESTINATION ".")
     INCLUDE(InstallRequiredSystemLibraries)
     SET(CMAKE_INSTALL_UCRT_LIBRARIES FALSE) # Windows >= 10 already contains these

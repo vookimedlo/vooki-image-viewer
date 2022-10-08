@@ -38,7 +38,7 @@ jobs:
         CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}
       run: |
         "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-        cmake -A x64 -G "Visual Studio 17 2022" -Bbuild ${{github.workspace}}\build\cmake -Wno-dev
+        cmake -A x64 -G "Visual Studio 17 2022" -Bbuild ${{github.workspace}}\build\cmake -Wno-dev -DINSTALL_SYSTEM_RUNTIME=1
     -
       name: build sources
       working-directory: ${{github.workspace}}\..
