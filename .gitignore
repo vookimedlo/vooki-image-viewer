@@ -53,6 +53,12 @@ cmake-build-*
 *.wixobj
 *.wixpdb
 *.dmg
+*.7z
+*.zip
+*.deb
+*.rpm
+*.srpm
+*.rb
 
 # DEB packages
 Makefile
