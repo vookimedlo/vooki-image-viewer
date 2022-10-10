@@ -71,12 +71,24 @@ foreach(GENERATOR IN LISTS CPACK_GENERATOR)
         SET(CPACK_RPM_PACKAGE_AUTOREQ ON)
         SET(CPACK_RPM_PACKAGE_RELOCATABLE ON)
         SET(CPACK_RPM_PACKAGE_REQUIRES_POST "qt6-qtimageformats")
-        set(CPACK_RPM_SPEC_MORE_DEFINE "%global __provides_exclude_from /%{name}/imageformats/.*\\\\.so.*$")
+        SET(CPACK_RPM_SPEC_MORE_DEFINE "%global __provides_exclude_from /%{name}/imageformats/.*\\\\.so.*$")
 
         SET(CPACK_RPM_BUILDREQUIRES "LibRaw-devel, cmake, git, make, qt6-qtbase, qt6-qtbase-devel, desktop-file-utils")
         SET(CPACK_RPM_PACKAGE_SOURCES OFF)
 
-        #CPACK_RPM_CHANGELOG_FILE
+        configure_file(${TOP_LEVEL_ABSOLUTE_PATH}/build/cmake/platform/unix/support/package/rpm/changelog/git2changelog/scripts/git2changelog "${CMAKE_BINARY_DIR}/" COPYONLY)
+        configure_file(${TOP_LEVEL_ABSOLUTE_PATH}/build/cmake/platform/unix/support/package/rpm/changelog/git2changelog/src/git2changelog.py "${CMAKE_BINARY_DIR}/" COPYONLY)
+        configure_file(${TOP_LEVEL_ABSOLUTE_PATH}/build/cmake/platform/unix/support/package/rpm/create-rpm-changelog.sh.in "${CMAKE_BINARY_DIR}/create-rpm-changelog.sh" @ONLY)
+
+        add_custom_command(
+                TARGET ${APPLICATION_NAME} POST_BUILD
+                COMMAND /bin/bash create-rpm-changelog.sh
+                WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+                DEPENDS "${CMAKE_BINARY_DIR}/create-rpm-changelog.sh"
+                COMMENT "Creating changelog"
+        )
+
+        SET(CPACK_RPM_CHANGELOG_FILE "${CMAKE_BINARY_DIR}/changelog")
     endif()
 
 endforeach()

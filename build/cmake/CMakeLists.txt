@@ -222,43 +222,17 @@ endfunction()
 #
 ADD_IMAGE_PLUGIN(vooki_kimg_pcx ../../src/plugins/kimageformats/pcx.cpp)
 
-if (Qt5_FOUND)
-    if (Qt5_VERSION VERSION_GREATER_EQUAL 5.8.0)
-        # Q_FALLTHROUGH was introduced in 5.8.0
-        #
+# Gimp (xcf)
+#
+ADD_IMAGE_PLUGIN(vooki_kimg_xcf ../../src/plugins/kimageformats/xcf.cpp)
 
-        # Gimp (xcf)
-        #
-        ADD_IMAGE_PLUGIN(vooki_kimg_xcf ../../src/plugins/kimageformats/xcf.cpp)
+# Targa (tga): supports more formats than Qt's version
+#
+ADD_IMAGE_PLUGIN(vooki_kimg_tga ../../src/plugins/kimageformats/tga.cpp)
 
-        # Targa (tga): supports more formats than Qt's version
-        #
-        ADD_IMAGE_PLUGIN(vooki_kimg_tga ../../src/plugins/kimageformats/tga.cpp)
-    endif()
-
-    if (Qt5_VERSION VERSION_GREATER_EQUAL 5.12.0)
-       # Format_RGBA64 was introduced in 5.12.0
-       #
-
-       # Photoshop documents (psd)
-       #
-       ADD_IMAGE_PLUGIN(vooki_kimg_psd ../../src/plugins/kimageformats/psd.cpp)
-    endif()
-endif()
-
-if (Qt6_FOUND)
-    # Gimp (xcf)
-    #
-    ADD_IMAGE_PLUGIN(vooki_kimg_xcf ../../src/plugins/kimageformats/xcf.cpp)
-
-    # Targa (tga): supports more formats than Qt's version
-    #
-    ADD_IMAGE_PLUGIN(vooki_kimg_tga ../../src/plugins/kimageformats/tga.cpp)
-
-    # Photoshop documents (psd)
-    #
-    ADD_IMAGE_PLUGIN(vooki_kimg_psd ../../src/plugins/kimageformats/psd.cpp)
-endif()
+# Photoshop documents (psd)
+#
+ADD_IMAGE_PLUGIN(vooki_kimg_psd ../../src/plugins/kimageformats/psd.cpp)
 
 # Windows Animated Cursor (ani)
 #
@@ -328,7 +302,7 @@ elseif(WIN32)
     ADD_CUSTOM_TARGET(copy-heif-deps)
     GET_FILENAME_COMPONENT(LIBDE265 "platform/windows/3rdPartyLibs/LibDe265-1.0.8/lib/libde265.dll" ABSOLUTE)
     GET_FILENAME_COMPONENT(LIBHEIF "platform/windows/3rdPartyLibs/LibHEIF-1.13.0/lib/heif.dll" ABSOLUTE)
-    ADD_CUSTOM_COMMAND(TARGET copy-heif-deps POST_BUILD
+    ADD_CUSTOM_COMMAND(TARGET copy-heif-deps PRE_BUILD
                        COMMAND ${CMAKE_COMMAND} -E copy ${LIBDE265} ${LIBHEIF} $<TARGET_FILE_DIR:${APPLICATION_NAME}>)
     ADD_DEPENDENCIES(vooki_kimg_heif copy-heif-deps)
     ADD_DEPENDENCIES(copy-heif-deps ${APPLICATION_NAME})

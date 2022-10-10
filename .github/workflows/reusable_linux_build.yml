@@ -29,6 +29,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
+        submodules: true
     - name: docker [pull a build image]
       run: docker pull ${{ inputs.docker_image }}
     - name: docker [run a container]

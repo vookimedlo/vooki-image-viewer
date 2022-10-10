@@ -1,0 +1,14 @@
+#!/bin/bash
+
+cd "@TOP_LEVEL_ABSOLUTE_PATH@"
+
+readonly EXACT_TAG=$(git describe --tag --exact-match)
+if [ -z $EXACT_TAG ]; then
+  readonly START_TAG=$(git tag --sort=-version:refname | head -n1)
+  cd "@CMAKE_BINARY_DIR@"
+  python ./git2changelog -b "$START_TAG" -e "$EXACT_TAG" -r "@TOP_LEVEL_ABSOLUTE_PATH@" > changelog
+else
+  readonly START_TAG=$(git tag --sort=-version:refname | grep -v "$EXACT_TAG" | head -n1)
+  cd "@CMAKE_BINARY_DIR@"
+  python ./git2changelog -b "$START_TAG" -r "@TOP_LEVEL_ABSOLUTE_PATH@" > changelog
+fi
