@@ -63,14 +63,12 @@ foreach(GENERATOR IN LISTS CPACK_GENERATOR)
                 COMMAND /bin/sh create-deb-changelog.sh
                 WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
                 DEPENDS "${CMAKE_BINARY_DIR}/create-deb-changelog.sh"
-                COMMENT "Creating changelog"
-        )
+                COMMENT "Creating changelog")
 
-        ADD_CUSTOM_TARGET(changelog ALL DEPENDS "${CMAKE_BINARY_DIR}/changelog.gz")
+        ADD_CUSTOM_TARGET(make_changelog ALL DEPENDS "${CMAKE_BINARY_DIR}/changelog.gz")
 
         INSTALL(FILES "${CMAKE_BINARY_DIR}/changelog.gz"
-                DESTINATION "share/doc/vookiimageviewer"
-                )
+                DESTINATION "share/doc/vookiimageviewer")
 
     elseif(GENERATOR MATCHES "RPM")
         SET(CPACK_VERBATIM_VARIABLES YES)
@@ -99,12 +97,16 @@ foreach(GENERATOR IN LISTS CPACK_GENERATOR)
         CONFIGURE_FILE(${TOP_LEVEL_ABSOLUTE_PATH}/build/cmake/platform/unix/support/package/rpm/create-rpm-changelog.sh.in "${CMAKE_BINARY_DIR}/create-rpm-changelog.sh" @ONLY)
 
         ADD_CUSTOM_COMMAND(
-                TARGET ${APPLICATION_NAME} POST_BUILD
+                OUTPUT "${CMAKE_BINARY_DIR}/changelog"
                 COMMAND /bin/sh create-rpm-changelog.sh
                 WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
                 DEPENDS "${CMAKE_BINARY_DIR}/create-rpm-changelog.sh"
-                COMMENT "Creating changelog"
-        )
+                COMMENT "Creating changelog")
+
+        ADD_CUSTOM_TARGET(make_changelog ALL DEPENDS "${CMAKE_BINARY_DIR}/changelog")
+
+        INSTALL(FILES "${CMAKE_BINARY_DIR}/changelog"
+                DESTINATION "share/doc/vookiimageviewer")
 
         SET(CPACK_RPM_CHANGELOG_FILE "${CMAKE_BINARY_DIR}/changelog")
     endif()
