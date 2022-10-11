@@ -54,6 +54,24 @@ foreach(GENERATOR IN LISTS CPACK_GENERATOR)
         SET(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
         SET(CPACK_DEBIAN_PACKAGE_RECOMMENDS "qt6-image-formats-plugins")
         SET(CPACK_DEBIAN_DEBUGINFO_PACKAGE OFF)
+
+        STRING(TOLOWER ${APPLICATION_NAME} APPLICATION_NAME_LOWER)
+        CONFIGURE_FILE(${TOP_LEVEL_ABSOLUTE_PATH}/build/cmake/platform/unix/support/package/deb/create-deb-changelog.sh.in "${CMAKE_BINARY_DIR}/create-deb-changelog.sh" @ONLY)
+
+        ADD_CUSTOM_COMMAND(
+                OUTPUT "${CMAKE_BINARY_DIR}/changelog.gz"
+                COMMAND /bin/sh create-deb-changelog.sh
+                WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+                DEPENDS "${CMAKE_BINARY_DIR}/create-deb-changelog.sh"
+                COMMENT "Creating changelog"
+        )
+
+        ADD_CUSTOM_TARGET(changelog ALL DEPENDS "${CMAKE_BINARY_DIR}/changelog.gz")
+
+        INSTALL(FILES "${CMAKE_BINARY_DIR}/changelog.gz"
+                DESTINATION "share/doc/vookiimageviewer"
+                )
+
     elseif(GENERATOR MATCHES "RPM")
         SET(CPACK_VERBATIM_VARIABLES YES)
 
@@ -76,13 +94,13 @@ foreach(GENERATOR IN LISTS CPACK_GENERATOR)
         SET(CPACK_RPM_BUILDREQUIRES "LibRaw-devel, cmake, git, make, qt6-qtbase, qt6-qtbase-devel, desktop-file-utils")
         SET(CPACK_RPM_PACKAGE_SOURCES OFF)
 
-        configure_file(${TOP_LEVEL_ABSOLUTE_PATH}/build/cmake/platform/unix/support/package/rpm/changelog/git2changelog/scripts/git2changelog "${CMAKE_BINARY_DIR}/" COPYONLY)
-        configure_file(${TOP_LEVEL_ABSOLUTE_PATH}/build/cmake/platform/unix/support/package/rpm/changelog/git2changelog/src/git2changelog.py "${CMAKE_BINARY_DIR}/" COPYONLY)
-        configure_file(${TOP_LEVEL_ABSOLUTE_PATH}/build/cmake/platform/unix/support/package/rpm/create-rpm-changelog.sh.in "${CMAKE_BINARY_DIR}/create-rpm-changelog.sh" @ONLY)
+        CONFIGURE_FILE(${TOP_LEVEL_ABSOLUTE_PATH}/build/cmake/platform/unix/support/package/rpm/changelog/git2changelog/scripts/git2changelog "${CMAKE_BINARY_DIR}/" COPYONLY)
+        CONFIGURE_FILE(${TOP_LEVEL_ABSOLUTE_PATH}/build/cmake/platform/unix/support/package/rpm/changelog/git2changelog/src/git2changelog.py "${CMAKE_BINARY_DIR}/" COPYONLY)
+        CONFIGURE_FILE(${TOP_LEVEL_ABSOLUTE_PATH}/build/cmake/platform/unix/support/package/rpm/create-rpm-changelog.sh.in "${CMAKE_BINARY_DIR}/create-rpm-changelog.sh" @ONLY)
 
-        add_custom_command(
+        ADD_CUSTOM_COMMAND(
                 TARGET ${APPLICATION_NAME} POST_BUILD
-                COMMAND /bin/bash create-rpm-changelog.sh
+                COMMAND /bin/sh create-rpm-changelog.sh
                 WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
                 DEPENDS "${CMAKE_BINARY_DIR}/create-rpm-changelog.sh"
                 COMMENT "Creating changelog"
