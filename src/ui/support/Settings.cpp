@@ -1,5 +1,5 @@
 /****************************************************************************
-VookiImageViewer - tool to showing images.
+VookiImageViewer - a tool for showing images.
 Copyright(C) 2017  Michal Duda <github@vookimedlo.cz>
 
 https://github.com/vookimedlo/vooki-image-viewer
@@ -73,7 +73,8 @@ void Settings::initializeSettings(QMenu *menu)
             continue;
 
         defaultSettings.setValue(action->whatsThis(), action->shortcut());
-        action->setShortcut(defaultSettings.value(action->whatsThis()).value<QKeySequence>());
+        action->setShortcut(userSettings.value(action->whatsThis(),
+                                               defaultSettings.value(action->whatsThis())).value<QKeySequence>());
     }
 }
 

@@ -1,10 +1,13 @@
 # VookiImageViewer
 
 ![alt text](https://img.shields.io/static/v1?label=Platforms&message=linux|macos|windows&color=blueviolet "Supported Platforms")
-[![Code Quality Score](https://www.code-inspector.com/project/16614/score/svg)](https://frontend.code-inspector.com/public/project/16614/vooki-image-viewer/dashboard)
-[![Code Grade](https://www.code-inspector.com/project/16614/status/svg)](https://frontend.code-inspector.com/public/project/16614/vooki-image-viewer/dashboard)
 
-Lightweight image viewer for a fast image preview. It has been developed to have the same viewer available for all major operating systems - Microsoft Windows 10, MacOS and GNU/Linux.
+
+[![Linux Builds](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/linux-build.yml/badge.svg)](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/linux-build.yml)
+[![Windows Builds](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/win-build.yml/badge.svg)](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/win-build.yml)
+[![MacOS Builds](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/macos-build.yml/badge.svg)](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/macos-build.yml)
+
+A lightweight image viewer for a fast image preview. It has been developed to have the same viewer available for all major operating systems - Microsoft Windows 11, macOS and GNU/Linux.
 
 The main goal is to have a free of charge cross-platform viewer with a simple design and minimum functions that are commonly used.
 
@@ -18,45 +21,46 @@ The main goal is to have a free of charge cross-platform viewer with a simple de
 - Remembers recent files.
 - Supports Apple's high definition trackpad gestures.
 
-![Application screenshot](src/resource/readme/screenshot_2017-10-19_21-24-02.png?raw=true "")
+![Application screenshot](src/resource/readme/screenshot_2022-10-07_21-59-01.png?raw=true "")
 
 Supported image formats cover the very common formats as well as the rare ones. The viewer does not intentionally [demosaic][1] the RAW images, but only displays the embedded thumbnail.
 
 
-| FORMAT             | DESCRIPTION                                      |
-|--------------------|--------------------------------------------------|
-| GIF                | Graphic Interchange Format                       |
-| JPG                | Joint Photographic Experts Group                 |
-| PNG                | Portable Network Graphics                        |
-| PBM                | Portable Bitmap                                  |
-| PGM                | Portable Graymap                                 |
-| PPM                | Portable Pixmap                                  |
-| XBM                | X11 Bitmap                                       |
-| XPM                | X11 Pixmap                                       |
-| SVG                | Scalable Vector Graphics                         |
-| BMP                | Windows Bitmap                                   |
-| XCF                | Gimp                                             |
-| PSD                | Photoshop Documents                              |
-| RAS                | Sun Raster                                       |
-| PCX                | Personal Computer Exchange                       |
-| RGB, RGBA, SGI, BW | SGI Images                                       |
-| PIC                | Softimage                                        |
-| TGA                | Targa                                            |
-| TIFF               | Tagged Image File Format
-| ARW                | Sony Alpha Raw [Inner thumbnail only]            |
-| CR2                | Canon Raw Version 2 [Inner thumbnail only]       |
-| DNG                | Digital Negative [Inner thumbnail only]          |
-| ERF                | Epson RAW File [Inner thumbnail only]            |
-| MOS                | Leaf Raw Image File [Inner thumbnail only]       |
-| MRW                | Konica Minolta RAW [Inner thumbnail only]        |
-| NEF                | Nikon Raw Image File [Inner thumbnail only]      |
-| ORF                | Olympus Raw Image File [Inner thumbnail only]    |
-| PEF                | Pentax Raw Image File [Inner thumbnail only]     |
-| RAF                | Fuji Raw Image File [Inner thumbnail only]       |
-| RW2                | Panasonic RAW Image File [Inner thumbnail only]  |
-| SRW                | Samsung RAW Image File [Inner thumbnail only]    |
-| X3F                | SIGMA X3F Camera RAW File [Inner thumbnail only] |
-| [MacOS/Windows only] HEIC| High-Efficiency Image File Format            |
+| FORMAT                    | DESCRIPTION                                      |
+|---------------------------|--------------------------------------------------|
+| ANI                       | Windows Animated Cursor                          |
+| GIF                       | Graphic Interchange Format                       |
+| JPG                       | Joint Photographic Experts Group                 |
+| PNG                       | Portable Network Graphics                        |
+| PBM                       | Portable Bitmap                                  |
+| PGM                       | Portable Graymap                                 |
+| PPM                       | Portable Pixmap                                  |
+| XBM                       | X11 Bitmap                                       |
+| XPM                       | X11 Pixmap                                       |
+| SVG                       | Scalable Vector Graphics                         |
+| BMP                       | Windows Bitmap                                   |
+| XCF                       | Gimp                                             |
+| PSD                       | Photoshop Documents                              |
+| RAS                       | Sun Raster                                       |
+| PCX                       | Personal Computer Exchange                       |
+| RGB, RGBA, SGI, BW        | SGI Images                                       |
+| PIC                       | Softimage                                        |
+| TGA                       | Targa                                            |
+| TIFF                      | Tagged Image File Format                         |
+| ARW                       | Sony Alpha Raw [Inner thumbnail only]            |
+| CR2                       | Canon Raw Version 2 [Inner thumbnail only]       |
+| DNG                       | Digital Negative [Inner thumbnail only]          |
+| ERF                       | Epson RAW File [Inner thumbnail only]            |
+| MOS                       | Leaf Raw Image File [Inner thumbnail only]       |
+| MRW                       | Konica Minolta RAW [Inner thumbnail only]        |
+| NEF                       | Nikon Raw Image File [Inner thumbnail only]      |
+| ORF                       | Olympus Raw Image File [Inner thumbnail only]    |
+| PEF                       | Pentax Raw Image File [Inner thumbnail only]     |
+| RAF                       | Fuji Raw Image File [Inner thumbnail only]       |
+| RW2                       | Panasonic RAW Image File [Inner thumbnail only]  |
+| SRW                       | Samsung RAW Image File [Inner thumbnail only]    |
+| X3F                       | SIGMA X3F Camera RAW File [Inner thumbnail only] |
+| [MacOS/Windows only] HEIC | High-Efficiency Image File Format                |
 
 
 All operations have assigned shortcuts and all of them can be user re-assigned except the one which is used for Preferences on MacOS.
@@ -162,11 +166,11 @@ yum -q makecache -y --disablerepo='*' --enablerepo='michal-duda-vookiimageviewer
 -----------------
 
 ## Builds
-All binaries could be built easily. For your convenience, travis-ci is used to continuously check if the current source code is buildable on Linux and MacOS.
+All binaries could be built easily. For your convenience, GitHub's Actions are used to continuously check if the current source code is buildable on Linux and MacOS.
 
-And the result is: 
- - Linux and MacOS: [![Build Status](https://travis-ci.org/vookimedlo/vooki-image-viewer.svg?branch=master)](https://travis-ci.org/vookimedlo/vooki-image-viewer)
- - Windows: [![Build status](https://ci.appveyor.com/api/projects/status/a0ots8hy6d8lutdv/branch/master?svg=true)](https://ci.appveyor.com/project/vookimedlo/vooki-image-viewer/branch/master)
+[![Linux Builds](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/linux-build.yml/badge.svg)](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/linux-build.yml)
+[![Windows Builds](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/win-build.yml/badge.svg)](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/win-build.yml)
+[![MacOS Builds](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/macos-build.yml/badge.svg)](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/macos-build.yml)
  
 -----------------
 

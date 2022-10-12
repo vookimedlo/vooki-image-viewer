@@ -7,9 +7,10 @@
 */
 
 #include "hdr_p.h"
+#include "util_p.h"
 
-#include <QImage>
 #include <QDataStream>
+#include <QImage>
 #include <QLoggingCategory>
 #include <QRegularExpressionMatch>
 
@@ -19,19 +20,18 @@ typedef unsigned char uchar;
 
 Q_LOGGING_CATEGORY(HDRPLUGIN, "kf.imageformats.plugins.hdr", QtWarningMsg)
 
-namespace   // Private.
+namespace // Private.
 {
-
-#define MAXLINE     1024
-#define MINELEN     8       // minimum scanline length for encoding
-#define MAXELEN     0x7fff  // maximum scanline length for encoding
+#define MAXLINE 1024
+#define MINELEN 8 // minimum scanline length for encoding
+#define MAXELEN 0x7fff // maximum scanline length for encoding
 
 static inline uchar ClipToByte(float value)
 {
     if (value > 255.0f) {
         return 255;
     }
-    //else if (value < 0.0f) return 0;  // we know value is positive.
+    // else if (value < 0.0f) return 0;  // we know value is positive.
     return uchar(value);
 }
 
@@ -39,8 +39,8 @@ static inline uchar ClipToByte(float value)
 // if 'first' is true the first byte is already read
 static bool Read_Old_Line(uchar *image, int width, QDataStream &s)
 {
-    int  rshift = 0;
-    int  i;
+    int rshift = 0;
+    int i;
 
     while (width > 0) {
         s >> image[0];
@@ -54,7 +54,7 @@ static bool Read_Old_Line(uchar *image, int width, QDataStream &s)
 
         if ((image[0] == 1) && (image[1] == 1) && (image[2] == 1)) {
             for (i = image[3] << rshift; i > 0; i--) {
-                //memcpy(image, image-4, 4);
+                // memcpy(image, image-4, 4);
                 (uint &)image[0] = (uint &)image[0 - 4];
                 image += 4;
                 width--;
@@ -81,9 +81,7 @@ static void RGBE_To_QRgbLine(uchar *image, QRgb *scanline, int width)
             v = 1.0f / float(1 << -e);
         }
 
-        scanline[j] = qRgb(ClipToByte(float(image[0]) * v),
-                           ClipToByte(float(image[1]) * v),
-                           ClipToByte(float(image[2]) * v));
+        scanline[j] = qRgb(ClipToByte(float(image[0]) * v), ClipToByte(float(image[1]) * v), ClipToByte(float(image[2]) * v));
 
         image += 4;
     }
@@ -92,10 +90,11 @@ static void RGBE_To_QRgbLine(uchar *image, QRgb *scanline, int width)
 // Load the HDR image.
 static bool LoadHDR(QDataStream &s, const int width, const int height, QImage &img)
 {
-    uchar val, code;
+    uchar val;
+    uchar code;
 
     // Create dst image.
-    img = QImage(width, height, QImage::Format_RGB32);
+    img = imageAlloc(width, height, QImage::Format_RGB32);
     if (img.isNull()) {
         qCDebug(HDRPLUGIN) << "Couldn't create image with size" << width << height << "and format RGB32";
         return false;
@@ -103,10 +102,10 @@ static bool LoadHDR(QDataStream &s, const int width, const int height, QImage &i
 
     QByteArray lineArray;
     lineArray.resize(4 * width);
-    uchar *image = (uchar *) lineArray.data();
+    uchar *image = (uchar *)lineArray.data();
 
     for (int cline = 0; cline < height; cline++) {
-        QRgb *scanline = (QRgb *) img.scanLine(cline);
+        QRgb *scanline = (QRgb *)img.scanLine(cline);
 
         // determine scanline type
         if ((width < MINELEN) || (MAXELEN < width)) {
@@ -168,7 +167,7 @@ static bool LoadHDR(QDataStream &s, const int width, const int height, QImage &i
                 } else {
                     // non-run
                     while (code != 0) {
-                        s >> image[i +  j * 4];
+                        s >> image[i + j * 4];
                         j++;
                         code--;
                     }
@@ -227,8 +226,14 @@ bool HDRHandler::read(QImage *outImage)
         qCDebug(HDRPLUGIN) << "Invalid HDR file, the first line after the header didn't have the expected format:" << line;
         return false;
     }
-    const int width = match.captured(2).toInt();
-    const int height = match.captured(4).toInt();
+
+    if ((match.captured(1).at(1) != u'Y') || (match.captured(3).at(1) != u'X')) {
+        qCDebug(HDRPLUGIN) << "Unsupported image orientation in HDR file.";
+        return false;
+    }
+
+    const int width = match.captured(4).toInt();
+    const int height = match.captured(2).toInt();
 
     QDataStream s(device());
 

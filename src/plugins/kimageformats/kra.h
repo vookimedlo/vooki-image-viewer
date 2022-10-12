@@ -16,7 +16,7 @@ public:
     KraHandler();
 
     bool canRead() const override;
-    bool read(QImage *image)  override;
+    bool read(QImage *image) override;
 
     static bool canRead(QIODevice *device);
 };
@@ -30,7 +30,5 @@ public:
     Capabilities capabilities(QIODevice *device, const QByteArray &format) const override;
     QImageIOHandler *create(QIODevice *device, const QByteArray &format = QByteArray()) const override;
 };
-
-
 
 #endif

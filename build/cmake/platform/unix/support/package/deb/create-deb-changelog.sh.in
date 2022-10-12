@@ -1,0 +1,26 @@
+#!/bin/bash
+
+cd "@TOP_LEVEL_ABSOLUTE_PATH@"
+rm "@CMAKE_BINARY_DIR@/changelog" 2>/dev/null || true
+
+readonly EXACT_TAG=$(git describe --tag --exact-match 2>/dev/null)
+if [ -z $EXACT_TAG ]; then
+    >"@CMAKE_BINARY_DIR@/changelog"
+    readonly START_TAG=$(git tag --sort=-version:refname | tail -n1)
+    prevtag=$START_TAG
+    git tag -l v* | sort -V | while read tag; do
+        (echo "@APPLICATION_NAME_LOWER@ (${tag#v}) unstable; urgency=low\n"; git log --pretty=format:'  * %s' $prevtag..$tag; git log --pretty='format:%n%n -- %aN <%aE>  %aD%n%n' $tag^..$tag) | cat - "@CMAKE_BINARY_DIR@/changelog" | sponge "@CMAKE_BINARY_DIR@/changelog"
+            prevtag=$tag
+    done
+    (echo "@APPLICATION_NAME_LOWER@ (HEAD-$(git rev-parse HEAD)) unstable; urgency=low\n"; git log --pretty=format:'  * %s' $(git tag --sort=-version:refname | head -n1)..HEAD; git log --pretty='format:%n%n -- %aN <%aE>  %aD%n%n' HEAD | head -n4) | cat - "@CMAKE_BINARY_DIR@/changelog" | sponge "@CMAKE_BINARY_DIR@/changelog"
+else
+    >"@CMAKE_BINARY_DIR@/changelog"
+    readonly START_TAG=$(git tag --sort=-version:refname | tail -n1)
+    prevtag=$START_TAG
+    git tag -l v* | sort -V | while read tag; do
+        (echo "@APPLICATION_NAME_LOWER@ (${tag#v}) unstable; urgency=low\n"; git log --pretty=format:'  * %s' $prevtag..$tag; git log --pretty='format:%n%n -- %aN <%aE>  %aD%n%n' $tag^..$tag) | cat - "@CMAKE_BINARY_DIR@/changelog" | sponge "@CMAKE_BINARY_DIR@/changelog"
+            prevtag=$tag
+    done
+fi
+
+gzip -cn9 "@CMAKE_BINARY_DIR@/changelog" > "@CMAKE_BINARY_DIR@/changelog.gz"

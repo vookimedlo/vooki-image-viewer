@@ -1,6 +1,6 @@
 #pragma once
 /****************************************************************************
-VookiImageViewer - tool to showing images.
+VookiImageViewer - a tool for showing images.
 Copyright(C) 2017  Michal Duda <github@vookimedlo.cz>
 
 https://github.com/vookimedlo/vooki-image-viewer
@@ -22,6 +22,8 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "../util/RotatingIndex.h"
 #include "../util/compiler.h"
 #include <QColor>
+#include <QImageReader>
+#include <QTimer>
 #include <QWidget>
 #include <cstdint>
 
@@ -35,6 +37,7 @@ class ImageAreaWidget : public QWidget
 public:
     explicit ImageAreaWidget(QWidget *parent = nullptr);
     DISABLE_COPY_MOVE(ImageAreaWidget);
+    ~ImageAreaWidget() noexcept;
 
     void drawBorder(bool draw, const QColor &color = QColor(Qt::white));
     bool showImage(const QString &fileName);
@@ -50,6 +53,7 @@ public slots:
     void onFlipVerticallyTriggered();
     void onIncreaseOffsetY(int pixels = m_imageOffsetStep);
     void onIncreaseOffsetX(int pixels = m_imageOffsetStep);
+    void onNextImage();
     void onRotateLeftTriggered();
     void onRotateRightTriggered();
     void onScrollDownTriggered();
@@ -83,10 +87,13 @@ private:
     QColor m_borderColor;
     QImage m_originalImage;
     QImage m_finalImage;
+    QImageReader m_reader;
     RotatingIndex<uint8_t> m_rotateIndex;
     int m_imageOffsetY;
     int m_imageOffsetX;
     QPoint m_mouseMoveLast;
+    QTimer m_animationTimer;
+    RotatingIndex<int> m_animationIndex;
 
     static const int m_imageOffsetStep;
 };

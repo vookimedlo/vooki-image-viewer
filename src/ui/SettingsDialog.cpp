@@ -1,5 +1,5 @@
 /****************************************************************************
-VookiImageViewer - tool to showing images.
+VookiImageViewer - a tool for showing images.
 Copyright(C) 2017  Michal Duda <github@vookimedlo.cz>
 
 https://github.com/vookimedlo/vooki-image-viewer
@@ -33,6 +33,18 @@ SettingsDialog::SettingsDialog(QWidget *parent)
     m_uiSettingsDialog.setupUi(this);
     const std::shared_ptr<QSettings> settings = Settings::userSettings();
     initializeUI(settings);
+
+    // restore all shortcuts from user settings
+    for (int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); i++)
+    {
+        QTableWidgetItem *item = m_uiSettingsDialog.tableShortcutsWidget->item(i, 0);
+
+        if (item->type() == SettingsShortcutsTableWidgetItem::type)
+        {
+            auto *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item);
+            shortcutItem->onKeySequenceChanged(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
+        }
+    }
 }
 
 void SettingsDialog::populateShortcuts(QMenu *menu) const

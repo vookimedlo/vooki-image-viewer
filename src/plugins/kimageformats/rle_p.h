@@ -8,8 +8,8 @@
 #ifndef KIMAGEFORMATS_RLE_P_H
 #define KIMAGEFORMATS_RLE_P_H
 
-#include <QDebug>
 #include <QDataStream>
+#include <QDebug>
 
 /**
  * The RLEVariant to use.
@@ -37,7 +37,7 @@ enum class RLEVariant {
      * of size 128, 130 of size 127, down to 255 of
      * size 2.
      */
-    PIC
+    PIC,
 };
 
 /**
@@ -64,12 +64,7 @@ enum class RLEVariant {
  *          into @p buf, @c false otherwise.
  */
 template<typename Item, typename Func1, typename Func2>
-static inline bool decodeRLEData(RLEVariant variant,
-                                 QDataStream &stream,
-                                 Item *dest,
-                                 quint32 length,
-                                 Func1 readData,
-                                 Func2 updateItem)
+static inline bool decodeRLEData(RLEVariant variant, QDataStream &stream, Item *dest, quint32 length, Func1 readData, Func2 updateItem)
 {
     unsigned offset = 0; // in dest
     bool is_msb = true; // only used for 16-bit PackBits, data is big-endian
@@ -154,7 +149,6 @@ static inline bool decodeRLEData(RLEVariant variant,
     return stream.status() == QDataStream::Ok;
 }
 
-
 /**
  * Encodes data in run-length encoding format.
  *
@@ -170,18 +164,10 @@ static inline bool decodeRLEData(RLEVariant variant,
  *                    and writes the item to the data stream.
  */
 template<typename Item, typename Func1, typename Func2>
-static inline void encodeRLEData(RLEVariant variant,
-                                 QDataStream &stream,
-		                 const Item *data,
-				 unsigned length,
-				 Func1 itemsEqual,
-				 Func2 writeItem)
+static inline void encodeRLEData(RLEVariant variant, QDataStream &stream, const Item *data, unsigned length, Func1 itemsEqual, Func2 writeItem)
 {
     unsigned offset = 0;
-    const unsigned maxEncodableChunk =
-        (variant == RLEVariant::PIC)
-        ? 65535u
-        : 128;
+    const unsigned maxEncodableChunk = (variant == RLEVariant::PIC) ? 65535u : 128;
     while (offset < length) {
         const Item *chunkStart = data + offset;
         unsigned maxChunk = qMin(length - offset, maxEncodableChunk);
@@ -220,10 +206,7 @@ static inline void encodeRLEData(RLEVariant variant,
             }
             chunkLength = 1;
             chunkEnd = chunkStart + 1;
-            while (chunkLength < maxChunk &&
-                    (chunkLength + 1u == maxChunk ||
-                     !itemsEqual(*chunkEnd, *(chunkEnd+1))))
-            {
+            while (chunkLength < maxChunk && (chunkLength + 1u == maxChunk || !itemsEqual(*chunkEnd, *(chunkEnd + 1)))) {
                 ++chunkEnd;
                 ++chunkLength;
             }

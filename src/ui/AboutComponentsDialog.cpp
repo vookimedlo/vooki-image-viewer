@@ -1,5 +1,5 @@
 /****************************************************************************
-VookiImageViewer - tool to showing images.
+VookiImageViewer - a tool for showing images.
 Copyright(C) 2017  Michal Duda <github@vookimedlo.cz>
 
 https://github.com/vookimedlo/vooki-image-viewer
@@ -53,6 +53,9 @@ void AboutComponentsDialog::onSelectedComponentChanged(const int row)
             m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutlibheif"));
             break;
         case 7:
+            m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutx265"));
+            break;
+        case 8:
             m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutkdmactouchbar"));
             break;
         default:

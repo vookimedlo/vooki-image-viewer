@@ -14,16 +14,17 @@
  */
 
 #include "pic_p.h"
-
 #include "rle_p.h"
+#include "util_p.h"
 
 #include <QDataStream>
 #include <QDebug>
 #include <QImage>
 #include <QVariant>
-#include <qendian.h>
 #include <algorithm>
 #include <functional>
+#include <qendian.h>
+#include <utility>
 
 /**
  * Reads a PIC file header from a data stream.
@@ -34,7 +35,7 @@
  *
  * @relates PicHeader
  */
-static QDataStream &operator>> (QDataStream &s, PicHeader &header)
+static QDataStream &operator>>(QDataStream &s, PicHeader &header)
 {
     s.setFloatingPointPrecision(QDataStream::SinglePrecision);
     s >> header.magic;
@@ -71,7 +72,7 @@ static QDataStream &operator>> (QDataStream &s, PicHeader &header)
  *
  * @relates PicHeader
  */
-static QDataStream &operator<< (QDataStream &s, const PicHeader &header)
+static QDataStream &operator<<(QDataStream &s, const PicHeader &header)
 {
     s.setFloatingPointPrecision(QDataStream::SinglePrecision);
     s << header.magic;
@@ -107,7 +108,7 @@ static QDataStream &operator<< (QDataStream &s, const PicHeader &header)
  *
  * @relates PicChannel
  */
-static QDataStream &operator>> (QDataStream &s, QList<PicChannel> &channels)
+static QDataStream &operator>>(QDataStream &s, QList<PicChannel> &channels)
 {
     const unsigned maxChannels = 8;
     unsigned count = 0;
@@ -142,7 +143,7 @@ static QDataStream &operator>> (QDataStream &s, QList<PicChannel> &channels)
  *
  * @relates PicChannel
  */
-static QDataStream &operator<< (QDataStream &s, const QList<PicChannel> &channels)
+static QDataStream &operator<<(QDataStream &s, const QList<PicChannel> &channels)
 {
     Q_ASSERT(channels.size() > 0);
     for (int i = 0; i < channels.size() - 1; ++i) {
@@ -160,8 +161,8 @@ static QDataStream &operator<< (QDataStream &s, const QList<PicChannel> &channel
 
 static bool readRow(QDataStream &stream, QRgb *row, quint16 width, const QList<PicChannel> &channels)
 {
-    for(const PicChannel &channel : channels) {
-        auto readPixel = [&] (QDataStream &str) -> QRgb {
+    for (const PicChannel &channel : channels) {
+        auto readPixel = [&](QDataStream &str) -> QRgb {
             quint8 red = 0;
             if (channel.code & RED) {
                 str >> red;
@@ -180,16 +181,14 @@ static bool readRow(QDataStream &stream, QRgb *row, quint16 width, const QList<P
             }
             return qRgba(red, green, blue, alpha);
         };
-        auto updatePixel = [&] (QRgb oldPixel, QRgb newPixel) -> QRgb {
-            return qRgba(
-                qRed((channel.code & RED) ? newPixel : oldPixel),
-                qGreen((channel.code & GREEN) ? newPixel : oldPixel),
-                qBlue((channel.code & BLUE) ? newPixel : oldPixel),
-                qAlpha((channel.code & ALPHA) ? newPixel : oldPixel));
+        auto updatePixel = [&](QRgb oldPixel, QRgb newPixel) -> QRgb {
+            return qRgba(qRed((channel.code & RED) ? newPixel : oldPixel),
+                         qGreen((channel.code & GREEN) ? newPixel : oldPixel),
+                         qBlue((channel.code & BLUE) ? newPixel : oldPixel),
+                         qAlpha((channel.code & ALPHA) ? newPixel : oldPixel));
         };
         if (channel.encoding == MixedRLE) {
-            bool success = decodeRLEData(RLEVariant::PIC, stream, row, width,
-                                         readPixel, updatePixel);
+            bool success = decodeRLEData(RLEVariant::PIC, stream, row, width, readPixel, updatePixel);
             if (!success) {
                 qDebug() << "decodeRLEData failed";
                 return false;
@@ -227,7 +226,7 @@ bool SoftimagePICHandler::read(QImage *image)
     }
 
     QImage::Format fmt = QImage::Format_RGB32;
-    for (const PicChannel &channel : qAsConst(m_channels)) {
+    for (const PicChannel &channel : std::as_const(m_channels)) {
         if (channel.size != 8) {
             // we cannot read images that do not come in bytes
             qDebug() << "Channel size was" << channel.size;
@@ -239,16 +238,16 @@ bool SoftimagePICHandler::read(QImage *image)
         }
     }
 
-    QImage img(m_header.width, m_header.height, fmt);
+    QImage img = imageAlloc(m_header.width, m_header.height, fmt);
     if (img.isNull()) {
         qDebug() << "Failed to allocate image, invalid dimensions?" << QSize(m_header.width, m_header.height) << fmt;
         return false;
     }
 
-    img.fill(qRgb(0,0,0));
+    img.fill(qRgb(0, 0, 0));
 
     for (int y = 0; y < m_header.height; y++) {
-        QRgb *row = reinterpret_cast<QRgb*>(img.scanLine(y));
+        QRgb *row = reinterpret_cast<QRgb *>(img.scanLine(y));
         if (!readRow(m_dataStream, row, m_header.width, m_channels)) {
             qDebug() << "readRow failed";
             m_state = Error;
@@ -265,9 +264,7 @@ bool SoftimagePICHandler::read(QImage *image)
 bool SoftimagePICHandler::write(const QImage &_image)
 {
     bool alpha = _image.hasAlphaChannel();
-    const QImage image = _image.convertToFormat(
-            alpha ? QImage::Format_ARGB32
-                  : QImage::Format_RGB32);
+    const QImage image = _image.convertToFormat(alpha ? QImage::Format_ARGB32 : QImage::Format_RGB32);
 
     if (image.width() < 0 || image.height() < 0) {
         qDebug() << "Image size invalid:" << image.width() << image.height();
@@ -292,22 +289,17 @@ bool SoftimagePICHandler::write(const QImage &_image)
     stream << channels;
 
     for (int r = 0; r < image.height(); r++) {
-        const QRgb *row = reinterpret_cast<const QRgb*>(image.scanLine(r));
+        const QRgb *row = reinterpret_cast<const QRgb *>(image.scanLine(r));
 
         /* Write the RGB part of the scanline */
-        auto rgbEqual = [] (QRgb p1, QRgb p2) -> bool {
-            return qRed(p1) == qRed(p2) &&
-                   qGreen(p1) == qGreen(p2) &&
-                   qBlue(p1) == qBlue(p2);
+        auto rgbEqual = [](QRgb p1, QRgb p2) -> bool {
+            return qRed(p1) == qRed(p2) && qGreen(p1) == qGreen(p2) && qBlue(p1) == qBlue(p2);
         };
-        auto writeRgb = [] (QDataStream &str, QRgb pixel) -> void {
-            str << quint8(qRed(pixel))
-                << quint8(qGreen(pixel))
-                << quint8(qBlue(pixel));
+        auto writeRgb = [](QDataStream &str, QRgb pixel) -> void {
+            str << quint8(qRed(pixel)) << quint8(qGreen(pixel)) << quint8(qBlue(pixel));
         };
         if (m_compression) {
-            encodeRLEData(RLEVariant::PIC, stream, row, image.width(),
-                          rgbEqual, writeRgb);
+            encodeRLEData(RLEVariant::PIC, stream, row, image.width(), rgbEqual, writeRgb);
         } else {
             for (int i = 0; i < image.width(); ++i) {
                 writeRgb(stream, row[i]);
@@ -316,15 +308,14 @@ bool SoftimagePICHandler::write(const QImage &_image)
 
         /* Write the alpha channel */
         if (alpha) {
-            auto alphaEqual = [] (QRgb p1, QRgb p2) -> bool {
+            auto alphaEqual = [](QRgb p1, QRgb p2) -> bool {
                 return qAlpha(p1) == qAlpha(p2);
             };
-            auto writeAlpha = [] (QDataStream &str, QRgb pixel) -> void {
+            auto writeAlpha = [](QDataStream &str, QRgb pixel) -> void {
                 str << quint8(qAlpha(pixel));
             };
             if (m_compression) {
-                encodeRLEData(RLEVariant::PIC, stream, row, image.width(),
-                              alphaEqual, writeAlpha);
+                encodeRLEData(RLEVariant::PIC, stream, row, image.width(), alphaEqual, writeAlpha);
             } else {
                 for (int i = 0; i < image.width(); ++i) {
                     writeAlpha(stream, row[i]);
@@ -341,7 +332,7 @@ bool SoftimagePICHandler::canRead(QIODevice *device)
     if (device->peek(data, 4) != 4) {
         return false;
     }
-    return qFromBigEndian<qint32>(reinterpret_cast<uchar*>(data)) == PIC_MAGIC_NUMBER;
+    return qFromBigEndian<qint32>(reinterpret_cast<uchar *>(data)) == PIC_MAGIC_NUMBER;
 }
 
 bool SoftimagePICHandler::readHeader()
@@ -374,67 +365,62 @@ bool SoftimagePICHandler::readChannels()
 void SoftimagePICHandler::setOption(ImageOption option, const QVariant &value)
 {
     switch (option) {
-        case CompressionRatio:
-            m_compression = value.toBool();
-            break;
-        case Description: {
-            m_description.clear();
-            const QStringList entries = value.toString().split(QStringLiteral("\n\n"));
-            for (const QString &entry : entries) {
-                if (entry.startsWith(QStringLiteral("Description: "))) {
-                    m_description = entry.mid(13).simplified().toUtf8();
-                }
+    case CompressionRatio:
+        m_compression = value.toBool();
+        break;
+    case Description: {
+        m_description.clear();
+        const QStringList entries = value.toString().split(QStringLiteral("\n\n"));
+        for (const QString &entry : entries) {
+            if (entry.startsWith(QStringLiteral("Description: "))) {
+                m_description = entry.mid(13).simplified().toUtf8();
             }
-            break;
         }
-        default:
-            break;
+        break;
+    }
+    default:
+        break;
     }
 }
 
 QVariant SoftimagePICHandler::option(ImageOption option) const
 {
-    const_cast<SoftimagePICHandler*>(this)->readHeader();
+    const_cast<SoftimagePICHandler *>(this)->readHeader();
     switch (option) {
-        case Size:
-            if (const_cast<SoftimagePICHandler*>(this)->readHeader()) {
-                return QSize(m_header.width, m_header.height);
-            } else {
-                return QVariant();
+    case Size:
+        if (const_cast<SoftimagePICHandler *>(this)->readHeader()) {
+            return QSize(m_header.width, m_header.height);
+        } else {
+            return QVariant();
+        }
+    case CompressionRatio:
+        return m_compression;
+    case Description:
+        if (const_cast<SoftimagePICHandler *>(this)->readHeader()) {
+            QString descStr = QString::fromUtf8(m_header.comment);
+            if (!descStr.isEmpty()) {
+                return QString(QStringLiteral("Description: ") + descStr + QStringLiteral("\n\n"));
             }
-        case CompressionRatio:
-            return m_compression;
-        case Description:
-            if (const_cast<SoftimagePICHandler*>(this)->readHeader()) {
-                QString descStr = QString::fromUtf8(m_header.comment);
-                if (!descStr.isEmpty()) {
-                    return QString(QStringLiteral("Description: ") +
-                           descStr +
-                           QStringLiteral("\n\n"));
+        }
+        return QString();
+    case ImageFormat:
+        if (const_cast<SoftimagePICHandler *>(this)->readChannels()) {
+            for (const PicChannel &channel : std::as_const(m_channels)) {
+                if (channel.code & ALPHA) {
+                    return QImage::Format_ARGB32;
                 }
             }
-            return QString();
-        case ImageFormat:
-            if (const_cast<SoftimagePICHandler*>(this)->readChannels()) {
-                for (const PicChannel &channel : qAsConst(m_channels)) {
-                    if (channel.code & ALPHA) {
-                        return QImage::Format_ARGB32;
-                    }
-                }
-                return QImage::Format_RGB32;
-            }
-            return QVariant();
-        default:
-            return QVariant();
+            return QImage::Format_RGB32;
+        }
+        return QVariant();
+    default:
+        return QVariant();
     }
 }
 
 bool SoftimagePICHandler::supportsOption(ImageOption option) const
 {
-    return (option == CompressionRatio ||
-            option == Description ||
-            option == ImageFormat ||
-            option == Size);
+    return (option == CompressionRatio || option == Description || option == ImageFormat || option == Size);
 }
 
 QImageIOPlugin::Capabilities SoftimagePICPlugin::capabilities(QIODevice *device, const QByteArray &format) const

@@ -8,11 +8,11 @@
 # Build dirs
 build/build*
 build/qmake/build*
-build/cmake/windows/build
-build/cmake/windows/support/application.aps
-build/cmake/windows/support/package/SourceDir
-build/cmake/mac/build
-build/cmake/mac/package
+build/cmake/platform/windows/build
+build/cmake/platform/windows/support/application.aps
+build/cmake/platform/windows/support/package/SourceDir
+build/cmake/platform/mac/build
+build/cmake/platform/mac/package
 cmake-build-*
 
 # CLion
@@ -53,6 +53,12 @@ cmake-build-*
 *.wixobj
 *.wixpdb
 *.dmg
+*.7z
+*.zip
+*.deb
+*.rpm
+*.srpm
+*.rb
 
 # DEB packages
 Makefile
@@ -63,7 +69,7 @@ debian/vookiimageviewer/
 debian/vookiimageviewer.substvars
 build-deb/
 
-build/cmake/unix/support/package/rpm/vookiimageviewer-patched.spec
-build/cmake/unix/support/package/rpm/git2changelog.py
-build/cmake/unix/support/package/rpm/git2changelog
-build/cmake/unix/support/package/rpm/git2changelog.pyc
+build/cmake/platform/unix/support/package/rpm/vookiimageviewer-patched.spec
+build/cmake/platform/unix/support/package/rpm/git2changelog.py
+build/cmake/platform/unix/support/package/rpm/git2changelog
+build/cmake/platform/unix/support/package/rpm/git2changelog.pyc

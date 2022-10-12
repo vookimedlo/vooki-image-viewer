@@ -1,5 +1,5 @@
 /****************************************************************************
-VookiImageViewer - tool to showing images.
+VookiImageViewer - a tool for showing images.
 Copyright(C) 2017  Michal Duda <github@vookimedlo.cz>
 
 https://github.com/vookimedlo/vooki-image-viewer
@@ -24,7 +24,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "../ui/support/Settings.h"
 #include "../ui/support/SettingsStrings.h"
 #include "../util/misc.h"
-#include "../util/version.h"
+#include "version.h"
 #include "AboutComponentsDialog.h"
 #if defined  __APPLE__
 #include "kdmactouchbar.h"
@@ -61,6 +61,7 @@ MainWindow::MainWindow(QWidget *parent)
     touchBar->addAction(m_ui.actionFlipVertically);
     touchBar->addAction(m_ui.actionPreviousImage);
     touchBar->addAction(m_ui.actionNextImage);
+    touchBar->setHidden(true);
 #endif // __APPLE__
     
     m_ui.toolBar->toggleViewAction()->setShortcut(QKeySequence(Qt::Key_T));

@@ -1,5 +1,5 @@
 /****************************************************************************
-VookiImageViewer - tool to showing images.
+VookiImageViewer - a tool for showing images.
 Copyright(C) 2017  Michal Duda <github@vookimedlo.cz>
 
 https://github.com/vookimedlo/vooki-image-viewer
@@ -23,7 +23,6 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "support/SettingsStrings.h"
 #include <QDebug>
 #include <QGuiApplication>
-#include <QImageReader>
 #include <QPaintEvent>
 #include <QPainter>
 #include <cmath>
@@ -40,14 +39,22 @@ ImageAreaWidget::ImageAreaWidget(QWidget *parent)
                                         , m_borderColor(Qt::white)
                                         , m_originalImage()
                                         , m_finalImage()
+                                        , m_reader()
                                         , m_rotateIndex(0, 4)
                                         , // 4 rotation quadrants
                                         m_imageOffsetY(0)
                                         , m_imageOffsetX(0)
                                         , m_mouseMoveLast()
+                                        , m_animationTimer(this)
+                                        , m_animationIndex(0, 1)
 {
     m_originalImage.fill(qRgb(0, 0, 0));
     m_finalImage.fill(qRgb(0, 0, 0));
+}
+
+ImageAreaWidget::~ImageAreaWidget() noexcept
+{
+    m_animationTimer.stop();
 }
 
 void ImageAreaWidget::drawBorder(const bool draw, const QColor &color)
@@ -58,12 +65,15 @@ void ImageAreaWidget::drawBorder(const bool draw, const QColor &color)
 
 bool ImageAreaWidget::showImage(const QString &fileName)
 {
-    QImageReader reader(fileName);
-    reader.setQuality(100);
-    m_originalImage = reader.read();
+    m_animationTimer.stop();
+    m_reader.setFileName(fileName);
+    m_reader.setQuality(100);
+    m_originalImage = m_reader.read();
 
-    if (m_originalImage.isNull())
+    if (m_originalImage.isNull()) {
+        update();
         return false;
+    }
 
     m_flipHorizontally = m_flipVertically = false;
     m_imageOffsetX = m_imageOffsetY = 0;
@@ -71,6 +81,15 @@ bool ImageAreaWidget::showImage(const QString &fileName)
     m_scaleFactor = 1;
     transformImage();
     update();
+
+    if (m_reader.imageCount() > 1)
+    {
+        m_animationIndex.set(0, m_reader.imageCount());
+        const auto delay = m_reader.nextImageDelay();
+        if (delay > 0)
+            m_animationTimer.singleShot(delay, this, SLOT(onNextImage()));
+    }
+
     return true;
 }
 
@@ -135,6 +154,23 @@ void ImageAreaWidget::onIncreaseOffsetY(const int pixels)
 {
     m_imageOffsetY += pixels;
     repaintWithTransformations();
+}
+
+void ImageAreaWidget::onNextImage()
+{
+    if (++m_animationIndex == 0)
+        m_reader.setFileName(m_reader.fileName());
+    qDebug()<<"Index: "<<m_animationIndex;
+    m_reader.jumpToImage(m_animationIndex);
+    if (!m_reader.read(&m_originalImage))
+        return;
+
+    transformImage();
+    update();
+
+    const auto delay = m_reader.nextImageDelay();
+    if (delay > 0)
+        m_animationTimer.singleShot(delay, this, SLOT(onNextImage()));
 }
 
 void ImageAreaWidget::onRotateLeftTriggered()
@@ -349,6 +385,9 @@ void ImageAreaWidget::scroll(const QPoint &point)
 
 void ImageAreaWidget::transformImage()
 {
+    if (m_originalImage.isNull())
+        return;
+
     QImage scaledImage;
     QImage rotatedImage = m_originalImage.transformed(QTransform().rotate(m_rotateIndex * 90), Qt::SmoothTransformation);
 

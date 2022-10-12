@@ -17,30 +17,30 @@
  */
 
 #include "tga_p.h"
+#include "util_p.h"
 
 #include <assert.h>
 
-#include <QImage>
 #include <QDataStream>
 #include <QDebug>
+#include <QImage>
 
 typedef quint32 uint;
 typedef quint16 ushort;
 typedef quint8 uchar;
 
-namespace   // Private.
+namespace // Private.
 {
-
 // Header format of saved files.
-uchar targaMagic[12] = { 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+uchar targaMagic[12] = {0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 enum TGAType {
-    TGA_TYPE_INDEXED        = 1,
-    TGA_TYPE_RGB            = 2,
-    TGA_TYPE_GREY           = 3,
-    TGA_TYPE_RLE_INDEXED    = 9,
-    TGA_TYPE_RLE_RGB        = 10,
-    TGA_TYPE_RLE_GREY       = 11
+    TGA_TYPE_INDEXED = 1,
+    TGA_TYPE_RGB = 2,
+    TGA_TYPE_GREY = 3,
+    TGA_TYPE_RLE_INDEXED = 9,
+    TGA_TYPE_RLE_RGB = 10,
+    TGA_TYPE_RLE_GREY = 11,
 };
 
 #define TGA_INTERLEAVE_MASK 0xc0
@@ -48,11 +48,11 @@ enum TGAType {
 #define TGA_INTERLEAVE_2WAY 0x40
 #define TGA_INTERLEAVE_4WAY 0x80
 
-#define TGA_ORIGIN_MASK     0x30
-#define TGA_ORIGIN_LEFT     0x00
-#define TGA_ORIGIN_RIGHT    0x10
-#define TGA_ORIGIN_LOWER    0x00
-#define TGA_ORIGIN_UPPER    0x20
+#define TGA_ORIGIN_MASK 0x30
+#define TGA_ORIGIN_LEFT 0x00
+#define TGA_ORIGIN_RIGHT 0x10
+#define TGA_ORIGIN_LOWER 0x00
+#define TGA_ORIGIN_UPPER 0x20
 
 /** Tga Header. */
 struct TgaHeader {
@@ -69,10 +69,12 @@ struct TgaHeader {
     uchar pixel_size;
     uchar flags;
 
-    enum { SIZE = 18 }; // const static int SIZE = 18;
+    enum {
+        SIZE = 18,
+    }; // const static int SIZE = 18;
 };
 
-static QDataStream &operator>> (QDataStream &s, TgaHeader &head)
+static QDataStream &operator>>(QDataStream &s, TgaHeader &head)
 {
     s >> head.id_length;
     s >> head.colormap_type;
@@ -88,30 +90,23 @@ static QDataStream &operator>> (QDataStream &s, TgaHeader &head)
     s >> head.flags;
     /*qDebug() << "id_length: " << head.id_length << " - colormap_type: " << head.colormap_type << " - image_type: " << head.image_type;
     qDebug() << "colormap_index: " << head.colormap_index << " - colormap_length: " << head.colormap_length << " - colormap_size: " << head.colormap_size;
-    qDebug() << "x_origin: " << head.x_origin << " - y_origin: " << head.y_origin << " - width:" << head.width << " - height:" << head.height << " - pixelsize: " << head.pixel_size << " - flags: " << head.flags;*/
+    qDebug() << "x_origin: " << head.x_origin << " - y_origin: " << head.y_origin << " - width:" << head.width << " - height:" << head.height << " - pixelsize:
+    " << head.pixel_size << " - flags: " << head.flags;*/
     return s;
 }
 
 static bool IsSupported(const TgaHeader &head)
 {
-    if (head.image_type != TGA_TYPE_INDEXED &&
-            head.image_type != TGA_TYPE_RGB &&
-            head.image_type != TGA_TYPE_GREY &&
-            head.image_type != TGA_TYPE_RLE_INDEXED &&
-            head.image_type != TGA_TYPE_RLE_RGB &&
-            head.image_type != TGA_TYPE_RLE_GREY) {
+    if (head.image_type != TGA_TYPE_INDEXED && head.image_type != TGA_TYPE_RGB && head.image_type != TGA_TYPE_GREY && head.image_type != TGA_TYPE_RLE_INDEXED
+        && head.image_type != TGA_TYPE_RLE_RGB && head.image_type != TGA_TYPE_RLE_GREY) {
         return false;
     }
-    if (head.image_type == TGA_TYPE_INDEXED ||
-            head.image_type == TGA_TYPE_RLE_INDEXED) {
+    if (head.image_type == TGA_TYPE_INDEXED || head.image_type == TGA_TYPE_RLE_INDEXED) {
         if (head.colormap_length > 256 || head.colormap_size != 24 || head.colormap_type != 1) {
             return false;
         }
     }
-    if (head.image_type == TGA_TYPE_RGB ||
-            head.image_type == TGA_TYPE_GREY ||
-            head.image_type == TGA_TYPE_RLE_RGB ||
-            head.image_type == TGA_TYPE_RLE_GREY) {
+    if (head.image_type == TGA_TYPE_RGB || head.image_type == TGA_TYPE_GREY || head.image_type == TGA_TYPE_RLE_RGB || head.image_type == TGA_TYPE_RLE_GREY) {
         if (head.colormap_type != 0) {
             return false;
         }
@@ -119,8 +114,7 @@ static bool IsSupported(const TgaHeader &head)
     if (head.width == 0 || head.height == 0) {
         return false;
     }
-    if (head.pixel_size != 8 && head.pixel_size != 16 &&
-            head.pixel_size != 24 && head.pixel_size != 32) {
+    if (head.pixel_size != 8 && head.pixel_size != 16 && head.pixel_size != 24 && head.pixel_size != 32) {
         return false;
     }
     return true;
@@ -138,12 +132,16 @@ struct TgaHeaderInfo {
     bool rgb;
     bool grey;
 
-    TgaHeaderInfo(const TgaHeader &tga) : rle(false), pal(false), rgb(false), grey(false)
+    TgaHeaderInfo(const TgaHeader &tga)
+        : rle(false)
+        , pal(false)
+        , rgb(false)
+        , grey(false)
     {
         switch (tga.image_type) {
         case TGA_TYPE_RLE_INDEXED:
             rle = true;
-        Q_FALLTHROUGH();
+            Q_FALLTHROUGH();
         // no break is intended!
         case TGA_TYPE_INDEXED:
             pal = true;
@@ -151,7 +149,7 @@ struct TgaHeaderInfo {
 
         case TGA_TYPE_RLE_RGB:
             rle = true;
-        Q_FALLTHROUGH();
+            Q_FALLTHROUGH();
         // no break is intended!
         case TGA_TYPE_RGB:
             rgb = true;
@@ -159,7 +157,7 @@ struct TgaHeaderInfo {
 
         case TGA_TYPE_RLE_GREY:
             rle = true;
-        Q_FALLTHROUGH();
+            Q_FALLTHROUGH();
         // no break is intended!
         case TGA_TYPE_GREY:
             grey = true;
@@ -175,7 +173,7 @@ struct TgaHeaderInfo {
 static bool LoadTGA(QDataStream &s, const TgaHeader &tga, QImage &img)
 {
     // Create image.
-    img = QImage(tga.width, tga.height, QImage::Format_RGB32);
+    img = imageAlloc(tga.width, tga.height, QImage::Format_RGB32);
     if (img.isNull()) {
         qWarning() << "Failed to allocate image, invalid dimensions?" << QSize(tga.width, tga.height);
         return false;
@@ -187,7 +185,7 @@ static bool LoadTGA(QDataStream &s, const TgaHeader &tga, QImage &img)
     const int numAlphaBits = tga.flags & 0xf;
     // However alpha exists only in the 32 bit format.
     if ((tga.pixel_size == 32) && (tga.flags & 0xf)) {
-        img = QImage(tga.width, tga.height, QImage::Format_ARGB32);
+        img = imageAlloc(tga.width, tga.height, QImage::Format_ARGB32);
         if (img.isNull()) {
             qWarning() << "Failed to allocate image, invalid dimensions?" << QSize(tga.width, tga.height);
             return false;
@@ -202,7 +200,7 @@ static bool LoadTGA(QDataStream &s, const TgaHeader &tga, QImage &img)
     qint64 size = qint64(tga.width) * qint64(tga.height) * pixel_size;
 
     if (size < 1) {
-//          qDebug() << "This TGA file is broken with size " << size;
+        //          qDebug() << "This TGA file is broken with size " << size;
         return false;
     }
 
@@ -225,7 +223,7 @@ static bool LoadTGA(QDataStream &s, const TgaHeader &tga, QImage &img)
     }
 
     // Allocate image.
-    uchar *const image = reinterpret_cast<uchar*>(malloc(size));
+    uchar *const image = reinterpret_cast<uchar *>(malloc(size));
     if (!image) {
         return false;
     }
@@ -282,11 +280,11 @@ static bool LoadTGA(QDataStream &s, const TgaHeader &tga, QImage &img)
                     return false;
                 }
 
-
                 if ((uint)dataRead < count) {
                     const size_t toCopy = count - dataRead;
                     if (&dst[dataRead] + toCopy > imgEnd) {
-                        qWarning() << "Trying to write out of bounds!" << ptrdiff_t(image) << ptrdiff_t(&dst[dataRead]);;
+                        qWarning() << "Trying to write out of bounds!" << ptrdiff_t(image) << ptrdiff_t(&dst[dataRead]);
+                        ;
                         valid = false;
                         break;
                     }
@@ -314,7 +312,9 @@ static bool LoadTGA(QDataStream &s, const TgaHeader &tga, QImage &img)
     }
 
     // Convert image to internal format.
-    int y_start, y_step, y_end;
+    int y_start;
+    int y_step;
+    int y_end;
     if (tga.flags & TGA_ORIGIN_UPPER) {
         y_start = 0;
         y_step = 1;
@@ -328,7 +328,7 @@ static bool LoadTGA(QDataStream &s, const TgaHeader &tga, QImage &img)
     uchar *src = image;
 
     for (int y = y_start; y != y_end; y += y_step) {
-        QRgb *scanline = (QRgb *) img.scanLine(y);
+        QRgb *scanline = (QRgb *)img.scanLine(y);
 
         if (info.pal) {
             // Paletted.
@@ -389,7 +389,7 @@ bool TGAHandler::canRead() const
 
 bool TGAHandler::read(QImage *outImage)
 {
-    //qDebug() << "Loading TGA file!";
+    // qDebug() << "Loading TGA file!";
 
     QDataStream s(device());
     s.setByteOrder(QDataStream::LittleEndian);
@@ -401,13 +401,13 @@ bool TGAHandler::read(QImage *outImage)
 
     // Check image file format.
     if (s.atEnd()) {
-//         qDebug() << "This TGA file is not valid.";
+        //         qDebug() << "This TGA file is not valid.";
         return false;
     }
 
     // Check supported file types.
     if (!IsSupported(tga)) {
-//         qDebug() << "This TGA file is not supported.";
+        //         qDebug() << "This TGA file is not supported.";
         return false;
     }
 
@@ -415,7 +415,7 @@ bool TGAHandler::read(QImage *outImage)
     bool result = LoadTGA(s, tga, img);
 
     if (result == false) {
-//         qDebug() << "Error loading TGA file.";
+        //         qDebug() << "Error loading TGA file.";
         return false;
     }
 
@@ -435,12 +435,12 @@ bool TGAHandler::write(const QImage &image)
     }
 
     // write header
-    s << quint16(img.width());   // width
-    s << quint16(img.height());   // height
-    s << quint8(hasAlpha ? 32 : 24);   // depth (24 bit RGB + 8 bit alpha)
-    s << quint8(hasAlpha ? 0x24 : 0x20);   // top left image (0x20) + 8 bit alpha (0x4)
+    s << quint16(img.width()); // width
+    s << quint16(img.height()); // height
+    s << quint8(hasAlpha ? 32 : 24); // depth (24 bit RGB + 8 bit alpha)
+    s << quint8(hasAlpha ? 0x24 : 0x20); // top left image (0x20) + 8 bit alpha (0x4)
 
-    for (int y = 0; y < img.height(); y++)
+    for (int y = 0; y < img.height(); y++) {
         for (int x = 0; x < img.width(); x++) {
             const QRgb color = img.pixel(x, y);
             s << quint8(qBlue(color));
@@ -450,6 +450,7 @@ bool TGAHandler::write(const QImage &image)
                 s << quint8(qAlpha(color));
             }
         }
+    }
 
     return true;
 }

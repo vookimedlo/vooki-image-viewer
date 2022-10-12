@@ -1,4 +1,4 @@
 {
-    "Keys": [ "psd" ],
-    "MimeTypes": [ "image/vnd.adobe.photoshop" ]
+    "Keys": [ "psd", "psb", "pdd", "psdt" ],
+    "MimeTypes": [ "image/vnd.adobe.photoshop", "image/vnd.adobe.photoshop", "image/vnd.adobe.photoshop", "image/vnd.adobe.photoshop" ]
 }
