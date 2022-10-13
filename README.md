@@ -104,7 +104,7 @@ All code developed during this project is [GPLv3][2] licensed. Images as well as
 Mac users can install the VookiImageViewer by the Homebrew.
 ```
 brew tap vookimedlo/homebrew-vookiimageviewer
-brew cask install vookiimageviewer-macos
+brew install --cask vookiimageviewer-macos
 ```
 
 Debian Bullseye users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
