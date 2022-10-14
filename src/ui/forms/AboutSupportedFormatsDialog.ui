@@ -65,7 +65,7 @@
      </attribute>
      <row>
       <property name="text">
-       <string>New Row</string>
+       <string/>
       </property>
      </row>
      <row>
