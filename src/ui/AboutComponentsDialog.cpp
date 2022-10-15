@@ -32,31 +32,31 @@ void AboutComponentsDialog::onSelectedComponentChanged(const int row)
     switch (row)
     {
         case 0:
-            m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutqt"));
+            m_uiAboutComponentsDialog.textBrowser->setSource(QString("qrc:/text/aboutqt"));
             break;
         case 1:
-            m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/abouticon54"));
+            m_uiAboutComponentsDialog.textBrowser->setSource(QString("qrc:/text/abouticon54"));
             break;
         case 2:
-            m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutopenclipart"));
+            m_uiAboutComponentsDialog.textBrowser->setSource(QString("qrc:/text/aboutopenclipart"));
             break;
         case 3:
-            m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutkimageformats"));
+            m_uiAboutComponentsDialog.textBrowser->setSource(QString("qrc:/text/aboutkimageformats"));
             break;
         case 4:
-            m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutlibraw"));
+            m_uiAboutComponentsDialog.textBrowser->setSource(QString("qrc:/text/aboutlibraw"));
             break;
         case 5:
-            m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutlibde265"));
+            m_uiAboutComponentsDialog.textBrowser->setSource(QString("qrc:/text/aboutlibde265"));
             break;
         case 6:
-            m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutlibheif"));
+            m_uiAboutComponentsDialog.textBrowser->setSource(QString("qrc:/text/aboutlibheif"));
             break;
         case 7:
-            m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutx265"));
+            m_uiAboutComponentsDialog.textBrowser->setSource(QString("qrc:/text/aboutx265"));
             break;
         case 8:
-            m_uiAboutComponentsDialog.textBrowser->setSource(tr("qrc:/text/aboutkdmactouchbar"));
+            m_uiAboutComponentsDialog.textBrowser->setSource(QString("qrc:/text/aboutkdmactouchbar"));
             break;
         default:
             m_uiAboutComponentsDialog.textBrowser->clear();

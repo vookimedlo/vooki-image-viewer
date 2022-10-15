@@ -4,51 +4,6 @@
 <context>
     <name>AboutComponentsDialog</name>
     <message>
-        <location filename="../../ui/AboutComponentsDialog.cpp" line="35"/>
-        <source>qrc:/text/aboutqt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/AboutComponentsDialog.cpp" line="38"/>
-        <source>qrc:/text/abouticon54</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/AboutComponentsDialog.cpp" line="41"/>
-        <source>qrc:/text/aboutopenclipart</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/AboutComponentsDialog.cpp" line="44"/>
-        <source>qrc:/text/aboutkimageformats</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/AboutComponentsDialog.cpp" line="47"/>
-        <source>qrc:/text/aboutlibraw</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/AboutComponentsDialog.cpp" line="50"/>
-        <source>qrc:/text/aboutlibde265</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/AboutComponentsDialog.cpp" line="53"/>
-        <source>qrc:/text/aboutlibheif</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/AboutComponentsDialog.cpp" line="56"/>
-        <source>qrc:/text/aboutx265</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/AboutComponentsDialog.cpp" line="59"/>
-        <source>qrc:/text/aboutkdmactouchbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../ui/forms/AboutComponentsDialog.ui" line="14"/>
         <source>About Components</source>
         <translation type="unfinished"></translation>
@@ -96,18 +51,6 @@
     <message>
         <location filename="../../ui/forms/AboutComponentsDialog.ui" line="79"/>
         <source>KDMacTouchBar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="90"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-hr { height: 1px; border-width: 0; }
-li.unchecked::marker { content: &quot;\2610&quot;; }
-li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;.AppleSystemUIFont&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;.SF NS Text&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -460,7 +403,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="600"/>
-        <source>[MacOS/Win10 only] HEIC</source>
+        <source>[MacOS/Win only] HEIC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -472,13 +415,88 @@ li.checked::marker { content: &quot;\2612&quot;; }
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../ui/MainWindow.cpp" line="441"/>
-        <source>Zoom: </source>
+        <location filename="../../ui/forms/MainWindow.ui" line="15"/>
+        <source>VookiImageViewer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="15"/>
-        <source>VookiImageViewer</source>
+        <location filename="../../ui/forms/MainWindow.ui" line="48"/>
+        <source>&amp;File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="52"/>
+        <source>Recent Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="67"/>
+        <source>&amp;View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="71"/>
+        <source>&amp;Zoom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="80"/>
+        <source>Rotate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="87"/>
+        <source>Flip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="94"/>
+        <source>Navigation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="101"/>
+        <source>Scroll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="122"/>
+        <source>&amp;Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="135"/>
+        <source>&amp;Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="139"/>
+        <source>Show</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="156"/>
+        <source>FileSystem Navigation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="181"/>
+        <source>Home Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="204"/>
+        <source>Documents Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="227"/>
+        <source>Pictures Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="283"/>
+        <source>ToolBar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -777,83 +795,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="48"/>
-        <source>&amp;File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="52"/>
-        <source>Recent Files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="67"/>
-        <source>&amp;View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="71"/>
-        <source>&amp;Zoom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="80"/>
-        <source>Rotate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="87"/>
-        <source>Flip</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="94"/>
-        <source>Navigation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="101"/>
-        <source>Scroll</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="122"/>
-        <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="135"/>
-        <source>&amp;Window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="139"/>
-        <source>Show</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="156"/>
-        <source>FileSystem Navigation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="181"/>
-        <source>Home Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="204"/>
-        <source>Documents Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="227"/>
-        <source>Pictures Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="283"/>
-        <source>ToolBar</source>
+        <location filename="../../ui/MainWindow.cpp" line="441"/>
+        <source>Zoom: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -871,11 +814,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="45"/>
-        <source>viv/general/fullscreen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="48"/>
         <source>Start in fullscreen mode</source>
         <translation type="unfinished"></translation>
@@ -886,28 +824,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="64"/>
-        <source>viv/image/remember/recent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="67"/>
         <source>Remeber recent opened images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="77"/>
-        <source>viv/image/fitimagetowindow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="80"/>
         <source>Fit Image to window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="87"/>
-        <source>viv/image/border/draw</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -931,30 +854,15 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="148"/>
-        <source>viv/window/hide/statusbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="151"/>
         <location filename="../../ui/forms/SettingsDialog.ui" line="193"/>
         <source>Hide statusbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="161"/>
-        <source>viv/window/hide/toolbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="164"/>
         <location filename="../../ui/forms/SettingsDialog.ui" line="206"/>
         <source>Hide toolbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="171"/>
-        <source>viv/window/hide/navigation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -969,28 +877,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="190"/>
-        <source>viv/fullscreen/hide/statusbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="203"/>
-        <source>viv/fullscreen/hide/toolbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="216"/>
-        <source>viv/fullscreen/hide/navigation</source>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="237"/>
+        <source>Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="247"/>
         <source>Shortcut</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="237"/>
-        <source>Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

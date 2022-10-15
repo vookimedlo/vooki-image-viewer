@@ -2,51 +2,6 @@
 <context>
     <name>AboutComponentsDialog</name>
     <message>
-        <location filename="../../ui/AboutComponentsDialog.cpp" line="35"/>
-        <source>qrc:/text/aboutqt</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../ui/AboutComponentsDialog.cpp" line="38"/>
-        <source>qrc:/text/abouticon54</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../ui/AboutComponentsDialog.cpp" line="41"/>
-        <source>qrc:/text/aboutopenclipart</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../ui/AboutComponentsDialog.cpp" line="44"/>
-        <source>qrc:/text/aboutkimageformats</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../ui/AboutComponentsDialog.cpp" line="47"/>
-        <source>qrc:/text/aboutlibraw</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../ui/AboutComponentsDialog.cpp" line="50"/>
-        <source>qrc:/text/aboutlibde265</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../ui/AboutComponentsDialog.cpp" line="53"/>
-        <source>qrc:/text/aboutlibheif</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../ui/AboutComponentsDialog.cpp" line="56"/>
-        <source>qrc:/text/aboutx265</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../ui/AboutComponentsDialog.cpp" line="59"/>
-        <source>qrc:/text/aboutkdmactouchbar</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../../ui/forms/AboutComponentsDialog.ui" line="14"/>
         <source>About Components</source>
         <translation>O komponentách</translation>
@@ -96,18 +51,6 @@
         <source>KDMacTouchBar</source>
         <translation>KDMacTouchBar</translation>
     </message>
-    <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="90"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-hr { height: 1px; border-width: 0; }
-li.unchecked::marker { content: &quot;\2610&quot;; }
-li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;.SF NS Text&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>AboutSupportedFormatsDialog</name>
@@ -129,7 +72,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="240"/>
         <source>ANI</source>
-        <translation type="unfinished"/>
+        <translation>ANI</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="245"/>
@@ -139,7 +82,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="250"/>
         <source>GIF</source>
-        <translation type="unfinished"/>
+        <translation>GIF</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="255"/>
@@ -149,7 +92,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="263"/>
         <source>JPG</source>
-        <translation type="unfinished"/>
+        <translation>JPG</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="268"/>
@@ -159,7 +102,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="276"/>
         <source>PNG</source>
-        <translation type="unfinished"/>
+        <translation>PNG</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="281"/>
@@ -169,7 +112,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="289"/>
         <source>PBM</source>
-        <translation type="unfinished"/>
+        <translation>PBM</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="294"/>
@@ -179,7 +122,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="302"/>
         <source>PGM</source>
-        <translation type="unfinished"/>
+        <translation>PGM</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="307"/>
@@ -189,7 +132,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="315"/>
         <source>PPM</source>
-        <translation type="unfinished"/>
+        <translation>PPM</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="320"/>
@@ -199,7 +142,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="328"/>
         <source>XBM</source>
-        <translation type="unfinished"/>
+        <translation>XBM</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="333"/>
@@ -209,7 +152,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="341"/>
         <source>XPM</source>
-        <translation type="unfinished"/>
+        <translation>XPM</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="346"/>
@@ -219,7 +162,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="354"/>
         <source>SVG</source>
-        <translation type="unfinished"/>
+        <translation>SVG</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="359"/>
@@ -229,7 +172,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="367"/>
         <source>BMP</source>
-        <translation type="unfinished"/>
+        <translation>BMP</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="372"/>
@@ -239,7 +182,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="380"/>
         <source>XCF</source>
-        <translation type="unfinished"/>
+        <translation>XCF</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="385"/>
@@ -249,7 +192,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="390"/>
         <source>PSD</source>
-        <translation type="unfinished"/>
+        <translation>PSD</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="395"/>
@@ -259,7 +202,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="400"/>
         <source>RAS</source>
-        <translation type="unfinished"/>
+        <translation>RAS</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="405"/>
@@ -269,7 +212,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="410"/>
         <source>HDR</source>
-        <translation type="unfinished"/>
+        <translation>HDR</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="415"/>
@@ -279,7 +222,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="420"/>
         <source>PCX</source>
-        <translation type="unfinished"/>
+        <translation>PCX</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="425"/>
@@ -289,7 +232,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="430"/>
         <source>RGB, RGBA, SGI, BW</source>
-        <translation type="unfinished"/>
+        <translation>RGB, RGBA, SGI, BW</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="435"/>
@@ -299,7 +242,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="440"/>
         <source>PIC</source>
-        <translation type="unfinished"/>
+        <translation>PIC</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="445"/>
@@ -309,7 +252,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="450"/>
         <source>TGA</source>
-        <translation type="unfinished"/>
+        <translation>TGA</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="455"/>
@@ -319,7 +262,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="460"/>
         <source>ARW</source>
-        <translation type="unfinished"/>
+        <translation>ARW</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="465"/>
@@ -329,7 +272,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="470"/>
         <source>CR2</source>
-        <translation type="unfinished"/>
+        <translation>CR2</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="475"/>
@@ -339,7 +282,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="480"/>
         <source>DNG</source>
-        <translation type="unfinished"/>
+        <translation>DNG</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="485"/>
@@ -349,7 +292,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="490"/>
         <source>ERF</source>
-        <translation type="unfinished"/>
+        <translation>ERF</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="495"/>
@@ -359,7 +302,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="500"/>
         <source>MOS</source>
-        <translation type="unfinished"/>
+        <translation>MOS</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="505"/>
@@ -369,7 +312,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="510"/>
         <source>MRW</source>
-        <translation type="unfinished"/>
+        <translation>MRW</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="515"/>
@@ -379,7 +322,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="520"/>
         <source>NEF</source>
-        <translation type="unfinished"/>
+        <translation>NEF</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="525"/>
@@ -389,7 +332,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="530"/>
         <source>ORF</source>
-        <translation type="unfinished"/>
+        <translation>ORF</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="535"/>
@@ -399,7 +342,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="540"/>
         <source>PEF</source>
-        <translation type="unfinished"/>
+        <translation>PEF</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="545"/>
@@ -409,7 +352,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="550"/>
         <source>RAF</source>
-        <translation type="unfinished"/>
+        <translation>RAF</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="555"/>
@@ -419,7 +362,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="560"/>
         <source>RW2</source>
-        <translation type="unfinished"/>
+        <translation>RW2</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="565"/>
@@ -429,7 +372,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="570"/>
         <source>SRW</source>
-        <translation type="unfinished"/>
+        <translation>SRW</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="575"/>
@@ -439,7 +382,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="580"/>
         <source>X3F</source>
-        <translation type="unfinished"/>
+        <translation>X3F</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="585"/>
@@ -449,7 +392,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="590"/>
         <source>TIFF</source>
-        <translation type="unfinished"/>
+        <translation>TIFF</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="595"/>
@@ -458,7 +401,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="600"/>
-        <source>[MacOS/Win10 only] HEIC</source>
+        <source>[MacOS/Win only] HEIC</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -470,14 +413,89 @@ li.checked::marker { content: &quot;\2612&quot;; }
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../ui/MainWindow.cpp" line="441"/>
-        <source>Zoom: </source>
-        <translation>Zvetšení:</translation>
-    </message>
-    <message>
         <location filename="../../ui/forms/MainWindow.ui" line="15"/>
         <source>VookiImageViewer</source>
         <translation>VookiImageViewer</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="48"/>
+        <source>&amp;File</source>
+        <translation>&amp;Soubor</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="52"/>
+        <source>Recent Files</source>
+        <translation>Poslední soubory</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="67"/>
+        <source>&amp;View</source>
+        <translation>&amp;Zobrazení</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="71"/>
+        <source>&amp;Zoom</source>
+        <translation>&amp;Zvětšit</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="80"/>
+        <source>Rotate</source>
+        <translation>Otočit</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="87"/>
+        <source>Flip</source>
+        <translation>Převrátit</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="94"/>
+        <source>Navigation</source>
+        <translation>Navigace</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="101"/>
+        <source>Scroll</source>
+        <translation>Posunout</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="122"/>
+        <source>&amp;Help</source>
+        <translation>&amp;Nápověda</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="135"/>
+        <source>&amp;Window</source>
+        <translation>&amp;Okno</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="139"/>
+        <source>Show</source>
+        <translation>Zobrazit</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="156"/>
+        <source>FileSystem Navigation</source>
+        <translation>Navigace v souborovém systému</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="181"/>
+        <source>Home Directory</source>
+        <translation>Domovský adresář</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="204"/>
+        <source>Documents Directory</source>
+        <translation>Adresář s dokumenty</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="227"/>
+        <source>Pictures Directory</source>
+        <translation>Adresář s obrázky</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="283"/>
+        <source>ToolBar</source>
+        <translation>Nástrojová lišta</translation>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="320"/>
@@ -487,7 +505,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="323"/>
         <source>Quit The Application</source>
-        <translation>Ukončení aplikace</translation>
+        <translation>Ukončit aplikaci</translation>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="329"/>
@@ -497,7 +515,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="347"/>
         <source>&amp;FullScreen</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Celoobrazový režim</translation>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="350"/>
@@ -562,7 +580,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="445"/>
         <source>Fi&amp;t to Window</source>
-        <translation>&amp;Přizpůsobení obrázku oknu</translation>
+        <translation>&amp;Přizpůsobit velikost obrázku oknu</translation>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="451"/>
@@ -577,7 +595,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="471"/>
         <source>Show/Hide StatusBar</source>
-        <translation>ZobrazeníSchovvání stavového řádku</translation>
+        <translation>Zobrazení/Schování stavového řádku</translation>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="477"/>
@@ -604,7 +622,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="../../ui/forms/MainWindow.ui" line="516"/>
         <location filename="../../ui/forms/MainWindow.ui" line="519"/>
         <source>Rotate Left</source>
-        <translation>Otočení vlevo</translation>
+        <translation>Otočit vlevo</translation>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="525"/>
@@ -621,7 +639,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="../../ui/forms/MainWindow.ui" line="543"/>
         <location filename="../../ui/forms/MainWindow.ui" line="546"/>
         <source>Rotate Right</source>
-        <translation>Otočení vpravo</translation>
+        <translation>Otočit vpravo</translation>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="552"/>
@@ -637,7 +655,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="../../ui/forms/MainWindow.ui" line="570"/>
         <location filename="../../ui/forms/MainWindow.ui" line="573"/>
         <source>Flip Horizontally</source>
-        <translation>Vodorovné zrcadlení</translation>
+        <translation>Převrátit vodorovně</translation>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="579"/>
@@ -653,7 +671,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="../../ui/forms/MainWindow.ui" line="597"/>
         <location filename="../../ui/forms/MainWindow.ui" line="600"/>
         <source>Flip Vertically</source>
-        <translation>Svislé převrácení</translation>
+        <translation>Převrátit svisle</translation>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="606"/>
@@ -719,7 +737,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="../../ui/forms/MainWindow.ui" line="730"/>
         <location filename="../../ui/forms/MainWindow.ui" line="733"/>
         <source>Scroll Left</source>
-        <translation>Posunutí vlevo</translation>
+        <translation>Posunout vlevo</translation>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="739"/>
@@ -730,7 +748,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="../../ui/forms/MainWindow.ui" line="754"/>
         <location filename="../../ui/forms/MainWindow.ui" line="757"/>
         <source>Scroll Right</source>
-        <translation>Posunutí vpravo</translation>
+        <translation>Posunout vpravo</translation>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="763"/>
@@ -746,7 +764,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="../../ui/forms/MainWindow.ui" line="778"/>
         <location filename="../../ui/forms/MainWindow.ui" line="781"/>
         <source>Scroll Up</source>
-        <translation>Posunutí nahoru</translation>
+        <translation>Posunout nahoru</translation>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="787"/>
@@ -762,7 +780,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <location filename="../../ui/forms/MainWindow.ui" line="802"/>
         <location filename="../../ui/forms/MainWindow.ui" line="805"/>
         <source>Scroll Down</source>
-        <translation>Posunutí dolu</translation>
+        <translation>Posunout dolu</translation>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="811"/>
@@ -775,84 +793,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation>Poznámky k vydání ...</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="48"/>
-        <source>&amp;File</source>
-        <translation>&amp;Soubor</translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="52"/>
-        <source>Recent Files</source>
-        <translation>Poslední soubory</translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="67"/>
-        <source>&amp;View</source>
-        <translation>&amp;Zobrazení</translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="71"/>
-        <source>&amp;Zoom</source>
-        <translation>&amp;Zvětšení</translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="80"/>
-        <source>Rotate</source>
-        <translation>Otočit</translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="87"/>
-        <source>Flip</source>
-        <translation>Převrátit</translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="94"/>
-        <source>Navigation</source>
-        <translation>Navigace</translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="101"/>
-        <source>Scroll</source>
-        <translation>Posun</translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="122"/>
-        <source>&amp;Help</source>
-        <translation>&amp;Nápověda</translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="135"/>
-        <source>&amp;Window</source>
-        <translation>&amp;Okno</translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="139"/>
-        <source>Show</source>
-        <translation>Zobrazit</translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="156"/>
-        <source>FileSystem Navigation</source>
-        <translation>Navigace v souborovém systému</translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="181"/>
-        <source>Home Directory</source>
-        <translation>Domovský adresář</translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="204"/>
-        <source>Documents Directory</source>
-        <translation>Adresář s dokumenty</translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="227"/>
-        <source>Pictures Directory</source>
-        <translation>Adresář s obrázky</translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="283"/>
-        <source>ToolBar</source>
-        <translation type="unfinished"/>
+        <location filename="../../ui/MainWindow.cpp" line="441"/>
+        <source>Zoom: </source>
+        <translation>Zvětšení: </translation>
     </message>
 </context>
 <context>
@@ -869,11 +812,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation>Obecné</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="45"/>
-        <source>viv/general/fullscreen</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="48"/>
         <source>Start in fullscreen mode</source>
         <translation>Spuštění v celoobrazovém režimu</translation>
@@ -884,29 +822,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation>Obrázek</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="64"/>
-        <source>viv/image/remember/recent</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="67"/>
         <source>Remeber recent opened images</source>
         <translation>Zapamatování naposled otevřených obrázků</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="77"/>
-        <source>viv/image/fitimagetowindow</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="80"/>
         <source>Fit Image to window</source>
-        <translation>Přizpůsobení obrázku oknu</translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="87"/>
-        <source>viv/image/border/draw</source>
-        <translation type="unfinished"/>
+        <translation>Přizpůsobení velikost obrázku oknu</translation>
     </message>
     <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="90"/>
@@ -926,12 +849,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="142"/>
         <source>Window mode (on startup)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="148"/>
-        <source>viv/window/hide/statusbar</source>
-        <translation type="unfinished"/>
+        <translation>Zobrazovací režim (při startu)</translation>
     </message>
     <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="151"/>
@@ -940,20 +858,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation>Schování stavového řádku</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="161"/>
-        <source>viv/window/hide/toolbar</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="164"/>
         <location filename="../../ui/forms/SettingsDialog.ui" line="206"/>
         <source>Hide toolbar</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="171"/>
-        <source>viv/window/hide/navigation</source>
-        <translation type="unfinished"/>
+        <translation>Schování nástrojové lišty</translation>
     </message>
     <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="174"/>
@@ -967,29 +875,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <translation>Přepnutí do celoobrazového režimu</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="190"/>
-        <source>viv/fullscreen/hide/statusbar</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="203"/>
-        <source>viv/fullscreen/hide/toolbar</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="216"/>
-        <source>viv/fullscreen/hide/navigation</source>
-        <translation type="unfinished"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="237"/>
+        <source>Shortcuts</source>
+        <translation>Zkratky</translation>
     </message>
     <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="247"/>
         <source>Shortcut</source>
         <translation>Zkratka</translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="237"/>
-        <source>Shortcuts</source>
-        <translation>Zkratky</translation>
     </message>
 </context>
 <context>
@@ -1007,7 +900,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <message>
         <location filename="../../ui/forms/AboutDialog.ui" line="104"/>
         <source>Version: </source>
-        <translation>Verze:</translation>
+        <translation>Verze: </translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutDialog.ui" line="124"/>

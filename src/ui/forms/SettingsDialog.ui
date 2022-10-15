@@ -42,7 +42,7 @@
               <item>
                <widget class="QCheckBox" name="checkBoxGeneralStartInFullscreen">
                 <property name="whatsThis">
-                 <string>viv/general/fullscreen</string>
+                 <string notr="true">viv/general/fullscreen</string>
                 </property>
                 <property name="text">
                  <string>Start in fullscreen mode</string>
@@ -61,7 +61,7 @@
               <item>
                <widget class="QCheckBox" name="checkBoxRemeberRecentImages">
                 <property name="whatsThis">
-                 <string>viv/image/remember/recent</string>
+                 <string notr="true">viv/image/remember/recent</string>
                 </property>
                 <property name="text">
                  <string>Remeber recent opened images</string>
@@ -74,7 +74,7 @@
               <item>
                <widget class="QCheckBox" name="checkBoxImageFitToWindow">
                 <property name="whatsThis">
-                 <string>viv/image/fitimagetowindow</string>
+                 <string notr="true">viv/image/fitimagetowindow</string>
                 </property>
                 <property name="text">
                  <string>Fit Image to window</string>
@@ -84,7 +84,7 @@
               <item>
                <widget class="QCheckBox" name="checkBoxImageDrawBorder">
                 <property name="whatsThis">
-                 <string>viv/image/border/draw</string>
+                 <string notr="true">viv/image/border/draw</string>
                 </property>
                 <property name="text">
                  <string>Draw image border</string>
@@ -145,7 +145,7 @@
               <item>
                <widget class="QCheckBox" name="checkBoxWindowHideStatusbar">
                 <property name="whatsThis">
-                 <string>viv/window/hide/statusbar</string>
+                 <string notr="true">viv/window/hide/statusbar</string>
                 </property>
                 <property name="text">
                  <string>Hide statusbar</string>
@@ -158,7 +158,7 @@
               <item>
                <widget class="QCheckBox" name="checkBoxWindowHideToolbar">
                 <property name="whatsThis">
-                 <string>viv/window/hide/toolbar</string>
+                 <string notr="true">viv/window/hide/toolbar</string>
                 </property>
                 <property name="text">
                  <string>Hide toolbar</string>
@@ -168,7 +168,7 @@
               <item>
                <widget class="QCheckBox" name="checkBoxWindowHideNavigation">
                 <property name="whatsThis">
-                 <string>viv/window/hide/navigation</string>
+                 <string notr="true">viv/window/hide/navigation</string>
                 </property>
                 <property name="text">
                  <string>Hide filesystem navigation</string>
@@ -187,7 +187,7 @@
               <item>
                <widget class="QCheckBox" name="checkBoxFullscreenHideStatusbar">
                 <property name="whatsThis">
-                 <string>viv/fullscreen/hide/statusbar</string>
+                 <string notr="true">viv/fullscreen/hide/statusbar</string>
                 </property>
                 <property name="text">
                  <string>Hide statusbar</string>
@@ -200,7 +200,7 @@
               <item>
                <widget class="QCheckBox" name="checkBoxFullscreenHideToolbar">
                 <property name="whatsThis">
-                 <string>viv/fullscreen/hide/toolbar</string>
+                 <string notr="true">viv/fullscreen/hide/toolbar</string>
                 </property>
                 <property name="text">
                  <string>Hide toolbar</string>
@@ -213,7 +213,7 @@
               <item>
                <widget class="QCheckBox" name="checkBoxFullscreenHideNavigation">
                 <property name="whatsThis">
-                 <string>viv/fullscreen/hide/navigation</string>
+                 <string notr="true">viv/fullscreen/hide/navigation</string>
                 </property>
                 <property name="text">
                  <string>Hide filesystem navigation</string>
