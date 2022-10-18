@@ -40,7 +40,7 @@
      <x>0</x>
      <y>0</y>
      <width>810</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -326,7 +326,7 @@
     <string notr="true">viv/shortcut/app/quit</string>
    </property>
    <property name="shortcut">
-    <string>Q</string>
+    <string notr="true">Q</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -353,7 +353,7 @@
     <string notr="true">viv/shortcut/view/fullscreen</string>
    </property>
    <property name="shortcut">
-    <string>F</string>
+    <string notr="true">F</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -376,7 +376,7 @@
     <string notr="true">viv/shortcut/app/about</string>
    </property>
    <property name="shortcut">
-    <string>F1</string>
+    <string notr="true">F1</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -400,7 +400,7 @@
     <string notr="true">viv/shortcut/view/zoom/in</string>
    </property>
    <property name="shortcut">
-    <string>+</string>
+    <string notr="true">+</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -424,7 +424,7 @@
     <string notr="true">viv/shortcut/view/zoom/out</string>
    </property>
    <property name="shortcut">
-    <string>-</string>
+    <string notr="true">-</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -448,7 +448,7 @@
     <string notr="true">viv/shortcut/view/zoom/fit</string>
    </property>
    <property name="shortcut">
-    <string>W</string>
+    <string notr="true">W</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -474,7 +474,7 @@
     <string notr="true">viv/shortcut/window/statusbar</string>
    </property>
    <property name="shortcut">
-    <string>S</string>
+    <string notr="true">S</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -495,7 +495,7 @@
     <string notr="true">viv/shortcut/view/zoom/original</string>
    </property>
    <property name="shortcut">
-    <string>*</string>
+    <string notr="true">*</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -522,7 +522,7 @@
     <string notr="true">viv/shortcut/view/rotate/left</string>
    </property>
    <property name="shortcut">
-    <string>,</string>
+    <string notr="true">,</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -549,7 +549,7 @@
     <string notr="true">viv/shortcut/view/rotate/right</string>
    </property>
    <property name="shortcut">
-    <string>.</string>
+    <string notr="true">.</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -576,7 +576,7 @@
     <string notr="true">viv/shortcut/view/flip/horizontally</string>
    </property>
    <property name="shortcut">
-    <string>H</string>
+    <string notr="true">H</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -603,7 +603,7 @@
     <string notr="true">viv/shortcut/view/flip/vertically</string>
    </property>
    <property name="shortcut">
-    <string>V</string>
+    <string notr="true">V</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -619,6 +619,9 @@
    <property name="whatsThis">
     <string notr="true">viv/shortcut/app/about/qt</string>
    </property>
+   <property name="shortcut">
+    <string notr="true"/>
+   </property>
    <property name="menuRole">
     <enum>QAction::AboutQtRole</enum>
    </property>
@@ -631,7 +634,7 @@
     <string notr="true">viv/shortcut/app/settings</string>
    </property>
    <property name="shortcut">
-    <string>P</string>
+    <string notr="true">P</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -652,7 +655,7 @@
     <string notr="true">viv/shortcut/view/navigation/previous</string>
    </property>
    <property name="shortcut">
-    <string>[</string>
+    <string notr="true">[</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -673,7 +676,7 @@
     <string notr="true">viv/shortcut/view/navigation/next</string>
    </property>
    <property name="shortcut">
-    <string>]</string>
+    <string notr="true">]</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -690,7 +693,7 @@
     <string notr="true">viv/shortcut/history/clear</string>
    </property>
    <property name="shortcut">
-    <string>Alt+C</string>
+    <string notr="true">Alt+C</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -703,6 +706,9 @@
    <property name="whatsThis">
     <string notr="true">viv/shortcut/app/about/formats</string>
    </property>
+   <property name="shortcut">
+    <string notr="true"/>
+   </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
    </property>
@@ -713,6 +719,9 @@
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/app/about/components</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true"/>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -736,7 +745,7 @@
     <string notr="true">viv/shortcut/view/scroll/left</string>
    </property>
    <property name="shortcut">
-    <string>J</string>
+    <string notr="true">J</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -760,7 +769,7 @@
     <string notr="true">viv/shortcut/view/scroll/right</string>
    </property>
    <property name="shortcut">
-    <string>L</string>
+    <string notr="true">L</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -784,7 +793,7 @@
     <string notr="true">viv/shortcut/view/scroll/up</string>
    </property>
    <property name="shortcut">
-    <string>I</string>
+    <string notr="true">I</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -808,7 +817,7 @@
     <string notr="true">viv/shortcut/view/scroll/down</string>
    </property>
    <property name="shortcut">
-    <string>K</string>
+    <string notr="true">K</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -817,6 +826,9 @@
   <action name="actionReleaseNotes">
    <property name="text">
     <string>Release Notes...</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true"/>
    </property>
   </action>
  </widget>

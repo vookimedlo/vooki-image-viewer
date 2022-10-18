@@ -28,6 +28,7 @@ Application::Application(int &argc, char **argv):
                                         translator(),
                                         qtTranslator()
 {
+    // Localization support
     qDebug() << "QLocale: " << QLocale().name();
 
     if(qtTranslator.load(QLocale(),
@@ -51,6 +52,11 @@ Application::Application(int &argc, char **argv):
     QCoreApplication::translate("MAC_APPLICATION_MENU", "About %1");
     QCoreApplication::translate("MAC_APPLICATION_MENU", "Quit %1");
     QCoreApplication::translate("MAC_APPLICATION_MENU", "Preferences...");
+
+    // This is a workaround to get all required specific QDialogButtonBox items into the translatable state.
+    QCoreApplication::translate("QPlatformTheme", "Ok");
+    QCoreApplication::translate("QPlatformTheme", "Cancel");
+    QCoreApplication::translate("QPlatformTheme", "Restore Defaults");
 }
 
 bool Application::event(QEvent *event)

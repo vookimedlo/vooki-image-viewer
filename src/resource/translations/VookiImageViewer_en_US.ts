@@ -415,42 +415,42 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../../application/Application.cpp" line="42"/>
+        <location filename="../../application/Application.cpp" line="47"/>
         <source>Services</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="43"/>
+        <location filename="../../application/Application.cpp" line="48"/>
         <source>Hide %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="44"/>
+        <location filename="../../application/Application.cpp" line="49"/>
         <source>Hide Others</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="45"/>
+        <location filename="../../application/Application.cpp" line="50"/>
         <source>Show %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="46"/>
+        <location filename="../../application/Application.cpp" line="51"/>
         <source>Show All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="47"/>
+        <location filename="../../application/Application.cpp" line="52"/>
         <source>About %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="48"/>
+        <location filename="../../application/Application.cpp" line="53"/>
         <source>Quit %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="49"/>
+        <location filename="../../application/Application.cpp" line="54"/>
         <source>Preferences...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -553,11 +553,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="329"/>
-        <source>Q</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../ui/forms/MainWindow.ui" line="347"/>
         <source>&amp;FullScreen</source>
         <translation type="unfinished"></translation>
@@ -565,11 +560,6 @@
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="350"/>
         <source>Show image in FullScreen mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="356"/>
-        <source>F</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -588,11 +578,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="379"/>
-        <source>F1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../ui/forms/MainWindow.ui" line="394"/>
         <source>Zoom &amp;In</source>
         <translation type="unfinished"></translation>
@@ -600,11 +585,6 @@
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="397"/>
         <source>Zoom In</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="403"/>
-        <source>+</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -618,18 +598,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="427"/>
-        <source>-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../ui/forms/MainWindow.ui" line="445"/>
         <source>Fi&amp;t to Window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="451"/>
-        <source>W</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -643,23 +613,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="477"/>
-        <source>S</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../ui/forms/MainWindow.ui" line="492"/>
         <source>Original Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="498"/>
-        <source>*</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../ui/forms/MainWindow.ui" line="513"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="727"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="736"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
@@ -670,13 +630,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="525"/>
-        <source>,</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../ui/forms/MainWindow.ui" line="540"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="751"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="760"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
@@ -684,11 +639,6 @@
         <location filename="../../ui/forms/MainWindow.ui" line="543"/>
         <location filename="../../ui/forms/MainWindow.ui" line="546"/>
         <source>Rotate Right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="552"/>
-        <source>.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -703,11 +653,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="579"/>
-        <source>H</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../ui/forms/MainWindow.ui" line="594"/>
         <source>Vertically</source>
         <translation type="unfinished"></translation>
@@ -719,127 +664,100 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="606"/>
-        <source>V</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../ui/forms/MainWindow.ui" line="617"/>
         <source>About Qt...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="628"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="631"/>
         <source>Preferences...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="634"/>
-        <source>P</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="649"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="652"/>
         <source>Previous Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="655"/>
-        <source>[</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="670"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="673"/>
         <source>Next Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="676"/>
-        <source>]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="687"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="690"/>
         <source>Clear History</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="693"/>
-        <source>Alt+C</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="701"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="704"/>
         <source>Supported Image Formats...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="712"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="718"/>
         <source>About Components...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="730"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="733"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="739"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="742"/>
         <source>Scroll Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="739"/>
-        <source>J</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="754"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="757"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="763"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="766"/>
         <source>Scroll Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="763"/>
-        <source>L</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="775"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="784"/>
         <source>Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="778"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="781"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="787"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="790"/>
         <source>Scroll Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="787"/>
-        <source>I</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="799"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="808"/>
         <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="802"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="805"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="811"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="814"/>
         <source>Scroll Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="811"/>
-        <source>K</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="819"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="828"/>
         <source>Release Notes...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../ui/MainWindow.cpp" line="441"/>
         <source>Zoom: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QPlatformTheme</name>
+    <message>
+        <location filename="../../application/Application.cpp" line="57"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../application/Application.cpp" line="58"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../application/Application.cpp" line="59"/>
+        <source>Restore Defaults</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -938,17 +856,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutDialog.ui" line="69"/>
+        <location filename="../../ui/forms/AboutDialog.ui" line="79"/>
         <source>qrc:/text/aboutapp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutDialog.ui" line="104"/>
+        <location filename="../../ui/forms/AboutDialog.ui" line="117"/>
         <source>Version: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutDialog.ui" line="124"/>
+        <location filename="../../ui/forms/AboutDialog.ui" line="137"/>
         <source>&amp;Close</source>
         <translation type="unfinished"></translation>
     </message>
@@ -958,70 +876,6 @@
     <message>
         <location filename="../../ui/forms/ReleaseNotesDialog.ui" line="39"/>
         <source>Release Notes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/ReleaseNotesDialog.ui" line="74"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-hr { height: 1px; border-width: 0; }
-li.unchecked::marker { content: &quot;\2610&quot;; }
-li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Tahoma&apos;; font-size:13pt; font-weight:400; font-style:normal;&quot; bgcolor=&quot;#ffd3c2&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:10pt; font-weight:600; text-decoration: underline; color:#000000;&quot;&gt;Release Notes&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:10pt; font-weight:600; color:#000000;&quot;&gt;v2022.10.13&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Components: Fully ported to the Qt6.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Components: Updated to the latest versions.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Image: Images supporting multiple frames are animated now.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Image: ANI format supported.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Image: Old HEIC/HEIF implementation replaced by the new one.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- MacOS: Touchboar support.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- MacOS: Fully compatible with arm architecture.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Build: GitHub&apos;s Actions CI introduced.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Build: Packaging completely refactored.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Build: Build definitions revised.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:10pt; font-weight:600; color:#000000;&quot;&gt;--------------------------------------------------------------&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:10pt; font-weight:600; color:#000000;&quot;&gt;v2020.11.25&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Components: updated to the latest versions.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:10pt; font-weight:600; color:#000000;&quot;&gt;--------------------------------------------------------------&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:10pt; font-weight:600; color:#000000;&quot;&gt;v2019.11.10&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Debian: DEB packages introduced.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Fedora: RPM packages introduced.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Components: updated to the latest versions.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:10pt; font-weight:600; color:#000000;&quot;&gt;--------------------------------------------------------------&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:10pt; font-weight:600; color:#000000;&quot;&gt;v2019.04.07&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Image: HEIC could be viewed on Windows platform.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Image: Zoom could be controlled by the Mouse wheel + CTRL.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- UI: Navigation buttons for Home, Docs. and Picture buttons added.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- MacOS: Dark mode fully supported.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Components: updated to the latest versions.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:10pt; font-weight:600; color:#000000;&quot;&gt;--------------------------------------------------------------&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:10pt; font-weight:600; color:#000000;&quot;&gt;v2018.01.19&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Image: Movement improved.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Components: updated to the latest versions.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:10pt; font-weight:600; color:#000000;&quot;&gt;--------------------------------------------------------------&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:10pt; font-weight:600; color:#000000;&quot;&gt;v2017.12.09&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Image: Smooth transformation applied.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Components: updated to the latest versions.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:10pt; font-weight:600; color:#000000;&quot;&gt;--------------------------------------------------------------&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:10pt; font-weight:600; color:#000000;&quot;&gt;v2017.11.24&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Windows: Problems with files over a shared network (\\server\...) fixed.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- MacOS:  Could be used as a default program for specific image formats.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:10pt; font-weight:600; color:#000000;&quot;&gt;--------------------------------------------------------------&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:10pt; font-weight:600; color:#000000;&quot;&gt;v2017.10.27&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- First stable release.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Transformations:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;  - Flip (horizontal, vertical).&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;  - Rotation (clockwise and counterclockwise in 90° steps).&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;  - Zoom (in, out, original size, fit to window).&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;  - Fullscreen or Window mode.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;  - Custom background color.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;  - Custom image border color.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;  - Remembers recent files.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;  - Supports Apple high definition trackpad gestures.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:8pt; font-weight:600; color:#000000;&quot;&gt;- Image: Multiple formats supported including the RAW ones.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;.SF NS Text&apos;; font-size:10pt; font-weight:600; color:#000000;&quot;&gt;--------------------------------------------------------------&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
