@@ -413,6 +413,49 @@
     </message>
 </context>
 <context>
+    <name>MAC_APPLICATION_MENU</name>
+    <message>
+        <location filename="../../application/Application.cpp" line="42"/>
+        <source>Services</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../application/Application.cpp" line="43"/>
+        <source>Hide %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../application/Application.cpp" line="44"/>
+        <source>Hide Others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../application/Application.cpp" line="45"/>
+        <source>Show %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../application/Application.cpp" line="46"/>
+        <source>Show All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../application/Application.cpp" line="47"/>
+        <source>About %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../application/Application.cpp" line="48"/>
+        <source>Quit %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../application/Application.cpp" line="49"/>
+        <source>Preferences...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="15"/>

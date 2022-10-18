@@ -21,10 +21,36 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "Application.h"
 #include <QDebug>
 #include <QFileOpenEvent>
+#include <QLibraryInfo>
 
-Application::Application(int &argc, char **argv)
-                                        : QApplication(argc, argv)
+Application::Application(int &argc, char **argv):
+                                        QApplication(argc, argv),
+                                        translator(),
+                                        qtTranslator()
 {
+    qDebug() << "QLocale: " << QLocale().name();
+
+    if(qtTranslator.load(QLocale(),
+                          "qt",
+                          "_",
+                          QLibraryInfo::path(QLibraryInfo::TranslationsPath)))
+        installTranslator(&qtTranslator);
+
+    if (translator.load(QLocale(),
+                        "VookiImageViewer",
+                        "_",
+                        ":/i18n"))
+        installTranslator(&translator);
+
+    // This is a workaround to get all macOS specific menu items into the translatable state.
+    QCoreApplication::translate("MAC_APPLICATION_MENU", "Services");
+    QCoreApplication::translate("MAC_APPLICATION_MENU", "Hide %1");
+    QCoreApplication::translate("MAC_APPLICATION_MENU", "Hide Others");
+    QCoreApplication::translate("MAC_APPLICATION_MENU", "Show %1");
+    QCoreApplication::translate("MAC_APPLICATION_MENU", "Show All");
+    QCoreApplication::translate("MAC_APPLICATION_MENU", "About %1");
+    QCoreApplication::translate("MAC_APPLICATION_MENU", "Quit %1");
+    QCoreApplication::translate("MAC_APPLICATION_MENU", "Preferences...");
 }
 
 bool Application::event(QEvent *event)

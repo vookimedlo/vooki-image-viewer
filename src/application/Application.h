@@ -22,6 +22,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "../util/compiler.h"
 #include <QApplication>
 #include <QString>
+#include <QTranslator>
 
 class Application : public QApplication
 {
@@ -35,4 +36,8 @@ signals:
 
 protected:
     bool event(QEvent *event) override;
+
+private:
+    QTranslator translator;
+    QTranslator qtTranslator;
 };

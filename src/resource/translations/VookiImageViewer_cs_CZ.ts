@@ -77,7 +77,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="245"/>
         <source>Windows Animated Cursor</source>
-        <translation type="unfinished"/>
+        <translation>Windows Animated Cursor</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="250"/>
@@ -87,7 +87,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="255"/>
         <source>Graphic Interchange Format</source>
-        <translation type="unfinished"/>
+        <translation>Graphic Interchange Format</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="263"/>
@@ -97,7 +97,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="268"/>
         <source>Joint Photographic Experts Group</source>
-        <translation type="unfinished"/>
+        <translation>Joint Photographic Experts Group</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="276"/>
@@ -107,7 +107,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="281"/>
         <source>Portable Network Graphics</source>
-        <translation type="unfinished"/>
+        <translation>Portable Network Graphics</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="289"/>
@@ -117,7 +117,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="294"/>
         <source>Portable Bitmap</source>
-        <translation type="unfinished"/>
+        <translation>Portable Bitmap</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="302"/>
@@ -127,7 +127,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="307"/>
         <source>Portable Graymap</source>
-        <translation type="unfinished"/>
+        <translation>Portable Graymap</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="315"/>
@@ -137,7 +137,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="320"/>
         <source>Portable Pixmap</source>
-        <translation type="unfinished"/>
+        <translation>Portable Pixmap</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="328"/>
@@ -147,7 +147,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="333"/>
         <source>X11 Bitmap</source>
-        <translation type="unfinished"/>
+        <translation>X11 Bitmap</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="341"/>
@@ -157,7 +157,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="346"/>
         <source>X11 Pixmap</source>
-        <translation type="unfinished"/>
+        <translation>X11 Pixmap</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="354"/>
@@ -167,7 +167,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="359"/>
         <source>Scalable Vector Graphics</source>
-        <translation type="unfinished"/>
+        <translation>Scalable Vector Graphics</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="367"/>
@@ -177,7 +177,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="372"/>
         <source>Windows Bitmap</source>
-        <translation type="unfinished"/>
+        <translation>Windows Bitmap</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="380"/>
@@ -187,7 +187,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="385"/>
         <source>Gimp</source>
-        <translation type="unfinished"/>
+        <translation>Gimp</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="390"/>
@@ -197,7 +197,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="395"/>
         <source>Photoshop Documents</source>
-        <translation type="unfinished"/>
+        <translation>Photoshop Documents</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="400"/>
@@ -207,7 +207,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="405"/>
         <source>Sun Raster</source>
-        <translation type="unfinished"/>
+        <translation>Sun Raster</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="410"/>
@@ -217,7 +217,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="415"/>
         <source>Radiance HDR</source>
-        <translation type="unfinished"/>
+        <translation>Radiance HDR</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="420"/>
@@ -227,7 +227,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="425"/>
         <source>Personal Computer Exchange</source>
-        <translation type="unfinished"/>
+        <translation>Personal Computer Exchange</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="430"/>
@@ -237,7 +237,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="435"/>
         <source>SGI Images</source>
-        <translation type="unfinished"/>
+        <translation>SGI Images</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="440"/>
@@ -247,7 +247,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="445"/>
         <source>Softimage</source>
-        <translation type="unfinished"/>
+        <translation>Softimage</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="450"/>
@@ -257,7 +257,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="455"/>
         <source>Targa</source>
-        <translation type="unfinished"/>
+        <translation>Targa</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="460"/>
@@ -267,7 +267,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="465"/>
         <source>Sony Alpha Raw [Inner thumbnail only]</source>
-        <translation type="unfinished"/>
+        <translation>Sony Alpha Raw [vnitřní náhled]</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="470"/>
@@ -277,7 +277,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="475"/>
         <source>Canon Raw Version 2 [Inner thumbnail only]</source>
-        <translation type="unfinished"/>
+        <translation>Canon Raw Version 2 [vnitřní náhled]</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="480"/>
@@ -287,7 +287,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="485"/>
         <source>Digital Negative [Inner thumbnail only]</source>
-        <translation type="unfinished"/>
+        <translation>Digital Negative [vnitřní náhled]</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="490"/>
@@ -297,7 +297,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="495"/>
         <source>Epson RAW File [Inner thumbnail only]</source>
-        <translation type="unfinished"/>
+        <translation>Epson RAW File [vnitřní náhled]</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="500"/>
@@ -307,7 +307,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="505"/>
         <source>Leaf Raw Image File [Inner thumbnail only]</source>
-        <translation type="unfinished"/>
+        <translation>Leaf Raw Image File [vnitřní náhled]</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="510"/>
@@ -317,7 +317,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="515"/>
         <source>Konica Minolta RAW [Inner thumbnail only]</source>
-        <translation type="unfinished"/>
+        <translation>Konica Minolta RAW [vnitřní náhled]</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="520"/>
@@ -327,7 +327,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="525"/>
         <source>Nikon Raw Image File [Inner thumbnail only]</source>
-        <translation type="unfinished"/>
+        <translation>Nikon Raw Image File [vnitřní náhled]</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="530"/>
@@ -337,7 +337,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="535"/>
         <source>Olympus Raw Image File [Inner thumbnail only]</source>
-        <translation type="unfinished"/>
+        <translation>Olympus Raw Image File [vnitřní náhled]</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="540"/>
@@ -347,7 +347,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="545"/>
         <source>Pentax Raw Image File [Inner thumbnail only]</source>
-        <translation type="unfinished"/>
+        <translation>Pentax Raw Image File [vnitřní náhled]</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="550"/>
@@ -357,7 +357,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="555"/>
         <source>Fuji Raw Image File [Inner thumbnail only]</source>
-        <translation type="unfinished"/>
+        <translation>Fuji Raw Image File [vnitřní náhled]</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="560"/>
@@ -367,7 +367,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="565"/>
         <source>Panasonic RAW Image File [Inner thumbnail only]</source>
-        <translation type="unfinished"/>
+        <translation>Panasonic RAW Image File [vnitřní náhled]</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="570"/>
@@ -377,7 +377,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="575"/>
         <source>Samsung RAW Image File [Inner thumbnail only]</source>
-        <translation type="unfinished"/>
+        <translation>Samsung RAW Image File [vnitřní náhled]</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="580"/>
@@ -387,7 +387,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="585"/>
         <source>SIGMA X3F Camera RAW File [Inner thumbnail only]</source>
-        <translation type="unfinished"/>
+        <translation>SIGMA X3F Camera RAW File [vnitřní náhled]</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="590"/>
@@ -397,17 +397,60 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="595"/>
         <source>Tagged Image File Format</source>
-        <translation type="unfinished"/>
+        <translation>Tagged Image File Format</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="600"/>
         <source>[MacOS/Win only] HEIC</source>
-        <translation type="unfinished"/>
+        <translation>[pouze macOS/win] HEIC</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="605"/>
         <source>High Efficiency Image File Format</source>
-        <translation type="unfinished"/>
+        <translation>High Efficiency Image File Format</translation>
+    </message>
+</context>
+<context>
+    <name>MAC_APPLICATION_MENU</name>
+    <message>
+        <location filename="../../application/Application.cpp" line="42"/>
+        <source>Services</source>
+        <translation>Služby</translation>
+    </message>
+    <message>
+        <location filename="../../application/Application.cpp" line="43"/>
+        <source>Hide %1</source>
+        <translation>Schovat %1</translation>
+    </message>
+    <message>
+        <location filename="../../application/Application.cpp" line="44"/>
+        <source>Hide Others</source>
+        <translation>Schovat ostatní</translation>
+    </message>
+    <message>
+        <location filename="../../application/Application.cpp" line="45"/>
+        <source>Show %1</source>
+        <translation>Zobrazit %1</translation>
+    </message>
+    <message>
+        <location filename="../../application/Application.cpp" line="46"/>
+        <source>Show All</source>
+        <translation>Zobrazit vše</translation>
+    </message>
+    <message>
+        <location filename="../../application/Application.cpp" line="47"/>
+        <source>About %1</source>
+        <translation>O %1</translation>
+    </message>
+    <message>
+        <location filename="../../application/Application.cpp" line="48"/>
+        <source>Quit %1</source>
+        <translation>Ukončit %1</translation>
+    </message>
+    <message>
+        <location filename="../../application/Application.cpp" line="49"/>
+        <source>Preferences...</source>
+        <translation>Nastavení...</translation>
     </message>
 </context>
 <context>
