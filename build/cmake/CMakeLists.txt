@@ -212,6 +212,7 @@ TARGET_LINK_LIBRARIES(VookiImageViewer ${OS_LIBS})
 
 function(ADD_TRANSLATION lang)
     SET(TRANSLATION_FILES ${TRANSLATION_FILES} ../../src/resource/translations/${APPLICATION_NAME}_${lang}.ts PARENT_SCOPE)
+    SET(TRANSLATION_LANGUAGES ${TRANSLATION_LANGUAGES} ${lang} PARENT_SCOPE)
 endfunction()
 
 ADD_TRANSLATION(cs_CZ)
@@ -312,10 +313,7 @@ if (APPLE)
     include(platform/mac/MacdeployQt.cmake)
     deployqt()
 
-    SET(PLUGINS "$<TARGET_FILE_DIR:${APPLICATION_NAME}>/../PlugIns/imageformats")
-
-    INSTALL(TARGETS ${IMAGE_PLUGINS}
-            LIBRARY DESTINATION ${PLUGINS})
+    INCLUDE(platform/mac/CPack.cmake)
 elseif(WIN32)
     # Windows
     #

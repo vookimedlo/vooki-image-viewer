@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="cs_CZ">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="cs_CZ">
 <context>
     <name>AboutComponentsDialog</name>
     <message>
@@ -744,9 +746,13 @@
 <context>
     <name>QPlatformTheme</name>
     <message>
-        <location filename="../../application/Application.cpp" line="57"/>
         <source>Ok</source>
-        <translation>Ok</translation>
+        <translation type="vanished">Ok</translation>
+    </message>
+    <message>
+        <location filename="../../application/Application.cpp" line="57"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../application/Application.cpp" line="58"/>
@@ -856,7 +862,7 @@
     <message>
         <location filename="../../ui/forms/AboutDialog.ui" line="79"/>
         <source>qrc:/text/aboutapp</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutDialog.ui" line="117"/>

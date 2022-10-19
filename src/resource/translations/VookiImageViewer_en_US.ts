@@ -747,7 +747,7 @@
     <name>QPlatformTheme</name>
     <message>
         <location filename="../../application/Application.cpp" line="57"/>
-        <source>Ok</source>
+        <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

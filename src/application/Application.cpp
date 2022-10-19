@@ -54,7 +54,7 @@ Application::Application(int &argc, char **argv):
     QCoreApplication::translate("MAC_APPLICATION_MENU", "Preferences...");
 
     // This is a workaround to get all required specific QDialogButtonBox items into the translatable state.
-    QCoreApplication::translate("QPlatformTheme", "Ok");
+    QCoreApplication::translate("QPlatformTheme", "OK");
     QCoreApplication::translate("QPlatformTheme", "Cancel");
     QCoreApplication::translate("QPlatformTheme", "Restore Defaults");
 }
