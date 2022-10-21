@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="cs_CZ">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="cs_CZ">
 <context>
     <name>AboutComponentsDialog</name>
     <message>
@@ -415,42 +413,42 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../../application/Application.cpp" line="47"/>
+        <location filename="../../application/Application.cpp" line="36"/>
         <source>Services</source>
         <translation>Služby</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="48"/>
+        <location filename="../../application/Application.cpp" line="37"/>
         <source>Hide %1</source>
         <translation>Schovat %1</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="49"/>
+        <location filename="../../application/Application.cpp" line="38"/>
         <source>Hide Others</source>
         <translation>Schovat ostatní</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="50"/>
+        <location filename="../../application/Application.cpp" line="39"/>
         <source>Show %1</source>
         <translation>Zobrazit %1</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="51"/>
+        <location filename="../../application/Application.cpp" line="40"/>
         <source>Show All</source>
         <translation>Zobrazit vše</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="52"/>
+        <location filename="../../application/Application.cpp" line="41"/>
         <source>About %1</source>
         <translation>O %1</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="53"/>
+        <location filename="../../application/Application.cpp" line="42"/>
         <source>Quit %1</source>
         <translation>Ukončit %1</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="54"/>
+        <location filename="../../application/Application.cpp" line="43"/>
         <source>Preferences...</source>
         <translation>Nastavení...</translation>
     </message>
@@ -738,29 +736,33 @@
         <translation>Poznámky k vydání ...</translation>
     </message>
     <message>
-        <location filename="../../ui/MainWindow.cpp" line="441"/>
+        <location filename="../../ui/MainWindow.cpp" line="475"/>
         <source>Zoom: </source>
         <translation>Zvětšení: </translation>
     </message>
 </context>
 <context>
+    <name>QFileSystemModel</name>
+    <message>
+        <location filename="../../application/Application.cpp" line="51"/>
+        <source>Name</source>
+        <translation>Název</translation>
+    </message>
+</context>
+<context>
     <name>QPlatformTheme</name>
     <message>
-        <source>Ok</source>
-        <translation type="vanished">Ok</translation>
-    </message>
-    <message>
-        <location filename="../../application/Application.cpp" line="57"/>
+        <location filename="../../application/Application.cpp" line="46"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="58"/>
+        <location filename="../../application/Application.cpp" line="47"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="59"/>
+        <location filename="../../application/Application.cpp" line="48"/>
         <source>Restore Defaults</source>
         <translation>Obnovit výchozí</translation>
     </message>
@@ -815,39 +817,49 @@
     </message>
     <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="142"/>
+        <source>Localization</source>
+        <translation>Lokalizace</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="151"/>
+        <source>Use system settings</source>
+        <translation>Použít nastavení systému</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="174"/>
         <source>Window mode (on startup)</source>
         <translation>Zobrazovací režim (při startu)</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="151"/>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="193"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="183"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="225"/>
         <source>Hide statusbar</source>
         <translation>Schování stavového řádku</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="164"/>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="206"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="196"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="238"/>
         <source>Hide toolbar</source>
         <translation>Schování nástrojové lišty</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="174"/>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="219"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="206"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="251"/>
         <source>Hide filesystem navigation</source>
         <translation>Schování navigace souborového systému</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="184"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="216"/>
         <source>Switch to FullScreen</source>
         <translation>Přepnutí do celoobrazového režimu</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="237"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="269"/>
         <source>Shortcuts</source>
         <translation>Zkratky</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="247"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="279"/>
         <source>Shortcut</source>
         <translation>Zkratka</translation>
     </message>
@@ -862,7 +874,7 @@
     <message>
         <location filename="../../ui/forms/AboutDialog.ui" line="79"/>
         <source>qrc:/text/aboutapp</source>
-        <translation type="unfinished"></translation>
+        <translation>qrc:/text/aboutapp</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutDialog.ui" line="117"/>

@@ -43,6 +43,7 @@ protected:
 protected slots:
     virtual void onAccept();
     virtual void onButtonBoxButtonClicked(QAbstractButton *button);
+    virtual void onLanguageChanged(int index);
     virtual void onRejected();
     virtual void onRestoreDefaultsTriggered();
     virtual void onToolButtonBorderColorClicked();
@@ -52,4 +53,5 @@ private:
     Ui::SettingsDialog m_uiSettingsDialog;
     QColor m_borderColor;
     QColor m_backgroundColor;
+    QString m_languageCode;
 };

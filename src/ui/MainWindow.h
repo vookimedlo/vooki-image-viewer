@@ -48,7 +48,9 @@ public:
     HANDLE_RESULT_E handleImagePath(const QString &path, bool addToRecentFiles = true);
 
 protected:
+    void changeEvent(QEvent*) override;
     QString getRecentFile(int item) const;
+    void loadTranslators();
     void propagateBorderSettings() const;
     QString registerProcessedImage(const QString &filePath, bool addToRecentFiles = true);
     void restoreRecentFiles();

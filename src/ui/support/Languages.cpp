@@ -1,7 +1,6 @@
-#pragma once
 /****************************************************************************
 VookiImageViewer - a tool for showing images.
-Copyright(C) 2017  Michal Duda <github@vookimedlo.cz>
+Copyright(C) 2022  Michal Duda <github@vookimedlo.cz>
 
 https://github.com/vookimedlo/vooki-image-viewer
 
@@ -19,27 +18,8 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include "../util/compiler.h"
-#include <QApplication>
-#include <QString>
-#include <QTranslator>
+#include "Languages.h"
 
-class Application : public QApplication
-{
-    Q_OBJECT
-public:
-    Application(int &argc, char **argv);
-    DISABLE_COPY_MOVE(Application);
-
-    void installTranslators(const QLocale &locale);
-
-signals:
-    void openFileRequested(QString path);
-
-protected:
-    bool event(QEvent *event) override;
-
-private:
-    QTranslator translator;
-    QTranslator qtTranslator;
+std::vector<Languages::Record> Languages::m_localizations = { {"cs_CZ", "Czech (Czech Republic)"},
+                                                              {"en_US", "English (United States)"}
 };

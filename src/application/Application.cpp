@@ -31,18 +31,6 @@ Application::Application(int &argc, char **argv):
     // Localization support
     qDebug() << "QLocale: " << QLocale().name();
 
-    if(qtTranslator.load(QLocale(),
-                          "qt",
-                          "_",
-                          QLibraryInfo::path(QLibraryInfo::TranslationsPath)))
-        installTranslator(&qtTranslator);
-
-    if (translator.load(QLocale(),
-                        "VookiImageViewer",
-                        "_",
-                        ":/i18n"))
-        installTranslator(&translator);
-
     // This is a workaround to get all macOS specific menu items into the translatable state.
     QCoreApplication::translate("MAC_APPLICATION_MENU", "Services");
     QCoreApplication::translate("MAC_APPLICATION_MENU", "Hide %1");
@@ -57,6 +45,27 @@ Application::Application(int &argc, char **argv):
     QCoreApplication::translate("QPlatformTheme", "OK");
     QCoreApplication::translate("QPlatformTheme", "Cancel");
     QCoreApplication::translate("QPlatformTheme", "Restore Defaults");
+
+    // This is a workaround to get all required specific QFileSystemModel items into the translatable state.
+    QCoreApplication::translate("QFileSystemModel", "Name");
+}
+
+void Application::installTranslators(const QLocale &locale)
+{
+    removeTranslator(&qtTranslator);
+    removeTranslator(&translator);
+
+    if(qtTranslator.load(locale,
+                          "qt",
+                          "_",
+                          QLibraryInfo::path(QLibraryInfo::TranslationsPath)))
+        installTranslator(&qtTranslator);
+
+    if (translator.load(locale,
+                        "VookiImageViewer",
+                        "_",
+                        ":/i18n"))
+        installTranslator(&translator);
 }
 
 bool Application::event(QEvent *event)
@@ -64,7 +73,7 @@ bool Application::event(QEvent *event)
     if (event->type() == QEvent::FileOpen)
     {
         auto openEvent = dynamic_cast<QFileOpenEvent *>(event);
-        qDebug() << "Open file" << openEvent->file();
+        qDebug() << "Open file " << openEvent->file();
         emit openFileRequested(openEvent->file());
     }
 

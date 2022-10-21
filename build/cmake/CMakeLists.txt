@@ -116,6 +116,7 @@ SET(SOURCES
     ../../src/ui/SettingsDialog.cpp
     ../../src/ui/SettingsShortcutsTableWidget.cpp
     ../../src/ui/StatusBar.cpp
+    ../../src/ui/support/Languages.cpp
     ../../src/ui/support/RecentFileAction.cpp
     ../../src/ui/support/Settings.cpp
     ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp

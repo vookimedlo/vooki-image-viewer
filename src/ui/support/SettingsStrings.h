@@ -28,6 +28,8 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #define SETTINGS_IMAGE_BORDER_DRAW "viv/image/border/draw"
 #define SETTINGS_IMAGE_BORDER_COLOR "viv/image/border/color"
 #define SETTINGS_IMAGE_BACKGROUND_COLOR "viv/image/background/color"
+#define SETTINGS_LANGUAGE_USE_SYSTEM "viv/language/system"
+#define SETTINGS_LANGUAGE_CODE "viv/language/code"
 #define SETTINGS_RECENT_FILE_1 "viv/recent/file/1"
 #define SETTINGS_RECENT_FILE_2 "viv/recent/file/2"
 #define SETTINGS_RECENT_FILE_3 "viv/recent/file/3"

@@ -29,6 +29,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #if defined  __APPLE__
 #include "kdmactouchbar.h"
 #endif // __APPLE__
+#include "../application/Application.h"
 #include "SettingsDialog.h"
 #include "support/RecentFileAction.h"
 #include "ui_AboutDialog.h"
@@ -107,6 +108,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     propagateBorderSettings();
     restoreRecentFiles();
+    loadTranslators();
 }
 
 MainWindow::~MainWindow() = default;
@@ -139,6 +141,29 @@ MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, con
     return HANDLE_RESULT_E_DONT_EXIST;
 }
 
+void MainWindow::changeEvent(QEvent* event)
+{
+    if(event != nullptr)
+    {
+        switch(event->type())
+        {
+            // this event is send if a translator is loaded
+            case QEvent::LanguageChange:
+                m_ui.retranslateUi(this);
+                break;
+
+            // this event is send, if the system, language changes
+            case QEvent::LocaleChange:
+                loadTranslators();
+                break;
+            default:
+                break;
+        }
+    }
+    QMainWindow::changeEvent(event);
+}
+
+
 QString MainWindow::getRecentFile(int item) const
 {
     const int index = item + 1;
@@ -152,6 +177,16 @@ QString MainWindow::getRecentFile(int item) const
     }
 
     return QString();
+}
+
+void MainWindow::loadTranslators()
+{
+    const std::shared_ptr<QSettings> settings = Settings::userSettings();
+    Application *application = static_cast<Application *>(QCoreApplication::instance());
+    if (settings->value(SETTINGS_LANGUAGE_USE_SYSTEM).toBool())
+        application->installTranslators(QLocale());
+    else
+        application->installTranslators(QLocale(settings->value(SETTINGS_LANGUAGE_CODE).value<QString>()));
 }
 
 void MainWindow::propagateBorderSettings() const
@@ -416,6 +451,7 @@ void MainWindow::onSettingsTriggered()
     {
         propagateBorderSettings();
         m_ui.imageAreaWidget->repaintWithTransformations();
+        loadTranslators();
     }
 }
 

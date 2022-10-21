@@ -415,42 +415,42 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../../application/Application.cpp" line="47"/>
+        <location filename="../../application/Application.cpp" line="36"/>
         <source>Services</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="48"/>
+        <location filename="../../application/Application.cpp" line="37"/>
         <source>Hide %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="49"/>
+        <location filename="../../application/Application.cpp" line="38"/>
         <source>Hide Others</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="50"/>
+        <location filename="../../application/Application.cpp" line="39"/>
         <source>Show %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="51"/>
+        <location filename="../../application/Application.cpp" line="40"/>
         <source>Show All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="52"/>
+        <location filename="../../application/Application.cpp" line="41"/>
         <source>About %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="53"/>
+        <location filename="../../application/Application.cpp" line="42"/>
         <source>Quit %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="54"/>
+        <location filename="../../application/Application.cpp" line="43"/>
         <source>Preferences...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -738,25 +738,33 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/MainWindow.cpp" line="441"/>
+        <location filename="../../ui/MainWindow.cpp" line="475"/>
         <source>Zoom: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QFileSystemModel</name>
+    <message>
+        <location filename="../../application/Application.cpp" line="51"/>
+        <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QPlatformTheme</name>
     <message>
-        <location filename="../../application/Application.cpp" line="57"/>
+        <location filename="../../application/Application.cpp" line="46"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="58"/>
+        <location filename="../../application/Application.cpp" line="47"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="59"/>
+        <location filename="../../application/Application.cpp" line="48"/>
         <source>Restore Defaults</source>
         <translation type="unfinished"></translation>
     </message>
@@ -811,39 +819,49 @@
     </message>
     <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="142"/>
-        <source>Window mode (on startup)</source>
+        <source>Localization</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="151"/>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="193"/>
-        <source>Hide statusbar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="164"/>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="206"/>
-        <source>Hide toolbar</source>
+        <source>Use system settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="174"/>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="219"/>
+        <source>Window mode (on startup)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="183"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="225"/>
+        <source>Hide statusbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="196"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="238"/>
+        <source>Hide toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="206"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="251"/>
         <source>Hide filesystem navigation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="184"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="216"/>
         <source>Switch to FullScreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="237"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="269"/>
         <source>Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="247"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="279"/>
         <source>Shortcut</source>
         <translation type="unfinished"></translation>
     </message>
