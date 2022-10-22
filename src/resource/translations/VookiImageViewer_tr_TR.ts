@@ -4,6 +4,7 @@
     <message>
         <location filename="../../ui/forms/AboutComponentsDialog.ui" line="14"/>
         <source>About Components</source>
+        <extracomment>Title: Dialog</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -57,6 +58,7 @@
     <message>
         <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="18"/>
         <source>Supported Formats</source>
+        <extracomment>Title: Dialog</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -458,6 +460,7 @@
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="15"/>
         <source>VookiImageViewer</source>
+        <extracomment>Title: Application Window</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -468,6 +471,7 @@
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="52"/>
         <source>Recent Files</source>
+        <extracomment>Menu item: &quot;File-&gt;Recent Files&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -478,261 +482,349 @@
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="71"/>
         <source>&amp;Zoom</source>
+        <extracomment>Menu item: &quot;View-&gt;Zoom&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="80"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="83"/>
         <source>Rotate</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="87"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="90"/>
         <source>Flip</source>
+        <extracomment>Menu item: &quot;View-&gt;Flip&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="94"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="97"/>
         <source>Navigation</source>
+        <extracomment>Menu item: &quot;View-&gt;Navigation&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="101"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="104"/>
         <source>Scroll</source>
+        <extracomment>Menu item: &quot;View-&gt;Scroll&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="122"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="125"/>
         <source>&amp;Help</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="135"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="138"/>
         <source>&amp;Window</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="139"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="142"/>
         <source>Show</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="156"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="159"/>
         <source>FileSystem Navigation</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="181"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="184"/>
         <source>Home Directory</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="204"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="207"/>
         <source>Documents Directory</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="227"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="230"/>
         <source>Pictures Directory</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="283"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="286"/>
         <source>ToolBar</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="320"/>
-        <source>&amp;Quit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../../ui/forms/MainWindow.ui" line="323"/>
-        <source>Quit The Application</source>
+        <source>&amp;Quit</source>
+        <extracomment>Menu item: &quot;File-&gt;Quit&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="347"/>
-        <source>&amp;FullScreen</source>
+        <location filename="../../ui/forms/MainWindow.ui" line="326"/>
+        <source>Quit The Application</source>
+        <extracomment>Toolbar action tool tip</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="350"/>
-        <source>Show image in FullScreen mode</source>
+        <source>&amp;FullScreen</source>
+        <extracomment>Menu item: &quot;View-&gt;FullScreen&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="367"/>
-        <source>&amp;About...</source>
+        <location filename="../../ui/forms/MainWindow.ui" line="353"/>
+        <source>Show image in FullScreen mode</source>
+        <extracomment>Toolbar action tool tip</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="370"/>
-        <source>About...</source>
+        <source>&amp;About...</source>
+        <extracomment>Menu item: &quot;Help-&gt;About...&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="373"/>
-        <source>About Application</source>
+        <source>About...</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="394"/>
-        <source>Zoom &amp;In</source>
+        <location filename="../../ui/forms/MainWindow.ui" line="376"/>
+        <source>About Application...</source>
+        <extracomment>Toolbar action tool tip</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="397"/>
-        <source>Zoom In</source>
+        <source>Zoom &amp;In</source>
+        <extracomment>Menu item: &quot;View-&gt;Zoom-&gt;Zoom In&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="418"/>
-        <source>Zoom &amp;Out</source>
+        <location filename="../../ui/forms/MainWindow.ui" line="400"/>
+        <source>Zoom In</source>
+        <extracomment>Toolbar action tool tip</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="421"/>
+        <source>Zoom &amp;Out</source>
+        <extracomment>Menu item: &quot;View-&gt;Zoom-&gt;Zoom Out&quot;</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="424"/>
         <source>Zoom Out</source>
+        <extracomment>Toolbar action tool tip</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="445"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="448"/>
         <source>Fi&amp;t to Window</source>
+        <extracomment>Menu item: &quot;View-&gt;Zoom-&gt;Fit to Window&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="468"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="451"/>
+        <source>Fit to Window</source>
+        <extracomment>Toolbar action tool tip</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="474"/>
         <source>StatusBar</source>
+        <extracomment>Menu item: &quot;Window-&gt;Show-&gt;StatusBar&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="471"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="477"/>
         <source>Show/Hide StatusBar</source>
+        <extracomment>Toolbar action tool tip</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="492"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="498"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="501"/>
         <source>Original Size</source>
+        <extracomment>Menu item: &quot;View-&gt;Zoom-&gt;Original Size&quot;
+----------
+Toolbar action tool tip</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="513"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="736"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="522"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="769"/>
         <source>Left</source>
+        <extracomment>Menu item: &quot;View-&gt;Rotate-&gt;Left&quot;
+----------
+Menu item: &quot;View-&gt;Scroll-&gt;Left&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="516"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="519"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="525"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="528"/>
         <source>Rotate Left</source>
+        <extracomment>Toolbar action tool tip</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="540"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="760"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="549"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="793"/>
         <source>Right</source>
+        <extracomment>Menu item: &quot;View-&gt;Rotate-&gt;Right&quot;
+----------
+Menu item: &quot;View-&gt;Scroll-&gt;Right&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="543"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="546"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="552"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="555"/>
         <source>Rotate Right</source>
+        <extracomment>Toolbar action tool tip</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="567"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="576"/>
         <source>Horizontally</source>
+        <extracomment>Menu item: &quot;View-&gt;Flip-&gt;Horizontally&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="570"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="573"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="579"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="582"/>
         <source>Flip Horizontally</source>
+        <extracomment>Toolbar action tool tip</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="594"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="603"/>
         <source>Vertically</source>
+        <extracomment>Menu item: &quot;View-&gt;Flip-&gt;Vertically&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="597"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="600"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="606"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="609"/>
         <source>Flip Vertically</source>
+        <extracomment>Toolbar action tool tip</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="617"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="626"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="629"/>
         <source>About Qt...</source>
+        <extracomment>Menu item: &quot;Help-&gt;About Qt...&quot;
+----------
+Toolbar action tool tip</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="631"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="643"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="649"/>
         <source>Preferences...</source>
+        <extracomment>Menu item: &quot;File-&gt;Preferences...&quot;
+----------
+Toolbar action tool tip</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="652"/>
-        <source>Previous Image</source>
+        <location filename="../../ui/forms/MainWindow.ui" line="646"/>
+        <source>Preferences</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="670"/>
         <location filename="../../ui/forms/MainWindow.ui" line="673"/>
+        <source>Previous Image</source>
+        <extracomment>Menu item: &quot;View-&gt;Navigation-&gt;Previous Image&quot;
+----------
+Toolbar action tool tip</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="694"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="697"/>
         <source>Next Image</source>
+        <extracomment>Menu item: &quot;View-&gt;Navigation-&gt;Next Image&quot;
+----------
+Toolbar action tool tip</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="690"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="714"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="717"/>
         <source>Clear History</source>
+        <extracomment>Menu item: &quot;File-&gt;Recent Files-&gt;Clear History&quot;
+----------
+Toolbar action tool tip</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="704"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="731"/>
         <source>Supported Image Formats...</source>
+        <extracomment>Menu item: &quot;Help-&gt;Supported Image Formats...&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="718"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="734"/>
+        <source>Supported Image Formats</source>
+        <extracomment>Toolbar action tool tip</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="748"/>
         <source>About Components...</source>
+        <extracomment>Menu item: &quot;Help-&gt;About Components...&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="739"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="742"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="751"/>
+        <source>About Components</source>
+        <extracomment>Toolbar action tool tip</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="772"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="775"/>
         <source>Scroll Left</source>
+        <extracomment>Toolbar action tool tip</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="763"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="766"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="796"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="799"/>
         <source>Scroll Right</source>
+        <extracomment>Toolbar action tool tip</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="784"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="817"/>
         <source>Up</source>
+        <extracomment>Menu item: &quot;View-&gt;Scroll-&gt;Up&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="787"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="790"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="820"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="823"/>
         <source>Scroll Up</source>
+        <extracomment>Toolbar action tool tip</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="808"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="841"/>
         <source>Down</source>
+        <extracomment>Menu item: &quot;View-&gt;Scroll-&gt;Down&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="811"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="814"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="844"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="847"/>
         <source>Scroll Down</source>
+        <extracomment>Toolbar action tool tip</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="828"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="861"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="864"/>
         <source>Release Notes...</source>
+        <extracomment>Menu item: &quot;Help-&gt;Release Notes...&quot;
+----------
+Toolbar action tool tip</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -773,6 +865,7 @@
     <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="15"/>
         <source>Preferences</source>
+        <extracomment>Title: Dialog</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -870,6 +963,7 @@
     <message>
         <location filename="../../ui/forms/AboutDialog.ui" line="18"/>
         <source>About VookiImageViewer</source>
+        <extracomment>Title: Dialog</extracomment>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -879,7 +973,7 @@
     </message>
     <message>
         <location filename="../../ui/forms/AboutDialog.ui" line="117"/>
-        <source>Version: </source>
+        <source>Version: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -893,6 +987,7 @@
     <message>
         <location filename="../../ui/forms/ReleaseNotesDialog.ui" line="39"/>
         <source>Release Notes</source>
+        <extracomment>Title: Window</extracomment>
         <translation type="unfinished"/>
     </message>
 </context>

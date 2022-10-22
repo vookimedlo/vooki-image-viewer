@@ -36,7 +36,7 @@
    <enum>Qt::NoContextMenu</enum>
   </property>
   <property name="windowTitle">
-   <string>Release Notes</string>
+   <string extracomment="Title: Window">Release Notes</string>
   </property>
   <property name="modal">
    <bool>true</bool>

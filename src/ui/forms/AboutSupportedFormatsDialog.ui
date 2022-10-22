@@ -15,7 +15,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Supported Formats</string>
+   <string extracomment="Title: Dialog">Supported Formats</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../resource/vookiimageviewer.qrc">

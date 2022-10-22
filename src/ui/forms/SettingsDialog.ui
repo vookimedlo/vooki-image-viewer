@@ -12,7 +12,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Preferences</string>
+   <string extracomment="Title: Dialog">Preferences</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../resource/vookiimageviewer.qrc">

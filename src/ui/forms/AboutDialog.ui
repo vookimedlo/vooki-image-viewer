@@ -15,7 +15,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>About VookiImageViewer</string>
+   <string extracomment="Title: Dialog">About VookiImageViewer</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../resource/vookiimageviewer.qrc">
@@ -114,7 +114,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         </font>
        </property>
        <property name="text">
-        <string>Version: </string>
+        <string>Version: %1</string>
        </property>
       </widget>
      </item>

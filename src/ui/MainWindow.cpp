@@ -302,7 +302,7 @@ void MainWindow::onAboutTriggered()
     Ui::aboutDialog uiAbout;
     QDialog dialog(this);
     uiAbout.setupUi(&dialog);
-    uiAbout.versionLabel->setText(uiAbout.versionLabel->text().append(Util::getVersionString()));
+    uiAbout.versionLabel->setText(uiAbout.versionLabel->text().arg(Util::getVersionString()));
     dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint);
     dialog.exec();
 }
