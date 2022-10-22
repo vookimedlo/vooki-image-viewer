@@ -28,6 +28,7 @@ Application::Application(int &argc, char **argv):
                                         translator(),
                                         qtTranslator()
 {
+    //QLocale::setDefault(QLocale::Language::German);
     // Localization support
     qDebug() << "QLocale: " << QLocale().name();
 
