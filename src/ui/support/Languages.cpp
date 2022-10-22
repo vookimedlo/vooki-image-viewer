@@ -19,7 +19,4 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #include "Languages.h"
-
-std::vector<Languages::Record> Languages::m_localizations = { {"cs_CZ", "Czech (Czech Republic)"},
-                                                              {"en_US", "English (United States)"}
-};
+#include "Languages_m_localizations.h"
