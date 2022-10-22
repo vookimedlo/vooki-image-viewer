@@ -736,8 +736,9 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../../ui/MainWindow.cpp" line="475"/>
-        <source>Zoom: </source>
+        <location filename="../../ui/MainWindow.cpp" line="478"/>
+        <source>Zoom: %1%</source>
+        <extracomment>Used in the statusbar showing the zooming percentage. Example: &quot;Zoom: 12%&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
 </context>

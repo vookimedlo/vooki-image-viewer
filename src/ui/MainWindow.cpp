@@ -474,7 +474,8 @@ void MainWindow::onZoomOutTriggered() const
 
 void MainWindow::onZoomPercentageChanged(const qreal value) const
 {
-    m_ui.statusBar->rightLabel().setText(tr("Zoom: ") + QString::number(static_cast<int>(value * 100)) + "%");
+    //: Used in the statusbar showing the zooming percentage. Example: "Zoom: 12%"
+    m_ui.statusBar->rightLabel().setText(tr("Zoom: %1%").arg(QString::number(static_cast<int>(value * 100))));
 }
 
 void MainWindow::onHomeDirClicked() const

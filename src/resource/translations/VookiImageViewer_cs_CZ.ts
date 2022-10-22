@@ -736,9 +736,10 @@
         <translation>Poznámky k vydání ...</translation>
     </message>
     <message>
-        <location filename="../../ui/MainWindow.cpp" line="475"/>
-        <source>Zoom: </source>
-        <translation>Zvětšení: </translation>
+        <location filename="../../ui/MainWindow.cpp" line="478"/>
+        <source>Zoom: %1%</source>
+        <extracomment>Used in the statusbar showing the zooming percentage. Example: &quot;Zoom: 12%&quot;</extracomment>
+        <translation>Zvětšení: %1 %</translation>
     </message>
 </context>
 <context>
