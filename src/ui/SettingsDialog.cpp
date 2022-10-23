@@ -53,8 +53,8 @@ SettingsDialog::SettingsDialog(QWidget *parent)
 
         if (item->type() == SettingsShortcutsTableWidgetItem::type)
         {
-            auto *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item);
-            shortcutItem->onKeySequenceChanged(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
+            if (auto *shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
+                shortcutItem->onKeySequenceChanged(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
         }
     }
 }
@@ -80,7 +80,7 @@ void SettingsDialog::populateShortcuts(QMenu *menu) const
 
         const int rowCount = m_uiSettingsDialog.tableShortcutsWidget->rowCount();
         m_uiSettingsDialog.tableShortcutsWidget->insertRow(rowCount);
-        QTableWidgetItem *headerItem = new QTableWidgetItem(action->toolTip());
+        auto *headerItem = new QTableWidgetItem(action->toolTip());
         m_uiSettingsDialog.tableShortcutsWidget->setVerticalHeaderItem(rowCount, headerItem);
 
         auto *item = new SettingsShortcutsTableWidgetItem(*action);
@@ -88,7 +88,7 @@ void SettingsDialog::populateShortcuts(QMenu *menu) const
     }
 }
 
-void SettingsDialog::initializeUI(const std::shared_ptr<QSettings> settings)
+void SettingsDialog::initializeUI(std::shared_ptr<QSettings> settings)
 {
     m_uiSettingsDialog.checkBoxUseSystemLanguage->setChecked(settings->value(m_uiSettingsDialog.checkBoxUseSystemLanguage->whatsThis()).toBool());
     m_uiSettingsDialog.checkBoxGeneralStartInFullscreen->setChecked(settings->value(m_uiSettingsDialog.checkBoxGeneralStartInFullscreen->whatsThis()).toBool());
@@ -142,8 +142,8 @@ void SettingsDialog::onAccept()
 
         if (item->type() == SettingsShortcutsTableWidgetItem::type)
         {
-            auto *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item);
-            settings->setValue(shortcutItem->action().whatsThis(), shortcutItem->keySequence());
+            if (auto *shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
+                settings->setValue(shortcutItem->action().whatsThis(), shortcutItem->keySequence());
         }
     }
 
@@ -179,8 +179,8 @@ void SettingsDialog::onRejected()
 
         if (item->type() == SettingsShortcutsTableWidgetItem::type)
         {
-            auto *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item);
-            shortcutItem->action().setShortcut(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
+            if (auto *shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
+                shortcutItem->action().setShortcut(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
         }
     }
 
@@ -199,8 +199,8 @@ void SettingsDialog::onRestoreDefaultsTriggered()
 
         if (item->type() == SettingsShortcutsTableWidgetItem::type)
         {
-            auto *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item);
-            shortcutItem->onKeySequenceChanged(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
+            if (auto *shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
+                shortcutItem->onKeySequenceChanged(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
         }
     }
 

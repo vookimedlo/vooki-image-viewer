@@ -37,12 +37,12 @@ public:
     ~MainWindow() override;
     DISABLE_COPY_MOVE(MainWindow);
 
-    enum HANDLE_RESULT_E
+    enum class HANDLE_RESULT_E
     {
-        HANDLE_RESULT_E_OK,
-        HANDLE_RESULT_E_NOT_READABLE,
-        HANDLE_RESULT_E_DONT_EXIST,
-        HANDLE_GENERAL_ERROR
+        OK,
+        NOT_READABLE,
+        DONT_EXIST,
+        GENERAL_ERROR
     };
 
     HANDLE_RESULT_E handleImagePath(const QString &path, bool addToRecentFiles = true);
@@ -50,7 +50,7 @@ public:
 protected:
     void changeEvent(QEvent*) override;
     [[nodiscard]] QString getRecentFile(int item) const;
-    void loadTranslators() const;
+    static void loadTranslators();
     void propagateBorderSettings() const;
     QString registerProcessedImage(const QString &filePath, bool addToRecentFiles = true);
     void restoreRecentFiles();

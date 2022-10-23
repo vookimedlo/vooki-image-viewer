@@ -63,7 +63,7 @@ Supported image formats cover the very common formats as well as the rare ones. 
 | [MacOS/Windows only] HEIC | High-Efficiency Image File Format                |
 
 
-All operations have assigned shortcuts and all of them can be user re-assigned except the one which is used for Preferences on MacOS.
+All operations have assigned shortcuts and all of them can be user re-assigned except the one which is used for Preferences on macOS.
 
 
 | MacOS            | Windows                     | GNU/Linux                   | OPERATION                                |
@@ -99,7 +99,7 @@ All code developed during this project is [GPLv3][2] licensed. Images as well as
 -----------------
 
 ## Releases
-[Prebuilt binaries][5] for Windows 11, Debian, Fedora, Ubuntu, and MacOS, as well as sources, are available [here.][5]
+[Prebuilt binaries][5] for Windows 11, Debian, Fedora, Ubuntu, and macOS, as well as sources, are available [here.][5]
 
 Mac users can install the VookiImageViewer by the Homebrew.
 ```
@@ -164,7 +164,7 @@ dnf install vookiimageviewer
 -----------------
 
 ## Builds
-All binaries could be built easily. For your convenience, GitHub's Actions are used to continuously check if the current source code is buildable on Linux and MacOS.
+All binaries could be built easily. For your convenience, GitHub's Actions are used to continuously check if the current source code is buildable on Linux and macOS.
 
 [![Linux Builds](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/linux-build.yml/badge.svg)](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/linux-build.yml)
 [![Windows Builds](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/win-build.yml/badge.svg)](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/win-build.yml)

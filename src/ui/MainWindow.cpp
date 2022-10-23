@@ -126,20 +126,20 @@ MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, con
             {
                 m_catalog.initialize(QDir(path));
                 showImage(addToRecentFiles);
-                return HANDLE_RESULT_E_OK;
+                return HANDLE_RESULT_E::OK;
             }
             else if (info.isFile())
             {
                 m_catalog.initialize(QFile(path));
                 showImage(addToRecentFiles);
-                return HANDLE_RESULT_E_OK;
+                return HANDLE_RESULT_E::OK;
             }
         }
 
-        return HANDLE_RESULT_E_NOT_READABLE;
+        return HANDLE_RESULT_E::NOT_READABLE;
     }
 
-    return HANDLE_RESULT_E_DONT_EXIST;
+    return HANDLE_RESULT_E::DONT_EXIST;
 }
 
 void MainWindow::changeEvent(QEvent* event)
@@ -148,12 +148,12 @@ void MainWindow::changeEvent(QEvent* event)
     {
         switch(event->type())
         {
-            // this event is send if a translator is loaded
+            // this event is sent if a translator is loaded
             case QEvent::LanguageChange:
                 m_ui.retranslateUi(this);
                 break;
 
-            // this event is send, if the system, language changes
+            // this event is sent, if the system, language changes
             case QEvent::LocaleChange:
                 loadTranslators();
                 break;
@@ -180,7 +180,7 @@ QString MainWindow::getRecentFile(int item) const
     return {};
 }
 
-void MainWindow::loadTranslators() const
+void MainWindow::loadTranslators()
 {
     const std::shared_ptr<QSettings> settings = Settings::userSettings();
     if (auto *application = dynamic_cast<Application *>(QCoreApplication::instance()))
