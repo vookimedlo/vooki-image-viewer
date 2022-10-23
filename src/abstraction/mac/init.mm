@@ -25,12 +25,12 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 namespace SystemDependant
 {
-    static void debugPrintNSUserDefaultsAllKeys()
+    [[maybe_unused]] static void debugPrintNSUserDefaultsAllKeys()
     {
         NSLog(@"%@", [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys]);
     }
 
-    static void debugPrintNSUserDefaultsAllKeysAndValues()
+    [[maybe_unused]] static void debugPrintNSUserDefaultsAllKeysAndValues()
     {
         NSLog(@"%@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
     }
@@ -50,8 +50,5 @@ namespace SystemDependant
         // - View -> Show Tab Bar
         // - View -> Show All Tabs
         [NSWindow setAllowsAutomaticWindowTabbing: false];
-
-        UNUSED_VARIABLE(debugPrintNSUserDefaultsAllKeys);
-        UNUSED_VARIABLE(debugPrintNSUserDefaultsAllKeysAndValues);
     }
 }

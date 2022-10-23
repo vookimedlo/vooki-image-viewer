@@ -74,7 +74,7 @@ QString ImageCatalog::getPrevious()
 QString ImageCatalog::getCatalogItem(const RotatingIndex<int> &catalogIndex) const
 {
     if (m_catalog.isEmpty())
-        return QString();
+        return {};
 
     return QFileInfo(m_absoluteDir + QDir::separator() + m_catalog.at(catalogIndex)).canonicalFilePath();
 }

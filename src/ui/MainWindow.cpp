@@ -47,11 +47,12 @@ MainWindow::MainWindow(QWidget *parent)
                                         , m_fileSystemModel(new QFileSystemModel(this))
                                         , m_sortFileSystemModel(new FileSystemSortFilterProxyModel(this))
                                         , m_catalog(Util::convertFormatsToFilters(QImageReader::supportedImageFormats()))
+                                        , m_widgetVisibilityPriorFullscreen()
 {
     m_ui.setupUi(this);
     
 #if defined  __APPLE__
-    KDMacTouchBar *touchBar = new KDMacTouchBar(this);
+    auto *touchBar = new KDMacTouchBar(this);
     touchBar->setTouchButtonStyle(KDMacTouchBar::IconOnly);
     touchBar->addAction(m_ui.actionZoomIn);
     touchBar->addAction(m_ui.actionZoomOut);
@@ -176,17 +177,19 @@ QString MainWindow::getRecentFile(int item) const
         return recentImage->text();
     }
 
-    return QString();
+    return {};
 }
 
-void MainWindow::loadTranslators()
+void MainWindow::loadTranslators() const
 {
     const std::shared_ptr<QSettings> settings = Settings::userSettings();
-    Application *application = static_cast<Application *>(QCoreApplication::instance());
-    if (settings->value(SETTINGS_LANGUAGE_USE_SYSTEM).toBool())
-        application->installTranslators(QLocale());
-    else
-        application->installTranslators(QLocale(settings->value(SETTINGS_LANGUAGE_CODE).value<QString>()));
+    if (auto *application = dynamic_cast<Application *>(QCoreApplication::instance()))
+    {
+        if (settings->value(SETTINGS_LANGUAGE_USE_SYSTEM).toBool())
+            application->installTranslators(QLocale());
+        else
+            application->installTranslators(QLocale(settings->value(SETTINGS_LANGUAGE_CODE).value<QString>()));
+    }
 }
 
 void MainWindow::propagateBorderSettings() const
@@ -198,7 +201,7 @@ void MainWindow::propagateBorderSettings() const
 QString MainWindow::registerProcessedImage(const QString &filePath, const bool addToRecentFiles)
 {
     if (filePath.isEmpty())
-        return QString();
+        return {};
 
     if (addToRecentFiles)
     {
@@ -351,10 +354,8 @@ void MainWindow::onFitToWindowToggled(const bool toggled) const
     m_ui.imageAreaWidget->onSetFitToWindowTriggered(toggled);
 }
 
-void MainWindow::onFullScreenToggled(bool toggled)
+void MainWindow::onFullScreenToggled([[maybe_unused]] bool toggled)
 {
-    UNUSED_VARIABLE(toggled);
-
     // It's better to check the real displayed mode instead of the "toggled" flag.
     if (isFullScreen())
     {

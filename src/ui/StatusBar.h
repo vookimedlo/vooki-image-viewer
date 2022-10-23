@@ -29,7 +29,7 @@ public:
     explicit StatusBar(QWidget *parent = nullptr);
     DISABLE_COPY_MOVE(StatusBar);
 
-    QLabel &rightLabel() const;
+    [[nodiscard]] QLabel &rightLabel() const;
 
 private:
     QLabel *m_rightLabel;

@@ -37,7 +37,7 @@ class ImageAreaWidget : public QWidget
 public:
     explicit ImageAreaWidget(QWidget *parent = nullptr);
     DISABLE_COPY_MOVE(ImageAreaWidget);
-    ~ImageAreaWidget() noexcept;
+    ~ImageAreaWidget() noexcept override;
 
     void drawBorder(bool draw, const QColor &color = QColor(Qt::white));
     bool showImage(const QString &fileName);

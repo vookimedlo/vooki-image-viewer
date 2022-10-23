@@ -24,7 +24,7 @@ namespace SystemDependant
 {
     QPixmap darkModePixmap(const QString &fileName)
     {
-        return QPixmap(fileName);
+        return {fileName};
     }
 
     bool isDarkMode()

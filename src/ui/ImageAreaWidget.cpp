@@ -87,7 +87,7 @@ bool ImageAreaWidget::showImage(const QString &fileName)
         m_animationIndex.set(0, m_reader.imageCount());
         const auto delay = m_reader.nextImageDelay();
         if (delay > 0)
-            m_animationTimer.singleShot(delay, this, SLOT(onNextImage()));
+            QTimer::singleShot(delay, this, SLOT(onNextImage()));
     }
 
     return true;
@@ -170,7 +170,7 @@ void ImageAreaWidget::onNextImage()
 
     const auto delay = m_reader.nextImageDelay();
     if (delay > 0)
-        m_animationTimer.singleShot(delay, this, SLOT(onNextImage()));
+        QTimer::singleShot(delay, this, SLOT(onNextImage()));
 }
 
 void ImageAreaWidget::onRotateLeftTriggered()
@@ -325,7 +325,7 @@ void ImageAreaWidget::nativeGestureEvent(QNativeGestureEvent *event)
     switch (event->gestureType())
     {
         case Qt::EndNativeGesture:
-            if (zoomPercentage)
+            if (zoomPercentage != 0)
             {
                 gestureZoom(zoomPercentage);
                 zoomPercentage = 0;
@@ -344,7 +344,7 @@ void ImageAreaWidget::nativeGestureEvent(QNativeGestureEvent *event)
         case Qt::SmartZoomNativeGesture:
         {
             const double factor = 1000;
-            if (event->value())
+            if (event->value() != 0)
                 onZoomImageInTriggered(factor);
             else
                 onZoomImageOutTriggered(factor);
