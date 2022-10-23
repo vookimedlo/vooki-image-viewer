@@ -23,13 +23,13 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QFileOpenEvent>
 #include <QLibraryInfo>
 
-Application::Application(int &argc, char **argv):
-                                        QApplication(argc, argv),
-                                        translator(),
-                                        qtTranslator()
+Application::Application(int &argc, char **argv)
+                                        : QApplication(argc, argv)
+                                        , translator()
+                                        , qtTranslator()
 {
-    //QLocale::setDefault(QLocale::Language::German);
-    // Localization support
+    // QLocale::setDefault(QLocale::Language::German);
+    //  Localization support
     qDebug() << "QLocale: " << QLocale().name();
 
     // This is a workaround to get all macOS specific menu items into the translatable state.
@@ -56,16 +56,10 @@ void Application::installTranslators(const QLocale &locale)
     removeTranslator(&qtTranslator);
     removeTranslator(&translator);
 
-    if(qtTranslator.load(locale,
-                          "qt",
-                          "_",
-                          QLibraryInfo::path(QLibraryInfo::TranslationsPath)))
+    if (qtTranslator.load(locale, "qt", "_", QLibraryInfo::path(QLibraryInfo::TranslationsPath)))
         installTranslator(&qtTranslator);
 
-    if (translator.load(locale,
-                        "VookiImageViewer",
-                        "_",
-                        ":/i18n"))
+    if (translator.load(locale, "VookiImageViewer", "_", ":/i18n"))
         installTranslator(&translator);
 }
 

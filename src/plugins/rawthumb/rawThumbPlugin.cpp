@@ -27,7 +27,7 @@ QImageIOPlugin::Capabilities RawThumbPlugin::capabilities(QIODevice *device, con
 
     if (formats.contains(format))
     {
-        return {CanRead};
+        return { CanRead };
     }
 
     if (!format.isEmpty())

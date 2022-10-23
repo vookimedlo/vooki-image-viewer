@@ -29,15 +29,16 @@ namespace SystemDependant
 {
     void Init()
     {
-        if (isDarkMode()) {
+        if (isDarkMode())
+        {
             // Taken from: https://forum.qt.io/topic/101391/windows-10-dark-theme/4
             qApp->setStyle(QStyleFactory::create("Fusion"));
             QPalette darkPalette;
-            QColor darkColor = QColor(45,45,45);
-            QColor disabledColor = QColor(127,127,127);
+            QColor darkColor = QColor(45, 45, 45);
+            QColor disabledColor = QColor(127, 127, 127);
             darkPalette.setColor(QPalette::Window, darkColor);
             darkPalette.setColor(QPalette::WindowText, Qt::white);
-            darkPalette.setColor(QPalette::Base, QColor(18,18,18));
+            darkPalette.setColor(QPalette::Base, QColor(18, 18, 18));
             darkPalette.setColor(QPalette::AlternateBase, darkColor);
             darkPalette.setColor(QPalette::ToolTipBase, Qt::white);
             darkPalette.setColor(QPalette::ToolTipText, Qt::white);

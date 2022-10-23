@@ -106,9 +106,8 @@ void SettingsDialog::initializeUI(std::shared_ptr<QSettings> settings)
     m_backgroundColor = settings->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>();
     m_languageCode = settings->value(SETTINGS_LANGUAGE_CODE).value<QString>();
 
-    auto findIt = std::find_if(begin(Languages::m_localizations),
-                           end(Languages::m_localizations),
-                           [&](const Languages::Record &record){ return m_languageCode == record.m_code; });
+    auto findIt = std::find_if(
+      begin(Languages::m_localizations), end(Languages::m_localizations), [&](const Languages::Record &record) { return m_languageCode == record.m_code; });
 
     if (findIt != std::end(Languages::m_localizations))
     {

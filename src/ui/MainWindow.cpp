@@ -24,9 +24,9 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "../ui/support/Settings.h"
 #include "../ui/support/SettingsStrings.h"
 #include "../util/misc.h"
-#include "version.h"
 #include "AboutComponentsDialog.h"
-#if defined  __APPLE__
+#include "version.h"
+#if defined __APPLE__
 #include "kdmactouchbar.h"
 #endif // __APPLE__
 #include "../application/Application.h"
@@ -50,8 +50,8 @@ MainWindow::MainWindow(QWidget *parent)
                                         , m_widgetVisibilityPriorFullscreen()
 {
     m_ui.setupUi(this);
-    
-#if defined  __APPLE__
+
+#if defined __APPLE__
     auto *touchBar = new KDMacTouchBar(this);
     touchBar->setTouchButtonStyle(KDMacTouchBar::IconOnly);
     touchBar->addAction(m_ui.actionZoomIn);
@@ -65,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent)
     touchBar->addAction(m_ui.actionNextImage);
     touchBar->setHidden(true);
 #endif // __APPLE__
-    
+
     m_ui.toolBar->toggleViewAction()->setShortcut(QKeySequence(Qt::Key_T));
     m_ui.toolBar->toggleViewAction()->setWhatsThis("viv/shortcut/window/toolbar");
     m_ui.menuShow->addAction(m_ui.toolBar->toggleViewAction());
@@ -142,11 +142,11 @@ MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, con
     return HANDLE_RESULT_E::DONT_EXIST;
 }
 
-void MainWindow::changeEvent(QEvent* event)
+void MainWindow::changeEvent(QEvent *event)
 {
-    if(event != nullptr)
+    if (event != nullptr)
     {
-        switch(event->type())
+        switch (event->type())
         {
             // this event is sent if a translator is loaded
             case QEvent::LanguageChange:
@@ -163,7 +163,6 @@ void MainWindow::changeEvent(QEvent* event)
     }
     QMainWindow::changeEvent(event);
 }
-
 
 QString MainWindow::getRecentFile(int item) const
 {

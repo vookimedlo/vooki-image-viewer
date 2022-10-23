@@ -70,7 +70,8 @@ bool ImageAreaWidget::showImage(const QString &fileName)
     m_reader.setQuality(100);
     m_originalImage = m_reader.read();
 
-    if (m_originalImage.isNull()) {
+    if (m_originalImage.isNull())
+    {
         update();
         return false;
     }
@@ -160,7 +161,7 @@ void ImageAreaWidget::onNextImage()
 {
     if (++m_animationIndex == 0)
         m_reader.setFileName(m_reader.fileName());
-    qDebug()<<"Index: "<<m_animationIndex;
+    qDebug() << "Index: " << m_animationIndex;
     m_reader.jumpToImage(m_animationIndex);
     if (!m_reader.read(&m_originalImage))
         return;
@@ -341,8 +342,7 @@ void ImageAreaWidget::nativeGestureEvent(QNativeGestureEvent *event)
                 zoomPercentage = 0;
             }
             break;
-        case Qt::SmartZoomNativeGesture:
-        {
+        case Qt::SmartZoomNativeGesture: {
             const double factor = 1000;
             if (event->value() != 0)
                 onZoomImageInTriggered(factor);
