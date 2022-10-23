@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="cs_CZ">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="cs">
 <context>
     <name>AboutComponentsDialog</name>
     <message>
@@ -964,7 +964,7 @@ Toolbar action tool tip</extracomment>
         <location filename="../../ui/forms/AboutDialog.ui" line="18"/>
         <source>About VookiImageViewer</source>
         <extracomment>Title: Dialog</extracomment>
-        <translation>O aplikaci ...</translation>
+        <translation>O aplikaci VookiImageViewer</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutDialog.ui" line="79"/>

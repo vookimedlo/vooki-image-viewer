@@ -11,8 +11,6 @@ INSTALL(TARGETS ${IMAGE_PLUGINS}
 
 SET(LOCALIZATION "$<TARGET_FILE_DIR:${APPLICATION_NAME}>/../Resources/")
 
-# Remove the region from languages - https://developer.apple.com/library/archive/documentation/CoreFoundation/Conceptual/CFBundles/BundleTypes/BundleTypes.html#//apple_ref/doc/uid/10000123i-CH101-SW7
-LIST(TRANSFORM TRANSLATION_LANGUAGES REPLACE "_.+" "")
 LIST(TRANSFORM TRANSLATION_LANGUAGES PREPEND ${CMAKE_BINARY_DIR}/)
 LIST(TRANSFORM TRANSLATION_LANGUAGES APPEND  ".lproj")
 FILE(MAKE_DIRECTORY ${TRANSLATION_LANGUAGES})
