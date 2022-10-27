@@ -21,6 +21,14 @@ The main goal is to have a free of charge cross-platform viewer with a simple de
 - Remembers recent files.
 - Supports Apple's high definition trackpad gestures.
 
+
+---
+**Looking for translators**
+
+🗒 If you are a native speaker of the non-US-English language and would like to help localize this application, please, see this [guideline][7] on how to join [the localization team][8].
+
+---
+
 ![Application screenshot](src/resource/readme/screenshot_2022-10-07_21-59-01.png?raw=true "")
 
 Supported image formats cover the very common formats as well as the rare ones. The viewer does not intentionally [demosaic][1] the RAW images, but only displays the embedded thumbnail.
@@ -180,3 +188,5 @@ Homepage: [https://vookiimageviewer.cz/][4]
 [4]: https://vookiimageviewer.cz/
 [5]: https://github.com/vookimedlo/vooki-image-viewer/releases/latest
 [6]: https://cloudsmith.io/
+[7]: https://github.com/vookimedlo/vooki-image-viewer/wiki/Localization
+[8]: https://explore.transifex.com/michal-duda/vookiimageviewer/
