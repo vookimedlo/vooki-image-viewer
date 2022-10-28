@@ -15,7 +15,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Supported Formats</string>
+   <string extracomment="Title: Dialog">Supported Formats</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../resource/vookiimageviewer.qrc">
@@ -65,7 +65,7 @@
      </attribute>
      <row>
       <property name="text">
-       <string>New Row</string>
+       <string/>
       </property>
      </row>
      <row>
@@ -597,7 +597,7 @@
      </item>
      <item row="33" column="0">
       <property name="text">
-       <string>[MacOS/Win10 only] HEIC</string>
+       <string>[MacOS/Win only] HEIC</string>
       </property>
      </item>
      <item row="33" column="1">

@@ -18,8 +18,8 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include <QSettings>
 #include "../darkmode.h"
+#include <QSettings>
 
 namespace SystemDependant
 {
@@ -27,11 +27,13 @@ namespace SystemDependant
 
     QPixmap darkModePixmap(const QString &fileName)
     {
-        if(isDarkMode()) {
-            return QPixmap(fileName + "-white");
+        if (isDarkMode())
+        {
+            return { fileName + "-white" };
         }
-        else {
-            return QPixmap(fileName);
+        else
+        {
+            return { fileName };
         }
     }
 

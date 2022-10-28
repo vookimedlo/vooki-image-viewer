@@ -19,6 +19,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #include "misc.h"
+#include <QStringBuilder>
 
 namespace Util
 {
@@ -27,11 +28,7 @@ namespace Util
         QStringList filters;
         // Converts formats (e.g. QImageReader::supportedImageFormats()) to QDir::setNameFilters()
         for (const QByteArray &format : formats)
-        {
-            QString filter("*.");
-            filter += QString::fromLatin1(format.toLower());
-            filters << filter;
-        }
+            filters << "*." % QString::fromLatin1(format.toLower());
         return filters;
     }
 }

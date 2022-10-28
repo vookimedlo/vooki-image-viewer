@@ -7,12 +7,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>634</width>
-    <height>404</height>
+    <width>726</width>
+    <height>423</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Preferences</string>
+   <string extracomment="Title: Dialog">Preferences</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../resource/vookiimageviewer.qrc">
@@ -42,7 +42,7 @@
               <item>
                <widget class="QCheckBox" name="checkBoxGeneralStartInFullscreen">
                 <property name="whatsThis">
-                 <string>viv/general/fullscreen</string>
+                 <string notr="true">viv/general/fullscreen</string>
                 </property>
                 <property name="text">
                  <string>Start in fullscreen mode</string>
@@ -61,7 +61,7 @@
               <item>
                <widget class="QCheckBox" name="checkBoxRemeberRecentImages">
                 <property name="whatsThis">
-                 <string>viv/image/remember/recent</string>
+                 <string notr="true">viv/image/remember/recent</string>
                 </property>
                 <property name="text">
                  <string>Remeber recent opened images</string>
@@ -74,7 +74,7 @@
               <item>
                <widget class="QCheckBox" name="checkBoxImageFitToWindow">
                 <property name="whatsThis">
-                 <string>viv/image/fitimagetowindow</string>
+                 <string notr="true">viv/image/fitimagetowindow</string>
                 </property>
                 <property name="text">
                  <string>Fit Image to window</string>
@@ -84,7 +84,7 @@
               <item>
                <widget class="QCheckBox" name="checkBoxImageDrawBorder">
                 <property name="whatsThis">
-                 <string>viv/image/border/draw</string>
+                 <string notr="true">viv/image/border/draw</string>
                 </property>
                 <property name="text">
                  <string>Draw image border</string>
@@ -137,6 +137,38 @@
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_7">
            <item>
+            <widget class="QGroupBox" name="groupBox_5">
+             <property name="title">
+              <string>Localization</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_10">
+              <item>
+               <widget class="QCheckBox" name="checkBoxUseSystemLanguage">
+                <property name="whatsThis">
+                 <string notr="true">viv/language/system</string>
+                </property>
+                <property name="text">
+                 <string>Use system settings</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="comboBoxLanguage">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="whatsThis">
+                 <string notr="true"/>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
             <widget class="QGroupBox" name="groupBox_2">
              <property name="title">
               <string>Window mode (on startup)</string>
@@ -145,7 +177,7 @@
               <item>
                <widget class="QCheckBox" name="checkBoxWindowHideStatusbar">
                 <property name="whatsThis">
-                 <string>viv/window/hide/statusbar</string>
+                 <string notr="true">viv/window/hide/statusbar</string>
                 </property>
                 <property name="text">
                  <string>Hide statusbar</string>
@@ -158,7 +190,7 @@
               <item>
                <widget class="QCheckBox" name="checkBoxWindowHideToolbar">
                 <property name="whatsThis">
-                 <string>viv/window/hide/toolbar</string>
+                 <string notr="true">viv/window/hide/toolbar</string>
                 </property>
                 <property name="text">
                  <string>Hide toolbar</string>
@@ -168,7 +200,7 @@
               <item>
                <widget class="QCheckBox" name="checkBoxWindowHideNavigation">
                 <property name="whatsThis">
-                 <string>viv/window/hide/navigation</string>
+                 <string notr="true">viv/window/hide/navigation</string>
                 </property>
                 <property name="text">
                  <string>Hide filesystem navigation</string>
@@ -187,7 +219,7 @@
               <item>
                <widget class="QCheckBox" name="checkBoxFullscreenHideStatusbar">
                 <property name="whatsThis">
-                 <string>viv/fullscreen/hide/statusbar</string>
+                 <string notr="true">viv/fullscreen/hide/statusbar</string>
                 </property>
                 <property name="text">
                  <string>Hide statusbar</string>
@@ -200,7 +232,7 @@
               <item>
                <widget class="QCheckBox" name="checkBoxFullscreenHideToolbar">
                 <property name="whatsThis">
-                 <string>viv/fullscreen/hide/toolbar</string>
+                 <string notr="true">viv/fullscreen/hide/toolbar</string>
                 </property>
                 <property name="text">
                  <string>Hide toolbar</string>
@@ -213,7 +245,7 @@
               <item>
                <widget class="QCheckBox" name="checkBoxFullscreenHideNavigation">
                 <property name="whatsThis">
-                 <string>viv/fullscreen/hide/navigation</string>
+                 <string notr="true">viv/fullscreen/hide/navigation</string>
                 </property>
                 <property name="text">
                  <string>Hide filesystem navigation</string>
@@ -283,8 +315,8 @@
    <slot>onAccept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>260</x>
+     <y>418</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -299,8 +331,8 @@
    <slot>onRejected()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>328</x>
+     <y>418</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
@@ -315,8 +347,8 @@
    <slot>onButtonBoxButtonClicked(QAbstractButton*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>288</x>
-     <y>327</y>
+     <x>300</x>
+     <y>418</y>
     </hint>
     <hint type="destinationlabel">
      <x>288</x>
@@ -331,8 +363,8 @@
    <slot>onToolButtonBackgroundColorClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>130</x>
-     <y>274</y>
+     <x>162</x>
+     <y>336</y>
     </hint>
     <hint type="destinationlabel">
      <x>316</x>
@@ -372,6 +404,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkBoxUseSystemLanguage</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>comboBoxLanguage</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>532</x>
+     <y>84</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>528</x>
+     <y>114</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxLanguage</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>onLanguageChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>528</x>
+     <y>114</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>362</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onAccept()</slot>
@@ -379,5 +443,6 @@
   <slot>onToolButtonBorderColorClicked()</slot>
   <slot>onToolButtonBackgroundColorClicked()</slot>
   <slot>onRejected()</slot>
+  <slot>onLanguageChanged(int)</slot>
  </slots>
 </ui>

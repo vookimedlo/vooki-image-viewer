@@ -26,10 +26,10 @@ namespace SystemDependant
     QPixmap darkModePixmap(const QString &fileName)
     {
         if(isDarkMode()) {
-            return QPixmap(fileName + "-white");
+            return {fileName + "-white"};
         }
         else {
-            return QPixmap(fileName);
+            return {fileName};
         }
     }
 

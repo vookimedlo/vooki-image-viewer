@@ -20,17 +20,29 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include "SettingsDialog.h"
 
+#include "../ui/support/Languages.h"
 #include "../ui/support/Settings.h"
 #include "../ui/support/SettingsStrings.h"
 #include "support/SettingsShortcutsTableWidgetItem.h"
 #include <QColorDialog>
+#include <QSignalBlocker>
 
 SettingsDialog::SettingsDialog(QWidget *parent)
                                         : QDialog(parent)
                                         , m_borderColor()
                                         , m_backgroundColor()
+                                        , m_languageCode()
 {
     m_uiSettingsDialog.setupUi(this);
+
+    {
+        QSignalBlocker signalBlocker(m_uiSettingsDialog.comboBoxLanguage);
+
+        // Populate a localization combobox
+        for (auto &record : Languages::m_localizations)
+            m_uiSettingsDialog.comboBoxLanguage->addItem(record.m_language, record.m_code);
+    }
+
     const std::shared_ptr<QSettings> settings = Settings::userSettings();
     initializeUI(settings);
 
@@ -41,8 +53,8 @@ SettingsDialog::SettingsDialog(QWidget *parent)
 
         if (item->type() == SettingsShortcutsTableWidgetItem::type)
         {
-            auto *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item);
-            shortcutItem->onKeySequenceChanged(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
+            if (auto *shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
+                shortcutItem->onKeySequenceChanged(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
         }
     }
 }
@@ -68,7 +80,7 @@ void SettingsDialog::populateShortcuts(QMenu *menu) const
 
         const int rowCount = m_uiSettingsDialog.tableShortcutsWidget->rowCount();
         m_uiSettingsDialog.tableShortcutsWidget->insertRow(rowCount);
-        QTableWidgetItem *headerItem = new QTableWidgetItem(action->toolTip());
+        auto *headerItem = new QTableWidgetItem(action->toolTip());
         m_uiSettingsDialog.tableShortcutsWidget->setVerticalHeaderItem(rowCount, headerItem);
 
         auto *item = new SettingsShortcutsTableWidgetItem(*action);
@@ -76,8 +88,9 @@ void SettingsDialog::populateShortcuts(QMenu *menu) const
     }
 }
 
-void SettingsDialog::initializeUI(const std::shared_ptr<QSettings> settings)
+void SettingsDialog::initializeUI(std::shared_ptr<QSettings> settings)
 {
+    m_uiSettingsDialog.checkBoxUseSystemLanguage->setChecked(settings->value(m_uiSettingsDialog.checkBoxUseSystemLanguage->whatsThis()).toBool());
     m_uiSettingsDialog.checkBoxGeneralStartInFullscreen->setChecked(settings->value(m_uiSettingsDialog.checkBoxGeneralStartInFullscreen->whatsThis()).toBool());
     m_uiSettingsDialog.checkBoxWindowHideStatusbar->setChecked(settings->value(m_uiSettingsDialog.checkBoxWindowHideStatusbar->whatsThis()).toBool());
     m_uiSettingsDialog.checkBoxWindowHideToolbar->setChecked(settings->value(m_uiSettingsDialog.checkBoxWindowHideToolbar->whatsThis()).toBool());
@@ -91,11 +104,22 @@ void SettingsDialog::initializeUI(const std::shared_ptr<QSettings> settings)
     m_uiSettingsDialog.toolButtonBorderColor->setEnabled(settings->value(m_uiSettingsDialog.checkBoxImageDrawBorder->whatsThis()).toBool());
     m_borderColor = settings->value(SETTINGS_IMAGE_BORDER_COLOR).value<QColor>();
     m_backgroundColor = settings->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>();
+    m_languageCode = settings->value(SETTINGS_LANGUAGE_CODE).value<QString>();
+
+    auto findIt = std::find_if(
+      begin(Languages::m_localizations), end(Languages::m_localizations), [&](const Languages::Record &record) { return m_languageCode == record.m_code; });
+
+    if (findIt != std::end(Languages::m_localizations))
+    {
+        const auto position = std::distance(Languages::m_localizations.begin(), findIt);
+        m_uiSettingsDialog.comboBoxLanguage->setCurrentIndex(position);
+    }
 }
 
 void SettingsDialog::onAccept()
 {
     std::shared_ptr<QSettings> settings = Settings::userSettings();
+    settings->setValue(m_uiSettingsDialog.checkBoxUseSystemLanguage->whatsThis(), m_uiSettingsDialog.checkBoxUseSystemLanguage->isChecked());
     settings->setValue(m_uiSettingsDialog.checkBoxGeneralStartInFullscreen->whatsThis(), m_uiSettingsDialog.checkBoxGeneralStartInFullscreen->isChecked());
     settings->setValue(m_uiSettingsDialog.checkBoxWindowHideStatusbar->whatsThis(), m_uiSettingsDialog.checkBoxWindowHideStatusbar->isChecked());
     settings->setValue(m_uiSettingsDialog.checkBoxWindowHideToolbar->whatsThis(), m_uiSettingsDialog.checkBoxWindowHideToolbar->isChecked());
@@ -108,6 +132,7 @@ void SettingsDialog::onAccept()
     settings->setValue(m_uiSettingsDialog.checkBoxImageDrawBorder->whatsThis(), m_uiSettingsDialog.checkBoxImageDrawBorder->isChecked());
     settings->setValue(SETTINGS_IMAGE_BORDER_COLOR, m_borderColor);
     settings->setValue(SETTINGS_IMAGE_BACKGROUND_COLOR, m_backgroundColor);
+    settings->setValue(SETTINGS_LANGUAGE_CODE, m_languageCode);
 
     // store all shortcuts in user settings
     for (int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); i++)
@@ -116,8 +141,8 @@ void SettingsDialog::onAccept()
 
         if (item->type() == SettingsShortcutsTableWidgetItem::type)
         {
-            auto *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item);
-            settings->setValue(shortcutItem->action().whatsThis(), shortcutItem->keySequence());
+            if (auto *shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
+                settings->setValue(shortcutItem->action().whatsThis(), shortcutItem->keySequence());
         }
     }
 
@@ -136,6 +161,12 @@ void SettingsDialog::onButtonBoxButtonClicked(QAbstractButton *button)
     }
 }
 
+void SettingsDialog::onLanguageChanged(int index)
+{
+    qDebug() << "Selected localization: " << Languages::m_localizations[index].m_language;
+    m_languageCode = Languages::m_localizations[index].m_code;
+}
+
 void SettingsDialog::onRejected()
 {
     const std::shared_ptr<QSettings> settings = Settings::userSettings();
@@ -147,8 +178,8 @@ void SettingsDialog::onRejected()
 
         if (item->type() == SettingsShortcutsTableWidgetItem::type)
         {
-            auto *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item);
-            shortcutItem->action().setShortcut(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
+            if (auto *shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
+                shortcutItem->action().setShortcut(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
         }
     }
 
@@ -167,8 +198,8 @@ void SettingsDialog::onRestoreDefaultsTriggered()
 
         if (item->type() == SettingsShortcutsTableWidgetItem::type)
         {
-            auto *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item);
-            shortcutItem->onKeySequenceChanged(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
+            if (auto *shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
+                shortcutItem->onKeySequenceChanged(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
         }
     }
 

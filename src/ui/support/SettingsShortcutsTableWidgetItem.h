@@ -35,8 +35,8 @@ public:
     explicit SettingsShortcutsTableWidgetItem(QAction &action);
     DISABLE_COPY_MOVE(SettingsShortcutsTableWidgetItem);
 
-    QAction &action() const;
-    QKeySequence keySequence() const;
+    [[nodiscard]] QAction &action() const;
+    [[nodiscard]] QKeySequence keySequence() const;
 
     static const int type;
 

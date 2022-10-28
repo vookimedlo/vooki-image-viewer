@@ -21,6 +21,14 @@ The main goal is to have a free of charge cross-platform viewer with a simple de
 - Remembers recent files.
 - Supports Apple's high definition trackpad gestures.
 
+
+---
+**Looking for translators**
+
+🗒 If you are a native speaker of the non-US-English language and would like to help localize this application, please, see this [guideline][7] on how to join [the localization team][8].
+
+---
+
 ![Application screenshot](src/resource/readme/screenshot_2022-10-07_21-59-01.png?raw=true "")
 
 Supported image formats cover the very common formats as well as the rare ones. The viewer does not intentionally [demosaic][1] the RAW images, but only displays the embedded thumbnail.
@@ -63,7 +71,7 @@ Supported image formats cover the very common formats as well as the rare ones. 
 | [MacOS/Windows only] HEIC | High-Efficiency Image File Format                |
 
 
-All operations have assigned shortcuts and all of them can be user re-assigned except the one which is used for Preferences on MacOS.
+All operations have assigned shortcuts and all of them can be user re-assigned except the one which is used for Preferences on macOS.
 
 
 | MacOS            | Windows                     | GNU/Linux                   | OPERATION                                |
@@ -99,7 +107,7 @@ All code developed during this project is [GPLv3][2] licensed. Images as well as
 -----------------
 
 ## Releases
-[Prebuilt binaries][5] for Windows 11, Debian, Fedora, Ubuntu, and MacOS, as well as sources, are available [here.][5]
+[Prebuilt binaries][5] for Windows 11, Debian, Fedora, Ubuntu, and macOS, as well as sources, are available [here.][5]
 
 Mac users can install the VookiImageViewer by the Homebrew.
 ```
@@ -164,7 +172,7 @@ dnf install vookiimageviewer
 -----------------
 
 ## Builds
-All binaries could be built easily. For your convenience, GitHub's Actions are used to continuously check if the current source code is buildable on Linux and MacOS.
+All binaries could be built easily. For your convenience, GitHub's Actions are used to continuously check if the current source code is buildable on Linux and macOS.
 
 [![Linux Builds](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/linux-build.yml/badge.svg)](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/linux-build.yml)
 [![Windows Builds](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/win-build.yml/badge.svg)](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/win-build.yml)
@@ -180,3 +188,5 @@ Homepage: [https://vookiimageviewer.cz/][4]
 [4]: https://vookiimageviewer.cz/
 [5]: https://github.com/vookimedlo/vooki-image-viewer/releases/latest
 [6]: https://cloudsmith.io/
+[7]: https://github.com/vookimedlo/vooki-image-viewer/wiki/Localization
+[8]: https://explore.transifex.com/michal-duda/vookiimageviewer/

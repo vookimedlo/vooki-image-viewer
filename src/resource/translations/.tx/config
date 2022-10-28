@@ -1,0 +1,10 @@
+[main]
+host = https://www.transifex.com
+
+[o:michal-duda:p:vookiimageviewer:r:application]
+file_filter   = VookiImageViewer_<lang>.ts
+source_file   = VookiImageViewer_en_US.ts
+type          = QT
+minimum_perc  = 0
+resource_name = VookiImageViewer Application
+

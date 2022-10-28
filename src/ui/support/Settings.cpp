@@ -43,6 +43,8 @@ void Settings::initializeSettings()
     defaultSettings.setValue(SETTINGS_IMAGE_BORDER_DRAW, false);
     defaultSettings.setValue(SETTINGS_IMAGE_BORDER_COLOR, QColor(Qt::white));
     defaultSettings.setValue(SETTINGS_IMAGE_BACKGROUND_COLOR, QColor(Qt::black));
+    defaultSettings.setValue(SETTINGS_LANGUAGE_USE_SYSTEM, true);
+    defaultSettings.setValue(SETTINGS_LANGUAGE_CODE, QString("en_US"));
 
     defaultSettings.setValue(SETTINGS_RECENT_FILE_1, QString());
     defaultSettings.setValue(SETTINGS_RECENT_FILE_2, QString());
@@ -73,8 +75,7 @@ void Settings::initializeSettings(QMenu *menu)
             continue;
 
         defaultSettings.setValue(action->whatsThis(), action->shortcut());
-        action->setShortcut(userSettings.value(action->whatsThis(),
-                                               defaultSettings.value(action->whatsThis())).value<QKeySequence>());
+        action->setShortcut(userSettings.value(action->whatsThis(), defaultSettings.value(action->whatsThis())).value<QKeySequence>());
     }
 }
 

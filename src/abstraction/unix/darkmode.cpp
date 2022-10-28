@@ -19,16 +19,25 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #include "../darkmode.h"
+#include <QLabel>
 
 namespace SystemDependant
 {
     QPixmap darkModePixmap(const QString &fileName)
     {
-        return QPixmap(fileName);
+        if (isDarkMode())
+        {
+            return { fileName + "-white" };
+        }
+        else
+        {
+            return { fileName };
+        }
     }
 
     bool isDarkMode()
     {
-        return false;
+        QLabel label(".");
+        return label.palette().color(QPalette::WindowText).value() > label.palette().color(QPalette::Window).value();
     }
 }

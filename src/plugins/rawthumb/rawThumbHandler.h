@@ -24,7 +24,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 class RawThumbHandler : public QImageIOHandler
 {
 public:
-    bool canRead() const Q_DECL_OVERRIDE;
+    [[nodiscard]] bool canRead() const Q_DECL_OVERRIDE;
     bool read(QImage *image) Q_DECL_OVERRIDE;
 
     static bool canRead(QIODevice *device);

@@ -70,7 +70,8 @@ bool ImageAreaWidget::showImage(const QString &fileName)
     m_reader.setQuality(100);
     m_originalImage = m_reader.read();
 
-    if (m_originalImage.isNull()) {
+    if (m_originalImage.isNull())
+    {
         update();
         return false;
     }
@@ -87,7 +88,7 @@ bool ImageAreaWidget::showImage(const QString &fileName)
         m_animationIndex.set(0, m_reader.imageCount());
         const auto delay = m_reader.nextImageDelay();
         if (delay > 0)
-            m_animationTimer.singleShot(delay, this, SLOT(onNextImage()));
+            QTimer::singleShot(delay, this, SLOT(onNextImage()));
     }
 
     return true;
@@ -160,7 +161,7 @@ void ImageAreaWidget::onNextImage()
 {
     if (++m_animationIndex == 0)
         m_reader.setFileName(m_reader.fileName());
-    qDebug()<<"Index: "<<m_animationIndex;
+    qDebug() << "Index: " << m_animationIndex;
     m_reader.jumpToImage(m_animationIndex);
     if (!m_reader.read(&m_originalImage))
         return;
@@ -170,7 +171,7 @@ void ImageAreaWidget::onNextImage()
 
     const auto delay = m_reader.nextImageDelay();
     if (delay > 0)
-        m_animationTimer.singleShot(delay, this, SLOT(onNextImage()));
+        QTimer::singleShot(delay, this, SLOT(onNextImage()));
 }
 
 void ImageAreaWidget::onRotateLeftTriggered()
@@ -325,7 +326,7 @@ void ImageAreaWidget::nativeGestureEvent(QNativeGestureEvent *event)
     switch (event->gestureType())
     {
         case Qt::EndNativeGesture:
-            if (zoomPercentage)
+            if (zoomPercentage != 0)
             {
                 gestureZoom(zoomPercentage);
                 zoomPercentage = 0;
@@ -341,10 +342,9 @@ void ImageAreaWidget::nativeGestureEvent(QNativeGestureEvent *event)
                 zoomPercentage = 0;
             }
             break;
-        case Qt::SmartZoomNativeGesture:
-        {
+        case Qt::SmartZoomNativeGesture: {
             const double factor = 1000;
-            if (event->value())
+            if (event->value() != 0)
                 onZoomImageInTriggered(factor);
             else
                 onZoomImageOutTriggered(factor);

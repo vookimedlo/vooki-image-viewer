@@ -24,11 +24,12 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "../ui/support/Settings.h"
 #include "../ui/support/SettingsStrings.h"
 #include "../util/misc.h"
-#include "version.h"
 #include "AboutComponentsDialog.h"
-#if defined  __APPLE__
+#include "version.h"
+#if defined __APPLE__
 #include "kdmactouchbar.h"
 #endif // __APPLE__
+#include "../application/Application.h"
 #include "SettingsDialog.h"
 #include "support/RecentFileAction.h"
 #include "ui_AboutDialog.h"
@@ -46,11 +47,12 @@ MainWindow::MainWindow(QWidget *parent)
                                         , m_fileSystemModel(new QFileSystemModel(this))
                                         , m_sortFileSystemModel(new FileSystemSortFilterProxyModel(this))
                                         , m_catalog(Util::convertFormatsToFilters(QImageReader::supportedImageFormats()))
+                                        , m_widgetVisibilityPriorFullscreen()
 {
     m_ui.setupUi(this);
-    
-#if defined  __APPLE__
-    KDMacTouchBar *touchBar = new KDMacTouchBar(this);
+
+#if defined __APPLE__
+    auto *touchBar = new KDMacTouchBar(this);
     touchBar->setTouchButtonStyle(KDMacTouchBar::IconOnly);
     touchBar->addAction(m_ui.actionZoomIn);
     touchBar->addAction(m_ui.actionZoomOut);
@@ -63,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent)
     touchBar->addAction(m_ui.actionNextImage);
     touchBar->setHidden(true);
 #endif // __APPLE__
-    
+
     m_ui.toolBar->toggleViewAction()->setShortcut(QKeySequence(Qt::Key_T));
     m_ui.toolBar->toggleViewAction()->setWhatsThis("viv/shortcut/window/toolbar");
     m_ui.menuShow->addAction(m_ui.toolBar->toggleViewAction());
@@ -107,6 +109,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     propagateBorderSettings();
     restoreRecentFiles();
+    loadTranslators();
 }
 
 MainWindow::~MainWindow() = default;
@@ -123,20 +126,42 @@ MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, con
             {
                 m_catalog.initialize(QDir(path));
                 showImage(addToRecentFiles);
-                return HANDLE_RESULT_E_OK;
+                return HANDLE_RESULT_E::OK;
             }
             else if (info.isFile())
             {
                 m_catalog.initialize(QFile(path));
                 showImage(addToRecentFiles);
-                return HANDLE_RESULT_E_OK;
+                return HANDLE_RESULT_E::OK;
             }
         }
 
-        return HANDLE_RESULT_E_NOT_READABLE;
+        return HANDLE_RESULT_E::NOT_READABLE;
     }
 
-    return HANDLE_RESULT_E_DONT_EXIST;
+    return HANDLE_RESULT_E::DONT_EXIST;
+}
+
+void MainWindow::changeEvent(QEvent *event)
+{
+    if (event != nullptr)
+    {
+        switch (event->type())
+        {
+            // this event is sent if a translator is loaded
+            case QEvent::LanguageChange:
+                m_ui.retranslateUi(this);
+                break;
+
+            // this event is sent, if the system, language changes
+            case QEvent::LocaleChange:
+                loadTranslators();
+                break;
+            default:
+                break;
+        }
+    }
+    QMainWindow::changeEvent(event);
 }
 
 QString MainWindow::getRecentFile(int item) const
@@ -151,7 +176,19 @@ QString MainWindow::getRecentFile(int item) const
         return recentImage->text();
     }
 
-    return QString();
+    return {};
+}
+
+void MainWindow::loadTranslators()
+{
+    const std::shared_ptr<QSettings> settings = Settings::userSettings();
+    if (auto *application = dynamic_cast<Application *>(QCoreApplication::instance()))
+    {
+        if (settings->value(SETTINGS_LANGUAGE_USE_SYSTEM).toBool())
+            application->installTranslators(QLocale());
+        else
+            application->installTranslators(QLocale(settings->value(SETTINGS_LANGUAGE_CODE).value<QString>()));
+    }
 }
 
 void MainWindow::propagateBorderSettings() const
@@ -163,7 +200,7 @@ void MainWindow::propagateBorderSettings() const
 QString MainWindow::registerProcessedImage(const QString &filePath, const bool addToRecentFiles)
 {
     if (filePath.isEmpty())
-        return QString();
+        return {};
 
     if (addToRecentFiles)
     {
@@ -267,7 +304,7 @@ void MainWindow::onAboutTriggered()
     Ui::aboutDialog uiAbout;
     QDialog dialog(this);
     uiAbout.setupUi(&dialog);
-    uiAbout.versionLabel->setText(uiAbout.versionLabel->text().append(Util::getVersionString()));
+    uiAbout.versionLabel->setText(uiAbout.versionLabel->text().arg(Util::getVersionString()));
     dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint);
     dialog.exec();
 }
@@ -316,10 +353,8 @@ void MainWindow::onFitToWindowToggled(const bool toggled) const
     m_ui.imageAreaWidget->onSetFitToWindowTriggered(toggled);
 }
 
-void MainWindow::onFullScreenToggled(bool toggled)
+void MainWindow::onFullScreenToggled([[maybe_unused]] bool toggled)
 {
-    UNUSED_VARIABLE(toggled);
-
     // It's better to check the real displayed mode instead of the "toggled" flag.
     if (isFullScreen())
     {
@@ -416,6 +451,7 @@ void MainWindow::onSettingsTriggered()
     {
         propagateBorderSettings();
         m_ui.imageAreaWidget->repaintWithTransformations();
+        loadTranslators();
     }
 }
 
@@ -438,7 +474,8 @@ void MainWindow::onZoomOutTriggered() const
 
 void MainWindow::onZoomPercentageChanged(const qreal value) const
 {
-    m_ui.statusBar->rightLabel().setText(tr("Zoom: ") + QString::number(static_cast<int>(value * 100)) + "%");
+    //: Used in the statusbar showing the zooming percentage. Example: "Zoom: 12%"
+    m_ui.statusBar->rightLabel().setText(tr("Zoom: %1%").arg(QString::number(static_cast<int>(value * 100))));
 }
 
 void MainWindow::onHomeDirClicked() const

@@ -35,11 +35,15 @@ if (NOT VERSION)
     STRING(REGEX MATCHALL "^${VERSION_REGEXP}$" VERSION_MATCH "${VERSION}")
     if (NOT VERSION_MATCH)
         STRING(REGEX REPLACE "^(......).*$" "\\1" VERSION_HASH "${HEAD_HASH}")
+        if("${VERSION_HASH}" STREQUAL "")
+            SET(VERSION_HASH "DEVEL")
+        endif()
         STRING(REGEX MATCHALL "^refs/heads/([^/]+)$" VERSION_MATCH "${HEAD_REFS}")
         if (VERSION_MATCH AND CMAKE_MATCH_COUNT EQUAL 1)
             STRING(TIMESTAMP BUILD_DATE_DOTTED "%Y.%m.%d")
             SET(VERSION "${BUILD_DATE_DOTTED}-${CMAKE_MATCH_1}-${VERSION_HASH}")
-        elseif()
+        else()
+            STRING(TIMESTAMP BUILD_DATE_DOTTED "%Y.%m.%d")
             SET(VERSION "${BUILD_DATE_DOTTED}-${VERSION_HASH}")
         endif ()
     endif()
@@ -74,8 +78,7 @@ SET(USE_QT_LIBRARIES
     Gui
     Widgets)
 
-FIND_PACKAGE(Qt6 REQUIRED COMPONENTS ${USE_QT_LIBRARIES})
-
+FIND_PACKAGE(Qt6 REQUIRED COMPONENTS ${USE_QT_LIBRARIES} LinguistTools)
 if (Qt6_FOUND)
     MESSAGE("-- Qt version is ${Qt6_VERSION}")
 
@@ -117,6 +120,7 @@ SET(SOURCES
     ../../src/ui/SettingsDialog.cpp
     ../../src/ui/SettingsShortcutsTableWidget.cpp
     ../../src/ui/StatusBar.cpp
+    ../../src/ui/support/Languages.cpp
     ../../src/ui/support/RecentFileAction.cpp
     ../../src/ui/support/Settings.cpp
     ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp
@@ -208,6 +212,52 @@ endif()
 TARGET_LINK_LIBRARIES(VookiImageViewer ${QT_ALL_LIBS})
 TARGET_LINK_LIBRARIES(VookiImageViewer ${OS_LIBS})
 
+#### Translations ####
+#
+
+function(ADD_TRANSLATION lang_code lang_name)
+    SET(TRANSLATION_FILES ${TRANSLATION_FILES} ../../src/resource/translations/${APPLICATION_NAME}_${lang_code}.ts PARENT_SCOPE)
+    SET(TRANSLATION_LANGUAGES ${TRANSLATION_LANGUAGES} ${lang_code} PARENT_SCOPE)
+    SET(TRANSLATION_STRUCT_RECORDS ${TRANSLATION_STRUCT_RECORDS} "{\"${lang_code}\", \"${lang_name}\"}, " PARENT_SCOPE)
+endfunction()
+
+ADD_TRANSLATION(en_US "English (US)")
+ADD_TRANSLATION(cs "Čeština — Czech")
+ADD_TRANSLATION(da "Dansk — Danish")
+ADD_TRANSLATION(de "Deutsch — German")
+ADD_TRANSLATION(el "Ελληνικά — Greek")
+ADD_TRANSLATION(es "Español — Spanish")
+ADD_TRANSLATION(et "Eesti — Estonian")
+ADD_TRANSLATION(fi "Suomi — Finnish")
+ADD_TRANSLATION(fr "Français — French")
+ADD_TRANSLATION(hr "Hrvatski — Croatian")
+ADD_TRANSLATION(hu "Magyar — Hungarian")
+ADD_TRANSLATION(ja "日本語 — Japanese")
+ADD_TRANSLATION(nl "Nederlands — Dutch")
+ADD_TRANSLATION(ro "Română — Romanian")
+ADD_TRANSLATION(ru "Русский — Russian")
+ADD_TRANSLATION(sk "Slovenčina — Slovak")
+ADD_TRANSLATION(sl "Slovenščina — Slovenian")
+ADD_TRANSLATION(sv "Svenska — Swedish")
+ADD_TRANSLATION(tr "Türkçe — Turkish")
+ADD_TRANSLATION(uk "Українська — Ukrainian")
+ADD_TRANSLATION(vi "Tiếng Việt — Vietnamese")
+ADD_TRANSLATION(zh_CN "简体中文 — Simplified Chinese")
+
+STRING(REPLACE ";" "\n" TRANSLATION_STRUCT_RECORDS_STRING "${TRANSLATION_STRUCT_RECORDS}")
+CONFIGURE_FILE(../../src/ui/support/Languages_m_localizations.h.in "${CMAKE_BINARY_DIR}/Languages_m_localizations.h" @ONLY)
+
+qt6_add_lupdate(${APPLICATION_NAME}
+        TS_FILES ${TRANSLATION_FILES}
+        SOURCES ${SOURCES} ${UIS})
+qt6_add_lrelease(${APPLICATION_NAME}
+        TS_FILES ${TRANSLATION_FILES}
+        QM_FILES_OUTPUT_VARIABLE qm_files)
+qt6_add_resources(${APPLICATION_NAME} "translations"
+        PREFIX "/i18n"
+        BASE "${CMAKE_BINARY_DIR}"
+        FILES "${qm_files}")
+
 #### Plugins ####
 #
 
@@ -271,10 +321,7 @@ if (APPLE)
     include(platform/mac/MacdeployQt.cmake)
     deployqt()
 
-    SET(PLUGINS "$<TARGET_FILE_DIR:${APPLICATION_NAME}>/../PlugIns/imageformats")
-
-    INSTALL(TARGETS ${IMAGE_PLUGINS}
-            LIBRARY DESTINATION ${PLUGINS})
+    INCLUDE(platform/mac/CPack.cmake)
 elseif(WIN32)
     # Windows
     #

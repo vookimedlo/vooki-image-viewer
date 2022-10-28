@@ -34,7 +34,7 @@ jobs:
       fail-fast: true
       matrix:
         compiler: [gcc, clang]
-        distribution: [stable, 36]
+        distribution: [stable, 36, 37]
     uses: ./.github/workflows/reusable_linux_build.yml
     with:
       docker_image: ghcr.io/vookimedlo/fedora-qt:qt6_latestdistroofficial_${{ matrix.compiler }}_${{ matrix.distribution }}

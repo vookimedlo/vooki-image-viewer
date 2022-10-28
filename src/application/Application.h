@@ -22,6 +22,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "../util/compiler.h"
 #include <QApplication>
 #include <QString>
+#include <QTranslator>
 
 class Application : public QApplication
 {
@@ -30,9 +31,15 @@ public:
     Application(int &argc, char **argv);
     DISABLE_COPY_MOVE(Application);
 
+    void installTranslators(const QLocale &locale);
+
 signals:
     void openFileRequested(QString path);
 
 protected:
     bool event(QEvent *event) override;
+
+private:
+    QTranslator translator;
+    QTranslator qtTranslator;
 };

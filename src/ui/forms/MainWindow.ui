@@ -12,7 +12,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>VookiImageViewer</string>
+   <string extracomment="Title: Application Window">VookiImageViewer</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../resource/vookiimageviewer.qrc">
@@ -40,7 +40,7 @@
      <x>0</x>
      <y>0</y>
      <width>810</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -49,7 +49,7 @@
     </property>
     <widget class="QMenu" name="menuRecentFiles">
      <property name="title">
-      <string>Recent Files</string>
+      <string extracomment="Menu item: &quot;File-&gt;Recent Files&quot;">Recent Files</string>
      </property>
      <addaction name="actionClearHistory"/>
      <addaction name="separator"/>
@@ -61,14 +61,14 @@
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="tearOffEnabled">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="title">
      <string>&amp;View</string>
     </property>
     <widget class="QMenu" name="menuZoom">
      <property name="title">
-      <string>&amp;Zoom</string>
+      <string extracomment="Menu item: &quot;View-&gt;Zoom&quot;">&amp;Zoom</string>
      </property>
      <addaction name="actionZoomIn"/>
      <addaction name="actionZoomOut"/>
@@ -76,6 +76,9 @@
      <addaction name="actionOriginalSize"/>
     </widget>
     <widget class="QMenu" name="menuRotate">
+     <property name="whatsThis">
+      <string extracomment="Menu item: &quot;View-&gt;Rotate&quot;"/>
+     </property>
      <property name="title">
       <string>Rotate</string>
      </property>
@@ -84,21 +87,21 @@
     </widget>
     <widget class="QMenu" name="menuFlip">
      <property name="title">
-      <string>Flip</string>
+      <string extracomment="Menu item: &quot;View-&gt;Flip&quot;">Flip</string>
      </property>
      <addaction name="actionFlipHorizontally"/>
      <addaction name="actionFlipVertically"/>
     </widget>
     <widget class="QMenu" name="menuNavigation">
      <property name="title">
-      <string>Navigation</string>
+      <string extracomment="Menu item: &quot;View-&gt;Navigation&quot;">Navigation</string>
      </property>
      <addaction name="actionNextImage"/>
      <addaction name="actionPreviousImage"/>
     </widget>
     <widget class="QMenu" name="menuScroll">
      <property name="title">
-      <string>Scroll</string>
+      <string extracomment="Menu item: &quot;View-&gt;Scroll&quot;">Scroll</string>
      </property>
      <addaction name="actionScrollUp"/>
      <addaction name="actionScrollDown"/>
@@ -317,16 +320,16 @@
      <normaloff>:/images/quit</normaloff>:/images/quit</iconset>
    </property>
    <property name="text">
-    <string>&amp;Quit</string>
+    <string extracomment="Menu item: &quot;File-&gt;Quit&quot;">&amp;Quit</string>
    </property>
    <property name="toolTip">
-    <string>Quit The Application</string>
+    <string extracomment="Toolbar action tool tip">Quit The Application</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/app/quit</string>
    </property>
    <property name="shortcut">
-    <string>Q</string>
+    <string notr="true">Q</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -344,16 +347,16 @@
      <normaloff>:/images/fullscreen</normaloff>:/images/fullscreen</iconset>
    </property>
    <property name="text">
-    <string>&amp;FullScreen</string>
+    <string extracomment="Menu item: &quot;View-&gt;FullScreen&quot;">&amp;FullScreen</string>
    </property>
    <property name="toolTip">
-    <string>Show image in FullScreen mode</string>
+    <string extracomment="Toolbar action tool tip">Show image in FullScreen mode</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/view/fullscreen</string>
    </property>
    <property name="shortcut">
-    <string>F</string>
+    <string notr="true">F</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -364,19 +367,19 @@
   </action>
   <action name="actionAbout">
    <property name="text">
-    <string>&amp;About...</string>
+    <string extracomment="Menu item: &quot;Help-&gt;About...&quot;">&amp;About...</string>
    </property>
    <property name="iconText">
     <string>About...</string>
    </property>
    <property name="toolTip">
-    <string>About Application</string>
+    <string extracomment="Toolbar action tool tip">About Application...</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/app/about</string>
    </property>
    <property name="shortcut">
-    <string>F1</string>
+    <string notr="true">F1</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -391,16 +394,16 @@
      <normaloff>:/images/zoomin</normaloff>:/images/zoomin</iconset>
    </property>
    <property name="text">
-    <string>Zoom &amp;In</string>
+    <string extracomment="Menu item: &quot;View-&gt;Zoom-&gt;Zoom In&quot;">Zoom &amp;In</string>
    </property>
    <property name="toolTip">
-    <string>Zoom In</string>
+    <string extracomment="Toolbar action tool tip">Zoom In</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/view/zoom/in</string>
    </property>
    <property name="shortcut">
-    <string>+</string>
+    <string notr="true">+</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -415,16 +418,16 @@
      <normaloff>:/images/zoomout</normaloff>:/images/zoomout</iconset>
    </property>
    <property name="text">
-    <string>Zoom &amp;Out</string>
+    <string extracomment="Menu item: &quot;View-&gt;Zoom-&gt;Zoom Out&quot;">Zoom &amp;Out</string>
    </property>
    <property name="toolTip">
-    <string>Zoom Out</string>
+    <string extracomment="Toolbar action tool tip">Zoom Out</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/view/zoom/out</string>
    </property>
    <property name="shortcut">
-    <string>-</string>
+    <string notr="true">-</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -442,13 +445,16 @@
      <normaloff>:/images/fittowindow</normaloff>:/images/fittowindow</iconset>
    </property>
    <property name="text">
-    <string>Fi&amp;t to Window</string>
+    <string extracomment="Menu item: &quot;View-&gt;Zoom-&gt;Fit to Window&quot;">Fi&amp;t to Window</string>
+   </property>
+   <property name="toolTip">
+    <string extracomment="Toolbar action tool tip">Fit to Window</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/view/zoom/fit</string>
    </property>
    <property name="shortcut">
-    <string>W</string>
+    <string notr="true">W</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -465,16 +471,16 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>StatusBar</string>
+    <string extracomment="Menu item: &quot;Window-&gt;Show-&gt;StatusBar&quot;">StatusBar</string>
    </property>
    <property name="toolTip">
-    <string>Show/Hide StatusBar</string>
+    <string extracomment="Toolbar action tool tip">Show/Hide StatusBar</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/window/statusbar</string>
    </property>
    <property name="shortcut">
-    <string>S</string>
+    <string notr="true">S</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -489,13 +495,16 @@
      <normaloff>:/images/originalsize</normaloff>:/images/originalsize</iconset>
    </property>
    <property name="text">
-    <string>Original Size</string>
+    <string extracomment="Menu item: &quot;View-&gt;Zoom-&gt;Original Size&quot;">Original Size</string>
+   </property>
+   <property name="toolTip">
+    <string extracomment="Toolbar action tool tip">Original Size</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/view/zoom/original</string>
    </property>
    <property name="shortcut">
-    <string>*</string>
+    <string notr="true">*</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -510,19 +519,19 @@
      <normaloff>:/images/rotateleft</normaloff>:/images/rotateleft</iconset>
    </property>
    <property name="text">
-    <string>Left</string>
+    <string extracomment="Menu item: &quot;View-&gt;Rotate-&gt;Left&quot;">Left</string>
    </property>
    <property name="iconText">
     <string>Rotate Left</string>
    </property>
    <property name="toolTip">
-    <string>Rotate Left</string>
+    <string extracomment="Toolbar action tool tip">Rotate Left</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/view/rotate/left</string>
    </property>
    <property name="shortcut">
-    <string>,</string>
+    <string notr="true">,</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -537,19 +546,19 @@
      <normaloff>:/images/rotateright</normaloff>:/images/rotateright</iconset>
    </property>
    <property name="text">
-    <string>Right</string>
+    <string extracomment="Menu item: &quot;View-&gt;Rotate-&gt;Right&quot;">Right</string>
    </property>
    <property name="iconText">
     <string>Rotate Right</string>
    </property>
    <property name="toolTip">
-    <string>Rotate Right</string>
+    <string extracomment="Toolbar action tool tip">Rotate Right</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/view/rotate/right</string>
    </property>
    <property name="shortcut">
-    <string>.</string>
+    <string notr="true">.</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -564,19 +573,19 @@
      <normaloff>:/images/fliphorizontal</normaloff>:/images/fliphorizontal</iconset>
    </property>
    <property name="text">
-    <string>Horizontally</string>
+    <string extracomment="Menu item: &quot;View-&gt;Flip-&gt;Horizontally&quot;">Horizontally</string>
    </property>
    <property name="iconText">
     <string>Flip Horizontally</string>
    </property>
    <property name="toolTip">
-    <string>Flip Horizontally</string>
+    <string extracomment="Toolbar action tool tip">Flip Horizontally</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/view/flip/horizontally</string>
    </property>
    <property name="shortcut">
-    <string>H</string>
+    <string notr="true">H</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -591,19 +600,19 @@
      <normaloff>:/images/flipvertical</normaloff>:/images/flipvertical</iconset>
    </property>
    <property name="text">
-    <string>Vertically</string>
+    <string extracomment="Menu item: &quot;View-&gt;Flip-&gt;Vertically&quot;">Vertically</string>
    </property>
    <property name="iconText">
     <string>Flip Vertically</string>
    </property>
    <property name="toolTip">
-    <string>Flip Vertically</string>
+    <string extracomment="Toolbar action tool tip">Flip Vertically</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/view/flip/vertically</string>
    </property>
    <property name="shortcut">
-    <string>V</string>
+    <string notr="true">V</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -614,10 +623,16 @@
   </action>
   <action name="actionAboutQt">
    <property name="text">
-    <string>About Qt...</string>
+    <string extracomment="Menu item: &quot;Help-&gt;About Qt...&quot;">About Qt...</string>
+   </property>
+   <property name="toolTip">
+    <string extracomment="Toolbar action tool tip">About Qt...</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/app/about/qt</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true"/>
    </property>
    <property name="menuRole">
     <enum>QAction::AboutQtRole</enum>
@@ -625,13 +640,19 @@
   </action>
   <action name="actionSettings">
    <property name="text">
-    <string>Preferences...</string>
+    <string extracomment="Menu item: &quot;File-&gt;Preferences...&quot;">Preferences...</string>
+   </property>
+   <property name="iconText">
+    <string>Preferences</string>
+   </property>
+   <property name="toolTip">
+    <string extracomment="Toolbar action tool tip">Preferences...</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/app/settings</string>
    </property>
    <property name="shortcut">
-    <string>P</string>
+    <string notr="true">P</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -646,13 +667,16 @@
      <normaloff>:/images/previous</normaloff>:/images/previous</iconset>
    </property>
    <property name="text">
-    <string>Previous Image</string>
+    <string extracomment="Menu item: &quot;View-&gt;Navigation-&gt;Previous Image&quot;">Previous Image</string>
+   </property>
+   <property name="toolTip">
+    <string extracomment="Toolbar action tool tip">Previous Image</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/view/navigation/previous</string>
    </property>
    <property name="shortcut">
-    <string>[</string>
+    <string notr="true">[</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -667,13 +691,16 @@
      <normaloff>:/images/next</normaloff>:/images/next</iconset>
    </property>
    <property name="text">
-    <string>Next Image</string>
+    <string extracomment="Menu item: &quot;View-&gt;Navigation-&gt;Next Image&quot;">Next Image</string>
+   </property>
+   <property name="toolTip">
+    <string extracomment="Toolbar action tool tip">Next Image</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/view/navigation/next</string>
    </property>
    <property name="shortcut">
-    <string>]</string>
+    <string notr="true">]</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -684,13 +711,16 @@
   </action>
   <action name="actionClearHistory">
    <property name="text">
-    <string>Clear History</string>
+    <string extracomment="Menu item: &quot;File-&gt;Recent Files-&gt;Clear History&quot;">Clear History</string>
+   </property>
+   <property name="toolTip">
+    <string extracomment="Toolbar action tool tip">Clear History</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/history/clear</string>
    </property>
    <property name="shortcut">
-    <string>Alt+C</string>
+    <string notr="true">Alt+C</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -698,10 +728,16 @@
   </action>
   <action name="actionSupportedImageFormats">
    <property name="text">
-    <string>Supported Image Formats...</string>
+    <string extracomment="Menu item: &quot;Help-&gt;Supported Image Formats...&quot;">Supported Image Formats...</string>
+   </property>
+   <property name="toolTip">
+    <string extracomment="Toolbar action tool tip">Supported Image Formats</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/app/about/formats</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true"/>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -709,10 +745,16 @@
   </action>
   <action name="actionAboutComponents">
    <property name="text">
-    <string>About Components...</string>
+    <string extracomment="Menu item: &quot;Help-&gt;About Components...&quot;">About Components...</string>
+   </property>
+   <property name="toolTip">
+    <string extracomment="Toolbar action tool tip">About Components</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/app/about/components</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true"/>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -724,19 +766,19 @@
      <normaloff>:/images/scrollleft</normaloff>:/images/scrollleft</iconset>
    </property>
    <property name="text">
-    <string>Left</string>
+    <string extracomment="Menu item: &quot;View-&gt;Scroll-&gt;Left&quot;">Left</string>
    </property>
    <property name="iconText">
     <string>Scroll Left</string>
    </property>
    <property name="toolTip">
-    <string>Scroll Left</string>
+    <string extracomment="Toolbar action tool tip">Scroll Left</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/view/scroll/left</string>
    </property>
    <property name="shortcut">
-    <string>J</string>
+    <string notr="true">J</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -748,19 +790,19 @@
      <normaloff>:/images/scrollright</normaloff>:/images/scrollright</iconset>
    </property>
    <property name="text">
-    <string>Right</string>
+    <string extracomment="Menu item: &quot;View-&gt;Scroll-&gt;Right&quot;">Right</string>
    </property>
    <property name="iconText">
     <string>Scroll Right</string>
    </property>
    <property name="toolTip">
-    <string>Scroll Right</string>
+    <string extracomment="Toolbar action tool tip">Scroll Right</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/view/scroll/right</string>
    </property>
    <property name="shortcut">
-    <string>L</string>
+    <string notr="true">L</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -772,19 +814,19 @@
      <normaloff>:/images/scrollup</normaloff>:/images/scrollup</iconset>
    </property>
    <property name="text">
-    <string>Up</string>
+    <string extracomment="Menu item: &quot;View-&gt;Scroll-&gt;Up&quot;">Up</string>
    </property>
    <property name="iconText">
     <string>Scroll Up</string>
    </property>
    <property name="toolTip">
-    <string>Scroll Up</string>
+    <string extracomment="Toolbar action tool tip">Scroll Up</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/view/scroll/up</string>
    </property>
    <property name="shortcut">
-    <string>I</string>
+    <string notr="true">I</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -796,19 +838,19 @@
      <normaloff>:/images/scrolldown</normaloff>:/images/scrolldown</iconset>
    </property>
    <property name="text">
-    <string>Down</string>
+    <string extracomment="Menu item: &quot;View-&gt;Scroll-&gt;Down&quot;">Down</string>
    </property>
    <property name="iconText">
     <string>Scroll Down</string>
    </property>
    <property name="toolTip">
-    <string>Scroll Down</string>
+    <string extracomment="Toolbar action tool tip">Scroll Down</string>
    </property>
    <property name="whatsThis">
     <string notr="true">viv/shortcut/view/scroll/down</string>
    </property>
    <property name="shortcut">
-    <string>K</string>
+    <string notr="true">K</string>
    </property>
    <property name="shortcutContext">
     <enum>Qt::ApplicationShortcut</enum>
@@ -816,7 +858,13 @@
   </action>
   <action name="actionReleaseNotes">
    <property name="text">
-    <string>Release Notes...</string>
+    <string extracomment="Menu item: &quot;Help-&gt;Release Notes...&quot;">Release Notes...</string>
+   </property>
+   <property name="toolTip">
+    <string extracomment="Toolbar action tool tip">Release Notes...</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true"/>
    </property>
   </action>
  </widget>
