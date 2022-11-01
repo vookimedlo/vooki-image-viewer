@@ -42,6 +42,11 @@ bool QAVIFHandler::canRead() const
 
     if (m_parseState != ParseAvifError) {
         setFormat("avif");
+
+        if (m_parseState == ParseAvifFinished) {
+            return false;
+        }
+
         return true;
     }
     return false;
@@ -69,7 +74,7 @@ bool QAVIFHandler::canRead(QIODevice *device)
 
 bool QAVIFHandler::ensureParsed() const
 {
-    if (m_parseState == ParseAvifSuccess || m_parseState == ParseAvifMetadata) {
+    if (m_parseState == ParseAvifSuccess || m_parseState == ParseAvifMetadata || m_parseState == ParseAvifFinished) {
         return true;
     }
     if (m_parseState == ParseAvifError) {
@@ -83,7 +88,7 @@ bool QAVIFHandler::ensureParsed() const
 
 bool QAVIFHandler::ensureOpened() const
 {
-    if (m_parseState == ParseAvifSuccess) {
+    if (m_parseState == ParseAvifSuccess || m_parseState == ParseAvifFinished) {
         return true;
     }
     if (m_parseState == ParseAvifError) {
@@ -130,6 +135,10 @@ bool QAVIFHandler::ensureDecoder()
 
 #if AVIF_VERSION >= 90100
     m_decoder->strictFlags = AVIF_STRICT_DISABLED;
+#endif
+
+#if AVIF_VERSION >= 110000
+    m_decoder->imageDimensionLimit = 65535;
 #endif
 
     avifResult decodeResult;
@@ -246,7 +255,7 @@ bool QAVIFHandler::decode_one_frame()
 
     QColorSpace colorspace;
     if (m_decoder->image->icc.data && (m_decoder->image->icc.size > 0)) {
-        const QByteArray icc_data((const char *)m_decoder->image->icc.data, (int)m_decoder->image->icc.size);
+        const QByteArray icc_data(reinterpret_cast<const char *>(m_decoder->image->icc.data), m_decoder->image->icc.size);
         colorspace = QColorSpace::fromIccProfile(icc_data);
         if (!colorspace.isValid()) {
             qWarning("AVIF image has Qt-unsupported or invalid ICC profile!");
@@ -336,7 +345,7 @@ bool QAVIFHandler::decode_one_frame()
         rgb.format = AVIF_RGB_FORMAT_ARGB;
 #endif
 
-#if (AVIF_VERSION >= 80400) && (AVIF_VERSION <= 100100)
+#if AVIF_VERSION >= 80400
         if (m_decoder->imageCount > 1) {
             /* accelerate animated AVIF */
             rgb.chromaUpsampling = AVIF_CHROMA_UPSAMPLING_FASTEST;
@@ -351,12 +360,7 @@ bool QAVIFHandler::decode_one_frame()
     rgb.rowBytes = result.bytesPerLine();
     rgb.pixels = result.bits();
 
-#if AVIF_VERSION >= 100101
-    // use faster decoding for animations
-    avifResult res = avifImageYUVToRGB(m_decoder->image, &rgb, (m_decoder->imageCount > 1) ? AVIF_CHROMA_UPSAMPLING_NEAREST : AVIF_YUV_TO_RGB_DEFAULT);
-#else
     avifResult res = avifImageYUVToRGB(m_decoder->image, &rgb);
-#endif
     if (res != AVIF_RESULT_OK) {
         qWarning("ERROR in avifImageYUVToRGB: %s", avifResultToString(res));
         return false;
@@ -459,6 +463,13 @@ bool QAVIFHandler::read(QImage *image)
     *image = m_current_image;
     if (imageCount() >= 2) {
         m_must_jump_to_next_image = true;
+        if (m_decoder->imageIndex >= m_decoder->imageCount - 1) {
+            // all frames in animation have been read
+            m_parseState = ParseAvifFinished;
+        }
+    } else {
+        // the static image has been read
+        m_parseState = ParseAvifFinished;
     }
     return true;
 }
@@ -756,7 +767,7 @@ bool QAVIFHandler::write(const QImage &image)
         avif->transferCharacteristics = transfer_to_save;
 
         if (iccprofile.size() > 0) {
-            avifImageSetProfileICC(avif, (const uint8_t *)iccprofile.constData(), iccprofile.size());
+            avifImageSetProfileICC(avif, reinterpret_cast<const uint8_t *>(iccprofile.constData()), iccprofile.size());
         }
 
         avifRGBImage rgb;
@@ -782,11 +793,7 @@ bool QAVIFHandler::write(const QImage &image)
             }
         }
 
-#if AVIF_VERSION >= 100101
-        res = avifImageRGBToYUV(avif, &rgb, AVIF_RGB_TO_YUV_DEFAULT);
-#else
         res = avifImageRGBToYUV(avif, &rgb);
-#endif
         if (res != AVIF_RESULT_OK) {
             qWarning("ERROR in avifImageRGBToYUV: %s", avifResultToString(res));
             return false;
@@ -914,6 +921,7 @@ bool QAVIFHandler::jumpToNextImage()
 
     if (m_decoder->imageIndex >= 0) {
         if (m_decoder->imageCount < 2) {
+            m_parseState = ParseAvifSuccess;
             return true;
         }
 
@@ -958,10 +966,12 @@ bool QAVIFHandler::jumpToImage(int imageNumber)
 
     if (m_decoder->imageCount < 2) { // not an animation
         if (imageNumber == 0) {
-            return ensureOpened();
-        } else {
-            return false;
+            if (ensureOpened()) {
+                m_parseState = ParseAvifSuccess;
+                return true;
+            }
         }
+        return false;
     }
 
     if (imageNumber < 0 || imageNumber >= m_decoder->imageCount) { // wrong index
@@ -970,6 +980,7 @@ bool QAVIFHandler::jumpToImage(int imageNumber)
 
     if (imageNumber == m_decoder->imageIndex) { // we are here already
         m_must_jump_to_next_image = false;
+        m_parseState = ParseAvifSuccess;
         return true;
     }
 
@@ -1028,7 +1039,8 @@ int QAVIFHandler::loopCount() const
         return 0;
     }
 
-    return 1;
+    // Endless loop to work around https://github.com/AOMediaCodec/libavif/issues/347
+    return -1;
 }
 
 QPointF QAVIFHandler::CompatibleChromacity(qreal chrX, qreal chrY)

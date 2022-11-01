@@ -19,11 +19,7 @@
 #define NOMINMAX
 #endif
 
-#if defined(Q_OS_WINDOWS)
-#include <libraw.h>
-#else
 #include <libraw/libraw.h>
-#endif
 
 #ifdef QT_DEBUG
 // This should be used to exclude the local QIODevice wrapper of the LibRaw_abstract_datastream interface.
@@ -118,9 +114,6 @@ public:
         auto read = m_device->read(reinterpret_cast<char *>(ptr), sz * nmemb);
         if (read < 1) {
             return 0;
-        }
-        if (auto o = read % sz) {
-            seek(-(sz - o), SEEK_CUR);
         }
         return read / sz;
     }
