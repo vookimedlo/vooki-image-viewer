@@ -52,6 +52,11 @@ private:
 
 } // namespace
 
+size_t HEIFHandler::m_initialized_count = 0;
+bool HEIFHandler::m_plugins_queried = false;
+bool HEIFHandler::m_heif_decoder_available = false;
+bool HEIFHandler::m_heif_encoder_available = false;
+
 HEIFHandler::HEIFHandler()
     : m_parseState(ParseHeicNotParsed)
     , m_quality(100)
@@ -88,6 +93,21 @@ bool HEIFHandler::write(const QImage &image)
         return false;
     }
 
+#if LIBHEIF_HAVE_VERSION(1, 13, 0)
+    startHeifLib();
+#endif
+
+    bool success = write_helper(image);
+
+#if LIBHEIF_HAVE_VERSION(1, 13, 0)
+    finishHeifLib();
+#endif
+
+    return success;
+}
+
+bool HEIFHandler::write_helper(const QImage &image)
+{
     int save_depth; // 8 or 10bit per channel
     QImage::Format tmpformat; // format for temporary image
     const bool save_alpha = image.hasAlphaChannel();
@@ -356,8 +376,18 @@ bool HEIFHandler::ensureParsed() const
 
     HEIFHandler *that = const_cast<HEIFHandler *>(this);
 
-    return that->ensureDecoder();
+#if LIBHEIF_HAVE_VERSION(1, 13, 0)
+    startHeifLib();
+#endif
+
+    bool success = that->ensureDecoder();
+
+#if LIBHEIF_HAVE_VERSION(1, 13, 0)
+    finishHeifLib();
+#endif
+    return success;
 }
+
 bool HEIFHandler::ensureDecoder()
 {
     if (m_parseState != ParseHeicNotParsed) {
@@ -375,7 +405,7 @@ bool HEIFHandler::ensureDecoder()
 
     try {
         heif::Context ctx;
-        ctx.read_from_memory_without_copy((const void *)(buffer.constData()), buffer.size());
+        ctx.read_from_memory_without_copy(static_cast<const void *>(buffer.constData()), buffer.size());
 
         heif::ImageHandle handle = ctx.get_primary_image_handle();
 
@@ -696,14 +726,100 @@ bool HEIFHandler::ensureDecoder()
     return true;
 }
 
+bool HEIFHandler::isHeifDecoderAvailable()
+{
+    QMutexLocker locker(&getHEIFHandlerMutex());
+
+    if (!m_plugins_queried) {
+#if LIBHEIF_HAVE_VERSION(1, 13, 0)
+        if (m_initialized_count == 0) {
+            heif_init(nullptr);
+        }
+#endif
+
+        m_heif_encoder_available = heif_have_encoder_for_format(heif_compression_HEVC);
+        m_heif_decoder_available = heif_have_decoder_for_format(heif_compression_HEVC);
+        m_plugins_queried = true;
+
+#if LIBHEIF_HAVE_VERSION(1, 13, 0)
+        if (m_initialized_count == 0) {
+            heif_deinit();
+        }
+#endif
+    }
+
+    return m_heif_decoder_available;
+}
+
+bool HEIFHandler::isHeifEncoderAvailable()
+{
+    QMutexLocker locker(&getHEIFHandlerMutex());
+
+    if (!m_plugins_queried) {
+#if LIBHEIF_HAVE_VERSION(1, 13, 0)
+        if (m_initialized_count == 0) {
+            heif_init(nullptr);
+        }
+#endif
+
+        m_heif_decoder_available = heif_have_decoder_for_format(heif_compression_HEVC);
+        m_heif_encoder_available = heif_have_encoder_for_format(heif_compression_HEVC);
+        m_plugins_queried = true;
+
+#if LIBHEIF_HAVE_VERSION(1, 13, 0)
+        if (m_initialized_count == 0) {
+            heif_deinit();
+        }
+#endif
+    }
+
+    return m_heif_encoder_available;
+}
+
+void HEIFHandler::startHeifLib()
+{
+#if LIBHEIF_HAVE_VERSION(1, 13, 0)
+    QMutexLocker locker(&getHEIFHandlerMutex());
+
+    if (m_initialized_count == 0) {
+        heif_init(nullptr);
+    }
+
+    m_initialized_count++;
+#endif
+}
+
+void HEIFHandler::finishHeifLib()
+{
+#if LIBHEIF_HAVE_VERSION(1, 13, 0)
+    QMutexLocker locker(&getHEIFHandlerMutex());
+
+    if (m_initialized_count == 0) {
+        return;
+    }
+
+    m_initialized_count--;
+    if (m_initialized_count == 0) {
+        heif_deinit();
+    }
+
+#endif
+}
+
+QMutex &HEIFHandler::getHEIFHandlerMutex()
+{
+    static QMutex heif_handler_mutex;
+    return heif_handler_mutex;
+}
+
 QImageIOPlugin::Capabilities HEIFPlugin::capabilities(QIODevice *device, const QByteArray &format) const
 {
     if (format == "heif" || format == "heic") {
         Capabilities format_cap;
-        if (heif_have_decoder_for_format(heif_compression_HEVC)) {
+        if (HEIFHandler::isHeifDecoderAvailable()) {
             format_cap |= CanRead;
         }
-        if (heif_have_encoder_for_format(heif_compression_HEVC)) {
+        if (HEIFHandler::isHeifEncoderAvailable()) {
             format_cap |= CanWrite;
         }
         return format_cap;
@@ -716,11 +832,11 @@ QImageIOPlugin::Capabilities HEIFPlugin::capabilities(QIODevice *device, const Q
     }
 
     Capabilities cap;
-    if (device->isReadable() && HEIFHandler::canRead(device) && heif_have_decoder_for_format(heif_compression_HEVC)) {
+    if (device->isReadable() && HEIFHandler::canRead(device) && HEIFHandler::isHeifDecoderAvailable()) {
         cap |= CanRead;
     }
 
-    if (device->isWritable() && heif_have_encoder_for_format(heif_compression_HEVC)) {
+    if (device->isWritable() && HEIFHandler::isHeifEncoderAvailable()) {
         cap |= CanWrite;
     }
     return cap;

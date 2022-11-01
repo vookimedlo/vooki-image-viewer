@@ -48,6 +48,11 @@ bool QJpegXLHandler::canRead() const
 
     if (m_parseState != ParseJpegXLError) {
         setFormat("jxl");
+
+        if (m_parseState == ParseJpegXLFinished) {
+            return false;
+        }
+
         return true;
     }
     return false;
@@ -63,7 +68,7 @@ bool QJpegXLHandler::canRead(QIODevice *device)
         return false;
     }
 
-    JxlSignature signature = JxlSignatureCheck((const uint8_t *)header.constData(), header.size());
+    JxlSignature signature = JxlSignatureCheck(reinterpret_cast<const uint8_t *>(header.constData()), header.size());
     if (signature == JXL_SIG_CODESTREAM || signature == JXL_SIG_CONTAINER) {
         return true;
     }
@@ -72,7 +77,7 @@ bool QJpegXLHandler::canRead(QIODevice *device)
 
 bool QJpegXLHandler::ensureParsed() const
 {
-    if (m_parseState == ParseJpegXLSuccess || m_parseState == ParseJpegXLBasicInfoParsed) {
+    if (m_parseState == ParseJpegXLSuccess || m_parseState == ParseJpegXLBasicInfoParsed || m_parseState == ParseJpegXLFinished) {
         return true;
     }
     if (m_parseState == ParseJpegXLError) {
@@ -90,7 +95,7 @@ bool QJpegXLHandler::ensureALLCounted() const
         return false;
     }
 
-    if (m_parseState == ParseJpegXLSuccess) {
+    if (m_parseState == ParseJpegXLSuccess || m_parseState == ParseJpegXLFinished) {
         return true;
     }
 
@@ -111,7 +116,7 @@ bool QJpegXLHandler::ensureDecoder()
         return false;
     }
 
-    JxlSignature signature = JxlSignatureCheck((const uint8_t *)m_rawData.constData(), m_rawData.size());
+    JxlSignature signature = JxlSignatureCheck(reinterpret_cast<const uint8_t *>(m_rawData.constData()), m_rawData.size());
     if (signature != JXL_SIG_CODESTREAM && signature != JXL_SIG_CONTAINER) {
         m_parseState = ParseJpegXLError;
         return false;
@@ -139,7 +144,7 @@ bool QJpegXLHandler::ensureDecoder()
         }
     }
 
-    if (JxlDecoderSetInput(m_decoder, (const uint8_t *)m_rawData.constData(), m_rawData.size()) != JXL_DEC_SUCCESS) {
+    if (JxlDecoderSetInput(m_decoder, reinterpret_cast<const uint8_t *>(m_rawData.constData()), m_rawData.size()) != JXL_DEC_SUCCESS) {
         qWarning("ERROR: JxlDecoderSetInput failed");
         m_parseState = ParseJpegXLError;
         return false;
@@ -273,8 +278,12 @@ bool QJpegXLHandler::countALLFrames()
         size_t icc_size = 0;
         if (JxlDecoderGetICCProfileSize(m_decoder, &m_input_pixel_format, JXL_COLOR_PROFILE_TARGET_DATA, &icc_size) == JXL_DEC_SUCCESS) {
             if (icc_size > 0) {
-                QByteArray icc_data((int)icc_size, 0);
-                if (JxlDecoderGetColorAsICCProfile(m_decoder, &m_input_pixel_format, JXL_COLOR_PROFILE_TARGET_DATA, (uint8_t *)icc_data.data(), icc_data.size())
+                QByteArray icc_data(icc_size, 0);
+                if (JxlDecoderGetColorAsICCProfile(m_decoder,
+                                                   &m_input_pixel_format,
+                                                   JXL_COLOR_PROFILE_TARGET_DATA,
+                                                   reinterpret_cast<uint8_t *>(icc_data.data()),
+                                                   icc_data.size())
                     == JXL_DEC_SUCCESS) {
                     m_colorspace = QColorSpace::fromIccProfile(icc_data);
 
@@ -397,7 +406,15 @@ bool QJpegXLHandler::decode_one_frame()
             if (!rewind()) {
                 return false;
             }
+
+            // all frames in animation have been read
+            m_parseState = ParseJpegXLFinished;
+        } else {
+            m_parseState = ParseJpegXLSuccess;
         }
+    } else {
+        // the static image has been read
+        m_parseState = ParseJpegXLFinished;
     }
 
     return true;
@@ -609,7 +626,7 @@ bool QJpegXLHandler::write(const QImage &image)
     }
 
     if (!convert_color_profile && iccprofile.size() > 0) {
-        status = JxlEncoderSetICCProfile(encoder, (const uint8_t *)iccprofile.constData(), iccprofile.size());
+        status = JxlEncoderSetICCProfile(encoder, reinterpret_cast<const uint8_t *>(iccprofile.constData()), iccprofile.size());
         if (status != JXL_ENC_SUCCESS) {
             qWarning("JxlEncoderSetICCProfile failed!");
             if (runner) {
@@ -648,7 +665,7 @@ bool QJpegXLHandler::write(const QImage &image)
 #endif
 
     if (image.hasAlphaChannel() || ((save_depth == 8) && (xsize % 4 == 0))) {
-        status = JxlEncoderAddImageFrame(encoder_options, &pixel_format, (void *)tmpimage.constBits(), buffer_size);
+        status = JxlEncoderAddImageFrame(encoder_options, &pixel_format, static_cast<const void *>(tmpimage.constBits()), buffer_size);
     } else {
         if (save_depth > 8) { // 16bit depth without alpha channel
             uint16_t *tmp_buffer = new (std::nothrow) uint16_t[3 * xsize * ysize];
@@ -679,7 +696,7 @@ bool QJpegXLHandler::write(const QImage &image)
                     src_pixels += 2; // skipalpha
                 }
             }
-            status = JxlEncoderAddImageFrame(encoder_options, &pixel_format, (void *)tmp_buffer, buffer_size);
+            status = JxlEncoderAddImageFrame(encoder_options, &pixel_format, static_cast<const void *>(tmp_buffer), buffer_size);
             delete[] tmp_buffer;
         } else { // 8bit depth without alpha channel
             uchar *tmp_buffer8 = new (std::nothrow) uchar[3 * xsize * ysize];
@@ -698,7 +715,7 @@ bool QJpegXLHandler::write(const QImage &image)
                 memcpy(dest_pixels8, tmpimage.constScanLine(y), rowbytes);
                 dest_pixels8 += rowbytes;
             }
-            status = JxlEncoderAddImageFrame(encoder_options, &pixel_format, (void *)tmp_buffer8, buffer_size);
+            status = JxlEncoderAddImageFrame(encoder_options, &pixel_format, static_cast<const void *>(tmp_buffer8), buffer_size);
             delete[] tmp_buffer8;
         }
     }
@@ -856,6 +873,7 @@ bool QJpegXLHandler::jumpToNextImage()
         }
     }
 
+    m_parseState = ParseJpegXLSuccess;
     return true;
 }
 
@@ -870,12 +888,14 @@ bool QJpegXLHandler::jumpToImage(int imageNumber)
     }
 
     if (imageNumber == m_currentimage_index) {
+        m_parseState = ParseJpegXLSuccess;
         return true;
     }
 
     if (imageNumber > m_currentimage_index) {
         JxlDecoderSkipFrames(m_decoder, imageNumber - m_currentimage_index);
         m_currentimage_index = imageNumber;
+        m_parseState = ParseJpegXLSuccess;
         return true;
     }
 
@@ -887,6 +907,7 @@ bool QJpegXLHandler::jumpToImage(int imageNumber)
         JxlDecoderSkipFrames(m_decoder, imageNumber);
     }
     m_currentimage_index = imageNumber;
+    m_parseState = ParseJpegXLSuccess;
     return true;
 }
 
@@ -910,7 +931,7 @@ int QJpegXLHandler::loopCount() const
     }
 
     if (m_basicinfo.have_animation) {
-        return 1;
+        return (m_basicinfo.animation.num_loops > 0) ? m_basicinfo.animation.num_loops - 1 : -1;
     } else {
         return 0;
     }
@@ -930,7 +951,7 @@ bool QJpegXLHandler::rewind()
         }
     }
 
-    if (JxlDecoderSetInput(m_decoder, (const uint8_t *)m_rawData.constData(), m_rawData.size()) != JXL_DEC_SUCCESS) {
+    if (JxlDecoderSetInput(m_decoder, reinterpret_cast<const uint8_t *>(m_rawData.constData()), m_rawData.size()) != JXL_DEC_SUCCESS) {
         qWarning("ERROR: JxlDecoderSetInput failed");
         m_parseState = ParseJpegXLError;
         return false;
