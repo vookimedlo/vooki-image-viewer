@@ -95,5 +95,6 @@ private:
     QTimer m_animationTimer;
     RotatingIndex<int> m_animationIndex;
 
-    static const int m_imageOffsetStep;
+    static constexpr int m_imageOffsetStep = 100;
+    static constexpr int m_maxAllocationImageSize = 4096;
 };

@@ -27,8 +27,6 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QPainter>
 #include <cmath>
 
-const int ImageAreaWidget::m_imageOffsetStep = 100;
-
 ImageAreaWidget::ImageAreaWidget(QWidget *parent)
                                         : QWidget(parent)
                                         , m_drawBorder(false)
@@ -66,6 +64,7 @@ void ImageAreaWidget::drawBorder(const bool draw, const QColor &color)
 bool ImageAreaWidget::showImage(const QString &fileName)
 {
     m_animationTimer.stop();
+    m_reader.setAllocationLimit(ImageAreaWidget::m_maxAllocationImageSize);
     m_reader.setFileName(fileName);
     m_reader.setQuality(100);
     m_reader.setAutoTransform(true);
