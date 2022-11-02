@@ -68,6 +68,7 @@ bool ImageAreaWidget::showImage(const QString &fileName)
     m_animationTimer.stop();
     m_reader.setFileName(fileName);
     m_reader.setQuality(100);
+    m_reader.setAutoTransform(true);
     m_originalImage = m_reader.read();
 
     if (m_originalImage.isNull())
