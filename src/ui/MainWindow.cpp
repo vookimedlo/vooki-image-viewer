@@ -74,6 +74,10 @@ MainWindow::MainWindow(QWidget *parent)
     m_ui.dockWidget->toggleViewAction()->setWhatsThis("viv/shortcut/window/navigation");
     m_ui.menuShow->addAction(m_ui.dockWidget->toggleViewAction());
 
+    m_ui.dockInfoWidget->toggleViewAction()->setShortcut(QKeySequence(Qt::Key_E));
+    m_ui.dockInfoWidget->toggleViewAction()->setWhatsThis("viv/shortcut/window/info");
+    m_ui.menuShow->addAction(m_ui.dockInfoWidget->toggleViewAction());
+
     m_sortFileSystemModel->setSourceModel(m_fileSystemModel);
 
     m_fileSystemModel->setRootPath(QDir::currentPath());

@@ -116,6 +116,7 @@ SET(SOURCES
     ../../src/ui/AboutComponentsDialog.cpp
     ../../src/ui/FileSystemTreeView.cpp
     ../../src/ui/ImageAreaWidget.cpp
+    ../../src/ui/InfoTableWidget.cpp
     ../../src/ui/MainWindow.cpp
     ../../src/ui/SettingsDialog.cpp
     ../../src/ui/SettingsShortcutsTableWidget.cpp
@@ -125,6 +126,7 @@ SET(SOURCES
     ../../src/ui/support/Settings.cpp
     ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp
     ../../src/util/misc.cpp
+    ../../components/easyexif/exif.cpp
 )
 
 SET(UIS

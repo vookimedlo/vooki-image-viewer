@@ -21,7 +21,10 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "ImageAreaWidget.h"
 #include "support/Settings.h"
 #include "support/SettingsStrings.h"
+#include "../../components/easyexif/exif.h"
 #include <QDebug>
+#include <QFile>
+#include <QFileInfo>
 #include <QGuiApplication>
 #include <QPaintEvent>
 #include <QPainter>
@@ -48,6 +51,7 @@ ImageAreaWidget::ImageAreaWidget(QWidget *parent)
 {
     m_originalImage.fill(qRgb(0, 0, 0));
     m_finalImage.fill(qRgb(0, 0, 0));
+    QImageReader::setAllocationLimit(ImageAreaWidget::m_maxAllocationImageSize);
 }
 
 ImageAreaWidget::~ImageAreaWidget() noexcept
@@ -64,10 +68,11 @@ void ImageAreaWidget::drawBorder(const bool draw, const QColor &color)
 bool ImageAreaWidget::showImage(const QString &fileName)
 {
     m_animationTimer.stop();
-    m_reader.setAllocationLimit(ImageAreaWidget::m_maxAllocationImageSize);
     m_reader.setFileName(fileName);
     m_reader.setQuality(100);
     m_reader.setAutoTransform(true);
+
+    const auto format = m_reader.format().toStdString();
     m_originalImage = m_reader.read();
 
     if (m_originalImage.isNull())
@@ -75,6 +80,45 @@ bool ImageAreaWidget::showImage(const QString &fileName)
         update();
         return false;
     }
+
+    easyexif::EXIFInfo info;
+    QFileInfo fileInfo(fileName);
+    std::vector<std::pair<QString, QString>> information{ std::pair{tr("File name", "Image Properties"), fileInfo.fileName()} };
+    addInformation(tr("Size", "Image Properties"), fileInfo.size(), information, info);
+    addInformation(tr("Width", "Image Properties"), m_originalImage.width(), information, info);
+    addInformation(tr("Height", "Image Properties"), m_originalImage.height(), information, info);
+
+    QFile file(fileName);
+    if (format == "jpeg" && file.open(QIODevice::ReadOnly))
+    {
+        QByteArray data = file.readAll();
+        if (int code = info.parseFrom((unsigned char *)data.data(), data.size()))
+            qDebug() << "Error parsing EXIF: code " << code;
+        else
+        {
+            addInformation(tr("Bits per sample", "Image Properties"), info.BitsPerSample, information, info);
+            addInformation(tr("Date", "Image Properties"), info.DateTime, information, info);
+
+            addInformation(tr("Flash", "Image Properties"), info.Flash, information, info);
+            addInformation(tr("ISO", "Image Properties"), info.ISOSpeedRatings, information, info);
+
+
+            addInformation(tr("f-number", "Image Properties"), info.FNumber, information, info);
+            addInformation(tr("Exposure time", "Image Properties"), info.ExposureTime, information, info);
+            addInformation(tr("Shutter speed", "Image Properties"), info.ShutterSpeedValue, information, info);
+            addInformation(tr("Focal length", "Image Properties"), info.FocalLength, information, info);
+
+            addInformation(tr("Camera model", "Image Properties"), info.Model, information, info);
+            addInformation(tr("Lens model", "Image Properties"), info.LensInfo.Model, information, info);
+            addInformation(tr("Lens focal length", "Image Properties"), info.LensInfo.FocalLengthMax, information, info);
+
+            addInformation(tr("Copyright", "Image Properties"), info.Copyright, information, info);
+        }
+    }
+    else
+        qDebug() << "Can't open file:" << fileName;
+
+    emit imageInformationParsed(information);
 
     m_flipHorizontally = m_flipVertically = false;
     m_imageOffsetX = m_imageOffsetY = 0;

@@ -156,7 +156,7 @@
     <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>FileSystem Navigation</string>
+    <string>File System Navigation</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
@@ -313,6 +313,53 @@
    <addaction name="actionScrollRight"/>
    <addaction name="actionScrollUp"/>
    <addaction name="actionScrollDown"/>
+  </widget>
+  <widget class="QDockWidget" name="dockInfoWidget">
+   <property name="windowTitle">
+    <string>Information</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockInfoWidgetContents">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="InfoTableWidget" name="infoTableWidget">
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="showDropIndicator" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="dragDropOverwriteMode">
+        <bool>false</bool>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::NoSelection</enum>
+       </property>
+       <property name="showGrid">
+        <bool>false</bool>
+       </property>
+       <attribute name="horizontalHeaderStretchLastSection">
+        <bool>true</bool>
+       </attribute>
+       <column>
+        <property name="text">
+         <string>Name</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Value</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <action name="actionQuit">
    <property name="icon">
@@ -878,6 +925,7 @@
    <container>1</container>
    <slots>
     <signal>zoomPercentageChanged(qreal)</signal>
+    <signal>imageInformationParsed(const std::vector&lt;std::pair&lt;QString, QString&gt;&gt;&amp;)</signal>
     <slot>onRotateRightTriggered()</slot>
     <slot>onRotateLeftTriggered()</slot>
     <slot>onFlipHorizontallyTriggered()</slot>
@@ -897,6 +945,14 @@
    <class>StatusBar</class>
    <extends>QStatusBar</extends>
    <header>../../src/ui/StatusBar.h</header>
+  </customwidget>
+  <customwidget>
+   <class>InfoTableWidget</class>
+   <extends>QTableWidget</extends>
+   <header>../../src/ui/InfoTableWidget.h</header>
+   <slots>
+    <slot>displayInformation(const std::vector&lt;std::pair&lt;QString, QString&gt;&gt;&amp;)</slot>
+   </slots>
   </customwidget>
  </customwidgets>
  <includes>
@@ -1093,8 +1149,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>545</x>
-     <y>289</y>
+     <x>516</x>
+     <y>369</y>
     </hint>
    </hints>
   </connection>
@@ -1109,8 +1165,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>545</x>
-     <y>289</y>
+     <x>516</x>
+     <y>369</y>
     </hint>
    </hints>
   </connection>
@@ -1125,8 +1181,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>545</x>
-     <y>289</y>
+     <x>516</x>
+     <y>369</y>
     </hint>
    </hints>
   </connection>
@@ -1141,8 +1197,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>545</x>
-     <y>289</y>
+     <x>516</x>
+     <y>369</y>
     </hint>
    </hints>
   </connection>
@@ -1237,8 +1293,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>545</x>
-     <y>289</y>
+     <x>516</x>
+     <y>369</y>
     </hint>
    </hints>
   </connection>
@@ -1253,8 +1309,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>545</x>
-     <y>289</y>
+     <x>516</x>
+     <y>369</y>
     </hint>
    </hints>
   </connection>
@@ -1269,8 +1325,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>545</x>
-     <y>289</y>
+     <x>516</x>
+     <y>369</y>
     </hint>
    </hints>
   </connection>
@@ -1285,8 +1341,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>545</x>
-     <y>289</y>
+     <x>516</x>
+     <y>369</y>
     </hint>
    </hints>
   </connection>
@@ -1297,8 +1353,8 @@
    <slot>onZoomPercentageChanged(qreal)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>545</x>
-     <y>289</y>
+     <x>516</x>
+     <y>369</y>
     </hint>
     <hint type="destinationlabel">
      <x>404</x>
@@ -1367,6 +1423,22 @@
     <hint type="destinationlabel">
      <x>404</x>
      <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>imageAreaWidget</sender>
+   <signal>imageInformationParsed(const std::vector&lt;std::pair&lt;QString, QString&gt;&gt;&amp;)</signal>
+   <receiver>infoTableWidget</receiver>
+   <slot>displayInformation(const std::vector&lt;std::pair&lt;QString, QString&gt;&gt;&amp;)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>428</x>
+     <y>145</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>591</x>
+     <y>176</y>
     </hint>
    </hints>
   </connection>

@@ -19,6 +19,7 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
+#include "../../components/easyexif/exif.h"
 #include "../util/RotatingIndex.h"
 #include "../util/compiler.h"
 #include <QColor>
@@ -26,9 +27,16 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QTimer>
 #include <QWidget>
 #include <cstdint>
+#include <utility>
+#include <vector>
 
 // Forward declarations
 class QNativeGestureEvent;
+
+namespace easyexif
+{
+    class EXIFInfo;
+}
 
 class ImageAreaWidget : public QWidget
 {
@@ -44,6 +52,7 @@ public:
     void repaintWithTransformations();
 
 signals:
+    void imageInformationParsed(const std::vector<std::pair<QString, QString>>& information);
     void zoomPercentageChanged(qreal value);
 
 public slots:
@@ -77,6 +86,18 @@ protected:
     void scroll(const QPoint &point);
     void transformImage();
     void wheelEvent(QWheelEvent *event) override;
+
+    template <typename T>
+    inline void addInformation(const QString &name, T value, std::vector<std::pair<QString, QString>> &information, const easyexif::EXIFInfo& exif) {
+        if (exif.isValid(value))
+            information.push_back(std::pair{ name, QString::number(value) });
+    }
+
+    template <>
+    inline void addInformation(const QString &name, std::string value, std::vector<std::pair<QString, QString>> &information, const easyexif::EXIFInfo& exif) {
+        if (exif.isValid(value))
+            information.push_back(std::pair{ name, value.c_str() });
+    }
 
 private:
     bool m_drawBorder;
