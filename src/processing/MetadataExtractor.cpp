@@ -42,6 +42,11 @@ std::vector<QString> MetadataExtractor::m_orientationDescriptions = { "", // EXI
                                                                       tr("270°, mirrored", "Image Description")
 };
 
+const QString MetadataExtractor::m_unitByte = tr(" b", "Image Description - Units: byte");
+const QString MetadataExtractor::m_unitMeter = tr(" m", "Image Description - Units: meter");
+const QString MetadataExtractor::m_unitPixel = tr(" px", "Image Description - Units: pixel");
+const QString MetadataExtractor::m_unitSecond = tr(" s", "Image Description - Units: second");
+
 void MetadataExtractor::extract(const QString &filename, int width, int height)
 {
     m_gpsLatitude.clear();
@@ -50,9 +55,9 @@ void MetadataExtractor::extract(const QString &filename, int width, int height)
 
     QFileInfo fileInfo(filename);
     std::vector<std::pair<QString, QString>> information{ std::pair{tr("File name", "Image Properties"), fileInfo.fileName()} };
-    addInformation(tr("Size", "Image Properties"), fileInfo.size(), information);
-    addInformation(tr("Width", "Image Properties"), width, information);
-    addInformation(tr("Height", "Image Properties"), height, information);
+    addInformation(tr("Size", "Image Properties"), fileInfo.size(), information, MetadataExtractor::m_unitByte);
+    addInformation(tr("Width", "Image Properties"), width, information, MetadataExtractor::m_unitPixel);
+    addInformation(tr("Height", "Image Properties"), height, information, MetadataExtractor::m_unitPixel);
 
     try
     {
@@ -66,7 +71,7 @@ void MetadataExtractor::extract(const QString &filename, int width, int height)
         addInformation<ExivProcessing::GPSLatitudeRef>("GPS Latitude", exifData.findKey(Exiv2::ExifKey("Exif.GPSInfo.GPSLatitudeRef")), information);
         addInformation<ExivProcessing::GPSLongitude>("", exifData.findKey(Exiv2::ExifKey("Exif.GPSInfo.GPSLongitude")), information);
         addInformation<ExivProcessing::GPSLongitudeRef>("GPS Longitude", exifData.findKey(Exiv2::ExifKey("Exif.GPSInfo.GPSLongitudeRef")), information);
-        addInformation<ExivProcessing::GPSAltitude>("", exifData.findKey(Exiv2::ExifKey("Exif.GPSInfo.GPSAltitude")), information);
+        addInformation<ExivProcessing::GPSAltitude>("", exifData.findKey(Exiv2::ExifKey("Exif.GPSInfo.GPSAltitude")), information, MetadataExtractor::m_unitMeter);
         addInformation<ExivProcessing::GPSAltitudeRef>("GPS Altitude", exifData.findKey(Exiv2::ExifKey("Exif.GPSInfo.GPSAltitudeRef")), information);
 
         addInformation<ExivProcessing::Flash>(tr("Flash", "Image Properties"), Exiv2::flash(exifData), information);

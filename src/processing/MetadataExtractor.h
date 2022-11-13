@@ -64,25 +64,25 @@ protected:
     };
 
     template <typename T>
-    inline void addInformation(const QString &name, const T& value, std::vector<std::pair<QString, QString>> &information) {
+    inline void addInformation(const QString &name, const T& value, std::vector<std::pair<QString, QString>> &information, const QString &units = QString("")) {
         if (!name.isEmpty())
-            information.push_back(std::pair{ name, QString::number(value) });
+            information.push_back(std::pair{ name, QString::number(value) + units });
     }
 
     template <>
-    inline void addInformation(const QString &name, const QString &value, std::vector<std::pair<QString, QString>> &information) {
+    inline void addInformation(const QString &name, const QString &value, std::vector<std::pair<QString, QString>> &information, const QString &units) {
         if (!name.isEmpty() && !value.isEmpty())
-            information.push_back(std::pair{ name, value });
+            information.push_back(std::pair{ name, value + units });
     }
 
     template <>
-    inline void addInformation(const QString &name, const std::string &value, std::vector<std::pair<QString, QString>> &information) {
+    inline void addInformation(const QString &name, const std::string &value, std::vector<std::pair<QString, QString>> &information, const QString &units) {
         if (!name.isEmpty() && !value.empty())
-            information.push_back(std::pair{ name, value.c_str() });
+            information.push_back(std::pair{ name, value.c_str() + units });
     }
 
     template <ExivProcessing processing = ExivProcessing::String>
-    inline void addInformation(const QString &name, const Exiv2::ExifData::const_iterator &value, std::vector<std::pair<QString, QString>> &information)
+    inline void addInformation(const QString &name, const Exiv2::ExifData::const_iterator &value, std::vector<std::pair<QString, QString>> &information, const QString &units = QString(""))
     {
         if (value != m_exivImage->exifData().end())
         {
@@ -131,8 +131,7 @@ protected:
                     addInformation(name, m_gpsLongitude, information);
                     break;
                 case ExivProcessing::GPSAltitude:
-                    m_gpsAltitude = QString::number(value->getValue()->toFloat());
-                    m_gpsAltitude.append(tr(" m", "Image Description - Units: meters"));
+                    m_gpsAltitude = QString::number(value->getValue()->toFloat()) + units;
                     break;
                 case ExivProcessing::GPSAltitudeRef:
                     m_gpsAltitude.append(value->getValue()->toLong() ? tr(" (below sea level)", "Image Description") : tr(" (above sea level)", "Image Description"));
@@ -153,4 +152,8 @@ private:
 
     std::unique_ptr<Exiv2::Image> m_exivImage;
     static std::vector<QString> m_orientationDescriptions;
+    static const QString m_unitByte;
+    static const QString m_unitMeter;
+    static const QString m_unitPixel;
+    static const QString m_unitSecond;
 };
