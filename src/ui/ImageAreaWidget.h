@@ -30,12 +30,6 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <utility>
 #include <vector>
 
-namespace std
-{
-    template<typename T>
-    using auto_ptr = std::unique_ptr<T>;
-}
-#include <exiv2/exiv2.hpp>
 
 // Forward declarations
 class QNativeGestureEvent;
@@ -94,57 +88,6 @@ protected:
     void transformImage();
     void wheelEvent(QWheelEvent *event) override;
 
-    template <typename T>
-    inline void addInformation(const QString &name, const T& value, std::vector<std::pair<QString, QString>> &information) {
-        if (!name.isEmpty())
-            information.push_back(std::pair{ name, QString::number(value) });
-    }
-
-    template <>
-    inline void addInformation(const QString &name, const QString &value, std::vector<std::pair<QString, QString>> &information) {
-        if (!name.isEmpty() && !value.isEmpty())
-            information.push_back(std::pair{ name, value });
-    }
-
-    template <>
-    inline void addInformation(const QString &name, const std::string &value, std::vector<std::pair<QString, QString>> &information) {
-        if (!name.isEmpty() && !value.empty())
-            information.push_back(std::pair{ name, value.c_str() });
-    }
-
-    enum class ExivProcessing
-    {
-        String,
-        Float,
-        Int,
-        GPS,
-    };
-
-    template <ExivProcessing processing = ExivProcessing::String>
-    inline void addInformation(const QString &name, const Exiv2::ExifData::const_iterator &value, std::vector<std::pair<QString, QString>> &information)
-    {
-        if (value != m_exivImage->exifData().end())
-        {
-            switch (processing)
-            {
-                case ExivProcessing::Float:
-                    addInformation(name, value->getValue()->toFloat(), information);
-                    qDebug() << "EXIF - " << name << ": " << value->getValue()->toFloat();
-                    break;
-                case ExivProcessing::Int:
-                    addInformation(name, value->getValue()->toFloat(), information);
-                    qDebug() << "EXIF - " << name << ": " << value->getValue()->toLong();
-                    break;
-                case ExivProcessing::GPS:
-                    break;
-                case ExivProcessing::String: [[fallthrough]];
-                default:
-                    addInformation(name, value->getValue()->toString(), information);
-                    qDebug() << "EXIF - " << name << ": " << value->getValue()->toString().c_str();
-            }
-        }
-    }
-
 private:
     bool m_drawBorder;
     bool m_flipHorizontally;
@@ -161,7 +104,6 @@ private:
     QPoint m_mouseMoveLast;
     QTimer m_animationTimer;
     RotatingIndex<int> m_animationIndex;
-    std::unique_ptr<Exiv2::Image> m_exivImage;
 
     static constexpr int m_imageOffsetStep = 100;
     static constexpr int m_maxAllocationImageSize = 4096;

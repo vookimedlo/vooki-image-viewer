@@ -19,16 +19,16 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #include "ImageAreaWidget.h"
-#include "support/Settings.h"
-#include "support/SettingsStrings.h"
 #include <QDebug>
 #include <QFile>
-#include <QFileInfo>
 #include <QGuiApplication>
 #include <QPaintEvent>
 #include <QPainter>
 #include <cmath>
-#include <exiv2/easyaccess.hpp>
+#include "support/Settings.h"
+#include "support/SettingsStrings.h"
+#include "../processing/MetadataExtractor.h"
+
 
 ImageAreaWidget::ImageAreaWidget(QWidget *parent)
                                         : QWidget(parent)
@@ -71,8 +71,6 @@ bool ImageAreaWidget::showImage(const QString &fileName)
     m_reader.setFileName(fileName);
     m_reader.setQuality(100);
     m_reader.setAutoTransform(true);
-
-    const auto format = m_reader.format().toStdString();
     m_originalImage = m_reader.read();
 
     if (m_originalImage.isNull())
@@ -81,46 +79,14 @@ bool ImageAreaWidget::showImage(const QString &fileName)
         return false;
     }
 
-    QFileInfo fileInfo(fileName);
-    std::vector<std::pair<QString, QString>> information{ std::pair{tr("File name", "Image Properties"), fileInfo.fileName()} };
-    addInformation(tr("Size", "Image Properties"), fileInfo.size(), information);
-    addInformation(tr("Width", "Image Properties"), m_originalImage.width(), information);
-    addInformation(tr("Height", "Image Properties"), m_originalImage.height(), information);
-
-    try
-    {
-        m_exivImage = Exiv2::ImageFactory::open(fileName.toStdString());
-        m_exivImage->readMetadata();
-        const Exiv2::ExifData &exifData = m_exivImage->exifData();
-        addInformation(tr("Date", "Image Properties"), Exiv2::dateTimeOriginal(exifData), information);
-
-        addInformation(tr("Flash", "Image Properties"), Exiv2::flash(exifData), information);
-        addInformation(tr("ISO", "Image Properties"), Exiv2::isoSpeed(exifData), information);
-
-        addInformation<ExivProcessing::Float>(tr("f-number", "Image Properties"), Exiv2::fNumber(exifData), information);
-        addInformation<ExivProcessing::Float>(tr("Exposure time", "Image Properties"), Exiv2::exposureTime(exifData), information);
-        addInformation<ExivProcessing::Float>(tr("Shutter speed", "Image Properties"), Exiv2::shutterSpeedValue(exifData), information);
-        addInformation<ExivProcessing::Float>(tr("Focal length", "Image Properties"), Exiv2::focalLength(exifData), information);
-
-        addInformation(tr("Camera maker", "Image Properties"), exifData.findKey(Exiv2::ExifKey("Exif.Image.Make")), information);
-        addInformation(tr("Camera model", "Image Properties"), Exiv2::model(exifData), information);
-        addInformation(tr("Lens maker", "Image Properties"), exifData.findKey(Exiv2::ExifKey("Exif.Photo.LensMake")), information);
-        addInformation(tr("Lens model", "Image Properties"), Exiv2::lensName(exifData), information);
-        addInformation<ExivProcessing::Float>(tr("Lens focal length", "Image Properties"), Exiv2::focalLength(exifData), information);
-
-
-        for (const auto &it : exifData)
-        {
-            qDebug() << "+ " << it.key().c_str() << " - " << it.value().toString().c_str();
-        }
-
-    }
-    catch (...)
-    {
-        qDebug() << "Cannot parse the EXIF/XMP data. Skipping ...";
-    }
-
-    emit imageInformationParsed(information);
+    MetadataExtractor metadataExtractor;
+    auto connection = connect(&metadataExtractor,
+                              &MetadataExtractor::imageInformationParsed,
+                              this,
+                              [=](const std::vector<std::pair<QString, QString>>& information) {
+                                  emit imageInformationParsed(information);
+                              });
+    metadataExtractor.extract(fileName, m_originalImage.width(), m_originalImage.height());
 
     m_flipHorizontally = m_flipVertically = false;
     m_imageOffsetX = m_imageOffsetY = 0;
@@ -137,6 +103,7 @@ bool ImageAreaWidget::showImage(const QString &fileName)
             QTimer::singleShot(delay, this, SLOT(onNextImage()));
     }
 
+    disconnect(connection);
     return true;
 }
 
