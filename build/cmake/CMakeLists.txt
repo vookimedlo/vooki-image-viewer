@@ -126,7 +126,6 @@ SET(SOURCES
     ../../src/ui/support/Settings.cpp
     ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp
     ../../src/util/misc.cpp
-    ../../components/easyexif/exif.cpp
 )
 
 SET(UIS
@@ -185,6 +184,15 @@ if (APPLE)
     GET_FILENAME_COMPONENT(PLIST_IN_ABSOLUTE_PATH platform/mac/support/MacOSXBundleInfo.plist.in ABSOLUTE)
     SET_TARGET_PROPERTIES(${APPLICATION_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${PLIST_IN_ABSOLUTE_PATH})
 
+    FIND_PACKAGE(ZLIB REQUIRED)
+    FIND_PACKAGE(Iconv REQUIRED)
+    FIND_PACKAGE(EXPAT REQUIRED)
+
+    SET(EXIV2_LOC "3rdPartyLibs/Exiv2-0.27.5")
+    GET_FILENAME_COMPONENT(EXIV2 platform/mac/${EXIV2_LOC} ABSOLUTE)
+    SET(CMAKE_CXX_FLAGS "-I${EXIV2}/include ${CMAKE_CXX_FLAGS}")
+    SET(CMAKE_EXE_LINKER_FLAGS "-L${EXIV2}/lib ${CMAKE_EXE_LINKER_FLAGS}")
+    TARGET_LINK_LIBRARIES(VookiImageViewer libexiv2.a libexiv2-xmp.a ZLIB::ZLIB Iconv::Iconv EXPAT::EXPAT)
 elseif(WIN32)
     SET(SOURCES
         ${SOURCES}

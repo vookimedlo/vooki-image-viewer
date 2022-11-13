@@ -21,7 +21,6 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "ImageAreaWidget.h"
 #include "support/Settings.h"
 #include "support/SettingsStrings.h"
-#include "../../components/easyexif/exif.h"
 #include <QDebug>
 #include <QFile>
 #include <QFileInfo>
@@ -29,6 +28,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QPaintEvent>
 #include <QPainter>
 #include <cmath>
+#include <exiv2/easyaccess.hpp>
 
 ImageAreaWidget::ImageAreaWidget(QWidget *parent)
                                         : QWidget(parent)
@@ -81,42 +81,44 @@ bool ImageAreaWidget::showImage(const QString &fileName)
         return false;
     }
 
-    easyexif::EXIFInfo info;
     QFileInfo fileInfo(fileName);
     std::vector<std::pair<QString, QString>> information{ std::pair{tr("File name", "Image Properties"), fileInfo.fileName()} };
-    addInformation(tr("Size", "Image Properties"), fileInfo.size(), information, info);
-    addInformation(tr("Width", "Image Properties"), m_originalImage.width(), information, info);
-    addInformation(tr("Height", "Image Properties"), m_originalImage.height(), information, info);
+    addInformation(tr("Size", "Image Properties"), fileInfo.size(), information);
+    addInformation(tr("Width", "Image Properties"), m_originalImage.width(), information);
+    addInformation(tr("Height", "Image Properties"), m_originalImage.height(), information);
 
-    QFile file(fileName);
-    if (format == "jpeg" && file.open(QIODevice::ReadOnly))
+    try
     {
-        QByteArray data = file.readAll();
-        if (int code = info.parseFrom((unsigned char *)data.data(), data.size()))
-            qDebug() << "Error parsing EXIF: code " << code;
-        else
+        m_exivImage = Exiv2::ImageFactory::open(fileName.toStdString());
+        m_exivImage->readMetadata();
+        const Exiv2::ExifData &exifData = m_exivImage->exifData();
+        addInformation(tr("Date", "Image Properties"), Exiv2::dateTimeOriginal(exifData), information);
+
+        addInformation(tr("Flash", "Image Properties"), Exiv2::flash(exifData), information);
+        addInformation(tr("ISO", "Image Properties"), Exiv2::isoSpeed(exifData), information);
+
+        addInformation<ExivProcessing::Float>(tr("f-number", "Image Properties"), Exiv2::fNumber(exifData), information);
+        addInformation<ExivProcessing::Float>(tr("Exposure time", "Image Properties"), Exiv2::exposureTime(exifData), information);
+        addInformation<ExivProcessing::Float>(tr("Shutter speed", "Image Properties"), Exiv2::shutterSpeedValue(exifData), information);
+        addInformation<ExivProcessing::Float>(tr("Focal length", "Image Properties"), Exiv2::focalLength(exifData), information);
+
+        addInformation(tr("Camera maker", "Image Properties"), exifData.findKey(Exiv2::ExifKey("Exif.Image.Make")), information);
+        addInformation(tr("Camera model", "Image Properties"), Exiv2::model(exifData), information);
+        addInformation(tr("Lens maker", "Image Properties"), exifData.findKey(Exiv2::ExifKey("Exif.Photo.LensMake")), information);
+        addInformation(tr("Lens model", "Image Properties"), Exiv2::lensName(exifData), information);
+        addInformation<ExivProcessing::Float>(tr("Lens focal length", "Image Properties"), Exiv2::focalLength(exifData), information);
+
+
+        for (const auto &it : exifData)
         {
-            addInformation(tr("Bits per sample", "Image Properties"), info.BitsPerSample, information, info);
-            addInformation(tr("Date", "Image Properties"), info.DateTime, information, info);
-
-            addInformation(tr("Flash", "Image Properties"), info.Flash, information, info);
-            addInformation(tr("ISO", "Image Properties"), info.ISOSpeedRatings, information, info);
-
-
-            addInformation(tr("f-number", "Image Properties"), info.FNumber, information, info);
-            addInformation(tr("Exposure time", "Image Properties"), info.ExposureTime, information, info);
-            addInformation(tr("Shutter speed", "Image Properties"), info.ShutterSpeedValue, information, info);
-            addInformation(tr("Focal length", "Image Properties"), info.FocalLength, information, info);
-
-            addInformation(tr("Camera model", "Image Properties"), info.Model, information, info);
-            addInformation(tr("Lens model", "Image Properties"), info.LensInfo.Model, information, info);
-            addInformation(tr("Lens focal length", "Image Properties"), info.LensInfo.FocalLengthMax, information, info);
-
-            addInformation(tr("Copyright", "Image Properties"), info.Copyright, information, info);
+            qDebug() << "+ " << it.key().c_str() << " - " << it.value().toString().c_str();
         }
+
     }
-    else
-        qDebug() << "Can't open file:" << fileName;
+    catch (...)
+    {
+        qDebug() << "Cannot parse the EXIF/XMP data. Skipping ...";
+    }
 
     emit imageInformationParsed(information);
 
