@@ -21,7 +21,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "MetadataExtractor.h"
 #include <QFileInfo>
 
-MetadataExtractor::MetadataExtractor()
+MetadataExtractor::MetadataExtractor() : m_gpsLatitude(), m_gpsLongitude(), m_exivImage(nullptr)
 {
 
 }
@@ -31,8 +31,23 @@ MetadataExtractor::~MetadataExtractor()
 
 }
 
+std::vector<QString> MetadataExtractor::m_orientationDescriptions = { "", // EXIF does not use the 0 for the orientation encoding
+                                                                      "0°",
+                                                                      tr("0°, mirrored", "Image Description"),
+                                                                      "180°",
+                                                                      tr("180°, mirrored", "Image Description"),
+                                                                      "90°",
+                                                                      tr("90°, mirrored", "Image Description"),
+                                                                      "270°",
+                                                                      tr("270°, mirrored", "Image Description")
+};
+
 void MetadataExtractor::extract(const QString &filename, int width, int height)
 {
+    m_gpsLatitude.clear();
+    m_gpsLongitude.clear();
+    m_gpsAltitude.clear();
+
     QFileInfo fileInfo(filename);
     std::vector<std::pair<QString, QString>> information{ std::pair{tr("File name", "Image Properties"), fileInfo.fileName()} };
     addInformation(tr("Size", "Image Properties"), fileInfo.size(), information);
@@ -44,10 +59,17 @@ void MetadataExtractor::extract(const QString &filename, int width, int height)
         m_exivImage = Exiv2::ImageFactory::open(filename.toStdString());
         m_exivImage->readMetadata();
         const Exiv2::ExifData &exifData = m_exivImage->exifData();
-        addInformation(tr("Orientation", "Image Properties"), Exiv2::orientation(exifData), information);
+        addInformation<ExivProcessing::Orientation>(tr("Orientation", "Image Properties"), Exiv2::orientation(exifData), information);
         addInformation(tr("Date", "Image Properties"), Exiv2::dateTimeOriginal(exifData), information);
 
-        addInformation(tr("Flash", "Image Properties"), Exiv2::flash(exifData), information);
+        addInformation<ExivProcessing::GPSLatitude>("", exifData.findKey(Exiv2::ExifKey("Exif.GPSInfo.GPSLatitude")), information);
+        addInformation<ExivProcessing::GPSLatitudeRef>("GPS Latitude", exifData.findKey(Exiv2::ExifKey("Exif.GPSInfo.GPSLatitudeRef")), information);
+        addInformation<ExivProcessing::GPSLongitude>("", exifData.findKey(Exiv2::ExifKey("Exif.GPSInfo.GPSLongitude")), information);
+        addInformation<ExivProcessing::GPSLongitudeRef>("GPS Longitude", exifData.findKey(Exiv2::ExifKey("Exif.GPSInfo.GPSLongitudeRef")), information);
+        addInformation<ExivProcessing::GPSAltitude>("", exifData.findKey(Exiv2::ExifKey("Exif.GPSInfo.GPSAltitude")), information);
+        addInformation<ExivProcessing::GPSAltitudeRef>("GPS Altitude", exifData.findKey(Exiv2::ExifKey("Exif.GPSInfo.GPSAltitudeRef")), information);
+
+        addInformation<ExivProcessing::Flash>(tr("Flash", "Image Properties"), Exiv2::flash(exifData), information);
         addInformation(tr("ISO", "Image Properties"), Exiv2::isoSpeed(exifData), information);
 
         addInformation<ExivProcessing::Float>(tr("f-number", "Image Properties"), Exiv2::fNumber(exifData), information);
@@ -60,7 +82,6 @@ void MetadataExtractor::extract(const QString &filename, int width, int height)
         addInformation(tr("Lens maker", "Image Properties"), exifData.findKey(Exiv2::ExifKey("Exif.Photo.LensMake")), information);
         addInformation(tr("Lens model", "Image Properties"), Exiv2::lensName(exifData), information);
         addInformation<ExivProcessing::Float>(tr("Lens focal length", "Image Properties"), Exiv2::focalLength(exifData), information);
-
 
         for (const auto &it : exifData)
             qDebug() << "+ " << it.key().c_str() << " - " << it.value().toString().c_str();

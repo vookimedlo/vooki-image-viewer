@@ -53,7 +53,12 @@ protected:
         String,
         Float,
         Int,
-        GPS,
+        GPSLatitude,
+        GPSLongitude,
+        GPSAltitude,
+        GPSLatitudeRef,
+        GPSLongitudeRef,
+        GPSAltitudeRef,
         Orientation,
         Flash,
     };
@@ -91,7 +96,47 @@ protected:
                     addInformation(name, value->getValue()->toFloat(), information);
                     qDebug() << "EXIF - " << name << ": " << value->getValue()->toLong();
                     break;
-                case ExivProcessing::GPS:
+                case ExivProcessing::Orientation:
+                    if (value->getValue()->toLong() == 0 || value->getValue()->toLong() >= static_cast<long>(m_orientationDescriptions.size()))
+                        return;
+
+                    addInformation(name, m_orientationDescriptions[value->getValue()->toLong()], information);
+                    qDebug() << "EXIF - " << name << ": " << value->getValue()->toString().c_str();
+                    break;
+                case ExivProcessing::Flash:
+                    addInformation(name, value->getValue()->toLong() & 0x01 ? tr("Flash fired", "Image Description") : tr("Flash didn't fired", "Image Description"), information);
+                    break;
+                case ExivProcessing::GPSLatitude: {
+                    QString floats[3];
+                    for (int i = 0; i < 3; ++i)
+                        floats[i] = QString::number(value->getValue()->toFloat(i));
+                    m_gpsLatitude = QString("%1° %2′ %3″").arg(floats[0], floats[1], floats[2]);
+                    }
+                    break;
+                case ExivProcessing::GPSLatitudeRef:
+                    m_gpsLatitude.append(" ");
+                    m_gpsLatitude.append(value->getValue()->toString().c_str());
+                    addInformation(name, m_gpsLatitude, information);
+                    break;
+                case ExivProcessing::GPSLongitude: {
+                        QString floats[3];
+                        for (int i = 0; i < 3; ++i)
+                            floats[i] = QString::number(value->getValue()->toFloat(i));
+                        m_gpsLongitude = QString("%1° %2′ %3″").arg(floats[0], floats[1], floats[2]);
+                    }
+                    break;
+                case ExivProcessing::GPSLongitudeRef:
+                    m_gpsLongitude.append(" ");
+                    m_gpsLongitude.append(value->getValue()->toString().c_str());
+                    addInformation(name, m_gpsLongitude, information);
+                    break;
+                case ExivProcessing::GPSAltitude:
+                    m_gpsAltitude = QString::number(value->getValue()->toFloat());
+                    m_gpsAltitude.append(tr(" m", "Image Description - Units: meters"));
+                    break;
+                case ExivProcessing::GPSAltitudeRef:
+                    m_gpsAltitude.append(value->getValue()->toLong() ? tr(" (below sea level)", "Image Description") : tr(" (above sea level)", "Image Description"));
+                    addInformation(name, m_gpsAltitude, information);
                     break;
                 case ExivProcessing::String: [[fallthrough]];
                 default:
@@ -102,5 +147,10 @@ protected:
     }
 
 private:
+    QString m_gpsLatitude;
+    QString m_gpsLongitude;
+    QString m_gpsAltitude;
+
     std::unique_ptr<Exiv2::Image> m_exivImage;
+    static std::vector<QString> m_orientationDescriptions;
 };
