@@ -111,9 +111,19 @@ public:
     }
     virtual int read(void *ptr, size_t sz, size_t nmemb) override
     {
-        auto read = m_device->read(reinterpret_cast<char *>(ptr), sz * nmemb);
-        if (read < 1) {
+        qint64 read = 0;
+        if (sz == 0) {
             return 0;
+        }
+        auto data = reinterpret_cast<char*>(ptr);
+        for (qint64 r = 0, size = sz * nmemb; read < size; read += r) {
+            if (m_device->atEnd()) {
+                break;
+            }
+            r = m_device->read(data + read, size - read);
+            if (r < 1) {
+                break;
+            }
         }
         return read / sz;
     }
@@ -665,6 +675,9 @@ bool LoadRAW(QImageIOHandler *handler, QImage &img)
         }
         if (params.output_color == 4) {
             img.setColorSpace(QColorSpace(QColorSpace::ProPhotoRgb));
+        }
+        if (params.output_color == 7) {
+            img.setColorSpace(QColorSpace(QColorSpace::DisplayP3));
         }
     }
 
