@@ -1,7 +1,7 @@
 #pragma once
 /****************************************************************************
 VookiImageViewer - a tool for showing images.
-Copyright(C) 2017  Michal Duda <github@vookimedlo.cz>
+Copyright(C) 2022  Michal Duda <github@vookimedlo.cz>
 
 https://github.com/vookimedlo/vooki-image-viewer
 
@@ -20,21 +20,17 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #include "../util/compiler.h"
-#include "ui_AboutComponentsDialog.h"
+#include "ui_ReleaseNotesDialog.h"
 #include <QDialog>
 
-class AboutComponentsDialog : public QDialog
+class ReleaseNotesDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit AboutComponentsDialog(QWidget *parent = Q_NULLPTR);
-    DISABLE_COPY_MOVE(AboutComponentsDialog);
-
-public Q_SLOTS:
-    virtual void onSelectedComponentChanged(int row);
+    explicit ReleaseNotesDialog(QWidget *parent = Q_NULLPTR);
+    DISABLE_COPY_MOVE(ReleaseNotesDialog);
 
 protected:
-    void showResourceMarkdown(const QString &resource);
-    Ui::AboutComponentsDialog m_uiAboutComponentsDialog;
+    Ui::releaseNotesDialog m_uiReleaseNotesDialog;
 };

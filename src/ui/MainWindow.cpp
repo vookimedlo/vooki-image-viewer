@@ -25,6 +25,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "../ui/support/SettingsStrings.h"
 #include "../util/misc.h"
 #include "AboutComponentsDialog.h"
+#include "ReleaseNotesDialog.h"
 #include "version.h"
 #if defined __APPLE__
 #include "kdmactouchbar.h"
@@ -34,7 +35,6 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "support/RecentFileAction.h"
 #include "ui_AboutDialog.h"
 #include "ui_AboutSupportedFormatsDialog.h"
-#include "ui_ReleaseNotesDialog.h"
 #include <QAction>
 #include <QFileSystemModel>
 #include <QImageReader>
@@ -305,6 +305,9 @@ void MainWindow::onAboutTriggered()
     QDialog dialog(this);
     uiAbout.setupUi(&dialog);
     uiAbout.versionLabel->setText(uiAbout.versionLabel->text().arg(Util::getVersionString()));
+    const auto resource = uiAbout.textBrowser->loadResource(QTextDocument::MarkdownResource,
+                                                            QUrl("qrc:/text/aboutapp"));
+    uiAbout.textBrowser->setMarkdown(resource.toString());
     dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint);
     dialog.exec();
 }
@@ -432,9 +435,7 @@ void MainWindow::onRecentFileTriggered(const QString &filePath)
 
 void MainWindow::onReleaseNotesTriggered()
 {
-    Ui::releaseNotesDialog uiReleaseNotes;
-    QDialog dialog(this);
-    uiReleaseNotes.setupUi(&dialog);
+    ReleaseNotesDialog dialog(this);
     dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint & ~Qt::WindowMinMaxButtonsHint);
     dialog.exec();
 }

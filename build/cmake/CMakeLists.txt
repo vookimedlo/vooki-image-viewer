@@ -117,6 +117,7 @@ SET(SOURCES
     ../../src/ui/FileSystemTreeView.cpp
     ../../src/ui/ImageAreaWidget.cpp
     ../../src/ui/MainWindow.cpp
+    ../../src/ui/ReleaseNotesDialog.cpp
     ../../src/ui/SettingsDialog.cpp
     ../../src/ui/SettingsShortcutsTableWidget.cpp
     ../../src/ui/StatusBar.cpp
