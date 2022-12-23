@@ -59,6 +59,12 @@ void AboutComponentsDialog::onSelectedComponentChanged(const int row)
         case 8:
             showResourceMarkdown("qrc:/text/aboutkdmactouchbar");
             break;
+        case 9:
+            showResourceMarkdown("qrc:/text/aboutlibjpegturbo");
+            break;
+        case 10:
+            showResourceMarkdown("qrc:/text/aboutzlib");
+            break;
         default:
             m_uiAboutComponentsDialog.textBrowser->clear();
     }
