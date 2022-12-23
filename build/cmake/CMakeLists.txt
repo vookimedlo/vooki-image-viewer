@@ -311,13 +311,18 @@ ADD_IMAGE_PLUGIN(vooki_kimg_rgb ../../src/plugins/kimageformats/rgb.cpp)
 if (APPLE)
     # MacOS
     #
-    SET(LIBRAW_LOC "3rdPartyLibs/LibRaw-0.20.2")
+    SET(LIBJPEG_LOC "3rdPartyLibs/libjpeg-turbo-2.1.4")
+    GET_FILENAME_COMPONENT(LIBJPEG platform/mac/${LIBJPEG_LOC} ABSOLUTE)
+    SET(CMAKE_CXX_FLAGS "-I${LIBJPEG}/include ${CMAKE_CXX_FLAGS}")
+    SET(CMAKE_MODULE_LINKER_FLAGS "-L${LIBJPEG}/lib ${CMAKE_MODULE_LINKER_FLAGS}")
+
+    SET(LIBRAW_LOC "3rdPartyLibs/LibRaw-0.21.0")
     GET_FILENAME_COMPONENT(LIBRAW platform/mac/${LIBRAW_LOC} ABSOLUTE)
-    SET(CMAKE_CXX_FLAGS "-I${LIBRAW} ${CMAKE_CXX_FLAGS}")
+    SET(CMAKE_CXX_FLAGS "-I${LIBRAW}/include ${CMAKE_CXX_FLAGS}")
     SET(CMAKE_MODULE_LINKER_FLAGS "-L${LIBRAW}/lib ${CMAKE_MODULE_LINKER_FLAGS}")
 
     ADD_IMAGE_PLUGIN(vooki_raw_thumb ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
-    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_r.a)
+    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_r.a libturbojpeg.a -lz)
 
     include(platform/mac/MacdeployQt.cmake)
     deployqt()
