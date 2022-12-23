@@ -20,6 +20,8 @@ jobs:
     - name: brew
       run: |
         brew update
+        brew upgrade || true
+        brew link --overwrite python
         brew install qt
         brew link --force qt
     - name: build sources

@@ -56,27 +56,37 @@
        </item>
        <item>
         <property name="text">
-         <string>LibRAW</string>
+         <string>LibRaw</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Libde265</string>
+         <string>libde265</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Libheif</string>
+         <string>libheif</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>X265</string>
+         <string>x265</string>
         </property>
        </item>
        <item>
         <property name="text">
          <string>KDMacTouchBar</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>libjpeg-turbo</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>zlib</string>
         </property>
        </item>
       </widget>
