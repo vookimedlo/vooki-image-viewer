@@ -333,14 +333,21 @@ elseif(WIN32)
     #
     ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS)
 
-    SET(LIBRAW_LOC "3rdPartyLibs/LibRaw-0.20.2")
-    ADD_DEFINITIONS(-DLIBRAW_NODLL)
+    SET(ZLIB_LOC "3rdPartyLibs/zlib-1.2.13")
+    GET_FILENAME_COMPONENT(ZLIB platform/windows/${ZLIB_LOC} ABSOLUTE)
+    SET(CMAKE_CXX_FLAGS "-I${ZLIB}/include ${CMAKE_CXX_FLAGS}")
 
+    SET(LIBJPEG_LOC "3rdPartyLibs/libjpeg-turbo-2.1.4")
+    GET_FILENAME_COMPONENT(LIBJPEG platform/windows/${LIBJPEG_LOC} ABSOLUTE)
+    SET(CMAKE_CXX_FLAGS "-I${LIBJPEG}/include ${CMAKE_CXX_FLAGS}")
+
+    SET(LIBRAW_LOC "3rdPartyLibs/LibRaw-0.21.0")
+    ADD_DEFINITIONS(-DLIBRAW_NODLL)
     GET_FILENAME_COMPONENT(LIBRAW platform/windows/${LIBRAW_LOC} ABSOLUTE)
-    SET(CMAKE_CXX_FLAGS "-I${LIBRAW} ${CMAKE_CXX_FLAGS}")
+    SET(CMAKE_CXX_FLAGS "-I${LIBRAW}/include ${CMAKE_CXX_FLAGS}")
 
     ADD_IMAGE_PLUGIN(vooki_raw_thumb ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
-    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} ${LIBRAW}/lib/libraw.lib)
+    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} ${LIBRAW}/lib/libraw_static.lib ${LIBJPEG}/lib/turbojpeg-static.lib ${ZLIB}/lib/zlibstatic.lib)
 
     GET_FILENAME_COMPONENT(LIBHEIF "platform/windows/3rdPartyLibs/LibHEIF-1.13.0" ABSOLUTE)
     SET(CMAKE_CXX_FLAGS "-I${LIBHEIF} ${CMAKE_CXX_FLAGS}")
