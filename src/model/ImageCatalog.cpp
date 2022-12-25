@@ -23,8 +23,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <utility>
 
 ImageCatalog::ImageCatalog(QStringList filter)
-                                        : m_catalogIndex()
-                                        , m_filter(std::move(filter))
+                                        : m_filter(std::move(filter))
 {
 }
 

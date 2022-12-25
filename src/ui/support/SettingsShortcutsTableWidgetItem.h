@@ -41,7 +41,7 @@ public:
     static const int type;
 
 public Q_SLOTS:
-    virtual void onKeySequenceChanged(const QKeySequence &keySequence);
+    void onKeySequenceChanged(const QKeySequence &keySequence);
 
 private:
     QAction &m_action;

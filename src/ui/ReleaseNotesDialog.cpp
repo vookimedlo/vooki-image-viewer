@@ -22,7 +22,6 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 ReleaseNotesDialog::ReleaseNotesDialog(QWidget *parent)
                                         : QDialog(parent)
-                                        , m_uiReleaseNotesDialog()
 {
     m_uiReleaseNotesDialog.setupUi(this);
     const auto changelog = m_uiReleaseNotesDialog.textBrowser->loadResource(QTextDocument::MarkdownResource,
