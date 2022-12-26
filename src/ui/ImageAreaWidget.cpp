@@ -271,26 +271,20 @@ void ImageAreaWidget::checkScrollOffset()
 
 bool ImageAreaWidget::event(QEvent *ev)
 {
-    switch (ev->type())
+    if (ev->type() == QEvent::NativeGesture)
     {
-        case QEvent::NativeGesture:
-            nativeGestureEvent(dynamic_cast<QNativeGestureEvent *>(ev));
-            break;
-        default:
-            return QWidget::event(ev);
+        nativeGestureEvent(dynamic_cast<QNativeGestureEvent *>(ev));
+        return ev->isAccepted();
     }
 
-    return ev->isAccepted();
+    return QWidget::event(ev);
 }
 
 void ImageAreaWidget::gestureZoom(qreal value)
 {
     qDebug() << "before " << m_scaleFactor;
     value /= 5;
-    if (value > 0)
-        onZoomImageInTriggered(value);
-    else
-        onZoomImageOutTriggered(-value);
+    onZoomImageInTriggered((value > 0) ? value : -value);
     qDebug() << "after " << m_scaleFactor;
 }
 
