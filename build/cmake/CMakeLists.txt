@@ -360,7 +360,7 @@ elseif(WIN32)
             PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PLUGINS})
 
     ADD_CUSTOM_TARGET(copy-heif-deps)
-    GET_FILENAME_COMPONENT(LIBDE265 "platform/windows/3rdPartyLibs/LibDe265-1.0.8/lib/libde265.dll" ABSOLUTE)
+    GET_FILENAME_COMPONENT(LIBDE265 "platform/windows/3rdPartyLibs/LibDe265-1.0.9/lib/libde265.dll" ABSOLUTE)
     GET_FILENAME_COMPONENT(LIBHEIF "platform/windows/3rdPartyLibs/LibHEIF-1.13.0/lib/heif.dll" ABSOLUTE)
     ADD_CUSTOM_COMMAND(TARGET copy-heif-deps PRE_BUILD
                        COMMAND ${CMAKE_COMMAND} -E copy ${LIBDE265} ${LIBHEIF} $<TARGET_FILE_DIR:${APPLICATION_NAME}>)
