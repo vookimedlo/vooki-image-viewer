@@ -50,7 +50,7 @@ void ImageCatalog::initialize(const QDir &imageDir)
     m_catalogIndex.set(0, m_catalog.size());
 }
 
-int ImageCatalog::getCatalogSize() const
+qsizetype ImageCatalog::getCatalogSize() const
 {
     return m_catalog.size();
 }
@@ -70,7 +70,7 @@ QString ImageCatalog::getPrevious()
     return getCatalogItem(--m_catalogIndex);
 }
 
-QString ImageCatalog::getCatalogItem(const RotatingIndex<int> &catalogIndex) const
+QString ImageCatalog::getCatalogItem(const RotatingIndex<qsizetype> &catalogIndex) const
 {
     if (m_catalog.isEmpty())
         return {};

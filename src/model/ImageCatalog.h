@@ -35,17 +35,17 @@ public:
     void initialize(const QFile &imageFile);
     void initialize(const QDir &imageDir);
 
-    [[nodiscard]] int getCatalogSize() const;
+    [[nodiscard]] qsizetype getCatalogSize() const;
     [[nodiscard]] QString getCurrent() const;
     [[nodiscard]] QString getNext();
     [[nodiscard]] QString getPrevious();
 
 protected:
-    [[nodiscard]] QString getCatalogItem(const RotatingIndex<int> &catalogIndex) const;
+    [[nodiscard]] QString getCatalogItem(const RotatingIndex<qsizetype> &catalogIndex) const;
 
 private:
     QString m_absoluteDir;
     QStringList m_catalog;
-    RotatingIndex<int> m_catalogIndex;
+    RotatingIndex<qsizetype> m_catalogIndex;
     QStringList m_filter;
 };
