@@ -28,6 +28,6 @@ public:
     explicit SettingsShortcutsTableWidget(QWidget *parent = nullptr);
     SettingsShortcutsTableWidget(int rows, int columns, QWidget *parent = nullptr);
 
-    void setItem(int row, int column, QTableWidgetItem *item);
+    void setItemAtCoordinates(int row, int column, QTableWidgetItem *item);
     void updateShortcuts() const;
 };

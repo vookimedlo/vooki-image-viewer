@@ -81,7 +81,7 @@ void SettingsDialog::populateShortcuts(const QMenu *menu) const
         m_uiSettingsDialog.tableShortcutsWidget->setVerticalHeaderItem(rowCount, headerItem);
 
         auto *item = new SettingsShortcutsTableWidgetItem(*action);
-        m_uiSettingsDialog.tableShortcutsWidget->setItem(rowCount, 0, item);
+        m_uiSettingsDialog.tableShortcutsWidget->setItemAtCoordinates(rowCount, 0, item);
     }
 }
 
