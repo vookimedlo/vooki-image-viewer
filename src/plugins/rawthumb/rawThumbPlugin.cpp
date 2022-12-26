@@ -19,13 +19,16 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #include "rawThumbPlugin.h"
+#include <memory>
 #include "rawThumbHandler.h"
 
 QImageIOPlugin::Capabilities RawThumbPlugin::capabilities(QIODevice *device, const QByteArray &format) const
 {
-    static const QStringList formats = { "raf", "mos", "cr2", "erf", "dng", "mrw", "nef", "orf", "rw2", "pef", "x3f", "srw", "x3f", "arw" };
-
-    if (formats.contains(format))
+    if (static const QStringList formats = { "raf", "mos", "cr2",
+                                             "erf", "dng", "mrw",
+                                             "nef", "orf", "rw2",
+                                             "pef", "x3f", "srw",
+                                             "x3f", "arw" }; formats.contains(format))
     {
         return { CanRead };
     }
@@ -51,8 +54,8 @@ QImageIOPlugin::Capabilities RawThumbPlugin::capabilities(QIODevice *device, con
 
 QImageIOHandler *RawThumbPlugin::create(QIODevice *device, const QByteArray &format) const
 {
-    QImageIOHandler *handler = new RawThumbHandler();
+    auto handler = std::make_unique<RawThumbHandler>();
     handler->setDevice(device);
     handler->setFormat(format);
-    return handler;
+    return handler.release();
 }
