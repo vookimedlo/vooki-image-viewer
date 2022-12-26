@@ -29,22 +29,6 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 ImageAreaWidget::ImageAreaWidget(QWidget *parent)
                                         : QWidget(parent)
-                                        , m_drawBorder(false)
-                                        , m_flipHorizontally(false)
-                                        , m_flipVertically(false)
-                                        , m_isFitToWindow(false)
-                                        , m_scaleFactor(1.0)
-                                        , m_borderColor(Qt::white)
-                                        , m_originalImage()
-                                        , m_finalImage()
-                                        , m_reader()
-                                        , m_rotateIndex(0, 4)
-                                        , // 4 rotation quadrants
-                                        m_imageOffsetY(0)
-                                        , m_imageOffsetX(0)
-                                        , m_mouseMoveLast()
-                                        , m_animationTimer(this)
-                                        , m_animationIndex(0, 1)
 {
     m_originalImage.fill(qRgb(0, 0, 0));
     m_finalImage.fill(qRgb(0, 0, 0));
@@ -64,7 +48,7 @@ void ImageAreaWidget::drawBorder(const bool draw, const QColor &color)
 bool ImageAreaWidget::showImage(const QString &fileName)
 {
     m_animationTimer.stop();
-    m_reader.setAllocationLimit(ImageAreaWidget::m_maxAllocationImageSize);
+    QImageReader::setAllocationLimit(ImageAreaWidget::m_maxAllocationImageSize);
     m_reader.setFileName(fileName);
     m_reader.setQuality(100);
     m_reader.setAutoTransform(true);

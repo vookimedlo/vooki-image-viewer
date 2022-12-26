@@ -49,7 +49,7 @@ public:
 
 protected:
     void changeEvent(QEvent *) override;
-    [[nodiscard]] QString getRecentFile(int item) const;
+    [[nodiscard]] QString getRecentFile(qsizetype item) const;
     static void loadTranslators();
     void propagateBorderSettings() const;
     QString registerProcessedImage(const QString &filePath, bool addToRecentFiles = true);

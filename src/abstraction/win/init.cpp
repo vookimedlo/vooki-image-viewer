@@ -32,7 +32,7 @@ namespace SystemDependant
         if (isDarkMode())
         {
             // Taken from: https://forum.qt.io/topic/101391/windows-10-dark-theme/4
-            qApp->setStyle(QStyleFactory::create("Fusion"));
+            QApplication::setStyle(QStyleFactory::create("Fusion"));
             QPalette darkPalette;
             auto darkColor = QColor(45, 45, 45);
             auto disabledColor = QColor(127, 127, 127);
@@ -54,7 +54,7 @@ namespace SystemDependant
             darkPalette.setColor(QPalette::HighlightedText, Qt::black);
             darkPalette.setColor(QPalette::Disabled, QPalette::HighlightedText, disabledColor);
 
-            qApp->setPalette(darkPalette);
+            QApplication::setPalette(darkPalette);
 
             qApp->setStyleSheet("QToolTip { color: #ffffff; background-color: #111111; border: 1px solid #C0C0C0; }");
         }

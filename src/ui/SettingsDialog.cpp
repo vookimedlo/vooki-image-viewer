@@ -77,11 +77,11 @@ void SettingsDialog::populateShortcuts(const QMenu *menu) const
 
         const int rowCount = m_uiSettingsDialog.tableShortcutsWidget->rowCount();
         m_uiSettingsDialog.tableShortcutsWidget->insertRow(rowCount);
-        auto *headerItem = new QTableWidgetItem(action->toolTip());
-        m_uiSettingsDialog.tableShortcutsWidget->setVerticalHeaderItem(rowCount, headerItem);
+        auto headerItem = std::make_unique<QTableWidgetItem>(action->toolTip());
+        m_uiSettingsDialog.tableShortcutsWidget->setVerticalHeaderItem(rowCount, headerItem.release());
 
-        auto *item = new SettingsShortcutsTableWidgetItem(*action);
-        m_uiSettingsDialog.tableShortcutsWidget->setItem(rowCount, 0, item);
+        auto item = std::make_unique<SettingsShortcutsTableWidgetItem>(*action);
+        m_uiSettingsDialog.tableShortcutsWidget->setItemAtCoordinates(rowCount, 0, item.release());
     }
 }
 
@@ -148,14 +148,8 @@ void SettingsDialog::onAccept()
 
 void SettingsDialog::onButtonBoxButtonClicked(QAbstractButton *button)
 {
-    switch (m_uiSettingsDialog.buttonBox->buttonRole(button))
-    {
-        case QDialogButtonBox::ButtonRole::ResetRole:
-            onRestoreDefaultsTriggered();
-            break;
-        default:
-            return;
-    }
+    if (QDialogButtonBox::ButtonRole::ResetRole == m_uiSettingsDialog.buttonBox->buttonRole(button))
+        onRestoreDefaultsTriggered();
 }
 
 void SettingsDialog::onLanguageChanged(int index)
@@ -175,7 +169,7 @@ void SettingsDialog::onRejected()
 
         if (item->type() == SettingsShortcutsTableWidgetItem::type)
         {
-            if (auto *shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
+            if (const auto *shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
                 shortcutItem->action().setShortcut(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
         }
     }

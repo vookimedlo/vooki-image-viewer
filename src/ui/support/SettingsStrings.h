@@ -19,22 +19,22 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#define SETTINGS_GENERAL_FULLSCREEN "viv/general/fullscreen"
-#define SETTINGS_FULLSCREEN_HIDE_STATUSBAR "viv/fullscreen/hide/statusbar"
-#define SETTINGS_FULLSCREEN_HIDE_TOOLBAR "viv/fullscreen/hide/toolbar"
-#define SETTINGS_FULLSCREEN_HIDE_NAVIGATION "viv/fullscreen/hide/navigation"
-#define SETTINGS_IMAGE_REMEMBER_RECENT "viv/image/remember/recent"
-#define SETTINGS_IMAGE_FITIMAGETOWINDOW "viv/image/fitimagetowindow"
-#define SETTINGS_IMAGE_BORDER_DRAW "viv/image/border/draw"
-#define SETTINGS_IMAGE_BORDER_COLOR "viv/image/border/color"
-#define SETTINGS_IMAGE_BACKGROUND_COLOR "viv/image/background/color"
-#define SETTINGS_LANGUAGE_USE_SYSTEM "viv/language/system"
-#define SETTINGS_LANGUAGE_CODE "viv/language/code"
-#define SETTINGS_RECENT_FILE_1 "viv/recent/file/1"
-#define SETTINGS_RECENT_FILE_2 "viv/recent/file/2"
-#define SETTINGS_RECENT_FILE_3 "viv/recent/file/3"
-#define SETTINGS_RECENT_FILE_4 "viv/recent/file/4"
-#define SETTINGS_RECENT_FILE_5 "viv/recent/file/5"
-#define SETTINGS_WINDOW_HIDE_STATUSBAR "viv/window/hide/statusbar"
-#define SETTINGS_WINDOW_HIDE_TOOLBAR "viv/window/hide/toolbar"
-#define SETTINGS_WINDOW_HIDE_NAVIGATION "viv/window/hide/navigation"
+static const char* const SETTINGS_GENERAL_FULLSCREEN = "viv/general/fullscreen";
+static const char* const SETTINGS_FULLSCREEN_HIDE_STATUSBAR = "viv/fullscreen/hide/statusbar";
+static const char* const SETTINGS_FULLSCREEN_HIDE_TOOLBAR = "viv/fullscreen/hide/toolbar";
+static const char* const SETTINGS_FULLSCREEN_HIDE_NAVIGATION = "viv/fullscreen/hide/navigation";
+static const char* const SETTINGS_IMAGE_REMEMBER_RECENT = "viv/image/remember/recent";
+static const char* const SETTINGS_IMAGE_FITIMAGETOWINDOW = "viv/image/fitimagetowindow";
+static const char* const SETTINGS_IMAGE_BORDER_DRAW = "viv/image/border/draw";
+static const char* const SETTINGS_IMAGE_BORDER_COLOR = "viv/image/border/color";
+static const char* const SETTINGS_IMAGE_BACKGROUND_COLOR = "viv/image/background/color";
+static const char* const SETTINGS_LANGUAGE_USE_SYSTEM = "viv/language/system";
+static const char* const SETTINGS_LANGUAGE_CODE = "viv/language/code";
+static const char* const SETTINGS_RECENT_FILE_1 = "viv/recent/file/1";
+static const char* const SETTINGS_RECENT_FILE_2 = "viv/recent/file/2";
+static const char* const SETTINGS_RECENT_FILE_3 = "viv/recent/file/3";
+static const char* const SETTINGS_RECENT_FILE_4 = "viv/recent/file/4";
+static const char* const SETTINGS_RECENT_FILE_5 = "viv/recent/file/5";
+static const char* const SETTINGS_WINDOW_HIDE_STATUSBAR = "viv/window/hide/statusbar";
+static const char* const SETTINGS_WINDOW_HIDE_TOOLBAR = "viv/window/hide/toolbar";
+static const char* const SETTINGS_WINDOW_HIDE_NAVIGATION = "viv/window/hide/navigation";
