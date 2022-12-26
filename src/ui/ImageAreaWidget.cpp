@@ -305,7 +305,7 @@ void ImageAreaWidget::mouseMoveEvent(QMouseEvent *event)
         {
             qDebug() << "MouseMove: " << event->pos() << " prev: " << m_mouseMoveLast << " delta: " << delta;
             m_mouseMoveLast = event->pos();
-            scroll(delta);
+            scrollTo(delta);
         }
     }
 
@@ -370,7 +370,7 @@ void ImageAreaWidget::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
 }
 
-void ImageAreaWidget::scroll(const QPoint &point)
+void ImageAreaWidget::scrollTo(const QPoint &point)
 {
     if (point.x() >= 0)
         onDecreaseOffsetX(point.x());
@@ -458,7 +458,7 @@ void ImageAreaWidget::wheelEvent(QWheelEvent *event)
     // High-res input
     if (!numPixels.isNull())
     {
-        scroll(numPixels);
+        scrollTo(numPixels);
     } // Low-res input
     else if (!numDegrees.isNull())
     {
@@ -475,7 +475,7 @@ void ImageAreaWidget::wheelEvent(QWheelEvent *event)
             QPoint numSteps = numDegrees / 15;
             numSteps.rx() *= m_imageOffsetStep;
             numSteps.ry() *= m_imageOffsetStep;
-            scroll(numSteps);
+            scrollTo(numSteps);
         }
     }
 

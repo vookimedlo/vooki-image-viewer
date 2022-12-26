@@ -31,6 +31,6 @@ public:
     explicit ReleaseNotesDialog(QWidget *parent = Q_NULLPTR);
     DISABLE_COPY_MOVE(ReleaseNotesDialog);
 
-protected:
+private:
     Ui::releaseNotesDialog m_uiReleaseNotesDialog;
 };

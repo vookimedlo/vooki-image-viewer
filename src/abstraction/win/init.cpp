@@ -34,8 +34,8 @@ namespace SystemDependant
             // Taken from: https://forum.qt.io/topic/101391/windows-10-dark-theme/4
             qApp->setStyle(QStyleFactory::create("Fusion"));
             QPalette darkPalette;
-            QColor darkColor = QColor(45, 45, 45);
-            QColor disabledColor = QColor(127, 127, 127);
+            auto darkColor = QColor(45, 45, 45);
+            auto disabledColor = QColor(127, 127, 127);
             darkPalette.setColor(QPalette::Window, darkColor);
             darkPalette.setColor(QPalette::WindowText, Qt::white);
             darkPalette.setColor(QPalette::Base, QColor(18, 18, 18));
