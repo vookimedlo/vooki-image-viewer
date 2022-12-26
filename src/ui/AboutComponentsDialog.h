@@ -36,5 +36,7 @@ public Q_SLOTS:
 
 protected:
     void showResourceMarkdown(const QString &resource);
+
+private:
     Ui::AboutComponentsDialog m_uiAboutComponentsDialog;
 };

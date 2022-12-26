@@ -39,7 +39,7 @@ void SettingsShortcutsTableWidget::setItem(const int row, const int column, QTab
 
     if (item->type() == SettingsShortcutsTableWidgetItem::type)
     {
-        if (auto *shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
+        if (const auto *shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
         {
             auto *keySequenceEdit = new QKeySequenceEdit(shortcutItem->keySequence());
             setCellWidget(row, column, keySequenceEdit);
@@ -55,7 +55,7 @@ void SettingsShortcutsTableWidget::updateShortcuts() const
         QTableWidgetItem *item = QTableWidget::item(row, 0);
         if (item->type() == SettingsShortcutsTableWidgetItem::type)
         {
-            if (auto *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item))
+            if (const auto *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item))
             {
                 if (auto *widget = dynamic_cast<QKeySequenceEdit *>(cellWidget(row, 0)))
                 {

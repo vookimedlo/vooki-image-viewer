@@ -22,7 +22,6 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 AboutComponentsDialog::AboutComponentsDialog(QWidget *parent)
                                         : QDialog(parent)
-                                        , m_uiAboutComponentsDialog()
 {
     m_uiAboutComponentsDialog.setupUi(this);
     m_uiAboutComponentsDialog.listWidget->setCurrentRow(0);

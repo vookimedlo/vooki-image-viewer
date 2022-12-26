@@ -116,9 +116,7 @@ MainWindow::~MainWindow() = default;
 
 MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, const bool addToRecentFiles)
 {
-    QFileInfo info(path);
-
-    if (info.exists())
+    if (QFileInfo info(path); info.exists())
     {
         if (info.isReadable())
         {
@@ -167,12 +165,11 @@ void MainWindow::changeEvent(QEvent *event)
 QString MainWindow::getRecentFile(int item) const
 {
     const int index = item + 1;
-    auto actions = m_ui.menuRecentFiles->actions();
 
     // The first two actions are Clear History & Menu Separator, which are out of our interest
-    if (2 < actions.size() && index < actions.size())
+    if (auto actions = m_ui.menuRecentFiles->actions(); 2 < actions.size() && index < actions.size())
     {
-        auto *recentImage = dynamic_cast<RecentFileAction *>(actions.at(index));
+        const auto *recentImage = dynamic_cast<RecentFileAction *>(actions.at(index));
         return recentImage->text();
     }
 

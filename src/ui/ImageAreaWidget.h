@@ -74,7 +74,7 @@ protected:
     void nativeGestureEvent(QNativeGestureEvent *event);
     void paintEvent(QPaintEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
-    void scroll(const QPoint &point);
+    void scrollTo(const QPoint &point);
     void transformImage();
     void wheelEvent(QWheelEvent *event) override;
 

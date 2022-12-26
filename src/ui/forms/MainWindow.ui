@@ -775,7 +775,7 @@
     <string extracomment="Toolbar action tool tip">Scroll Left</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">viv/shortcut/view/scroll/left</string>
+    <string notr="true">viv/shortcut/view/scrollTo/left</string>
    </property>
    <property name="shortcut">
     <string notr="true">J</string>
@@ -799,7 +799,7 @@
     <string extracomment="Toolbar action tool tip">Scroll Right</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">viv/shortcut/view/scroll/right</string>
+    <string notr="true">viv/shortcut/view/scrollTo/right</string>
    </property>
    <property name="shortcut">
     <string notr="true">L</string>
@@ -823,7 +823,7 @@
     <string extracomment="Toolbar action tool tip">Scroll Up</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">viv/shortcut/view/scroll/up</string>
+    <string notr="true">viv/shortcut/view/scrollTo/up</string>
    </property>
    <property name="shortcut">
     <string notr="true">I</string>
@@ -847,7 +847,7 @@
     <string extracomment="Toolbar action tool tip">Scroll Down</string>
    </property>
    <property name="whatsThis">
-    <string notr="true">viv/shortcut/view/scroll/down</string>
+    <string notr="true">viv/shortcut/view/scrollTo/down</string>
    </property>
    <property name="shortcut">
     <string notr="true">K</string>
