@@ -47,7 +47,6 @@ MainWindow::MainWindow(QWidget *parent)
                                         , m_fileSystemModel(new QFileSystemModel(this))
                                         , m_sortFileSystemModel(new FileSystemSortFilterProxyModel(this))
                                         , m_catalog(Util::convertFormatsToFilters(QImageReader::supportedImageFormats()))
-                                        , m_widgetVisibilityPriorFullscreen()
 {
     m_ui.setupUi(this);
 
@@ -162,9 +161,9 @@ void MainWindow::changeEvent(QEvent *event)
     QMainWindow::changeEvent(event);
 }
 
-QString MainWindow::getRecentFile(int item) const
+QString MainWindow::getRecentFile(qsizetype item) const
 {
-    const int index = item + 1;
+    const qsizetype index = item + 1;
 
     // The first two actions are Clear History & Menu Separator, which are out of our interest
     if (auto actions = m_ui.menuRecentFiles->actions(); 2 < actions.size() && index < actions.size())
