@@ -349,8 +349,8 @@ elseif(WIN32)
     ADD_IMAGE_PLUGIN(vooki_raw_thumb ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
     TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} ${LIBRAW}/lib/libraw_static.lib ${LIBJPEG}/lib/turbojpeg-static.lib ${ZLIB}/lib/zlibstatic.lib)
 
-    GET_FILENAME_COMPONENT(LIBHEIF "platform/windows/3rdPartyLibs/LibHEIF-1.13.0" ABSOLUTE)
-    SET(CMAKE_CXX_FLAGS "-I${LIBHEIF} ${CMAKE_CXX_FLAGS}")
+    GET_FILENAME_COMPONENT(LIBHEIF "platform/windows/3rdPartyLibs/LibHEIF-1.14.0" ABSOLUTE)
+    SET(CMAKE_CXX_FLAGS "-I${LIBHEIF}/include ${CMAKE_CXX_FLAGS}")
 
     ADD_IMAGE_PLUGIN(vooki_kimg_heif ../../src/plugins/kimageformats/heif.cpp)
     TARGET_LINK_LIBRARIES(vooki_kimg_heif ${QT_UI_LIB} ${LIBHEIF}/lib/heif.lib)
@@ -360,8 +360,8 @@ elseif(WIN32)
             PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PLUGINS})
 
     ADD_CUSTOM_TARGET(copy-heif-deps)
-    GET_FILENAME_COMPONENT(LIBDE265 "platform/windows/3rdPartyLibs/LibDe265-1.0.9/lib/libde265.dll" ABSOLUTE)
-    GET_FILENAME_COMPONENT(LIBHEIF "platform/windows/3rdPartyLibs/LibHEIF-1.13.0/lib/heif.dll" ABSOLUTE)
+    GET_FILENAME_COMPONENT(LIBDE265 "platform/windows/3rdPartyLibs/libde265-1.0.9/lib/libde265.dll" ABSOLUTE)
+    GET_FILENAME_COMPONENT(LIBHEIF "${LIBHEIF}/lib/heif.dll" ABSOLUTE)
     ADD_CUSTOM_COMMAND(TARGET copy-heif-deps PRE_BUILD
                        COMMAND ${CMAKE_COMMAND} -E copy ${LIBDE265} ${LIBHEIF} $<TARGET_FILE_DIR:${APPLICATION_NAME}>)
     ADD_DEPENDENCIES(vooki_kimg_heif copy-heif-deps)
