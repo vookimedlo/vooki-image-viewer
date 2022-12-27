@@ -220,14 +220,13 @@ QString MainWindow::registerProcessedImage(const QString &filePath, const bool a
             m_ui.menuRecentFiles->insertActions(nullptr, actions);
         }
 
-        // Remove entry exceeding the allowed limit of menu items in recent files menu
+        // Remove the entry exceeding the allowed limit of menu items in recent files menu
         const int maxRecentFiles = 7;
         if (actions.size() > maxRecentFiles)
         {
-            auto *recentImage = dynamic_cast<RecentFileAction *>(actions.at(maxRecentFiles));
-            recentImage->setParent(nullptr);
-            QObject::disconnect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
-            delete recentImage;
+            std::unique_ptr<RecentFileAction> recentImage(dynamic_cast<RecentFileAction *>(actions.at(maxRecentFiles)));
+            recentImage->setParent(nullptr); // Removes an ownership
+            QObject::disconnect(recentImage.get(), &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
             actions.removeAt(maxRecentFiles);
         }
     }
