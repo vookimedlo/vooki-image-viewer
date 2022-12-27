@@ -209,25 +209,22 @@ QString MainWindow::registerProcessedImage(const QString &filePath, const bool a
         }
 
         {
-            auto *recentImage = new RecentFileAction(filePath, this);
+            auto recentImage = std::make_unique<RecentFileAction>(filePath, this);
             recentImage->setStatusTip(filePath);
 
-            QObject::connect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
+            QObject::connect(recentImage.get(), &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
 
             // Add the action just after the separator
-            actions.insert(2, recentImage);
-
+            actions.insert(2, recentImage.release());
             m_ui.menuRecentFiles->insertActions(nullptr, actions);
         }
 
-        // Remove entry exceeding the allowed limit of menu items in recent files menu
+        // Remove the entry exceeding the allowed limit of menu items in recent files menu
         const int maxRecentFiles = 7;
         if (actions.size() > maxRecentFiles)
         {
-            auto *recentImage = dynamic_cast<RecentFileAction *>(actions.at(maxRecentFiles));
-            recentImage->setParent(nullptr);
-            QObject::disconnect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
-            delete recentImage;
+            std::unique_ptr<RecentFileAction> recentImage(dynamic_cast<RecentFileAction *>(actions.at(maxRecentFiles)));
+            QObject::disconnect(recentImage.get(), &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
             actions.removeAt(maxRecentFiles);
         }
     }
@@ -258,13 +255,13 @@ void MainWindow::restoreRecentFiles()
             if (value.isEmpty())
                 continue;
 
-            auto *recentImage = new RecentFileAction(value, this);
+            auto recentImage = std::make_unique<RecentFileAction>(value, this);
             recentImage->setStatusTip(value);
 
-            QObject::connect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
+            QObject::connect(recentImage.get(), &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
 
             // Add the action just after the separator
-            actions.insert(2, recentImage);
+            actions.insert(2, recentImage.release());
         }
 
         m_ui.menuRecentFiles->insertActions(nullptr, actions);
@@ -278,7 +275,7 @@ void MainWindow::showImage(const bool addToRecentFiles)
 
 void MainWindow::onAboutToQuit() const
 {
-    const std::vector<QString> settingsKeys = {
+    const std::vector<QString> settingsKeys {
         SETTINGS_RECENT_FILE_1, SETTINGS_RECENT_FILE_2, SETTINGS_RECENT_FILE_3, SETTINGS_RECENT_FILE_4, SETTINGS_RECENT_FILE_5
     };
 
