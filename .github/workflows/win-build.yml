@@ -7,7 +7,7 @@ on:
   pull_request:
   
 env:
-  QT_VERSION:              "6.4.1"
+  QT_VERSION:              "6.4.2"
   MINGW_VERSION:           "win64_msvc2019_64"
   BUILD_TYPE:              Release
   artifact_retention_days: 5
