@@ -1,9 +1,10 @@
 # Release Notes
 
 --------------------------------------------------------------
-## v2022.12.XX
+## v2023.01.08
 - Components: Updated to the latest versions.
 - Translations: Czech (Looking for translators to other languages).
+- Core: Minor bug fixes.
 --------------------------------------------------------------
 ## v2022.10.13
 - Components: Fully ported to the Qt6.
