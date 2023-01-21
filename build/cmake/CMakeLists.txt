@@ -151,6 +151,11 @@ SET_PROPERTY(SOURCE "qrc_vookiimageviewer.cpp" PROPERTY SKIP_AUTOMOC ON)
 
 QT_RESOURCES(UI_RESOURCES ../../src/resource/vookiimageviewer.qrc)
 
+ADD_LIBRARY(exiv2wrapper STATIC ../../src/processing/Exiv2ImageAutoPtrWrapper.cpp)
+SET_TARGET_PROPERTIES(exiv2wrapper PROPERTIES CXX_STANDARD 11)
+TARGET_COMPILE_OPTIONS(exiv2wrapper PRIVATE -Wno-deprecated)
+
+
 if (APPLE)
     FIND_LIBRARY(APPKIT AppKit)
     SET(OS_LIBS ${APPKIT})
@@ -193,7 +198,8 @@ if (APPLE)
     GET_FILENAME_COMPONENT(EXIV2 platform/mac/${EXIV2_LOC} ABSOLUTE)
     SET(CMAKE_CXX_FLAGS "-I${EXIV2}/include ${CMAKE_CXX_FLAGS}")
     SET(CMAKE_EXE_LINKER_FLAGS "-L${EXIV2}/lib ${CMAKE_EXE_LINKER_FLAGS}")
-    TARGET_LINK_LIBRARIES(VookiImageViewer libexiv2.a libexiv2-xmp.a ZLIB::ZLIB Iconv::Iconv EXPAT::EXPAT)
+
+    TARGET_LINK_LIBRARIES(VookiImageViewer libexiv2.a libexiv2-xmp.a ZLIB::ZLIB Iconv::Iconv EXPAT::EXPAT exiv2wrapper)
 elseif(WIN32)
     SET(SOURCES
         ${SOURCES}

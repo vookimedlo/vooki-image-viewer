@@ -20,6 +20,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include "MetadataExtractor.h"
 #include <QFileInfo>
+#include "Exiv2ImageAutoPtrWrapper.h"
 
 MetadataExtractor::MetadataExtractor() : m_gpsLatitude(), m_gpsLongitude(), m_exivImage(nullptr)
 {
@@ -61,7 +62,7 @@ void MetadataExtractor::extract(const QString &filename, int width, int height)
 
     try
     {
-        m_exivImage = Exiv2::ImageFactory::open(filename.toStdString());
+        m_exivImage = Exiv2ImageAutoPtrWrapper::open(filename.toStdString());
         m_exivImage->readMetadata();
         const Exiv2::ExifData &exifData = m_exivImage->exifData();
         addInformation<ExivProcessing::Orientation>(tr("Orientation", "Image Properties"), Exiv2::orientation(exifData), information);
