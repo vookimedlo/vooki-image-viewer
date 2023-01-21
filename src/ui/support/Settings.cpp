@@ -53,7 +53,7 @@ void Settings::initializeSettings()
     defaultSettings.setValue(SETTINGS_RECENT_FILE_5, QString());
 }
 
-void Settings::initializeSettings(QMenu *menu)
+void Settings::initializeSettings(const QMenu *menu)
 {
     QSettings defaultSettings(QSettings::UserScope, QCoreApplication::organizationName());
     QSettings userSettings(QSettings::UserScope, QCoreApplication::organizationName(), QCoreApplication::applicationName());
@@ -84,7 +84,7 @@ void Settings::restoreDefaultSettings()
     QSettings defaultSettings(QSettings::UserScope, QCoreApplication::organizationName());
     QSettings userSettings(QSettings::UserScope, QCoreApplication::organizationName(), QCoreApplication::applicationName());
 
-    for (QString &key : defaultSettings.allKeys())
+    for (const QString &key : defaultSettings.allKeys())
     {
         userSettings.setValue(key, defaultSettings.value(key));
     }

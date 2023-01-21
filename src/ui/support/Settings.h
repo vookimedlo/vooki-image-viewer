@@ -32,7 +32,7 @@ public:
 
     static std::shared_ptr<QSettings> defaultSettings();
     static void initializeSettings();
-    static void initializeSettings(QMenu *menu);
+    static void initializeSettings(const QMenu *menu);
     static std::shared_ptr<QSettings> userSettings();
 
 private:

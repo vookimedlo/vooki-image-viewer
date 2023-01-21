@@ -32,7 +32,7 @@ bool FileSystemSortFilterProxyModel::lessThan(const QModelIndex &left, const QMo
     // If sorting by filenames column
     if (sortColumn() == 0)
     {
-        auto *fsm = qobject_cast<QFileSystemModel *>(sourceModel());
+        const auto *fsm = qobject_cast<QFileSystemModel *>(sourceModel());
         const bool asc = sortOrder() == Qt::AscendingOrder;
 
         QFileInfo leftFileInfo = fsm->fileInfo(left);

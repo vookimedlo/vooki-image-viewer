@@ -70,7 +70,7 @@ public:
     }
 
     // Post-increment operator
-    const RotatingIndex operator++(int)
+    RotatingIndex operator++(int)
     {
         const RotatingIndex old(*this);
         operator++();
@@ -78,7 +78,7 @@ public:
     }
 
     // Pre-decrement operator
-    const RotatingIndex &operator--()
+    RotatingIndex &operator--()
     {
         if (m_index == 0)
             m_index = m_maxValuePlus1;
@@ -88,7 +88,7 @@ public:
     }
 
     // Post-decrement operator
-    const RotatingIndex operator--(int)
+    RotatingIndex operator--(int)
     {
         const RotatingIndex old(*this);
         operator--();

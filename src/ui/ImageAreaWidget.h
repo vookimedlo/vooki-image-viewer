@@ -84,26 +84,26 @@ protected:
     void nativeGestureEvent(QNativeGestureEvent *event);
     void paintEvent(QPaintEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
-    void scroll(const QPoint &point);
+    void scrollTo(const QPoint &point);
     void transformImage();
     void wheelEvent(QWheelEvent *event) override;
 
 private:
-    bool m_drawBorder;
-    bool m_flipHorizontally;
-    bool m_flipVertically;
-    bool m_isFitToWindow;
-    double m_scaleFactor;
-    QColor m_borderColor;
-    QImage m_originalImage;
-    QImage m_finalImage;
-    QImageReader m_reader;
-    RotatingIndex<uint8_t> m_rotateIndex;
-    int m_imageOffsetY;
-    int m_imageOffsetX;
-    QPoint m_mouseMoveLast;
-    QTimer m_animationTimer;
-    RotatingIndex<int> m_animationIndex;
+    bool m_drawBorder = {false};
+    bool m_flipHorizontally {false};
+    bool m_flipVertically {false};
+    bool m_isFitToWindow {false};
+    double m_scaleFactor {1.0};
+    QColor m_borderColor {Qt::white};
+    QImage m_originalImage {};
+    QImage m_finalImage {};
+    QImageReader m_reader {};
+    RotatingIndex<uint8_t> m_rotateIndex {0, 4}; // 4 rotation quadrants
+    int m_imageOffsetY {0};
+    int m_imageOffsetX {0};
+    QPoint m_mouseMoveLast {};
+    QTimer m_animationTimer {this};
+    RotatingIndex<int> m_animationIndex {0, 1};
 
     static constexpr int m_imageOffsetStep = 100;
     static constexpr int m_maxAllocationImageSize = 4096;

@@ -23,11 +23,10 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 StatusBar::StatusBar(QWidget *parent)
                                         : QStatusBar(parent)
 {
-    m_rightLabel = new QLabel(this);
-    addPermanentWidget(m_rightLabel);
+    addPermanentWidget(&m_rightLabel);
 }
 
-QLabel &StatusBar::rightLabel() const
+QLabel &StatusBar::rightLabel()
 {
-    return *m_rightLabel;
+    return m_rightLabel;
 }

@@ -25,6 +25,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "../ui/support/SettingsStrings.h"
 #include "../util/misc.h"
 #include "AboutComponentsDialog.h"
+#include "ReleaseNotesDialog.h"
 #include "version.h"
 #if defined __APPLE__
 #include "kdmactouchbar.h"
@@ -34,7 +35,6 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "support/RecentFileAction.h"
 #include "ui_AboutDialog.h"
 #include "ui_AboutSupportedFormatsDialog.h"
-#include "ui_ReleaseNotesDialog.h"
 #include <QAction>
 #include <QFileSystemModel>
 #include <QImageReader>
@@ -47,7 +47,6 @@ MainWindow::MainWindow(QWidget *parent)
                                         , m_fileSystemModel(new QFileSystemModel(this))
                                         , m_sortFileSystemModel(new FileSystemSortFilterProxyModel(this))
                                         , m_catalog(Util::convertFormatsToFilters(QImageReader::supportedImageFormats()))
-                                        , m_widgetVisibilityPriorFullscreen()
 {
     m_ui.setupUi(this);
 
@@ -120,9 +119,7 @@ MainWindow::~MainWindow() = default;
 
 MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, const bool addToRecentFiles)
 {
-    QFileInfo info(path);
-
-    if (info.exists())
+    if (QFileInfo info(path); info.exists())
     {
         if (info.isReadable())
         {
@@ -168,15 +165,14 @@ void MainWindow::changeEvent(QEvent *event)
     QMainWindow::changeEvent(event);
 }
 
-QString MainWindow::getRecentFile(int item) const
+QString MainWindow::getRecentFile(qsizetype item) const
 {
-    const int index = item + 1;
-    auto actions = m_ui.menuRecentFiles->actions();
+    const qsizetype index = item + 1;
 
     // The first two actions are Clear History & Menu Separator, which are out of our interest
-    if (2 < actions.size() && index < actions.size())
+    if (auto actions = m_ui.menuRecentFiles->actions(); 2 < actions.size() && index < actions.size())
     {
-        auto *recentImage = dynamic_cast<RecentFileAction *>(actions.at(index));
+        const auto *recentImage = dynamic_cast<RecentFileAction *>(actions.at(index));
         return recentImage->text();
     }
 
@@ -217,25 +213,22 @@ QString MainWindow::registerProcessedImage(const QString &filePath, const bool a
         }
 
         {
-            auto *recentImage = new RecentFileAction(filePath, this);
+            auto recentImage = std::make_unique<RecentFileAction>(filePath, this);
             recentImage->setStatusTip(filePath);
 
-            QObject::connect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
+            QObject::connect(recentImage.get(), &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
 
             // Add the action just after the separator
-            actions.insert(2, recentImage);
-
+            actions.insert(2, recentImage.release());
             m_ui.menuRecentFiles->insertActions(nullptr, actions);
         }
 
-        // Remove entry exceeding the allowed limit of menu items in recent files menu
+        // Remove the entry exceeding the allowed limit of menu items in recent files menu
         const int maxRecentFiles = 7;
         if (actions.size() > maxRecentFiles)
         {
-            auto *recentImage = dynamic_cast<RecentFileAction *>(actions.at(maxRecentFiles));
-            recentImage->setParent(nullptr);
-            QObject::disconnect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
-            delete recentImage;
+            std::unique_ptr<RecentFileAction> recentImage(dynamic_cast<RecentFileAction *>(actions.at(maxRecentFiles)));
+            QObject::disconnect(recentImage.get(), &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
             actions.removeAt(maxRecentFiles);
         }
     }
@@ -266,13 +259,13 @@ void MainWindow::restoreRecentFiles()
             if (value.isEmpty())
                 continue;
 
-            auto *recentImage = new RecentFileAction(value, this);
+            auto recentImage = std::make_unique<RecentFileAction>(value, this);
             recentImage->setStatusTip(value);
 
-            QObject::connect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
+            QObject::connect(recentImage.get(), &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
 
             // Add the action just after the separator
-            actions.insert(2, recentImage);
+            actions.insert(2, recentImage.release());
         }
 
         m_ui.menuRecentFiles->insertActions(nullptr, actions);
@@ -286,7 +279,7 @@ void MainWindow::showImage(const bool addToRecentFiles)
 
 void MainWindow::onAboutToQuit() const
 {
-    const std::vector<QString> settingsKeys = {
+    const std::vector<QString> settingsKeys {
         SETTINGS_RECENT_FILE_1, SETTINGS_RECENT_FILE_2, SETTINGS_RECENT_FILE_3, SETTINGS_RECENT_FILE_4, SETTINGS_RECENT_FILE_5
     };
 
@@ -309,6 +302,9 @@ void MainWindow::onAboutTriggered()
     QDialog dialog(this);
     uiAbout.setupUi(&dialog);
     uiAbout.versionLabel->setText(uiAbout.versionLabel->text().arg(Util::getVersionString()));
+    const auto resource = uiAbout.textBrowser->loadResource(QTextDocument::MarkdownResource,
+                                                            QUrl("qrc:/text/aboutapp"));
+    uiAbout.textBrowser->setMarkdown(resource.toString());
     dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint);
     dialog.exec();
 }
@@ -436,9 +432,7 @@ void MainWindow::onRecentFileTriggered(const QString &filePath)
 
 void MainWindow::onReleaseNotesTriggered()
 {
-    Ui::releaseNotesDialog uiReleaseNotes;
-    QDialog dialog(this);
-    uiReleaseNotes.setupUi(&dialog);
+    ReleaseNotesDialog dialog(this);
     dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint & ~Qt::WindowMinMaxButtonsHint);
     dialog.exec();
 }

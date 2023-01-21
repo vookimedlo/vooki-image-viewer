@@ -32,22 +32,6 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 ImageAreaWidget::ImageAreaWidget(QWidget *parent)
                                         : QWidget(parent)
-                                        , m_drawBorder(false)
-                                        , m_flipHorizontally(false)
-                                        , m_flipVertically(false)
-                                        , m_isFitToWindow(false)
-                                        , m_scaleFactor(1.0)
-                                        , m_borderColor(Qt::white)
-                                        , m_originalImage()
-                                        , m_finalImage()
-                                        , m_reader()
-                                        , m_rotateIndex(0, 4)
-                                        , // 4 rotation quadrants
-                                        m_imageOffsetY(0)
-                                        , m_imageOffsetX(0)
-                                        , m_mouseMoveLast()
-                                        , m_animationTimer(this)
-                                        , m_animationIndex(0, 1)
 {
     m_originalImage.fill(qRgb(0, 0, 0));
     m_finalImage.fill(qRgb(0, 0, 0));
@@ -68,6 +52,7 @@ void ImageAreaWidget::drawBorder(const bool draw, const QColor &color)
 bool ImageAreaWidget::showImage(const QString &fileName)
 {
     m_animationTimer.stop();
+    QImageReader::setAllocationLimit(ImageAreaWidget::m_maxAllocationImageSize);
     m_reader.setFileName(fileName);
     m_reader.setQuality(100);
     m_reader.setAutoTransform(true);
@@ -284,26 +269,20 @@ void ImageAreaWidget::checkScrollOffset()
 
 bool ImageAreaWidget::event(QEvent *ev)
 {
-    switch (ev->type())
+    if (ev->type() == QEvent::NativeGesture)
     {
-        case QEvent::NativeGesture:
-            nativeGestureEvent(dynamic_cast<QNativeGestureEvent *>(ev));
-            break;
-        default:
-            return QWidget::event(ev);
+        nativeGestureEvent(dynamic_cast<QNativeGestureEvent *>(ev));
+        return ev->isAccepted();
     }
 
-    return ev->isAccepted();
+    return QWidget::event(ev);
 }
 
 void ImageAreaWidget::gestureZoom(qreal value)
 {
     qDebug() << "before " << m_scaleFactor;
     value /= 5;
-    if (value > 0)
-        onZoomImageInTriggered(value);
-    else
-        onZoomImageOutTriggered(-value);
+    onZoomImageInTriggered((value > 0) ? value : -value);
     qDebug() << "after " << m_scaleFactor;
 }
 
@@ -318,7 +297,7 @@ void ImageAreaWidget::mouseMoveEvent(QMouseEvent *event)
         {
             qDebug() << "MouseMove: " << event->pos() << " prev: " << m_mouseMoveLast << " delta: " << delta;
             m_mouseMoveLast = event->pos();
-            scroll(delta);
+            scrollTo(delta);
         }
     }
 
@@ -383,7 +362,7 @@ void ImageAreaWidget::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
 }
 
-void ImageAreaWidget::scroll(const QPoint &point)
+void ImageAreaWidget::scrollTo(const QPoint &point)
 {
     if (point.x() >= 0)
         onDecreaseOffsetX(point.x());
@@ -471,7 +450,7 @@ void ImageAreaWidget::wheelEvent(QWheelEvent *event)
     // High-res input
     if (!numPixels.isNull())
     {
-        scroll(numPixels);
+        scrollTo(numPixels);
     } // Low-res input
     else if (!numDegrees.isNull())
     {
@@ -488,7 +467,7 @@ void ImageAreaWidget::wheelEvent(QWheelEvent *event)
             QPoint numSteps = numDegrees / 15;
             numSteps.rx() *= m_imageOffsetStep;
             numSteps.ry() *= m_imageOffsetStep;
-            scroll(numSteps);
+            scrollTo(numSteps);
         }
     }
 

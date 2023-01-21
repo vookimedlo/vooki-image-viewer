@@ -1,0 +1,54 @@
+name: SonarCloud analysis
+on:
+  push:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+   
+env:
+  QT_VERSION:              "6.4.1"
+  MINGW_VERSION:           "win64_msvc2019_64"
+  BUILD_TYPE:              Release
+   
+permissions:
+  pull-requests: read # allows SonarCloud to decorate PRs with analysis results
+
+jobs:
+  Analysis:
+    runs-on: windows-latest
+    env:
+      BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory # Directory where build-wrapper output will be placed
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - name: install qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          aqtversion: '==2.1.*'
+          host: 'windows'
+          target: 'desktop'
+          modules: 'qtimageformats'        
+          version: ${{ env.QT_VERSION }}
+          arch: ${{ env.MINGW_VERSION }}
+          dir: "${{github.workspace}}/qt"
+          install-deps: "true"
+      - name: Install sonar-scanner and build-wrapper
+        uses: SonarSource/sonarcloud-github-c-cpp@v1
+      - name: Run build-wrapper
+        env:
+          CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}
+        run: |
+          New-Item -ItemType directory -Path buildx64
+          "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          cmake -A x64 -G "Visual Studio 17 2022" -Bbuildx64 build/cmake -Wno-dev -DINSTALL_SYSTEM_RUNTIME=1
+          build-wrapper-win-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build buildx64 --config ${{env.BUILD_TYPE}}
+      - name: Analyze with SonarCloud
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          sonar-scanner --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
+
+
+ 

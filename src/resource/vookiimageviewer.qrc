@@ -44,15 +44,18 @@
         <file alias="picturesdir-white">image-white/Picture-Folder_240px-white.png</file>
     </qresource>
     <qresource prefix="/text">
-        <file alias="aboutapp">text/about.html</file>
-        <file alias="aboutopenclipart">text/aboutOpenClipart.html</file>
-        <file alias="aboutqt">text/aboutQt.html</file>
-        <file alias="abouticon54">text/aboutIcon54.html</file>
-        <file alias="aboutkimageformats">text/aboutKImageFormats.html</file>
-        <file alias="aboutlibraw">text/aboutLibRaw.html</file>
-        <file alias="aboutlibde265">text/aboutLibde265.html</file>
-        <file alias="aboutlibheif">text/aboutLibheif.html</file>
-        <file alias="aboutx265">text/aboutX265.html</file>
-        <file alias="aboutkdmactouchbar">text/aboutKDMacTouchBar.html</file>
+        <file alias="changelog">text/changelog.md</file>
+        <file alias="aboutapp">text/aboutApp.md</file>
+        <file alias="aboutopenclipart">text/aboutOpenClipart.md</file>
+        <file alias="aboutqt">text/aboutQt.md</file>
+        <file alias="abouticon54">text/aboutIcon54.md</file>
+        <file alias="aboutkimageformats">text/aboutKImageFormats.md</file>
+        <file alias="aboutlibjpegturbo">text/aboutLibjpeg-turbo.md</file>
+        <file alias="aboutlibraw">text/aboutLibRaw.md</file>
+        <file alias="aboutlibde265">text/aboutLibde265.md</file>
+        <file alias="aboutlibheif">text/aboutLibheif.md</file>
+        <file alias="aboutx265">text/aboutX265.md</file>
+        <file alias="aboutkdmactouchbar">text/aboutKDMacTouchBar.md</file>
+        <file alias="aboutzlib">text/aboutzlib.md</file>
     </qresource>
 </RCC>

@@ -119,6 +119,7 @@ SET(SOURCES
     ../../src/ui/ImageAreaWidget.cpp
     ../../src/ui/InfoTableWidget.cpp
     ../../src/ui/MainWindow.cpp
+    ../../src/ui/ReleaseNotesDialog.cpp
     ../../src/ui/SettingsDialog.cpp
     ../../src/ui/SettingsShortcutsTableWidget.cpp
     ../../src/ui/StatusBar.cpp
@@ -327,13 +328,20 @@ ADD_IMAGE_PLUGIN(vooki_kimg_rgb ../../src/plugins/kimageformats/rgb.cpp)
 if (APPLE)
     # MacOS
     #
-    SET(LIBRAW_LOC "3rdPartyLibs/LibRaw-0.20.2")
-    GET_FILENAME_COMPONENT(LIBRAW platform/mac/${LIBRAW_LOC} ABSOLUTE)
-    SET(CMAKE_CXX_FLAGS "-I${LIBRAW} ${CMAKE_CXX_FLAGS}")
+    SET(3RD_LIB_LOC "platform/mac/3rdPartyLibs")
+
+    SET(LIBJPEG_LOC "libjpeg-turbo-2.1.4")
+    GET_FILENAME_COMPONENT(LIBJPEG "${3RD_LIB_LOC}/${LIBJPEG_LOC}" ABSOLUTE)
+    SET(CMAKE_CXX_FLAGS "-I${LIBJPEG}/include ${CMAKE_CXX_FLAGS}")
+    SET(CMAKE_MODULE_LINKER_FLAGS "-L${LIBJPEG}/lib ${CMAKE_MODULE_LINKER_FLAGS}")
+
+    SET(LIBRAW_LOC "LibRaw-0.21.0")
+    GET_FILENAME_COMPONENT(LIBRAW "${3RD_LIB_LOC}/${LIBRAW_LOC}" ABSOLUTE)
+    SET(CMAKE_CXX_FLAGS "-I${LIBRAW}/include ${CMAKE_CXX_FLAGS}")
     SET(CMAKE_MODULE_LINKER_FLAGS "-L${LIBRAW}/lib ${CMAKE_MODULE_LINKER_FLAGS}")
 
     ADD_IMAGE_PLUGIN(vooki_raw_thumb ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
-    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_r.a)
+    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_r.a libturbojpeg.a -lz)
 
     include(platform/mac/MacdeployQt.cmake)
     deployqt()
@@ -344,28 +352,41 @@ elseif(WIN32)
     #
     ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS)
 
-    SET(LIBRAW_LOC "3rdPartyLibs/LibRaw-0.20.2")
-    ADD_DEFINITIONS(-DLIBRAW_NODLL)
+    SET(3RD_LIB_LOC "platform/windows/3rdPartyLibs")
 
-    GET_FILENAME_COMPONENT(LIBRAW platform/windows/${LIBRAW_LOC} ABSOLUTE)
-    SET(CMAKE_CXX_FLAGS "-I${LIBRAW} ${CMAKE_CXX_FLAGS}")
+    SET(ZLIB_LOC "zlib-1.2.13")
+    GET_FILENAME_COMPONENT(ZLIB "${3RD_LIB_LOC}/${ZLIB_LOC}" ABSOLUTE)
+    SET(CMAKE_CXX_FLAGS "-I${ZLIB}/include ${CMAKE_CXX_FLAGS}")
+
+    SET(LIBJPEG_LOC "libjpeg-turbo-2.1.4")
+    GET_FILENAME_COMPONENT(LIBJPEG "${3RD_LIB_LOC}/${LIBJPEG_LOC}" ABSOLUTE)
+    SET(CMAKE_CXX_FLAGS "-I${LIBJPEG}/include ${CMAKE_CXX_FLAGS}")
+
+    SET(LIBRAW_LOC "LibRaw-0.21.0")
+    ADD_DEFINITIONS(-DLIBRAW_NODLL)
+    GET_FILENAME_COMPONENT(LIBRAW "${3RD_LIB_LOC}/${LIBRAW_LOC}" ABSOLUTE)
+    SET(CMAKE_CXX_FLAGS "-I${LIBRAW}/include ${CMAKE_CXX_FLAGS}")
 
     ADD_IMAGE_PLUGIN(vooki_raw_thumb ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
-    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} ${LIBRAW}/lib/libraw.lib)
+    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} ${LIBRAW}/lib/libraw_static.lib ${LIBJPEG}/lib/turbojpeg-static.lib ${ZLIB}/lib/zlibstatic.lib)
 
-    GET_FILENAME_COMPONENT(LIBHEIF "platform/windows/3rdPartyLibs/LibHEIF-1.13.0" ABSOLUTE)
-    SET(CMAKE_CXX_FLAGS "-I${LIBHEIF} ${CMAKE_CXX_FLAGS}")
+    SET(LIBRAW_LOC "libheif-1.14.0")
+    GET_FILENAME_COMPONENT(LIBHEIF "${3RD_LIB_LOC}/${LIBRAW_LOC}" ABSOLUTE)
+    SET(CMAKE_CXX_FLAGS "-I${LIBHEIF}/include ${CMAKE_CXX_FLAGS}")
 
     ADD_IMAGE_PLUGIN(vooki_kimg_heif ../../src/plugins/kimageformats/heif.cpp)
     TARGET_LINK_LIBRARIES(vooki_kimg_heif ${QT_UI_LIB} ${LIBHEIF}/lib/heif.lib)
+
+    SET(LIBDE265_LOC "libde265-1.0.9")
+    GET_FILENAME_COMPONENT(LIBDE265 "${3RD_LIB_LOC}/${LIBDE265_LOC}" ABSOLUTE)
 
     SET(PLUGINS "$<TARGET_FILE_DIR:${APPLICATION_NAME}>/imageformats")
     SET_TARGET_PROPERTIES(${IMAGE_PLUGINS}
             PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PLUGINS})
 
     ADD_CUSTOM_TARGET(copy-heif-deps)
-    GET_FILENAME_COMPONENT(LIBDE265 "platform/windows/3rdPartyLibs/LibDe265-1.0.8/lib/libde265.dll" ABSOLUTE)
-    GET_FILENAME_COMPONENT(LIBHEIF "platform/windows/3rdPartyLibs/LibHEIF-1.13.0/lib/heif.dll" ABSOLUTE)
+    GET_FILENAME_COMPONENT(LIBDE265 "${LIBDE265}/lib/libde265.dll" ABSOLUTE)
+    GET_FILENAME_COMPONENT(LIBHEIF "${LIBHEIF}/lib/heif.dll" ABSOLUTE)
     ADD_CUSTOM_COMMAND(TARGET copy-heif-deps PRE_BUILD
                        COMMAND ${CMAKE_COMMAND} -E copy ${LIBDE265} ${LIBHEIF} $<TARGET_FILE_DIR:${APPLICATION_NAME}>)
     ADD_DEPENDENCIES(vooki_kimg_heif copy-heif-deps)

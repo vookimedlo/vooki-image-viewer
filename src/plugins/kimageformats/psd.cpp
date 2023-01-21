@@ -646,6 +646,9 @@ static bool IsValid(const PSDHeader &header)
 // Check that the header is supported by this plugin.
 static bool IsSupported(const PSDHeader &header)
 {
+    if (!IsValid(header)) {
+        return false;
+    }
     if (header.version != 1 && header.version != 2) {
         return false;
     }
@@ -660,8 +663,13 @@ static bool IsSupported(const PSDHeader &header)
         header.color_mode != CM_INDEXED &&
         header.color_mode != CM_DUOTONE &&
         header.color_mode != CM_CMYK &&
+        header.color_mode != CM_MULTICHANNEL &&
         header.color_mode != CM_LABCOLOR &&
         header.color_mode != CM_BITMAP) {
+        return false;
+    }
+    if (header.color_mode == CM_MULTICHANNEL &&
+        header.channel_count < 4) {
         return false;
     }
     return true;
@@ -729,13 +737,14 @@ static QImage::Format imageFormat(const PSDHeader &header, bool alpha)
         else
             format = header.channel_count < 4 || !alpha ? QImage::Format_RGB888 : QImage::Format_RGBA8888;
         break;
-    case CM_CMYK:       // Photoshop supports CMYK 8-bits and 16-bits only
+    case CM_MULTICHANNEL:       // Treat MCH as CMYK (number of channel check is done in IsSupported())
+    case CM_CMYK:               // Photoshop supports CMYK/MCH 8-bits and 16-bits only
         if (header.depth == 16)
             format = header.channel_count < 5 || !alpha ? QImage::Format_RGBX64 : QImage::Format_RGBA64;
         else if (header.depth == 8)
             format = header.channel_count < 5 || !alpha ? QImage::Format_RGB888 : QImage::Format_RGBA8888;
         break;
-    case CM_LABCOLOR:   // Photoshop supports LAB 8-bits and 16-bits only
+    case CM_LABCOLOR:           // Photoshop supports LAB 8-bits and 16-bits only
         if (header.depth == 16)
             format = header.channel_count < 4 || !alpha ? QImage::Format_RGBX64 : QImage::Format_RGBA64;
         else if (header.depth == 8)
@@ -1078,7 +1087,7 @@ static bool LoadPSD(QDataStream &stream, const PSDHeader &header, QImage &img)
             }
 
             // Conversion to RGB
-            if (header.color_mode == CM_CMYK) {
+            if (header.color_mode == CM_CMYK || header.color_mode == CM_MULTICHANNEL) {
                 if (header.depth == 8)
                     cmykToRgb<quint8>(img.scanLine(y), imgChannels, psdScanline.data(), header.channel_count, header.width, alpha);
                 else
@@ -1257,7 +1266,7 @@ bool PSDHandler::canRead(QIODevice *device)
         }
     }
 
-    return IsValid(header);
+    return IsSupported(header);
 }
 
 QImageIOPlugin::Capabilities PSDPlugin::capabilities(QIODevice *device, const QByteArray &format) const

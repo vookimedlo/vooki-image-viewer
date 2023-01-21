@@ -169,6 +169,16 @@ dnf -q makecache -y --disablerepo='*' --enablerepo='michal-duda-vookiimageviewer
 dnf install vookiimageviewer
 ```
 
+Fedora 37 users can install the VookiImageViewer from the repository hosted by the [cloudsmith.io][6] for free.
+```
+dnf install yum-utils pygpgme
+rpm --import 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/gpg.EF5E62B51DE78AFF.key'
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.rpm.txt?distro=fedora&codename=37' > /tmp/michal-duda-vookiimageviewer.repo
+dnf config-manager --add-repo '/tmp/michal-duda-vookiimageviewer.repo'
+dnf -q makecache -y --disablerepo='*' --enablerepo='michal-duda-vookiimageviewer' --enablerepo='michal-duda-vookiimageviewer-source'
+dnf install vookiimageviewer
+```
+
 -----------------
 
 ## Builds

@@ -35,5 +35,8 @@ public Q_SLOTS:
     virtual void onSelectedComponentChanged(int row);
 
 protected:
+    void showResourceMarkdown(const QString &resource);
+
+private:
     Ui::AboutComponentsDialog m_uiAboutComponentsDialog;
 };

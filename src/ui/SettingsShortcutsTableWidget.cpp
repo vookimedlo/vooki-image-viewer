@@ -21,6 +21,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "SettingsShortcutsTableWidget.h"
 
 #include "../ui/support/SettingsShortcutsTableWidgetItem.h"
+#include <memory>
 #include <QKeySequenceEdit>
 
 SettingsShortcutsTableWidget::SettingsShortcutsTableWidget(QWidget *parent)
@@ -33,17 +34,17 @@ SettingsShortcutsTableWidget::SettingsShortcutsTableWidget(const int rows, const
 {
 }
 
-void SettingsShortcutsTableWidget::setItem(const int row, const int column, QTableWidgetItem *item)
+void SettingsShortcutsTableWidget::setItemAtCoordinates(int row, int column, QTableWidgetItem *item)
 {
     QTableWidget::setItem(row, column, item);
 
     if (item->type() == SettingsShortcutsTableWidgetItem::type)
     {
-        if (auto *shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
+        if (const auto *shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
         {
-            auto *keySequenceEdit = new QKeySequenceEdit(shortcutItem->keySequence());
-            setCellWidget(row, column, keySequenceEdit);
-            QObject::connect(keySequenceEdit, &QKeySequenceEdit::keySequenceChanged, shortcutItem, &SettingsShortcutsTableWidgetItem::onKeySequenceChanged);
+            auto keySequenceEdit = std::make_unique<QKeySequenceEdit>(shortcutItem->keySequence());
+            QObject::connect(keySequenceEdit.get(), &QKeySequenceEdit::keySequenceChanged, shortcutItem, &SettingsShortcutsTableWidgetItem::onKeySequenceChanged);
+            setCellWidget(row, column, keySequenceEdit.release()); // ownership passed
         }
     }
 }
@@ -52,10 +53,9 @@ void SettingsShortcutsTableWidget::updateShortcuts() const
 {
     for (int row = 0; row < rowCount(); ++row)
     {
-        QTableWidgetItem *item = QTableWidget::item(row, 0);
-        if (item->type() == SettingsShortcutsTableWidgetItem::type)
+        if (const auto *item = QTableWidget::item(row, 0); item->type() == SettingsShortcutsTableWidgetItem::type)
         {
-            if (auto *shortcutItem = static_cast<SettingsShortcutsTableWidgetItem *>(item))
+            if (const auto *shortcutItem = dynamic_cast<const SettingsShortcutsTableWidgetItem *>(item))
             {
                 if (auto *widget = dynamic_cast<QKeySequenceEdit *>(cellWidget(row, 0)))
                 {
