@@ -27,11 +27,14 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <utility>
 #include <vector>
 
+#if defined (__APPLE__) or defined (_WIN32)
 namespace std
 {
     template<typename T>
     using auto_ptr = std::unique_ptr<T>;
 }
+#endif
+
 #include <exiv2/exiv2.hpp>
 
 class MetadataExtractor : public QObject
