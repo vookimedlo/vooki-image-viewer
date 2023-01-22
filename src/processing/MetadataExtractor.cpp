@@ -66,7 +66,10 @@ void MetadataExtractor::extract(const QString &filename, int width, int height)
         m_exivImage->readMetadata();
         const Exiv2::ExifData &exifData = m_exivImage->exifData();
         addInformation<ExivProcessing::Orientation>(tr("Orientation", "Image Properties"), Exiv2::orientation(exifData), information);
-        addInformation(tr("Date", "Image Properties"), Exiv2::dateTimeOriginal(exifData), information);
+
+        #if EXIV2_TEST_VERSION(0,27,4)
+            addInformation(tr("Date", "Image Properties"), Exiv2::dateTimeOriginal(exifData), information);
+        #endif
 
         addInformation<ExivProcessing::GPSLatitude>("", exifData.findKey(Exiv2::ExifKey("Exif.GPSInfo.GPSLatitude")), information);
         addInformation<ExivProcessing::GPSLatitudeRef>("GPS Latitude", exifData.findKey(Exiv2::ExifKey("Exif.GPSInfo.GPSLatitudeRef")), information);
@@ -75,12 +78,17 @@ void MetadataExtractor::extract(const QString &filename, int width, int height)
         addInformation<ExivProcessing::GPSAltitude>("", exifData.findKey(Exiv2::ExifKey("Exif.GPSInfo.GPSAltitude")), information, MetadataExtractor::m_unitMeter);
         addInformation<ExivProcessing::GPSAltitudeRef>("GPS Altitude", exifData.findKey(Exiv2::ExifKey("Exif.GPSInfo.GPSAltitudeRef")), information);
 
-        addInformation<ExivProcessing::Flash>(tr("Flash", "Image Properties"), Exiv2::flash(exifData), information);
+        #if EXIV2_TEST_VERSION(0,27,4)
+            addInformation<ExivProcessing::Flash>(tr("Flash", "Image Properties"), Exiv2::flash(exifData), information);
+        #endif
         addInformation(tr("ISO", "Image Properties"), Exiv2::isoSpeed(exifData), information);
 
         addInformation<ExivProcessing::Float>(tr("f-number", "Image Properties"), Exiv2::fNumber(exifData), information);
         addInformation<ExivProcessing::Float>(tr("Exposure time", "Image Properties"), Exiv2::exposureTime(exifData), information);
-        addInformation<ExivProcessing::Float>(tr("Shutter speed", "Image Properties"), Exiv2::shutterSpeedValue(exifData), information);
+
+        #if EXIV2_TEST_VERSION(0,27,4)
+            addInformation<ExivProcessing::Float>(tr("Shutter speed", "Image Properties"), Exiv2::shutterSpeedValue(exifData), information);
+        #endif
         addInformation<ExivProcessing::Float>(tr("Focal length", "Image Properties"), Exiv2::focalLength(exifData), information);
 
         addInformation(tr("Camera maker", "Image Properties"), exifData.findKey(Exiv2::ExifKey("Exif.Image.Make")), information);
