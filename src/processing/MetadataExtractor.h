@@ -72,17 +72,7 @@ protected:
             information.push_back(std::pair{ name, QString::number(value) + units });
     }
 
-    template <>
-    inline void addInformation(const QString &name, const QString &value, std::vector<std::pair<QString, QString>> &information, const QString &units) {
-        if (!name.isEmpty() && !value.isEmpty())
-            information.push_back(std::pair{ name, value + units });
-    }
 
-    template <>
-    inline void addInformation(const QString &name, const std::string &value, std::vector<std::pair<QString, QString>> &information, const QString &units) {
-        if (!name.isEmpty() && !value.empty())
-            information.push_back(std::pair{ name, value.c_str() + units });
-    }
 
     template <ExivProcessing processing = ExivProcessing::String>
     inline void addInformation(const QString &name, const Exiv2::ExifData::const_iterator &value, std::vector<std::pair<QString, QString>> &information, const QString &units = QString(""))
@@ -160,3 +150,15 @@ private:
     static const QString m_unitPixel;
     static const QString m_unitSecond;
 };
+
+template <>
+inline void MetadataExtractor::addInformation<QString>(const QString &name, const QString &value, std::vector<std::pair<QString, QString>> &information, const QString &units) {
+    if (!name.isEmpty() && !value.isEmpty())
+        information.push_back(std::pair{ name, value + units });
+}
+
+template <>
+inline void MetadataExtractor::addInformation<std::string>(const QString &name, const std::string &value, std::vector<std::pair<QString, QString>> &information, const QString &units) {
+    if (!name.isEmpty() && !value.empty())
+        information.push_back(std::pair{ name, value.c_str() + units });
+}
