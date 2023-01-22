@@ -156,7 +156,6 @@ ADD_LIBRARY(exiv2wrapper STATIC ../../src/processing/Exiv2ImageAutoPtrWrapper.cp
 SET_TARGET_PROPERTIES(exiv2wrapper PROPERTIES CXX_STANDARD 11)
 TARGET_COMPILE_OPTIONS(exiv2wrapper PRIVATE -Wno-deprecated)
 
-
 if (APPLE)
     FIND_LIBRARY(APPKIT AppKit)
     SET(OS_LIBS ${APPKIT})
@@ -200,7 +199,7 @@ if (APPLE)
     SET(CMAKE_CXX_FLAGS "-I${EXIV2}/include ${CMAKE_CXX_FLAGS}")
     SET(CMAKE_EXE_LINKER_FLAGS "-L${EXIV2}/lib ${CMAKE_EXE_LINKER_FLAGS}")
 
-    TARGET_LINK_LIBRARIES(VookiImageViewer libexiv2.a libexiv2-xmp.a ZLIB::ZLIB Iconv::Iconv EXPAT::EXPAT exiv2wrapper)
+    TARGET_LINK_LIBRARIES(VookiImageViewer libexiv2.a libexiv2-xmp.a ZLIB::ZLIB Iconv::Iconv EXPAT::EXPAT)
 elseif(WIN32)
     SET(SOURCES
         ${SOURCES}
@@ -225,10 +224,14 @@ else()
         ${SOURCES}
         ${UI_HEADERS}
         ${UI_RESOURCES})
+
+    FIND_LIBRARY(LIBEXIV2 NAMES libexiv2 exiv2 REQUIRED)
+    TARGET_LINK_LIBRARIES(VookiImageViewer ${LIBEXIV2})
 endif()
 
 TARGET_LINK_LIBRARIES(VookiImageViewer ${QT_ALL_LIBS})
 TARGET_LINK_LIBRARIES(VookiImageViewer ${OS_LIBS})
+TARGET_LINK_LIBRARIES(VookiImageViewer exiv2wrapper)
 
 #### Translations ####
 #
