@@ -154,7 +154,8 @@ QT_RESOURCES(UI_RESOURCES ../../src/resource/vookiimageviewer.qrc)
 
 ADD_LIBRARY(exiv2wrapper STATIC ../../src/processing/Exiv2ImageAutoPtrWrapper.cpp)
 SET_TARGET_PROPERTIES(exiv2wrapper PROPERTIES CXX_STANDARD 11)
-TARGET_COMPILE_OPTIONS(exiv2wrapper PRIVATE -Wno-deprecated)
+TARGET_COMPILE_OPTIONS(exiv2wrapper PRIVATE
+        "$<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>:-Wno-deprecated>")
 
 if (APPLE)
     FIND_LIBRARY(APPKIT AppKit)
@@ -213,6 +214,18 @@ elseif(WIN32)
         ${SOURCES}
         ${UI_HEADERS}
         ${UI_RESOURCES})
+
+    SET(EXIV2_LOC "3rdPartyLibs/Exiv2-0.27.6")
+    GET_FILENAME_COMPONENT(EXIV2 platform/windows/${EXIV2_LOC} ABSOLUTE)
+    SET(ZLIB_LOC "3rdPartyLibs/zlib-1.2.13")
+    GET_FILENAME_COMPONENT(ZLIB platform/windows/${ZLIB_LOC} ABSOLUTE)
+    SET(EXPAT_LOC "3rdPartyLibs/expat-2.5.0")
+    GET_FILENAME_COMPONENT(EXPAT platform/windows/${EXPAT_LOC} ABSOLUTE)
+
+    SET(CMAKE_CXX_FLAGS "-I${EXIV2}/include -I${ZLIB}/include -I${EXPAT}/include ${CMAKE_CXX_FLAGS}")
+    SET(CMAKE_EXE_LINKER_FLAGS "/LIBPATH:${EXIV2}/lib /LIBPATH:${ZLIB}/lib /LIBPATH:${EXPAT}/lib ${CMAKE_EXE_LINKER_FLAGS}")
+
+    TARGET_LINK_LIBRARIES(VookiImageViewer exiv2.lib exiv2-xmp.lib zlibstatic.lib libexpatMD.lib wsock32 ws2_32 Psapi.lib exiv2wrapper)
 else()
     SET(SOURCES
         ${SOURCES}
