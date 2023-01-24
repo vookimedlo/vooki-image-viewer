@@ -68,7 +68,7 @@ bool ImageAreaWidget::showImage(const QString &fileName)
     auto connection = connect(&metadataExtractor,
                               &MetadataExtractor::imageInformationParsed,
                               this,
-                              [=](const std::vector<std::pair<QString, QString>>& information) {
+                              [this](const std::vector<std::pair<QString, QString>>& information) {
                                   emit imageInformationParsed(information);
                               });
     metadataExtractor.extract(fileName, m_originalImage.width(), m_originalImage.height());

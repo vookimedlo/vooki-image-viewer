@@ -22,16 +22,6 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QFileInfo>
 #include "Exiv2ImageAutoPtrWrapper.h"
 
-MetadataExtractor::MetadataExtractor() : m_gpsLatitude(), m_gpsLongitude(), m_exivImage(nullptr)
-{
-
-}
-
-MetadataExtractor::~MetadataExtractor()
-{
-
-}
-
 std::vector<QString> MetadataExtractor::m_orientationDescriptions = { "", // EXIF does not use the 0 for the orientation encoding
                                                                       "0°",
                                                                       tr("0°, mirrored", "Image Description"),
@@ -100,7 +90,7 @@ void MetadataExtractor::extract(const QString &filename, int width, int height)
         for (const auto &it : exifData)
             qDebug() << "+ " << it.key().c_str() << " - " << it.value().toString().c_str();
     }
-    catch (...)
+    catch (const Exiv2::AnyError&)
     {
         qDebug() << "Cannot parse the EXIF/XMP data. Skipping ...";
     }

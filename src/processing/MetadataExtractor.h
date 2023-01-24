@@ -22,28 +22,24 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QDebug>
 #include <QObject>
 #include <QString>
+#include <array>
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
-
-#if defined (__APPLE__) or defined (_WIN32)
-namespace std
-{
-    template<typename T>
-    using auto_ptr = std::unique_ptr<T>;
-}
-#endif
-
+#include "AutoPtrWrapper.h"
 #include <exiv2/exiv2.hpp>
+#include "../util/compiler.h"
 
 class MetadataExtractor : public QObject
 {
     Q_OBJECT
 
 public:
-    MetadataExtractor();
-    virtual ~MetadataExtractor();
+    MetadataExtractor() = default;
+    ~MetadataExtractor() override = default;
+    DISABLE_COPY_MOVE(MetadataExtractor);
+
 
     virtual void extract(const QString &filename, int width, int height);
 
@@ -69,10 +65,8 @@ protected:
     template <typename T>
     inline void addInformation(const QString &name, const T& value, std::vector<std::pair<QString, QString>> &information, const QString &units = QString("")) {
         if (!name.isEmpty())
-            information.push_back(std::pair{ name, QString::number(value) + units });
+            information.emplace_back(name, QString::number(value) + units );
     }
-
-
 
     template <ExivProcessing processing = ExivProcessing::String>
     inline void addInformation(const QString &name, const Exiv2::ExifData::const_iterator &value, std::vector<std::pair<QString, QString>> &information, const QString &units = QString(""))
@@ -100,7 +94,7 @@ protected:
                     addInformation(name, value->getValue()->toLong() & 0x01 ? tr("Flash fired", "Image Description") : tr("Flash didn't fired", "Image Description"), information);
                     break;
                 case ExivProcessing::GPSLatitude: {
-                    QString floats[3];
+                    std::array<QString, 3> floats;
                     for (int i = 0; i < 3; ++i)
                         floats[i] = QString::number(value->getValue()->toFloat(i));
                     m_gpsLatitude = QString("%1° %2′ %3″").arg(floats[0], floats[1], floats[2]);
@@ -112,10 +106,10 @@ protected:
                     addInformation(name, m_gpsLatitude, information);
                     break;
                 case ExivProcessing::GPSLongitude: {
-                        QString floats[3];
-                        for (int i = 0; i < 3; ++i)
-                            floats[i] = QString::number(value->getValue()->toFloat(i));
-                        m_gpsLongitude = QString("%1° %2′ %3″").arg(floats[0], floats[1], floats[2]);
+                    std::array<QString, 3> floats;
+                    for (int i = 0; i < 3; ++i)
+                        floats[i] = QString::number(value->getValue()->toFloat(i));
+                    m_gpsLongitude = QString("%1° %2′ %3″").arg(floats[0], floats[1], floats[2]);
                     }
                     break;
                 case ExivProcessing::GPSLongitudeRef:
@@ -154,11 +148,11 @@ private:
 template <>
 inline void MetadataExtractor::addInformation<QString>(const QString &name, const QString &value, std::vector<std::pair<QString, QString>> &information, const QString &units) {
     if (!name.isEmpty() && !value.isEmpty())
-        information.push_back(std::pair{ name, value + units });
+        information.emplace_back( name, value + units );
 }
 
 template <>
 inline void MetadataExtractor::addInformation<std::string>(const QString &name, const std::string &value, std::vector<std::pair<QString, QString>> &information, const QString &units) {
     if (!name.isEmpty() && !value.empty())
-        information.push_back(std::pair{ name, value.c_str() + units });
+        information.emplace_back( name, value.c_str() + units );
 }
