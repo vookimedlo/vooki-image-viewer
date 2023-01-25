@@ -40,7 +40,6 @@ public:
     ~MetadataExtractor() override = default;
     DISABLE_COPY_MOVE(MetadataExtractor);
 
-
     virtual void extract(const QString &filename, int width, int height);
 
 signals:
