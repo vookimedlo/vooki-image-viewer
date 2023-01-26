@@ -71,6 +71,8 @@ protected slots:
     void onFitToWindowToggled(bool toggled) const;
     void onFullScreenToggled(bool toggled);
     void onHomeDirClicked() const;
+    void onImageDimensionsChanged(int width, int height) const;
+    void onImageSizeChanged(uint64_t size) const;
     void onNextImageTriggered();
     void onOriginalSizeTriggered() const;
     void onPicturesDirClicked() const;

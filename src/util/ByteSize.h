@@ -1,7 +1,7 @@
 #pragma once
 /****************************************************************************
 VookiImageViewer - a tool for showing images.
-Copyright(C) 2017  Michal Duda <github@vookimedlo.cz>
+Copyright(C) 2023  Michal Duda <github@vookimedlo.cz>
 
 https://github.com/vookimedlo/vooki-image-viewer
 
@@ -19,26 +19,35 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include "../util/compiler.h"
-#include <QFrame>
-#include <QLabel>
-#include <QStatusBar>
+#include <QCoreApplication>
+#include <cstdint>
+#include <utility>
+#include "EnumClassArray.h"
 
-class StatusBar : public QStatusBar
+class ByteSize
 {
 public:
-    explicit StatusBar(QWidget *parent = nullptr);
-    DISABLE_COPY_MOVE(StatusBar);
+    enum class SizeUnits {
+        B,
+        kB,
+        MB,
+        GB,
+        TB,
+    };
 
-    [[nodiscard]] QLabel &dimensionsLabel();
-    [[nodiscard]] QLabel &sizeLabel();
-    [[nodiscard]] QLabel &zoomLabel();
+    ByteSize(uint64_t size);
 
-protected:
-    QFrame* createVerticalLine();
+    std::pair<double, enum ByteSize::SizeUnits> humanReadableSize();
+    QString getUnit(enum ByteSize::SizeUnits unit) const;
 
 private:
-    QLabel m_dimensionsLabel{this};
-    QLabel m_sizeLabel{this};
-    QLabel m_zoomLabel{this};
+    EnumClassArray<QString, 5> units {
+        QCoreApplication::translate("File size - Units: byte", "B"),
+        QCoreApplication::translate("File size - Units: kilobyte", "kB"),
+        QCoreApplication::translate("File size - Units: megabyte", "MB"),
+        QCoreApplication::translate("File size - Units: gigabyte", "GB"),
+        QCoreApplication::translate("File size - Units: terabyte", "TB"),
+    };
+
+    uint64_t m_size;
 };

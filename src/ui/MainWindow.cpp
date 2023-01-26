@@ -23,6 +23,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "../model/FileSystemSortFilterProxyModel.h"
 #include "../ui/support/Settings.h"
 #include "../ui/support/SettingsStrings.h"
+#include "../util//ByteSize.h"
 #include "../util/misc.h"
 #include "AboutComponentsDialog.h"
 #include "ReleaseNotesDialog.h"
@@ -470,10 +471,26 @@ void MainWindow::onZoomOutTriggered() const
     m_ui.imageAreaWidget->onZoomImageOutTriggered(0.10);
 }
 
+void MainWindow::onImageDimensionsChanged(int width, int height) const
+{
+    //: Used in the statusbar showing the image dimensions. Example: "1024x760"
+    m_ui.statusBar->dimensionsLabel().setText(tr("%1x%2").arg(QString::number(width), QString::number(height)));
+}
+
+void MainWindow::onImageSizeChanged(uint64_t size) const
+{
+    ByteSize byteSize{size};
+    const auto [newSize, unit] = byteSize.humanReadableSize();
+    const auto unitString = byteSize.getUnit(unit);
+
+    //: Used in the statusbar showing the image size. Example: "103.4 kB"
+    m_ui.statusBar->sizeLabel().setText(tr("%1 %2").arg(QString::number(newSize), unitString));
+}
+
 void MainWindow::onZoomPercentageChanged(const qreal value) const
 {
-    //: Used in the statusbar showing the zooming percentage. Example: "Zoom: 12%"
-    m_ui.statusBar->rightLabel().setText(tr("Zoom: %1%").arg(QString::number(static_cast<int>(value * 100))));
+    //: Used in the statusbar showing the zooming percentage. Example: "12%"
+    m_ui.statusBar->zoomLabel().setText(tr("%1%").arg(QString::number(static_cast<int>(value * 100))));
 }
 
 void MainWindow::onHomeDirClicked() const

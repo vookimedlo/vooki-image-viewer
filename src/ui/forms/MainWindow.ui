@@ -926,6 +926,8 @@
    <slots>
     <signal>zoomPercentageChanged(qreal)</signal>
     <signal>imageInformationParsed(const std::vector&lt;std::pair&lt;QString, QString&gt;&gt;&amp;)</signal>
+    <signal>imageDimensionsChanged(int,int)</signal>
+    <signal>imageSizeChanged(uint64_t)</signal>
     <slot>onRotateRightTriggered()</slot>
     <slot>onRotateLeftTriggered()</slot>
     <slot>onFlipHorizontallyTriggered()</slot>
@@ -1442,6 +1444,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>imageAreaWidget</sender>
+   <signal>imageSizeChanged(uint64_t)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onImageSizeChanged(uint64_t)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>404</x>
+     <y>287</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>404</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>imageAreaWidget</sender>
+   <signal>imageDimensionsChanged(int,int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onImageDimensionsChanged(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>404</x>
+     <y>287</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>404</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onQuitTriggered()</slot>
@@ -1465,5 +1499,7 @@
   <slot>onDocsDirClicked()</slot>
   <slot>onPicturesDirClicked()</slot>
   <slot>onReleaseNotesTriggered()</slot>
+  <slot>onImageDimensionsChanged(int,int)</slot>
+  <slot>onImageSizeChanged(uint64_t)</slot>
  </slots>
 </ui>

@@ -54,6 +54,8 @@ public:
 
 signals:
     void imageInformationParsed(const std::vector<std::pair<QString, QString>>& information);
+    void imageDimensionsChanged(int width, int height);
+    void imageSizeChanged(uint64_t size);
     void zoomPercentageChanged(qreal value);
 
 public slots:

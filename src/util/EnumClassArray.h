@@ -1,3 +1,4 @@
+#pragma once
 /****************************************************************************
 VookiImageViewer - a tool for showing images.
 Copyright(C) 2017  Michal Duda <github@vookimedlo.cz>
@@ -18,39 +19,18 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include "StatusBar.h"
+#include <array>
 
-StatusBar::StatusBar(QWidget *parent)
-                                        : QStatusBar(parent)
+template <class T, std::size_t N>
+struct EnumClassArray : std::array<T, N>
 {
-    addPermanentWidget(&m_dimensionsLabel);
-    addPermanentWidget(createVerticalLine());
-    addPermanentWidget(&m_sizeLabel);
-    addPermanentWidget(createVerticalLine());
-    addPermanentWidget(&m_zoomLabel);
-}
+    template <typename I>
+    T& operator[](const I& i) {
+        return std::array<T, N>::operator[](static_cast<typename std::underlying_type<I>::type>(i));
+    }
 
-QFrame* StatusBar::createVerticalLine()
-{
-    auto line = new QFrame(this);
-    line->setObjectName(QString::fromUtf8("line"));
-    line->setGeometry(QRect(320, 150, 118, 3));
-    line->setFrameShape(QFrame::VLine);
-    line->setFrameShadow(QFrame::Sunken);
-    return line;
-}
-
-QLabel &StatusBar::dimensionsLabel()
-{
-    return m_dimensionsLabel;
-}
-
-QLabel &StatusBar::sizeLabel()
-{
-    return m_sizeLabel;
-}
-
-QLabel &StatusBar::zoomLabel()
-{
-    return m_zoomLabel;
-}
+    template <typename I>
+    const T& operator[](const I& i) const {
+        return std::array<T, N>::operator[](static_cast<typename std::underlying_type<I>::type>(i));
+    }
+};

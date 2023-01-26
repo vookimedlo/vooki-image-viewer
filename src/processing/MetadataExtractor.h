@@ -44,6 +44,8 @@ public:
 
 signals:
     void imageInformationParsed(const std::vector<std::pair<QString, QString>>& information);
+    void imageDimensionsParsed(int width, int height);
+    void imageSizeParsed(uint64_t size);
 
 protected:
     enum class ExivProcessing

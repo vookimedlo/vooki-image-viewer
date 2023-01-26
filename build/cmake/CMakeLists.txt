@@ -127,6 +127,7 @@ SET(SOURCES
     ../../src/ui/support/RecentFileAction.cpp
     ../../src/ui/support/Settings.cpp
     ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp
+    ../../src/util/ByteSize.cpp
     ../../src/util/misc.cpp
 )
 

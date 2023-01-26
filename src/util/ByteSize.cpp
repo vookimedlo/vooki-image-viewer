@@ -1,6 +1,6 @@
 /****************************************************************************
 VookiImageViewer - a tool for showing images.
-Copyright(C) 2017  Michal Duda <github@vookimedlo.cz>
+Copyright(C) 2023  Michal Duda <github@vookimedlo.cz>
 
 https://github.com/vookimedlo/vooki-image-viewer
 
@@ -18,39 +18,21 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include "StatusBar.h"
+#include "ByteSize.h"
+#include <cmath>
 
-StatusBar::StatusBar(QWidget *parent)
-                                        : QStatusBar(parent)
+ByteSize::ByteSize(uint64_t size) : m_size(size)
 {
-    addPermanentWidget(&m_dimensionsLabel);
-    addPermanentWidget(createVerticalLine());
-    addPermanentWidget(&m_sizeLabel);
-    addPermanentWidget(createVerticalLine());
-    addPermanentWidget(&m_zoomLabel);
 }
 
-QFrame* StatusBar::createVerticalLine()
-{
-    auto line = new QFrame(this);
-    line->setObjectName(QString::fromUtf8("line"));
-    line->setGeometry(QRect(320, 150, 118, 3));
-    line->setFrameShape(QFrame::VLine);
-    line->setFrameShadow(QFrame::Sunken);
-    return line;
+std::pair<double, enum ByteSize::SizeUnits> ByteSize::humanReadableSize() {
+    int i{};
+    double mantissa = m_size;
+    for (; mantissa >= 1024.; mantissa /= 1024., ++i);
+    mantissa = std::ceil(mantissa * 10.) / 10.;
+    return {mantissa, SizeUnits{i}};
 }
 
-QLabel &StatusBar::dimensionsLabel()
-{
-    return m_dimensionsLabel;
-}
-
-QLabel &StatusBar::sizeLabel()
-{
-    return m_sizeLabel;
-}
-
-QLabel &StatusBar::zoomLabel()
-{
-    return m_zoomLabel;
+QString ByteSize::getUnit(enum ByteSize::SizeUnits unit) const {
+    return units[unit];
 }

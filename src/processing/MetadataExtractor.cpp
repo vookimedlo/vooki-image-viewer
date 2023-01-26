@@ -33,7 +33,7 @@ std::vector<QString> MetadataExtractor::m_orientationDescriptions = { "", // EXI
                                                                       tr("270°, mirrored", "Image Description")
 };
 
-const QString MetadataExtractor::m_unitByte = tr(" b", "Image Description - Units: byte");
+const QString MetadataExtractor::m_unitByte = tr(" B", "Image Description - Units: byte");
 const QString MetadataExtractor::m_unitMeter = tr(" m", "Image Description - Units: meter");
 const QString MetadataExtractor::m_unitPixel = tr(" px", "Image Description - Units: pixel");
 const QString MetadataExtractor::m_unitSecond = tr(" s", "Image Description - Units: second");
@@ -49,6 +49,9 @@ void MetadataExtractor::extract(const QString &filename, int width, int height)
     addInformation(tr("Size", "Image Properties"), fileInfo.size(), information, MetadataExtractor::m_unitByte);
     addInformation(tr("Width", "Image Properties"), width, information, MetadataExtractor::m_unitPixel);
     addInformation(tr("Height", "Image Properties"), height, information, MetadataExtractor::m_unitPixel);
+
+    emit imageSizeParsed(fileInfo.size());
+    emit imageDimensionsParsed(width, height);
 
     try
     {
