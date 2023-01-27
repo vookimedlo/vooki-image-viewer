@@ -35,9 +35,9 @@ public:
         TB,
     };
 
-    ByteSize(uint64_t size);
+    explicit ByteSize(uint64_t size);
 
-    std::pair<double, enum ByteSize::SizeUnits> humanReadableSize();
+    std::pair<double, enum ByteSize::SizeUnits> humanReadableSize() const;
     QString getUnit(enum ByteSize::SizeUnits unit) const;
 
 private:

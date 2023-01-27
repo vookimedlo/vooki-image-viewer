@@ -26,11 +26,11 @@ struct EnumClassArray : std::array<T, N>
 {
     template <typename I>
     T& operator[](const I& i) {
-        return std::array<T, N>::operator[](static_cast<typename std::underlying_type<I>::type>(i));
+        return std::array<T, N>::operator[](static_cast<typename std::underlying_type_t<I>>(i));
     }
 
     template <typename I>
     const T& operator[](const I& i) const {
-        return std::array<T, N>::operator[](static_cast<typename std::underlying_type<I>::type>(i));
+        return std::array<T, N>::operator[](static_cast<typename std::underlying_type_t<I>>(i));
     }
 };

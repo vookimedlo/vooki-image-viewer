@@ -25,10 +25,10 @@ ByteSize::ByteSize(uint64_t size) : m_size(size)
 {
 }
 
-std::pair<double, enum ByteSize::SizeUnits> ByteSize::humanReadableSize() {
+std::pair<double, enum ByteSize::SizeUnits> ByteSize::humanReadableSize() const {
     int i{};
-    double mantissa = m_size;
-    for (; mantissa >= 1024.; mantissa /= 1024., ++i);
+    long double mantissa = m_size;
+    for (; std::ceil(mantissa) >= 1024; mantissa /= 1024., ++i);
     mantissa = std::ceil(mantissa * 10.) / 10.;
     return {mantissa, SizeUnits{i}};
 }

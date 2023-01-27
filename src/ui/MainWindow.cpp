@@ -120,6 +120,8 @@ MainWindow::~MainWindow() = default;
 
 MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, const bool addToRecentFiles)
 {
+    m_ui.statusBar->clearLabels();
+
     if (QFileInfo info(path); info.exists())
     {
         if (info.isReadable())
