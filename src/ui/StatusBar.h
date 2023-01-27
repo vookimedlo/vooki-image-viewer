@@ -23,6 +23,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QFrame>
 #include <QLabel>
 #include <QStatusBar>
+#include <memory>
 
 class StatusBar : public QStatusBar
 {
@@ -35,7 +36,7 @@ public:
     [[nodiscard]] QLabel &zoomLabel();
 
 protected:
-    QFrame* createVerticalLine();
+    std::unique_ptr<QFrame> createVerticalLine();
 
 private:
     QLabel m_dimensionsLabel{this};

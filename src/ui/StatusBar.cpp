@@ -24,15 +24,15 @@ StatusBar::StatusBar(QWidget *parent)
                                         : QStatusBar(parent)
 {
     addPermanentWidget(&m_dimensionsLabel);
-    addPermanentWidget(createVerticalLine());
+    addPermanentWidget(createVerticalLine().release());
     addPermanentWidget(&m_sizeLabel);
-    addPermanentWidget(createVerticalLine());
+    addPermanentWidget(createVerticalLine().release());
     addPermanentWidget(&m_zoomLabel);
 }
 
-QFrame* StatusBar::createVerticalLine()
+std::unique_ptr<QFrame> StatusBar::createVerticalLine()
 {
-    auto line = new QFrame(this);
+    auto line = std::make_unique<QFrame>(this);
     line->setObjectName(QString::fromUtf8("line"));
     line->setGeometry(QRect(320, 150, 118, 3));
     line->setFrameShape(QFrame::VLine);
