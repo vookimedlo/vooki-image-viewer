@@ -54,3 +54,11 @@ QLabel &StatusBar::zoomLabel()
 {
     return m_zoomLabel;
 }
+
+void StatusBar::clearLabels()
+{
+    showMessage("");
+    m_sizeLabel.clear();
+    m_dimensionsLabel.clear();
+    m_zoomLabel.clear();
+}

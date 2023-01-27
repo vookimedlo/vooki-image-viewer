@@ -35,6 +35,8 @@ public:
     [[nodiscard]] QLabel &sizeLabel();
     [[nodiscard]] QLabel &zoomLabel();
 
+    void clearLabels();
+
 protected:
     std::unique_ptr<QFrame> createVerticalLine();
 
