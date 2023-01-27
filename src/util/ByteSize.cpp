@@ -19,6 +19,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #include "ByteSize.h"
+#include <cfenv>
 #include <cmath>
 
 ByteSize::ByteSize(uint64_t size) : m_size(size)
@@ -27,8 +28,9 @@ ByteSize::ByteSize(uint64_t size) : m_size(size)
 
 std::pair<double, enum ByteSize::SizeUnits> ByteSize::humanReadableSize() const {
     int i{};
-    long double mantissa = m_size;
-    for (; std::ceil(mantissa) >= 1024; mantissa /= 1024., ++i);
+    long double mantissa = static_cast<long double>(m_size);
+    std::fesetround(FE_DOWNWARD);
+    for (; std::llrint(mantissa) >= 1024; mantissa /= 1024., ++i);
     mantissa = std::ceil(mantissa * 10.) / 10.;
     return {mantissa, SizeUnits{i}};
 }
