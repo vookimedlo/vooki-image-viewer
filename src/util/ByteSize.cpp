@@ -28,7 +28,7 @@ ByteSize::ByteSize(uint64_t size) : m_size(size)
 
 std::pair<double, enum ByteSize::SizeUnits> ByteSize::humanReadableSize() const {
     int i{};
-    long double mantissa = static_cast<long double>(m_size);
+    auto mantissa = static_cast<long double>(m_size);
     std::fesetround(FE_DOWNWARD);
     for (; std::llrint(mantissa) >= 1024; mantissa /= 1024., ++i);
     mantissa = std::ceil(mantissa * 10.) / 10.;
