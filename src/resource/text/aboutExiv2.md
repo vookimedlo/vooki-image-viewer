@@ -1,8 +1,8 @@
-# x265
+# Exiv2
 
 -----------------
 
-- WWW: https://github.com/videolan/x265
+- WWW: https://github.com/Exiv2/exiv2
 - License: [GPLv2][1]
 
 -----------------
