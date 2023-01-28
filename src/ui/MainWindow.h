@@ -97,5 +97,6 @@ private:
         bool isFileSystemNavigationVisible;
         bool isStatusBarVisible;
         bool isToolBarVisible;
+        bool isInformationVisible;
     } m_widgetVisibilityPriorFullscreen;
 };

@@ -8,7 +8,7 @@
     <x>0</x>
     <y>0</y>
     <width>726</width>
-    <height>423</height>
+    <height>444</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -207,6 +207,16 @@
                 </property>
                </widget>
               </item>
+              <item>
+               <widget class="QCheckBox" name="checkBoxWindowHideInformation">
+                <property name="whatsThis">
+                 <string notr="true">viv/window/hide/information</string>
+                </property>
+                <property name="text">
+                 <string>Hide image information</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>
@@ -249,6 +259,19 @@
                 </property>
                 <property name="text">
                  <string>Hide filesystem navigation</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBoxFullscreenHideInformation">
+                <property name="whatsThis">
+                 <string notr="true">viv/fullscreen/hide/information</string>
+                </property>
+                <property name="text">
+                 <string>Hide image information</string>
                 </property>
                 <property name="checked">
                  <bool>true</bool>

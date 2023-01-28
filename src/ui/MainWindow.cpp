@@ -99,8 +99,10 @@ MainWindow::MainWindow(QWidget *parent)
     const std::shared_ptr<QSettings> settings = Settings::userSettings();
     m_ui.toolBar->setHidden(settings->value(SETTINGS_WINDOW_HIDE_TOOLBAR).toBool());
     m_ui.dockWidget->setHidden(settings->value(SETTINGS_WINDOW_HIDE_NAVIGATION).toBool());
+    m_ui.dockInfoWidget->setHidden(settings->value(SETTINGS_WINDOW_HIDE_INFORMATION).toBool());
     m_ui.toolBar->toggleViewAction()->setChecked(!settings->value(SETTINGS_WINDOW_HIDE_TOOLBAR).toBool());
     m_ui.dockWidget->toggleViewAction()->setChecked(!settings->value(SETTINGS_WINDOW_HIDE_NAVIGATION).toBool());
+    m_ui.dockInfoWidget->toggleViewAction()->setChecked(!settings->value(SETTINGS_WINDOW_HIDE_INFORMATION).toBool());
 
     if (settings->value(SETTINGS_IMAGE_FITIMAGETOWINDOW).toBool())
         m_ui.actionFitToWindow->setChecked(true);
@@ -372,6 +374,11 @@ void MainWindow::onFullScreenToggled([[maybe_unused]] bool toggled)
             m_ui.dockWidget->show();
         else
             m_ui.dockWidget->hide();
+        m_ui.dockInfoWidget->toggleViewAction()->setChecked(m_widgetVisibilityPriorFullscreen.isInformationVisible);
+        if (m_widgetVisibilityPriorFullscreen.isInformationVisible)
+            m_ui.dockInfoWidget->show();
+        else
+            m_ui.dockInfoWidget->hide();
         m_ui.actionStatusBar->setChecked(m_widgetVisibilityPriorFullscreen.isStatusBarVisible);
         if (m_widgetVisibilityPriorFullscreen.isStatusBarVisible)
             m_ui.statusBar->show();
@@ -382,6 +389,7 @@ void MainWindow::onFullScreenToggled([[maybe_unused]] bool toggled)
     {
         m_widgetVisibilityPriorFullscreen.isToolBarVisible = m_ui.toolBar->toggleViewAction()->isChecked();
         m_widgetVisibilityPriorFullscreen.isFileSystemNavigationVisible = m_ui.dockWidget->toggleViewAction()->isChecked();
+        m_widgetVisibilityPriorFullscreen.isInformationVisible = m_ui.dockInfoWidget->toggleViewAction()->isChecked();
         m_widgetVisibilityPriorFullscreen.isStatusBarVisible = m_ui.actionStatusBar->isChecked();
 
         const std::shared_ptr<QSettings> settings = Settings::userSettings();
@@ -395,6 +403,12 @@ void MainWindow::onFullScreenToggled([[maybe_unused]] bool toggled)
         {
             m_ui.dockWidget->toggleViewAction()->setChecked(false);
             m_ui.dockWidget->hide();
+        }
+
+        if (settings->value(SETTINGS_FULLSCREEN_HIDE_INFORMATION).toBool())
+        {
+            m_ui.dockInfoWidget->toggleViewAction()->setChecked(false);
+            m_ui.dockInfoWidget->hide();
         }
 
         if (settings->value(SETTINGS_FULLSCREEN_HIDE_STATUSBAR).toBool())

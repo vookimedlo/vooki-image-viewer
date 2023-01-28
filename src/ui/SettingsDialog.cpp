@@ -92,9 +92,11 @@ void SettingsDialog::initializeUI(std::shared_ptr<QSettings> settings)
     m_uiSettingsDialog.checkBoxWindowHideStatusbar->setChecked(settings->value(m_uiSettingsDialog.checkBoxWindowHideStatusbar->whatsThis()).toBool());
     m_uiSettingsDialog.checkBoxWindowHideToolbar->setChecked(settings->value(m_uiSettingsDialog.checkBoxWindowHideToolbar->whatsThis()).toBool());
     m_uiSettingsDialog.checkBoxWindowHideNavigation->setChecked(settings->value(m_uiSettingsDialog.checkBoxWindowHideNavigation->whatsThis()).toBool());
+    m_uiSettingsDialog.checkBoxWindowHideInformation->setChecked(settings->value(m_uiSettingsDialog.checkBoxWindowHideInformation->whatsThis()).toBool());
     m_uiSettingsDialog.checkBoxFullscreenHideStatusbar->setChecked(settings->value(m_uiSettingsDialog.checkBoxFullscreenHideStatusbar->whatsThis()).toBool());
     m_uiSettingsDialog.checkBoxFullscreenHideToolbar->setChecked(settings->value(m_uiSettingsDialog.checkBoxFullscreenHideToolbar->whatsThis()).toBool());
     m_uiSettingsDialog.checkBoxFullscreenHideNavigation->setChecked(settings->value(m_uiSettingsDialog.checkBoxFullscreenHideNavigation->whatsThis()).toBool());
+    m_uiSettingsDialog.checkBoxFullscreenHideInformation->setChecked(settings->value(m_uiSettingsDialog.checkBoxFullscreenHideInformation->whatsThis()).toBool());
     m_uiSettingsDialog.checkBoxRemeberRecentImages->setChecked(settings->value(m_uiSettingsDialog.checkBoxRemeberRecentImages->whatsThis()).toBool());
     m_uiSettingsDialog.checkBoxImageFitToWindow->setChecked(settings->value(m_uiSettingsDialog.checkBoxImageFitToWindow->whatsThis()).toBool());
     m_uiSettingsDialog.checkBoxImageDrawBorder->setChecked(settings->value(m_uiSettingsDialog.checkBoxImageDrawBorder->whatsThis()).toBool());
@@ -121,9 +123,11 @@ void SettingsDialog::onAccept()
     settings->setValue(m_uiSettingsDialog.checkBoxWindowHideStatusbar->whatsThis(), m_uiSettingsDialog.checkBoxWindowHideStatusbar->isChecked());
     settings->setValue(m_uiSettingsDialog.checkBoxWindowHideToolbar->whatsThis(), m_uiSettingsDialog.checkBoxWindowHideToolbar->isChecked());
     settings->setValue(m_uiSettingsDialog.checkBoxWindowHideNavigation->whatsThis(), m_uiSettingsDialog.checkBoxWindowHideNavigation->isChecked());
+    settings->setValue(m_uiSettingsDialog.checkBoxWindowHideInformation->whatsThis(), m_uiSettingsDialog.checkBoxWindowHideInformation->isChecked());
     settings->setValue(m_uiSettingsDialog.checkBoxFullscreenHideStatusbar->whatsThis(), m_uiSettingsDialog.checkBoxFullscreenHideStatusbar->isChecked());
     settings->setValue(m_uiSettingsDialog.checkBoxFullscreenHideToolbar->whatsThis(), m_uiSettingsDialog.checkBoxFullscreenHideToolbar->isChecked());
     settings->setValue(m_uiSettingsDialog.checkBoxFullscreenHideNavigation->whatsThis(), m_uiSettingsDialog.checkBoxFullscreenHideNavigation->isChecked());
+    settings->setValue(m_uiSettingsDialog.checkBoxFullscreenHideInformation->whatsThis(), m_uiSettingsDialog.checkBoxFullscreenHideInformation->isChecked());
     settings->setValue(m_uiSettingsDialog.checkBoxRemeberRecentImages->whatsThis(), m_uiSettingsDialog.checkBoxRemeberRecentImages->isChecked());
     settings->setValue(m_uiSettingsDialog.checkBoxImageFitToWindow->whatsThis(), m_uiSettingsDialog.checkBoxImageFitToWindow->isChecked());
     settings->setValue(m_uiSettingsDialog.checkBoxImageDrawBorder->whatsThis(), m_uiSettingsDialog.checkBoxImageDrawBorder->isChecked());
