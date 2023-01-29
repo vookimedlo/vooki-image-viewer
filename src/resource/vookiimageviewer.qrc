@@ -46,6 +46,8 @@
     <qresource prefix="/text">
         <file alias="changelog">text/changelog.md</file>
         <file alias="aboutapp">text/aboutApp.md</file>
+        <file alias="aboutexiv2">text/aboutExiv2.md</file>
+        <file alias="aboutexpat">text/aboutExpat.md</file>
         <file alias="aboutopenclipart">text/aboutOpenClipart.md</file>
         <file alias="aboutqt">text/aboutQt.md</file>
         <file alias="abouticon54">text/aboutIcon54.md</file>

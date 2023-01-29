@@ -19,19 +19,24 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #include "ImageAreaWidget.h"
-#include "support/Settings.h"
-#include "support/SettingsStrings.h"
 #include <QDebug>
+#include <QFile>
 #include <QGuiApplication>
 #include <QPaintEvent>
 #include <QPainter>
 #include <cmath>
+#include "support/Settings.h"
+#include "support/SettingsStrings.h"
+#include "MainWindow.h"
+#include "../processing/MetadataExtractor.h"
+
 
 ImageAreaWidget::ImageAreaWidget(QWidget *parent)
                                         : QWidget(parent)
 {
     m_originalImage.fill(qRgb(0, 0, 0));
     m_finalImage.fill(qRgb(0, 0, 0));
+    QImageReader::setAllocationLimit(ImageAreaWidget::m_maxAllocationImageSize);
 }
 
 ImageAreaWidget::~ImageAreaWidget() noexcept
@@ -60,6 +65,25 @@ bool ImageAreaWidget::showImage(const QString &fileName)
         return false;
     }
 
+    MetadataExtractor metadataExtractor;
+    auto connection = connect(&metadataExtractor,
+                              &MetadataExtractor::imageInformationParsed,
+                              this,
+                              [this](const std::vector<std::pair<QString, QString>>& information) {
+                                  emit imageInformationParsed(information);
+                              });
+
+    auto connectionSize = connect(&metadataExtractor,
+                                  &MetadataExtractor::imageSizeParsed,
+                                  this,
+                                  [this](const uint64_t &size) {
+                                      emit imageSizeChanged(size);
+                                  });
+
+    metadataExtractor.extract(fileName, m_originalImage.width(), m_originalImage.height());
+
+    emit imageDimensionsChanged(m_originalImage.width(), m_originalImage.height());
+
     m_flipHorizontally = m_flipVertically = false;
     m_imageOffsetX = m_imageOffsetY = 0;
     m_rotateIndex.reset(0);
@@ -75,6 +99,8 @@ bool ImageAreaWidget::showImage(const QString &fileName)
             QTimer::singleShot(delay, this, SLOT(onNextImage()));
     }
 
+    disconnect(connection);
+    disconnect(connectionSize);
     return true;
 }
 

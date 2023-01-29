@@ -36,7 +36,12 @@
        </property>
        <item>
         <property name="text">
-         <string>Qt Framework</string>
+         <string>Exiv2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Expat</string>
         </property>
        </item>
        <item>
@@ -46,17 +51,12 @@
        </item>
        <item>
         <property name="text">
-         <string>Open Clipart Library</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
          <string>KDE KImageFormats</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>LibRaw</string>
+         <string>KDMacTouchBar</string>
         </property>
        </item>
        <item>
@@ -71,17 +71,27 @@
        </item>
        <item>
         <property name="text">
-         <string>x265</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>KDMacTouchBar</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
          <string>libjpeg-turbo</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>LibRaw</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Open Clipart Library</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Qt Framework</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>x265</string>
         </property>
        </item>
        <item>

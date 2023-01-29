@@ -35,9 +35,11 @@ void Settings::initializeSettings()
     defaultSettings.setValue(SETTINGS_WINDOW_HIDE_STATUSBAR, false);
     defaultSettings.setValue(SETTINGS_WINDOW_HIDE_TOOLBAR, false);
     defaultSettings.setValue(SETTINGS_WINDOW_HIDE_NAVIGATION, false);
+    defaultSettings.setValue(SETTINGS_WINDOW_HIDE_INFORMATION, false);
     defaultSettings.setValue(SETTINGS_FULLSCREEN_HIDE_STATUSBAR, true);
     defaultSettings.setValue(SETTINGS_FULLSCREEN_HIDE_TOOLBAR, true);
     defaultSettings.setValue(SETTINGS_FULLSCREEN_HIDE_NAVIGATION, true);
+    defaultSettings.setValue(SETTINGS_FULLSCREEN_HIDE_INFORMATION, true);
     defaultSettings.setValue(SETTINGS_IMAGE_REMEMBER_RECENT, true);
     defaultSettings.setValue(SETTINGS_IMAGE_FITIMAGETOWINDOW, false);
     defaultSettings.setValue(SETTINGS_IMAGE_BORDER_DRAW, false);

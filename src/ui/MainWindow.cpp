@@ -23,6 +23,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "../model/FileSystemSortFilterProxyModel.h"
 #include "../ui/support/Settings.h"
 #include "../ui/support/SettingsStrings.h"
+#include "../util//ByteSize.h"
 #include "../util/misc.h"
 #include "AboutComponentsDialog.h"
 #include "ReleaseNotesDialog.h"
@@ -73,6 +74,10 @@ MainWindow::MainWindow(QWidget *parent)
     m_ui.dockWidget->toggleViewAction()->setWhatsThis("viv/shortcut/window/navigation");
     m_ui.menuShow->addAction(m_ui.dockWidget->toggleViewAction());
 
+    m_ui.dockInfoWidget->toggleViewAction()->setShortcut(QKeySequence(Qt::Key_E));
+    m_ui.dockInfoWidget->toggleViewAction()->setWhatsThis("viv/shortcut/window/info");
+    m_ui.menuShow->addAction(m_ui.dockInfoWidget->toggleViewAction());
+
     m_sortFileSystemModel->setSourceModel(m_fileSystemModel);
 
     m_fileSystemModel->setRootPath(QDir::currentPath());
@@ -94,8 +99,10 @@ MainWindow::MainWindow(QWidget *parent)
     const std::shared_ptr<QSettings> settings = Settings::userSettings();
     m_ui.toolBar->setHidden(settings->value(SETTINGS_WINDOW_HIDE_TOOLBAR).toBool());
     m_ui.dockWidget->setHidden(settings->value(SETTINGS_WINDOW_HIDE_NAVIGATION).toBool());
+    m_ui.dockInfoWidget->setHidden(settings->value(SETTINGS_WINDOW_HIDE_INFORMATION).toBool());
     m_ui.toolBar->toggleViewAction()->setChecked(!settings->value(SETTINGS_WINDOW_HIDE_TOOLBAR).toBool());
     m_ui.dockWidget->toggleViewAction()->setChecked(!settings->value(SETTINGS_WINDOW_HIDE_NAVIGATION).toBool());
+    m_ui.dockInfoWidget->toggleViewAction()->setChecked(!settings->value(SETTINGS_WINDOW_HIDE_INFORMATION).toBool());
 
     if (settings->value(SETTINGS_IMAGE_FITIMAGETOWINDOW).toBool())
         m_ui.actionFitToWindow->setChecked(true);
@@ -115,6 +122,8 @@ MainWindow::~MainWindow() = default;
 
 MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, const bool addToRecentFiles)
 {
+    m_ui.statusBar->clearLabels();
+
     if (QFileInfo info(path); info.exists())
     {
         if (info.isReadable())
@@ -365,6 +374,11 @@ void MainWindow::onFullScreenToggled([[maybe_unused]] bool toggled)
             m_ui.dockWidget->show();
         else
             m_ui.dockWidget->hide();
+        m_ui.dockInfoWidget->toggleViewAction()->setChecked(m_widgetVisibilityPriorFullscreen.isInformationVisible);
+        if (m_widgetVisibilityPriorFullscreen.isInformationVisible)
+            m_ui.dockInfoWidget->show();
+        else
+            m_ui.dockInfoWidget->hide();
         m_ui.actionStatusBar->setChecked(m_widgetVisibilityPriorFullscreen.isStatusBarVisible);
         if (m_widgetVisibilityPriorFullscreen.isStatusBarVisible)
             m_ui.statusBar->show();
@@ -375,6 +389,7 @@ void MainWindow::onFullScreenToggled([[maybe_unused]] bool toggled)
     {
         m_widgetVisibilityPriorFullscreen.isToolBarVisible = m_ui.toolBar->toggleViewAction()->isChecked();
         m_widgetVisibilityPriorFullscreen.isFileSystemNavigationVisible = m_ui.dockWidget->toggleViewAction()->isChecked();
+        m_widgetVisibilityPriorFullscreen.isInformationVisible = m_ui.dockInfoWidget->toggleViewAction()->isChecked();
         m_widgetVisibilityPriorFullscreen.isStatusBarVisible = m_ui.actionStatusBar->isChecked();
 
         const std::shared_ptr<QSettings> settings = Settings::userSettings();
@@ -388,6 +403,12 @@ void MainWindow::onFullScreenToggled([[maybe_unused]] bool toggled)
         {
             m_ui.dockWidget->toggleViewAction()->setChecked(false);
             m_ui.dockWidget->hide();
+        }
+
+        if (settings->value(SETTINGS_FULLSCREEN_HIDE_INFORMATION).toBool())
+        {
+            m_ui.dockInfoWidget->toggleViewAction()->setChecked(false);
+            m_ui.dockInfoWidget->hide();
         }
 
         if (settings->value(SETTINGS_FULLSCREEN_HIDE_STATUSBAR).toBool())
@@ -466,10 +487,26 @@ void MainWindow::onZoomOutTriggered() const
     m_ui.imageAreaWidget->onZoomImageOutTriggered(0.10);
 }
 
+void MainWindow::onImageDimensionsChanged(int width, int height) const
+{
+    //: Used in the statusbar showing the image dimensions. Example: "1024x760"
+    m_ui.statusBar->dimensionsLabel().setText(tr("%1x%2").arg(QString::number(width), QString::number(height)));
+}
+
+void MainWindow::onImageSizeChanged(uint64_t size) const
+{
+    ByteSize byteSize{size};
+    const auto [newSize, unit] = byteSize.humanReadableSize();
+    const auto unitString = byteSize.getUnit(unit);
+
+    //: Used in the statusbar showing the image size. Example: "103.4 kB"
+    m_ui.statusBar->sizeLabel().setText(tr("%1 %2").arg(QString::number(newSize), unitString));
+}
+
 void MainWindow::onZoomPercentageChanged(const qreal value) const
 {
-    //: Used in the statusbar showing the zooming percentage. Example: "Zoom: 12%"
-    m_ui.statusBar->rightLabel().setText(tr("Zoom: %1%").arg(QString::number(static_cast<int>(value * 100))));
+    //: Used in the statusbar showing the zooming percentage. Example: "12%"
+    m_ui.statusBar->zoomLabel().setText(tr("%1%").arg(QString::number(static_cast<int>(value * 100))));
 }
 
 void MainWindow::onHomeDirClicked() const

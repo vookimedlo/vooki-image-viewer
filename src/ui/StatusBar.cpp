@@ -23,10 +23,42 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 StatusBar::StatusBar(QWidget *parent)
                                         : QStatusBar(parent)
 {
-    addPermanentWidget(&m_rightLabel);
+    addPermanentWidget(&m_dimensionsLabel);
+    addPermanentWidget(createVerticalLine().release());
+    addPermanentWidget(&m_sizeLabel);
+    addPermanentWidget(createVerticalLine().release());
+    addPermanentWidget(&m_zoomLabel);
 }
 
-QLabel &StatusBar::rightLabel()
+std::unique_ptr<QFrame> StatusBar::createVerticalLine()
 {
-    return m_rightLabel;
+    auto line = std::make_unique<QFrame>(this);
+    line->setObjectName(QString::fromUtf8("line"));
+    line->setGeometry(QRect(320, 150, 118, 3));
+    line->setFrameShape(QFrame::VLine);
+    line->setFrameShadow(QFrame::Sunken);
+    return line;
+}
+
+QLabel &StatusBar::dimensionsLabel()
+{
+    return m_dimensionsLabel;
+}
+
+QLabel &StatusBar::sizeLabel()
+{
+    return m_sizeLabel;
+}
+
+QLabel &StatusBar::zoomLabel()
+{
+    return m_zoomLabel;
+}
+
+void StatusBar::clearLabels()
+{
+    showMessage("");
+    m_sizeLabel.clear();
+    m_dimensionsLabel.clear();
+    m_zoomLabel.clear();
 }

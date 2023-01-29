@@ -26,9 +26,18 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QTimer>
 #include <QWidget>
 #include <cstdint>
+#include <list>
+#include <utility>
+#include <vector>
+
 
 // Forward declarations
 class QNativeGestureEvent;
+
+namespace Exiv2
+{
+    class Image;
+}
 
 class ImageAreaWidget : public QWidget
 {
@@ -44,6 +53,9 @@ public:
     void repaintWithTransformations();
 
 signals:
+    void imageInformationParsed(const std::vector<std::pair<QString, QString>>& information);
+    void imageDimensionsChanged(int width, int height);
+    void imageSizeChanged(uint64_t size);
     void zoomPercentageChanged(qreal value);
 
 public slots:

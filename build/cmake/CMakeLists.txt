@@ -113,9 +113,11 @@ SET(SOURCES
     ../../src/application/main.cpp
     ../../src/model/FileSystemSortFilterProxyModel.cpp
     ../../src/model/ImageCatalog.cpp
+    ../../src/processing/MetadataExtractor.cpp
     ../../src/ui/AboutComponentsDialog.cpp
     ../../src/ui/FileSystemTreeView.cpp
     ../../src/ui/ImageAreaWidget.cpp
+    ../../src/ui/InfoTableWidget.cpp
     ../../src/ui/MainWindow.cpp
     ../../src/ui/ReleaseNotesDialog.cpp
     ../../src/ui/SettingsDialog.cpp
@@ -125,6 +127,7 @@ SET(SOURCES
     ../../src/ui/support/RecentFileAction.cpp
     ../../src/ui/support/Settings.cpp
     ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp
+    ../../src/util/ByteSize.cpp
     ../../src/util/misc.cpp
 )
 
@@ -149,6 +152,11 @@ SET_PROPERTY(SOURCE "ui_SettingsDialog.h" PROPERTY SKIP_AUTOMOC ON)
 SET_PROPERTY(SOURCE "qrc_vookiimageviewer.cpp" PROPERTY SKIP_AUTOMOC ON)
 
 QT_RESOURCES(UI_RESOURCES ../../src/resource/vookiimageviewer.qrc)
+
+ADD_LIBRARY(exiv2wrapper STATIC ../../src/processing/Exiv2ImageAutoPtrWrapper.cpp)
+SET_TARGET_PROPERTIES(exiv2wrapper PROPERTIES CXX_STANDARD 11)
+TARGET_COMPILE_OPTIONS(exiv2wrapper PRIVATE
+        "$<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>:-Wno-deprecated>")
 
 if (APPLE)
     FIND_LIBRARY(APPKIT AppKit)
@@ -184,6 +192,16 @@ if (APPLE)
     GET_FILENAME_COMPONENT(PLIST_IN_ABSOLUTE_PATH platform/mac/support/MacOSXBundleInfo.plist.in ABSOLUTE)
     SET_TARGET_PROPERTIES(${APPLICATION_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${PLIST_IN_ABSOLUTE_PATH})
 
+    FIND_PACKAGE(ZLIB REQUIRED)
+    FIND_PACKAGE(Iconv REQUIRED)
+    FIND_PACKAGE(EXPAT REQUIRED)
+
+    SET(EXIV2_LOC "3rdPartyLibs/Exiv2-0.27.6")
+    GET_FILENAME_COMPONENT(EXIV2 platform/mac/${EXIV2_LOC} ABSOLUTE)
+    SET(CMAKE_CXX_FLAGS "-I${EXIV2}/include ${CMAKE_CXX_FLAGS}")
+    SET(CMAKE_EXE_LINKER_FLAGS "-L${EXIV2}/lib ${CMAKE_EXE_LINKER_FLAGS}")
+
+    TARGET_LINK_LIBRARIES(VookiImageViewer libexiv2.a libexiv2-xmp.a ZLIB::ZLIB Iconv::Iconv EXPAT::EXPAT)
 elseif(WIN32)
     SET(SOURCES
         ${SOURCES}
@@ -197,6 +215,18 @@ elseif(WIN32)
         ${SOURCES}
         ${UI_HEADERS}
         ${UI_RESOURCES})
+
+    SET(EXIV2_LOC "3rdPartyLibs/Exiv2-0.27.6")
+    GET_FILENAME_COMPONENT(EXIV2 platform/windows/${EXIV2_LOC} ABSOLUTE)
+    SET(ZLIB_LOC "3rdPartyLibs/zlib-1.2.13")
+    GET_FILENAME_COMPONENT(ZLIB platform/windows/${ZLIB_LOC} ABSOLUTE)
+    SET(EXPAT_LOC "3rdPartyLibs/expat-2.5.0")
+    GET_FILENAME_COMPONENT(EXPAT platform/windows/${EXPAT_LOC} ABSOLUTE)
+
+    SET(CMAKE_CXX_FLAGS "-I${EXIV2}/include -I${ZLIB}/include -I${EXPAT}/include ${CMAKE_CXX_FLAGS}")
+    SET(CMAKE_EXE_LINKER_FLAGS "/LIBPATH:${EXIV2}/lib /LIBPATH:${ZLIB}/lib /LIBPATH:${EXPAT}/lib ${CMAKE_EXE_LINKER_FLAGS}")
+
+    TARGET_LINK_LIBRARIES(VookiImageViewer exiv2.lib exiv2-xmp.lib zlibstatic.lib libexpatMD.lib wsock32 ws2_32 Psapi.lib exiv2wrapper)
 else()
     SET(SOURCES
         ${SOURCES}
@@ -208,10 +238,14 @@ else()
         ${SOURCES}
         ${UI_HEADERS}
         ${UI_RESOURCES})
+
+    FIND_LIBRARY(LIBEXIV2 NAMES libexiv2 exiv2 REQUIRED)
+    TARGET_LINK_LIBRARIES(VookiImageViewer ${LIBEXIV2})
 endif()
 
 TARGET_LINK_LIBRARIES(VookiImageViewer ${QT_ALL_LIBS})
 TARGET_LINK_LIBRARIES(VookiImageViewer ${OS_LIBS})
+TARGET_LINK_LIBRARIES(VookiImageViewer exiv2wrapper)
 
 #### Translations ####
 #
