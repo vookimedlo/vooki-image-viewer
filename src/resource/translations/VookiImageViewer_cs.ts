@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="cs">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="cs">
 <context>
     <name>AboutComponentsDialog</name>
     <message>
@@ -9,16 +11,56 @@
     </message>
     <message>
         <location filename="../../ui/forms/AboutComponentsDialog.ui" line="39"/>
+        <source>Exiv2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="44"/>
+        <source>Expat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="64"/>
+        <source>libde265</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="69"/>
+        <source>libheif</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="74"/>
+        <source>libjpeg-turbo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="79"/>
+        <source>LibRaw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="89"/>
         <source>Qt Framework</source>
         <translation>Qt knihovna</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="44"/>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="94"/>
+        <source>x265</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="99"/>
+        <source>zlib</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="49"/>
         <source>Icon54.com</source>
         <translation>Icon54.com</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="49"/>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="84"/>
         <source>Open Clipart Library</source>
         <translation>Open Clipart knihovna</translation>
     </message>
@@ -28,27 +70,23 @@
         <translation>KDE KImageFormats</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="59"/>
         <source>LibRAW</source>
-        <translation>LibRAW</translation>
+        <translation type="vanished">LibRAW</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="64"/>
         <source>Libde265</source>
-        <translation>Libde265</translation>
+        <translation type="vanished">Libde265</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="69"/>
         <source>Libheif</source>
-        <translation>Libheif</translation>
+        <translation type="vanished">Libheif</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="74"/>
         <source>X265</source>
-        <translation>X265</translation>
+        <translation type="vanished">X265</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="79"/>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="59"/>
         <source>KDMacTouchBar</source>
         <translation>KDMacTouchBar</translation>
     </message>
@@ -415,42 +453,42 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../../application/Application.cpp" line="36"/>
+        <location filename="../../application/Application.cpp" line="34"/>
         <source>Services</source>
         <translation>Služby</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="37"/>
+        <location filename="../../application/Application.cpp" line="35"/>
         <source>Hide %1</source>
         <translation>Schovat %1</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="38"/>
+        <location filename="../../application/Application.cpp" line="36"/>
         <source>Hide Others</source>
         <translation>Schovat ostatní</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="39"/>
+        <location filename="../../application/Application.cpp" line="37"/>
         <source>Show %1</source>
         <translation>Zobrazit %1</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="40"/>
+        <location filename="../../application/Application.cpp" line="38"/>
         <source>Show All</source>
         <translation>Zobrazit vše</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="41"/>
+        <location filename="../../application/Application.cpp" line="39"/>
         <source>About %1</source>
         <translation>O %1</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="42"/>
+        <location filename="../../application/Application.cpp" line="40"/>
         <source>Quit %1</source>
         <translation>Ukončit %1</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="43"/>
+        <location filename="../../application/Application.cpp" line="41"/>
         <source>Preferences...</source>
         <translation>Nastavení...</translation>
     </message>
@@ -524,9 +562,13 @@
         <translation>Zobrazit</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="159"/>
         <source>FileSystem Navigation</source>
-        <translation>Navigace v souborovém systému</translation>
+        <translation type="vanished">Navigace v souborovém systému</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="159"/>
+        <source>File System Navigation</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="184"/>
@@ -549,97 +591,112 @@
         <translation>Nástrojová lišta</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="323"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="319"/>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="351"/>
+        <source>Name</source>
+        <translation type="unfinished">Název</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="356"/>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/MainWindow.ui" line="370"/>
         <source>&amp;Quit</source>
         <extracomment>Menu item: &quot;File-&gt;Quit&quot;</extracomment>
         <translation>&amp;Ukončit</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="326"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="373"/>
         <source>Quit The Application</source>
         <extracomment>Toolbar action tool tip</extracomment>
         <translation>Ukončit aplikaci</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="350"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="397"/>
         <source>&amp;FullScreen</source>
         <extracomment>Menu item: &quot;View-&gt;FullScreen&quot;</extracomment>
         <translation>&amp;Celoobrazový režim</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="353"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="400"/>
         <source>Show image in FullScreen mode</source>
         <extracomment>Toolbar action tool tip</extracomment>
         <translation>Zobrazit obrázek v celoobrazovém režimu</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="370"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="417"/>
         <source>&amp;About...</source>
         <extracomment>Menu item: &quot;Help-&gt;About...&quot;</extracomment>
         <translation>&amp;O ...</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="373"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="420"/>
         <source>About...</source>
         <translation>O ...</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="376"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="423"/>
         <source>About Application...</source>
         <extracomment>Toolbar action tool tip</extracomment>
         <translation>O aplikaci ...</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="397"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="444"/>
         <source>Zoom &amp;In</source>
         <extracomment>Menu item: &quot;View-&gt;Zoom-&gt;Zoom In&quot;</extracomment>
         <translation>Z&amp;většit</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="400"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="447"/>
         <source>Zoom In</source>
         <extracomment>Toolbar action tool tip</extracomment>
         <translation>Zvětšit</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="421"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="468"/>
         <source>Zoom &amp;Out</source>
         <extracomment>Menu item: &quot;View-&gt;Zoom-&gt;Zoom Out&quot;</extracomment>
         <translation>Z&amp;menšit</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="424"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="471"/>
         <source>Zoom Out</source>
         <extracomment>Toolbar action tool tip</extracomment>
         <translation>Zmenšit</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="448"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="495"/>
         <source>Fi&amp;t to Window</source>
         <extracomment>Menu item: &quot;View-&gt;Zoom-&gt;Fit to Window&quot;</extracomment>
         <translation>&amp;Přizpůsobit velikost obrázku oknu</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="451"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="498"/>
         <source>Fit to Window</source>
         <extracomment>Toolbar action tool tip</extracomment>
         <translation>Přizpůsobit velikost obrázku oknu</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="474"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="521"/>
         <source>StatusBar</source>
         <extracomment>Menu item: &quot;Window-&gt;Show-&gt;StatusBar&quot;</extracomment>
         <translation>Stavový řádek</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="477"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="524"/>
         <source>Show/Hide StatusBar</source>
         <extracomment>Toolbar action tool tip</extracomment>
         <translation>Zobrazení/Schování stavového řádku</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="498"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="501"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="545"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="548"/>
         <source>Original Size</source>
         <extracomment>Menu item: &quot;View-&gt;Zoom-&gt;Original Size&quot;
 ----------
@@ -647,8 +704,8 @@ Toolbar action tool tip</extracomment>
         <translation>Původní velikost</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="522"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="769"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="569"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="816"/>
         <source>Left</source>
         <extracomment>Menu item: &quot;View-&gt;Rotate-&gt;Left&quot;
 ----------
@@ -656,15 +713,15 @@ Menu item: &quot;View-&gt;Scroll-&gt;Left&quot;</extracomment>
         <translation>Vlevo</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="525"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="528"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="572"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="575"/>
         <source>Rotate Left</source>
         <extracomment>Toolbar action tool tip</extracomment>
         <translation>Otočit vlevo</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="549"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="793"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="596"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="840"/>
         <source>Right</source>
         <extracomment>Menu item: &quot;View-&gt;Rotate-&gt;Right&quot;
 ----------
@@ -672,41 +729,41 @@ Menu item: &quot;View-&gt;Scroll-&gt;Right&quot;</extracomment>
         <translation>Vpravo</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="552"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="555"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="599"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="602"/>
         <source>Rotate Right</source>
         <extracomment>Toolbar action tool tip</extracomment>
         <translation>Otočit vpravo</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="576"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="623"/>
         <source>Horizontally</source>
         <extracomment>Menu item: &quot;View-&gt;Flip-&gt;Horizontally&quot;</extracomment>
         <translation>Vodorovně</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="579"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="582"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="626"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="629"/>
         <source>Flip Horizontally</source>
         <extracomment>Toolbar action tool tip</extracomment>
         <translation>Převrátit vodorovně</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="603"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="650"/>
         <source>Vertically</source>
         <extracomment>Menu item: &quot;View-&gt;Flip-&gt;Vertically&quot;</extracomment>
         <translation>Svisle</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="606"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="609"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="653"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="656"/>
         <source>Flip Vertically</source>
         <extracomment>Toolbar action tool tip</extracomment>
         <translation>Převrátit svisle</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="626"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="629"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="673"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="676"/>
         <source>About Qt...</source>
         <extracomment>Menu item: &quot;Help-&gt;About Qt...&quot;
 ----------
@@ -714,8 +771,8 @@ Toolbar action tool tip</extracomment>
         <translation>O Qt ...</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="643"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="649"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="690"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="696"/>
         <source>Preferences...</source>
         <extracomment>Menu item: &quot;File-&gt;Preferences...&quot;
 ----------
@@ -723,13 +780,13 @@ Toolbar action tool tip</extracomment>
         <translation>Nastavení ...</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="646"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="693"/>
         <source>Preferences</source>
         <translation>Nastavení</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="670"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="673"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="717"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="720"/>
         <source>Previous Image</source>
         <extracomment>Menu item: &quot;View-&gt;Navigation-&gt;Previous Image&quot;
 ----------
@@ -737,8 +794,8 @@ Toolbar action tool tip</extracomment>
         <translation>Předchozí obrázek</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="694"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="697"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="741"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="744"/>
         <source>Next Image</source>
         <extracomment>Menu item: &quot;View-&gt;Navigation-&gt;Next Image&quot;
 ----------
@@ -746,8 +803,8 @@ Toolbar action tool tip</extracomment>
         <translation>Další obrázek</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="714"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="717"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="761"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="764"/>
         <source>Clear History</source>
         <extracomment>Menu item: &quot;File-&gt;Recent Files-&gt;Clear History&quot;
 ----------
@@ -755,72 +812,72 @@ Toolbar action tool tip</extracomment>
         <translation>Vymazat historii</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="731"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="778"/>
         <source>Supported Image Formats...</source>
         <extracomment>Menu item: &quot;Help-&gt;Supported Image Formats...&quot;</extracomment>
         <translation>Podporované formáty obrázků ...</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="734"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="781"/>
         <source>Supported Image Formats</source>
         <extracomment>Toolbar action tool tip</extracomment>
         <translation>Podporované formáty obrázků</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="748"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="795"/>
         <source>About Components...</source>
         <extracomment>Menu item: &quot;Help-&gt;About Components...&quot;</extracomment>
         <translation>O komponentách ...</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="751"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="798"/>
         <source>About Components</source>
         <extracomment>Toolbar action tool tip</extracomment>
         <translation>O komponentách</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="772"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="775"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="819"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="822"/>
         <source>Scroll Left</source>
         <extracomment>Toolbar action tool tip</extracomment>
         <translation>Posunout vlevo</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="796"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="799"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="843"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="846"/>
         <source>Scroll Right</source>
         <extracomment>Toolbar action tool tip</extracomment>
         <translation>Posunout vpravo</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="817"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="864"/>
         <source>Up</source>
         <extracomment>Menu item: &quot;View-&gt;Scroll-&gt;Up&quot;</extracomment>
         <translation>Nahoru</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="820"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="823"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="867"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="870"/>
         <source>Scroll Up</source>
         <extracomment>Toolbar action tool tip</extracomment>
         <translation>Posunout nahoru</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="841"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="888"/>
         <source>Down</source>
         <extracomment>Menu item: &quot;View-&gt;Scroll-&gt;Down&quot;</extracomment>
         <translation>Dolu</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="844"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="847"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="891"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="894"/>
         <source>Scroll Down</source>
         <extracomment>Toolbar action tool tip</extracomment>
         <translation>Posunout dolu</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/MainWindow.ui" line="861"/>
-        <location filename="../../ui/forms/MainWindow.ui" line="864"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="908"/>
+        <location filename="../../ui/forms/MainWindow.ui" line="911"/>
         <source>Release Notes...</source>
         <extracomment>Menu item: &quot;Help-&gt;Release Notes...&quot;
 ----------
@@ -828,16 +885,186 @@ Toolbar action tool tip</extracomment>
         <translation>Poznámky k vydání ...</translation>
     </message>
     <message>
-        <location filename="../../ui/MainWindow.cpp" line="478"/>
         <source>Zoom: %1%</source>
         <extracomment>Used in the statusbar showing the zooming percentage. Example: &quot;Zoom: 12%&quot;</extracomment>
-        <translation>Zvětšení: %1 %</translation>
+        <translation type="vanished">Zvětšení: %1 %</translation>
+    </message>
+    <message>
+        <location filename="../../ui/MainWindow.cpp" line="493"/>
+        <source>%1x%2</source>
+        <extracomment>Used in the statusbar showing the image dimensions. Example: &quot;1024x760&quot;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/MainWindow.cpp" line="503"/>
+        <source>%1 %2</source>
+        <extracomment>Used in the statusbar showing the image size. Example: &quot;103.4 kB&quot;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/MainWindow.cpp" line="509"/>
+        <source>%1%</source>
+        <extracomment>Used in the statusbar showing the zooming percentage. Example: &quot;12%&quot;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MetadataExtractor</name>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="27"/>
+        <source>0°, mirrored</source>
+        <comment>Image Description</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="29"/>
+        <source>180°, mirrored</source>
+        <comment>Image Description</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="31"/>
+        <source>90°, mirrored</source>
+        <comment>Image Description</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="33"/>
+        <source>270°, mirrored</source>
+        <comment>Image Description</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="36"/>
+        <source> B</source>
+        <comment>Image Description - Units: byte</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="37"/>
+        <source> m</source>
+        <comment>Image Description - Units: meter</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="38"/>
+        <source> px</source>
+        <comment>Image Description - Units: pixel</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="39"/>
+        <source> s</source>
+        <comment>Image Description - Units: second</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="48"/>
+        <source>File name</source>
+        <comment>Image Properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="49"/>
+        <source>Size</source>
+        <comment>Image Properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="50"/>
+        <source>Width</source>
+        <comment>Image Properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="51"/>
+        <source>Height</source>
+        <comment>Image Properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="61"/>
+        <source>Orientation</source>
+        <comment>Image Properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="64"/>
+        <source>Date</source>
+        <comment>Image Properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="75"/>
+        <source>Flash</source>
+        <comment>Image Properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="77"/>
+        <source>ISO</source>
+        <comment>Image Properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="79"/>
+        <source>f-number</source>
+        <comment>Image Properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="80"/>
+        <source>Exposure time</source>
+        <comment>Image Properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="83"/>
+        <source>Shutter speed</source>
+        <comment>Image Properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="85"/>
+        <source>Focal length</source>
+        <comment>Image Properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="87"/>
+        <source>Camera maker</source>
+        <comment>Image Properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="88"/>
+        <source>Camera model</source>
+        <comment>Image Properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="89"/>
+        <source>Lens maker</source>
+        <comment>Image Properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="90"/>
+        <source>Lens model</source>
+        <comment>Image Properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="91"/>
+        <source>Lens focal length</source>
+        <comment>Image Properties</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QFileSystemModel</name>
     <message>
-        <location filename="../../application/Application.cpp" line="51"/>
+        <location filename="../../application/Application.cpp" line="49"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
@@ -845,17 +1072,17 @@ Toolbar action tool tip</extracomment>
 <context>
     <name>QPlatformTheme</name>
     <message>
-        <location filename="../../application/Application.cpp" line="46"/>
+        <location filename="../../application/Application.cpp" line="44"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="47"/>
+        <location filename="../../application/Application.cpp" line="45"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="48"/>
+        <location filename="../../application/Application.cpp" line="46"/>
         <source>Restore Defaults</source>
         <translation>Obnovit výchozí</translation>
     </message>
@@ -926,34 +1153,40 @@ Toolbar action tool tip</extracomment>
     </message>
     <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="183"/>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="225"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="235"/>
         <source>Hide statusbar</source>
         <translation>Schování stavového řádku</translation>
     </message>
     <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="196"/>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="238"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="248"/>
         <source>Hide toolbar</source>
         <translation>Schování nástrojové lišty</translation>
     </message>
     <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="206"/>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="251"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="261"/>
         <source>Hide filesystem navigation</source>
         <translation>Schování navigace souborového systému</translation>
     </message>
     <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="216"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="274"/>
+        <source>Hide image information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="226"/>
         <source>Switch to FullScreen</source>
         <translation>Přepnutí do celoobrazového režimu</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="269"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="292"/>
         <source>Shortcuts</source>
         <translation>Zkratky</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/SettingsDialog.ui" line="279"/>
+        <location filename="../../ui/forms/SettingsDialog.ui" line="302"/>
         <source>Shortcut</source>
         <translation>Zkratka</translation>
     </message>
@@ -967,17 +1200,16 @@ Toolbar action tool tip</extracomment>
         <translation>O aplikaci VookiImageViewer</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutDialog.ui" line="79"/>
         <source>qrc:/text/aboutapp</source>
-        <translation>qrc:/text/aboutapp</translation>
+        <translation type="vanished">qrc:/text/aboutapp</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutDialog.ui" line="117"/>
+        <location filename="../../ui/forms/AboutDialog.ui" line="123"/>
         <source>Version: %1</source>
         <translation>Verze: %1</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutDialog.ui" line="137"/>
+        <location filename="../../ui/forms/AboutDialog.ui" line="143"/>
         <source>&amp;Close</source>
         <translation>&amp;Zavřít</translation>
     </message>
@@ -985,7 +1217,7 @@ Toolbar action tool tip</extracomment>
 <context>
     <name>releaseNotesDialog</name>
     <message>
-        <location filename="../../ui/forms/ReleaseNotesDialog.ui" line="39"/>
+        <location filename="../../ui/forms/ReleaseNotesDialog.ui" line="44"/>
         <source>Release Notes</source>
         <extracomment>Title: Window</extracomment>
         <translation>Poznámky k vydání</translation>
