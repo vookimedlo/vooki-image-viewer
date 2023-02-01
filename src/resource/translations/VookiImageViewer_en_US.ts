@@ -998,6 +998,24 @@ Toolbar action tool tip</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="72"/>
+        <source>GPS Latitude</source>
+        <comment>Image Properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="74"/>
+        <source>GPS Longitude</source>
+        <comment>Image Properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="76"/>
+        <source>GPS Altitude</source>
+        <comment>Image Properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../../processing/MetadataExtractor.cpp" line="79"/>
         <source>Flash</source>
         <comment>Image Properties</comment>

@@ -996,6 +996,24 @@ Toolbar action tool tip</extracomment>
         <translation>Datum</translation>
     </message>
     <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="72"/>
+        <source>GPS Latitude</source>
+        <comment>Image Properties</comment>
+        <translation>GPS zeměpisná šířka</translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="74"/>
+        <source>GPS Longitude</source>
+        <comment>Image Properties</comment>
+        <translation>GPS zeměpisná délka</translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="76"/>
+        <source>GPS Altitude</source>
+        <comment>Image Properties</comment>
+        <translation>GPS nadmořská výška</translation>
+    </message>
+    <message>
         <location filename="../../processing/MetadataExtractor.cpp" line="79"/>
         <source>Flash</source>
         <comment>Image Properties</comment>
@@ -1071,13 +1089,13 @@ Toolbar action tool tip</extracomment>
         <location filename="../../processing/MetadataExtractor.h" line="125"/>
         <source> (below sea level)</source>
         <comment>Image Description</comment>
-        <translation>(pod mořem)</translation>
+        <translation> (pod mořem)</translation>
     </message>
     <message>
         <location filename="../../processing/MetadataExtractor.h" line="125"/>
         <source> (above sea level)</source>
         <comment>Image Description</comment>
-        <translation>(nad mořem)</translation>
+        <translation> (nad mořem)</translation>
     </message>
 </context>
 <context>
