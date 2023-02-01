@@ -910,92 +910,114 @@ Toolbar action tool tip</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="36"/>
-        <source> B</source>
-        <comment>Image Description - Units: byte</comment>
+        <location filename="../../processing/MetadataExtractor.cpp" line="26"/>
+        <source>0°</source>
+        <comment>Image Description</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="28"/>
+        <source>180°</source>
+        <comment>Image Description</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="30"/>
+        <source>90°</source>
+        <comment>Image Description</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="32"/>
+        <source>270°</source>
+        <comment>Image Description</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../processing/MetadataExtractor.cpp" line="37"/>
-        <source> m</source>
-        <comment>Image Description - Units: meter</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="38"/>
-        <source> px</source>
-        <comment>Image Description - Units: pixel</comment>
+        <source> B</source>
+        <comment>Image Description</comment>
+        <extracomment>Units: Byte</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../processing/MetadataExtractor.cpp" line="39"/>
-        <source> s</source>
-        <comment>Image Description - Units: second</comment>
+        <source> m</source>
+        <comment>Image Description</comment>
+        <extracomment>Units: Meter</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="48"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="41"/>
+        <source> px</source>
+        <comment>Image Description</comment>
+        <extracomment>Units: Pixel</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="43"/>
+        <source> s</source>
+        <comment>Image Description</comment>
+        <extracomment>Units: Second</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="52"/>
         <source>File name</source>
         <comment>Image Properties</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="49"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="53"/>
         <source>Size</source>
         <comment>Image Properties</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="50"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="54"/>
         <source>Width</source>
         <comment>Image Properties</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="51"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="55"/>
         <source>Height</source>
         <comment>Image Properties</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="61"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="65"/>
         <source>Orientation</source>
         <comment>Image Properties</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="64"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="68"/>
         <source>Date</source>
         <comment>Image Properties</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="75"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="79"/>
         <source>Flash</source>
         <comment>Image Properties</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="77"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="81"/>
         <source>ISO</source>
         <comment>Image Properties</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="79"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="83"/>
         <source>f-number</source>
         <comment>Image Properties</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="80"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="84"/>
         <source>Exposure time</source>
-        <comment>Image Properties</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="83"/>
-        <source>Shutter speed</source>
         <comment>Image Properties</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -1033,6 +1055,30 @@ Toolbar action tool tip</extracomment>
         <location filename="../../processing/MetadataExtractor.cpp" line="91"/>
         <source>Lens focal length</source>
         <comment>Image Properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.h" line="95"/>
+        <source>Flash fired</source>
+        <comment>Image Description</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.h" line="95"/>
+        <source>Flash didn&apos;t fired</source>
+        <comment>Image Description</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.h" line="125"/>
+        <source> (below sea level)</source>
+        <comment>Image Description</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.h" line="125"/>
+        <source> (above sea level)</source>
+        <comment>Image Description</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

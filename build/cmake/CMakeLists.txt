@@ -284,7 +284,7 @@ CONFIGURE_FILE(../../src/ui/support/Languages_m_localizations.h.in "${CMAKE_BINA
 
 qt6_add_lupdate(${APPLICATION_NAME}
         TS_FILES ${TRANSLATION_FILES}
-        SOURCES ${SOURCES} ${UIS})
+        SOURCES ${SOURCES} ${UIS} ../../src/processing/MetadataExtractor.h)
 qt6_add_lrelease(${APPLICATION_NAME}
         TS_FILES ${TRANSLATION_FILES}
         QM_FILES_OUTPUT_VARIABLE qm_files)

@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="cs">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="cs">
 <context>
     <name>AboutComponentsDialog</name>
     <message>
@@ -12,32 +10,32 @@
     <message>
         <location filename="../../ui/forms/AboutComponentsDialog.ui" line="39"/>
         <source>Exiv2</source>
-        <translation type="unfinished"></translation>
+        <translation>Exiv2</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutComponentsDialog.ui" line="44"/>
         <source>Expat</source>
-        <translation type="unfinished"></translation>
+        <translation>Expat</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutComponentsDialog.ui" line="64"/>
         <source>libde265</source>
-        <translation type="unfinished"></translation>
+        <translation>libde265</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutComponentsDialog.ui" line="69"/>
         <source>libheif</source>
-        <translation type="unfinished"></translation>
+        <translation>libheif</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutComponentsDialog.ui" line="74"/>
         <source>libjpeg-turbo</source>
-        <translation type="unfinished"></translation>
+        <translation>libjpeg-turbo</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutComponentsDialog.ui" line="79"/>
         <source>LibRaw</source>
-        <translation type="unfinished"></translation>
+        <translation>LibRaw</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutComponentsDialog.ui" line="89"/>
@@ -47,12 +45,12 @@
     <message>
         <location filename="../../ui/forms/AboutComponentsDialog.ui" line="94"/>
         <source>x265</source>
-        <translation type="unfinished"></translation>
+        <translation>x265</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutComponentsDialog.ui" line="99"/>
         <source>zlib</source>
-        <translation type="unfinished"></translation>
+        <translation>zlib</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutComponentsDialog.ui" line="49"/>
@@ -68,22 +66,6 @@
         <location filename="../../ui/forms/AboutComponentsDialog.ui" line="54"/>
         <source>KDE KImageFormats</source>
         <translation>KDE KImageFormats</translation>
-    </message>
-    <message>
-        <source>LibRAW</source>
-        <translation type="vanished">LibRAW</translation>
-    </message>
-    <message>
-        <source>Libde265</source>
-        <translation type="vanished">Libde265</translation>
-    </message>
-    <message>
-        <source>Libheif</source>
-        <translation type="vanished">Libheif</translation>
-    </message>
-    <message>
-        <source>X265</source>
-        <translation type="vanished">X265</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutComponentsDialog.ui" line="59"/>
@@ -562,13 +544,9 @@
         <translation>Zobrazit</translation>
     </message>
     <message>
-        <source>FileSystem Navigation</source>
-        <translation type="vanished">Navigace v souborovém systému</translation>
-    </message>
-    <message>
         <location filename="../../ui/forms/MainWindow.ui" line="159"/>
         <source>File System Navigation</source>
-        <translation type="unfinished"></translation>
+        <translation>Navigace v souborovém systému</translation>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="184"/>
@@ -593,17 +571,17 @@
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="319"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informace</translation>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="351"/>
         <source>Name</source>
-        <translation type="unfinished">Název</translation>
+        <translation>Název</translation>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="356"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Hodnota</translation>
     </message>
     <message>
         <location filename="../../ui/forms/MainWindow.ui" line="370"/>
@@ -885,27 +863,22 @@ Toolbar action tool tip</extracomment>
         <translation>Poznámky k vydání ...</translation>
     </message>
     <message>
-        <source>Zoom: %1%</source>
-        <extracomment>Used in the statusbar showing the zooming percentage. Example: &quot;Zoom: 12%&quot;</extracomment>
-        <translation type="vanished">Zvětšení: %1 %</translation>
-    </message>
-    <message>
         <location filename="../../ui/MainWindow.cpp" line="493"/>
         <source>%1x%2</source>
         <extracomment>Used in the statusbar showing the image dimensions. Example: &quot;1024x760&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1x%2</translation>
     </message>
     <message>
         <location filename="../../ui/MainWindow.cpp" line="503"/>
         <source>%1 %2</source>
         <extracomment>Used in the statusbar showing the image size. Example: &quot;103.4 kB&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 %2</translation>
     </message>
     <message>
         <location filename="../../ui/MainWindow.cpp" line="509"/>
         <source>%1%</source>
         <extracomment>Used in the statusbar showing the zooming percentage. Example: &quot;12%&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 %</translation>
     </message>
 </context>
 <context>
@@ -914,151 +887,197 @@ Toolbar action tool tip</extracomment>
         <location filename="../../processing/MetadataExtractor.cpp" line="27"/>
         <source>0°, mirrored</source>
         <comment>Image Description</comment>
-        <translation type="unfinished"></translation>
+        <translation>0°, zrcadleno</translation>
     </message>
     <message>
         <location filename="../../processing/MetadataExtractor.cpp" line="29"/>
         <source>180°, mirrored</source>
         <comment>Image Description</comment>
-        <translation type="unfinished"></translation>
+        <translation>180°, zrcadleno</translation>
     </message>
     <message>
         <location filename="../../processing/MetadataExtractor.cpp" line="31"/>
         <source>90°, mirrored</source>
         <comment>Image Description</comment>
-        <translation type="unfinished"></translation>
+        <translation>90°, zrcadleno</translation>
     </message>
     <message>
         <location filename="../../processing/MetadataExtractor.cpp" line="33"/>
         <source>270°, mirrored</source>
         <comment>Image Description</comment>
-        <translation type="unfinished"></translation>
+        <translation>270°, zrcadleno</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="36"/>
-        <source> B</source>
-        <comment>Image Description - Units: byte</comment>
-        <translation type="unfinished"></translation>
+        <location filename="../../processing/MetadataExtractor.cpp" line="26"/>
+        <source>0°</source>
+        <comment>Image Description</comment>
+        <translation>0°</translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="28"/>
+        <source>180°</source>
+        <comment>Image Description</comment>
+        <translation>180°</translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="30"/>
+        <source>90°</source>
+        <comment>Image Description</comment>
+        <translation>90°</translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="32"/>
+        <source>270°</source>
+        <comment>Image Description</comment>
+        <translation>270°</translation>
     </message>
     <message>
         <location filename="../../processing/MetadataExtractor.cpp" line="37"/>
-        <source> m</source>
-        <comment>Image Description - Units: meter</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="38"/>
-        <source> px</source>
-        <comment>Image Description - Units: pixel</comment>
-        <translation type="unfinished"></translation>
+        <source> B</source>
+        <comment>Image Description</comment>
+        <extracomment>Units: Byte</extracomment>
+        <translation> B</translation>
     </message>
     <message>
         <location filename="../../processing/MetadataExtractor.cpp" line="39"/>
-        <source> s</source>
-        <comment>Image Description - Units: second</comment>
-        <translation type="unfinished"></translation>
+        <source> m</source>
+        <comment>Image Description</comment>
+        <extracomment>Units: Meter</extracomment>
+        <translation> m</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="48"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="41"/>
+        <source> px</source>
+        <comment>Image Description</comment>
+        <extracomment>Units: Pixel</extracomment>
+        <translation> px</translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="43"/>
+        <source> s</source>
+        <comment>Image Description</comment>
+        <extracomment>Units: Second</extracomment>
+        <translation> s</translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="52"/>
         <source>File name</source>
         <comment>Image Properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jméno souboru</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="49"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="53"/>
         <source>Size</source>
         <comment>Image Properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>Velikost</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="50"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="54"/>
         <source>Width</source>
         <comment>Image Properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>Šířka</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="51"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="55"/>
         <source>Height</source>
         <comment>Image Properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>Výška</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="61"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="65"/>
         <source>Orientation</source>
         <comment>Image Properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>Orientace</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="64"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="68"/>
         <source>Date</source>
         <comment>Image Properties</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="75"/>
-        <source>Flash</source>
-        <comment>Image Properties</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="77"/>
-        <source>ISO</source>
-        <comment>Image Properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>Datum</translation>
     </message>
     <message>
         <location filename="../../processing/MetadataExtractor.cpp" line="79"/>
-        <source>f-number</source>
+        <source>Flash</source>
         <comment>Image Properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blesk</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="80"/>
-        <source>Exposure time</source>
+        <location filename="../../processing/MetadataExtractor.cpp" line="81"/>
+        <source>ISO</source>
         <comment>Image Properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>ISO</translation>
     </message>
     <message>
         <location filename="../../processing/MetadataExtractor.cpp" line="83"/>
-        <source>Shutter speed</source>
+        <source>f-number</source>
         <comment>Image Properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>Clonové číslo</translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.cpp" line="84"/>
+        <source>Exposure time</source>
+        <comment>Image Properties</comment>
+        <translation>Doba expozice</translation>
     </message>
     <message>
         <location filename="../../processing/MetadataExtractor.cpp" line="85"/>
         <source>Focal length</source>
         <comment>Image Properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ohnisková vzdálenost</translation>
     </message>
     <message>
         <location filename="../../processing/MetadataExtractor.cpp" line="87"/>
         <source>Camera maker</source>
         <comment>Image Properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>Výrobce fotoaparátu</translation>
     </message>
     <message>
         <location filename="../../processing/MetadataExtractor.cpp" line="88"/>
         <source>Camera model</source>
         <comment>Image Properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>Model fotoaparátu</translation>
     </message>
     <message>
         <location filename="../../processing/MetadataExtractor.cpp" line="89"/>
         <source>Lens maker</source>
         <comment>Image Properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>Výrobce objektivu</translation>
     </message>
     <message>
         <location filename="../../processing/MetadataExtractor.cpp" line="90"/>
         <source>Lens model</source>
         <comment>Image Properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>Model objektivu</translation>
     </message>
     <message>
         <location filename="../../processing/MetadataExtractor.cpp" line="91"/>
         <source>Lens focal length</source>
         <comment>Image Properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ohnisková vzdálenost objektivu</translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.h" line="95"/>
+        <source>Flash fired</source>
+        <comment>Image Description</comment>
+        <translation>S bleskem</translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.h" line="95"/>
+        <source>Flash didn&apos;t fired</source>
+        <comment>Image Description</comment>
+        <translation>Bez blesku</translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.h" line="125"/>
+        <source> (below sea level)</source>
+        <comment>Image Description</comment>
+        <translation>(pod mořem)</translation>
+    </message>
+    <message>
+        <location filename="../../processing/MetadataExtractor.h" line="125"/>
+        <source> (above sea level)</source>
+        <comment>Image Description</comment>
+        <translation>(nad mořem)</translation>
     </message>
 </context>
 <context>
@@ -1173,7 +1192,7 @@ Toolbar action tool tip</extracomment>
         <location filename="../../ui/forms/SettingsDialog.ui" line="216"/>
         <location filename="../../ui/forms/SettingsDialog.ui" line="274"/>
         <source>Hide image information</source>
-        <translation type="unfinished"></translation>
+        <translation>Schování informací o obrázku</translation>
     </message>
     <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="226"/>
@@ -1198,10 +1217,6 @@ Toolbar action tool tip</extracomment>
         <source>About VookiImageViewer</source>
         <extracomment>Title: Dialog</extracomment>
         <translation>O aplikaci VookiImageViewer</translation>
-    </message>
-    <message>
-        <source>qrc:/text/aboutapp</source>
-        <translation type="vanished">qrc:/text/aboutapp</translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutDialog.ui" line="123"/>
