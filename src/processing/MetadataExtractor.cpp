@@ -23,20 +23,24 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "Exiv2ImageAutoPtrWrapper.h"
 
 std::vector<QString> MetadataExtractor::m_orientationDescriptions = { "", // EXIF does not use the 0 for the orientation encoding
-                                                                      "0°",
+                                                                      tr("0°", "Image Description"),
                                                                       tr("0°, mirrored", "Image Description"),
-                                                                      "180°",
+                                                                      tr("180°", "Image Description"),
                                                                       tr("180°, mirrored", "Image Description"),
-                                                                      "90°",
+                                                                      tr("90°", "Image Description"),
                                                                       tr("90°, mirrored", "Image Description"),
-                                                                      "270°",
+                                                                      tr("270°", "Image Description"),
                                                                       tr("270°, mirrored", "Image Description")
 };
 
-const QString MetadataExtractor::m_unitByte = tr(" B", "Image Description - Units: byte");
-const QString MetadataExtractor::m_unitMeter = tr(" m", "Image Description - Units: meter");
-const QString MetadataExtractor::m_unitPixel = tr(" px", "Image Description - Units: pixel");
-const QString MetadataExtractor::m_unitSecond = tr(" s", "Image Description - Units: second");
+//: Units: Byte
+const QString MetadataExtractor::m_unitByte = tr(" B", "Image Description");
+//: Units: Meter
+const QString MetadataExtractor::m_unitMeter = tr(" m", "Image Description");
+//: Units: Pixel
+const QString MetadataExtractor::m_unitPixel = tr(" px", "Image Description");
+//: Units: Second
+const QString MetadataExtractor::m_unitSecond = tr(" s", "Image Description");
 
 void MetadataExtractor::extract(const QString &filename, int width, int height)
 {
@@ -78,10 +82,6 @@ void MetadataExtractor::extract(const QString &filename, int width, int height)
 
         addInformation<ExivProcessing::Float>(tr("f-number", "Image Properties"), Exiv2::fNumber(exifData), information);
         addInformation<ExivProcessing::Float>(tr("Exposure time", "Image Properties"), Exiv2::exposureTime(exifData), information);
-
-        #if EXIV2_TEST_VERSION(0,27,4)
-            addInformation<ExivProcessing::Float>(tr("Shutter speed", "Image Properties"), Exiv2::shutterSpeedValue(exifData), information);
-        #endif
         addInformation<ExivProcessing::Float>(tr("Focal length", "Image Properties"), Exiv2::focalLength(exifData), information);
 
         addInformation(tr("Camera maker", "Image Properties"), exifData.findKey(Exiv2::ExifKey("Exif.Image.Make")), information);
