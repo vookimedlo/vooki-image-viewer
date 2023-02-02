@@ -31,9 +31,9 @@ public:
     explicit StatusBar(QWidget *parent = nullptr);
     DISABLE_COPY_MOVE(StatusBar);
 
-    [[nodiscard]] QLabel &dimensionsLabel();
-    [[nodiscard]] QLabel &sizeLabel();
-    [[nodiscard]] QLabel &zoomLabel();
+    void setDimensionLabel(const QString &value);
+    void setSizeLabel(const QString &value);
+    void setZoomLabel(const QString &value);
 
     void clearLabels();
 

@@ -28,6 +28,10 @@ StatusBar::StatusBar(QWidget *parent)
     addPermanentWidget(&m_sizeLabel);
     addPermanentWidget(createVerticalLine().release());
     addPermanentWidget(&m_zoomLabel);
+
+    m_dimensionsLabel.setToolTip(tr("Image dimensions"));
+    m_sizeLabel.setToolTip(tr("Image size"));
+    m_zoomLabel.setToolTip(tr("Zoom"));
 }
 
 std::unique_ptr<QFrame> StatusBar::createVerticalLine()
@@ -40,19 +44,19 @@ std::unique_ptr<QFrame> StatusBar::createVerticalLine()
     return line;
 }
 
-QLabel &StatusBar::dimensionsLabel()
+void StatusBar::setDimensionLabel(const QString &value)
 {
-    return m_dimensionsLabel;
+    m_dimensionsLabel.setText(value);
 }
 
-QLabel &StatusBar::sizeLabel()
+void StatusBar::setSizeLabel(const QString &value)
 {
-    return m_sizeLabel;
+    m_sizeLabel.setText(value);
 }
 
-QLabel &StatusBar::zoomLabel()
+void StatusBar::setZoomLabel(const QString &value)
 {
-    return m_zoomLabel;
+    m_zoomLabel.setText(value);
 }
 
 void StatusBar::clearLabels()
