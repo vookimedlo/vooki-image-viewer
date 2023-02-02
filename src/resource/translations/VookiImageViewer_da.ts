@@ -864,7 +864,7 @@ Toolbar action tool tip</extracomment>
     </message>
     <message>
         <location filename="../../ui/MainWindow.cpp" line="493"/>
-        <source>%1x%2</source>
+        <source>%1x%2 px</source>
         <extracomment>Used in the statusbar showing the image dimensions. Example: &quot;1024x760&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
@@ -876,7 +876,7 @@ Toolbar action tool tip</extracomment>
     </message>
     <message>
         <location filename="../../ui/MainWindow.cpp" line="509"/>
-        <source>%1%</source>
+        <source>%1 %</source>
         <extracomment>Used in the statusbar showing the zooming percentage. Example: &quot;12%&quot;</extracomment>
         <translation type="unfinished"/>
     </message>
@@ -1225,6 +1225,24 @@ Toolbar action tool tip</extracomment>
     <message>
         <location filename="../../ui/forms/SettingsDialog.ui" line="302"/>
         <source>Shortcut</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>StatusBar</name>
+    <message>
+        <location filename="../../ui/StatusBar.cpp" line="32"/>
+        <source>Image dimensions</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../ui/StatusBar.cpp" line="33"/>
+        <source>Image size</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../ui/StatusBar.cpp" line="34"/>
+        <source>Zoom</source>
         <translation type="unfinished"/>
     </message>
 </context>

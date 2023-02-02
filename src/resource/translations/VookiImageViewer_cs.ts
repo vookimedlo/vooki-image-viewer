@@ -864,9 +864,9 @@ Toolbar action tool tip</extracomment>
     </message>
     <message>
         <location filename="../../ui/MainWindow.cpp" line="493"/>
-        <source>%1x%2</source>
+        <source>%1x%2 px</source>
         <extracomment>Used in the statusbar showing the image dimensions. Example: &quot;1024x760&quot;</extracomment>
-        <translation>%1x%2</translation>
+        <translation>%1x%2 px</translation>
     </message>
     <message>
         <location filename="../../ui/MainWindow.cpp" line="503"/>
@@ -876,7 +876,7 @@ Toolbar action tool tip</extracomment>
     </message>
     <message>
         <location filename="../../ui/MainWindow.cpp" line="509"/>
-        <source>%1%</source>
+        <source>%1 %</source>
         <extracomment>Used in the statusbar showing the zooming percentage. Example: &quot;12%&quot;</extracomment>
         <translation>%1 %</translation>
     </message>
@@ -1226,6 +1226,24 @@ Toolbar action tool tip</extracomment>
         <location filename="../../ui/forms/SettingsDialog.ui" line="302"/>
         <source>Shortcut</source>
         <translation>Zkratka</translation>
+    </message>
+</context>
+<context>
+    <name>StatusBar</name>
+    <message>
+        <location filename="../../ui/StatusBar.cpp" line="32"/>
+        <source>Image dimensions</source>
+        <translation>Rozměry obrázku</translation>
+    </message>
+    <message>
+        <location filename="../../ui/StatusBar.cpp" line="33"/>
+        <source>Image size</source>
+        <translation>Velikost souboru</translation>
+    </message>
+    <message>
+        <location filename="../../ui/StatusBar.cpp" line="34"/>
+        <source>Zoom</source>
+        <translation>Zvětšení</translation>
     </message>
 </context>
 <context>
