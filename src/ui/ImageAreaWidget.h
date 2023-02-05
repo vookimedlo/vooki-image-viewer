@@ -22,13 +22,14 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "../util/RotatingIndex.h"
 #include "../util/compiler.h"
 #include <QColor>
-#include <QImageReader>
 #include <QTimer>
 #include <QWidget>
 #include <cstdint>
 #include <list>
 #include <utility>
 #include <vector>
+#include "../processing/ImageLoader.h"
+#include "../processing/ImageProcessor.h"
 
 
 // Forward declarations
@@ -89,24 +90,19 @@ protected:
     void scrollTo(const QPoint &point);
     void transformImage();
     void wheelEvent(QWheelEvent *event) override;
+    void zoom(const double factor, bool isZoomIn);
 
 private:
     bool m_drawBorder = {false};
-    bool m_flipHorizontally {false};
-    bool m_flipVertically {false};
-    bool m_isFitToWindow {false};
-    double m_scaleFactor {1.0};
     QColor m_borderColor {Qt::white};
     QImage m_originalImage {};
     QImage m_finalImage {};
-    QImageReader m_reader {};
-    RotatingIndex<uint8_t> m_rotateIndex {0, 4}; // 4 rotation quadrants
     int m_imageOffsetY {0};
     int m_imageOffsetX {0};
     QPoint m_mouseMoveLast {};
     QTimer m_animationTimer {this};
-    RotatingIndex<int> m_animationIndex {0, 1};
+    ImageLoader m_imageLoader {};
+    ImageProcessor m_imageProcessor {};
 
     static constexpr int m_imageOffsetStep = 100;
-    static constexpr int m_maxAllocationImageSize = 4096;
 };

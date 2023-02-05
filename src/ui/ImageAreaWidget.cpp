@@ -36,7 +36,6 @@ ImageAreaWidget::ImageAreaWidget(QWidget *parent)
 {
     m_originalImage.fill(qRgb(0, 0, 0));
     m_finalImage.fill(qRgb(0, 0, 0));
-    QImageReader::setAllocationLimit(ImageAreaWidget::m_maxAllocationImageSize);
 }
 
 ImageAreaWidget::~ImageAreaWidget() noexcept
@@ -53,17 +52,15 @@ void ImageAreaWidget::drawBorder(const bool draw, const QColor &color)
 bool ImageAreaWidget::showImage(const QString &fileName)
 {
     m_animationTimer.stop();
-    QImageReader::setAllocationLimit(ImageAreaWidget::m_maxAllocationImageSize);
-    m_reader.setFileName(fileName);
-    m_reader.setQuality(100);
-    m_reader.setAutoTransform(true);
-    m_originalImage = m_reader.read();
-
-    if (m_originalImage.isNull())
-    {
-        update();
+    if (!m_imageLoader.loadImage(fileName))
         return false;
-    }
+
+    m_originalImage = m_imageLoader.getImage();
+    if (m_originalImage.isNull())
+        return false;
+
+    m_imageProcessor.bind(m_originalImage);
+    update();
 
     MetadataExtractor metadataExtractor;
     auto connection = connect(&metadataExtractor,
@@ -84,17 +81,13 @@ bool ImageAreaWidget::showImage(const QString &fileName)
 
     emit imageDimensionsChanged(m_originalImage.width(), m_originalImage.height());
 
-    m_flipHorizontally = m_flipVertically = false;
     m_imageOffsetX = m_imageOffsetY = 0;
-    m_rotateIndex.reset(0);
-    m_scaleFactor = 1;
     transformImage();
     update();
 
-    if (m_reader.imageCount() > 1)
+    if (m_imageLoader.imageCount() > 1)
     {
-        m_animationIndex.set(0, m_reader.imageCount());
-        const auto delay = m_reader.nextImageDelay();
+        const auto delay = m_imageLoader.nextImageDelay();
         if (delay > 0)
             QTimer::singleShot(delay, this, SLOT(onNextImage()));
     }
@@ -125,15 +118,7 @@ void ImageAreaWidget::onDecreaseOffsetY(const int pixels)
 
 void ImageAreaWidget::onFlipHorizontallyTriggered()
 {
-    m_flipHorizontally = !m_flipHorizontally;
-
-    if (m_flipHorizontally && m_flipVertically)
-    {
-        // Simultaneous vertical and horizontal flip is equal to the PI RAD (180 degrees) rotation
-        m_flipHorizontally = m_flipVertically = false;
-        ++m_rotateIndex;
-        ++m_rotateIndex;
-    }
+    m_imageProcessor.flipHorizontally();
 
     transformImage();
     update();
@@ -141,15 +126,7 @@ void ImageAreaWidget::onFlipHorizontallyTriggered()
 
 void ImageAreaWidget::onFlipVerticallyTriggered()
 {
-    m_flipVertically = !m_flipVertically;
-
-    if (m_flipHorizontally && m_flipVertically)
-    {
-        // Simultaneous vertical and horizontal flip is equal to the PI RAD (180 degrees) rotation
-        m_flipHorizontally = m_flipVertically = false;
-        ++m_rotateIndex;
-        ++m_rotateIndex;
-    }
+    m_imageProcessor.flipVertically();
 
     transformImage();
     update();
@@ -169,37 +146,25 @@ void ImageAreaWidget::onIncreaseOffsetY(const int pixels)
 
 void ImageAreaWidget::onNextImage()
 {
-    if (++m_animationIndex == 0)
-        m_reader.setFileName(m_reader.fileName());
-    qDebug() << "Index: " << m_animationIndex;
-    m_reader.jumpToImage(m_animationIndex);
-    if (!m_reader.read(&m_originalImage))
-        return;
-
+    m_originalImage = m_imageLoader.getNextImage();
     transformImage();
     update();
 
-    const auto delay = m_reader.nextImageDelay();
+    const auto delay = m_imageLoader.nextImageDelay();
     if (delay > 0)
         QTimer::singleShot(delay, this, SLOT(onNextImage()));
 }
 
 void ImageAreaWidget::onRotateLeftTriggered()
 {
-    if (m_flipHorizontally || m_flipVertically)
-        ++m_rotateIndex;
-    else
-        --m_rotateIndex;
+    m_imageProcessor.rotateLeft();
     transformImage();
     update();
 }
 
 void ImageAreaWidget::onRotateRightTriggered()
 {
-    if (m_flipHorizontally || m_flipVertically)
-        --m_rotateIndex;
-    else
-        ++m_rotateIndex;
+    m_imageProcessor.rotateRight();
     transformImage();
     update();
 }
@@ -226,38 +191,45 @@ void ImageAreaWidget::onScrollUpTriggered()
 
 void ImageAreaWidget::onSetFitToWindowTriggered(const bool enabled)
 {
-    m_isFitToWindow = enabled;
-    m_scaleFactor = 1;
+    m_imageProcessor.setFitToArea(enabled);
+    m_imageProcessor.setScaleFactor(1.0);
+    transformImage();
+    update();
+}
+
+void ImageAreaWidget::zoom(const double factor, bool isZoomIn)
+{
+    constexpr double maxValue = 2.0;
+    constexpr double minValue = 0.1;
+
+    const double newScaleFactor = factor + m_imageProcessor.getScaleFactor();
+    if (isZoomIn)
+        m_imageProcessor.setScaleFactor(newScaleFactor < maxValue ? newScaleFactor : maxValue);
+    else
+        m_imageProcessor.setScaleFactor(newScaleFactor > minValue ? newScaleFactor : minValue);
+
     transformImage();
     update();
 }
 
 void ImageAreaWidget::onZoomImageInTriggered(const double factor)
 {
-    const double maxValue = 2.0;
-    const double newScaleFactor = factor + m_scaleFactor;
-    m_scaleFactor = newScaleFactor < maxValue ? newScaleFactor : maxValue;
-    transformImage();
-    update();
+    zoom(factor, true);
 }
 
 void ImageAreaWidget::onZoomImageOutTriggered(const double factor)
 {
-    const double minValue = 0.1;
-    const double newScaleFactor = -factor + m_scaleFactor;
-    m_scaleFactor = newScaleFactor > minValue ? newScaleFactor : minValue;
-    transformImage();
-    update();
+    zoom(-factor, false);
 }
 
 void ImageAreaWidget::onZoomResetTriggered()
 {
-    const bool isFitToWindow = this->m_isFitToWindow;
-    this->m_isFitToWindow = false;
-    m_scaleFactor = 1;
+    const bool isFitToWindow = m_imageProcessor.isFitToAreaEnabled();
+    m_imageProcessor.setFitToArea(false);
+    m_imageProcessor.setScaleFactor(1.0);
     transformImage();
     update();
-    this->m_isFitToWindow = isFitToWindow;
+    m_imageProcessor.setFitToArea(isFitToWindow);
 }
 
 void ImageAreaWidget::checkScrollOffset()
@@ -292,10 +264,11 @@ bool ImageAreaWidget::event(QEvent *ev)
 
 void ImageAreaWidget::gestureZoom(qreal value)
 {
-    qDebug() << "before " << m_scaleFactor;
     value /= 5;
-    onZoomImageInTriggered((value > 0) ? value : -value);
-    qDebug() << "after " << m_scaleFactor;
+    if (value >= 0)
+        onZoomImageInTriggered(value);
+    else
+        onZoomImageOutTriggered(-value);
 }
 
 void ImageAreaWidget::mouseMoveEvent(QMouseEvent *event)
@@ -392,35 +365,8 @@ void ImageAreaWidget::transformImage()
     if (m_originalImage.isNull())
         return;
 
-    QImage scaledImage;
-    QImage rotatedImage = m_originalImage.transformed(QTransform().rotate(m_rotateIndex * 90), Qt::SmoothTransformation);
-
-    // It seems that Qt implementation has swapped the meaning of the vertical and horizontal flip
-    // rotatedImage = rotatedImage.mirrored(m_flipHorizontally, m_flipVertically);
-
-    if (m_flipHorizontally)
-    {
-        QTransform transform;
-        QTransform trans = transform.rotate(180, Qt::XAxis);
-        rotatedImage = rotatedImage.transformed(trans, Qt::SmoothTransformation);
-    }
-
-    if (m_flipVertically)
-    {
-        QTransform transform;
-        QTransform trans = transform.rotate(180, Qt::YAxis);
-        rotatedImage = rotatedImage.transformed(trans, Qt::SmoothTransformation);
-    }
-
-    if (m_isFitToWindow)
-    {
-        m_imageOffsetX = m_imageOffsetY = 0;
-        scaledImage = rotatedImage.scaledToWidth(width(), Qt::SmoothTransformation);
-        if (scaledImage.height() > height())
-            scaledImage = rotatedImage.scaledToHeight(height(), Qt::SmoothTransformation);
-    }
-    else
-        scaledImage = rotatedImage.scaledToWidth((int)(rotatedImage.width() * m_scaleFactor), Qt::SmoothTransformation);
+    m_imageProcessor.setAreaSize(size());
+    QImage scaledImage = m_imageProcessor.process();
 
     QSize newSize = scaledImage.size().expandedTo(size());
     QImage newImage(newSize, QImage::Format_RGB32);

@@ -113,6 +113,8 @@ SET(SOURCES
     ../../src/application/main.cpp
     ../../src/model/FileSystemSortFilterProxyModel.cpp
     ../../src/model/ImageCatalog.cpp
+    ../../src/processing/ImageLoader.cpp
+    ../../src/processing/ImageProcessor.cpp
     ../../src/processing/MetadataExtractor.cpp
     ../../src/ui/AboutComponentsDialog.cpp
     ../../src/ui/FileSystemTreeView.cpp
