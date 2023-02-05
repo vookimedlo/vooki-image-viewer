@@ -57,9 +57,28 @@ if (APPLE)
     MESSAGE("-- Requested architectures are x86_64 & arm64")
 endif()
 
-SET(CMAKE_CXX_STANDARD 17)
+SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 SET(CMAKE_CXX_EXTENSIONS OFF)
+
+include(FetchContent)
+
+SET(QCORO_BUILD_EXAMPLES OFF)
+SET(QCORO_WITH_QTDBUS OFF)
+SET(QCORO_WITH_QTNETWORK OFF)
+SET(QCORO_WITH_QTWEBSOCKETS OFF)
+SET(QCORO_WITH_QTQUICK OFF)
+SET(QCORO_WITH_QML OFF)
+SET(BUILD_TESTING OFF)
+
+FetchContent_Declare(qcoro
+        GIT_REPOSITORY https://github.com/danvratil/qcoro.git
+        GIT_TAG v0.8.0
+        GIT_SHALLOW true
+        )
+
+FetchContent_MakeAvailable(qcoro)
+
 
 SET(CMAKE_AUTOMOC ON)
 SET(CMAKE_AUTORCC ON)
@@ -248,6 +267,7 @@ endif()
 TARGET_LINK_LIBRARIES(VookiImageViewer ${QT_ALL_LIBS})
 TARGET_LINK_LIBRARIES(VookiImageViewer ${OS_LIBS})
 TARGET_LINK_LIBRARIES(VookiImageViewer exiv2wrapper)
+TARGET_LINK_LIBRARIES(VookiImageViewer QCoro6Core)
 
 #### Translations ####
 #
