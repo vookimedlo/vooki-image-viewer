@@ -34,7 +34,6 @@ QImage ImageProcessor::process()
     if (m_originalImage.isNull())
         return m_originalImage;
 
-    QImage scaledImage;
     QImage rotatedImage = m_originalImage.transformed(QTransform().rotate(m_rotateIndex * 90), Qt::SmoothTransformation);
 
     // It seems that Qt implementation has swapped the meaning of the vertical and horizontal flip
@@ -42,27 +41,28 @@ QImage ImageProcessor::process()
 
     if (m_flipHorizontally)
     {
-        QTransform transform;
-        QTransform trans = transform.rotate(180, Qt::XAxis);
-        rotatedImage = rotatedImage.transformed(trans, Qt::SmoothTransformation);
+        static QTransform transform{QTransform().rotate(180, Qt::XAxis)};
+        rotatedImage = rotatedImage.transformed(transform, Qt::SmoothTransformation);
     }
 
     if (m_flipVertically)
     {
-        QTransform transform;
-        QTransform trans = transform.rotate(180, Qt::YAxis);
-        rotatedImage = rotatedImage.transformed(trans, Qt::SmoothTransformation);
+        static QTransform transform{QTransform().rotate(180, Qt::YAxis)};
+        rotatedImage = rotatedImage.transformed(transform, Qt::SmoothTransformation);
     }
 
-    if (m_fitToArea)
-    {
-        //m_imageOffsetX = m_imageOffsetY = 0;
-        scaledImage = rotatedImage.scaledToWidth(m_areaWidth, Qt::SmoothTransformation);
-        if (scaledImage.height() > m_areaHeight)
-            scaledImage = rotatedImage.scaledToHeight(m_areaHeight, Qt::SmoothTransformation);
-    }
-    else
-        scaledImage = rotatedImage.scaledToWidth((int)(rotatedImage.width() * m_scaleFactor), Qt::SmoothTransformation);
+    QImage scaledImage = [this, rotatedImage]() {
+        if (m_fitToArea)
+        {
+            // m_imageOffsetX = m_imageOffsetY = 0;
+            if ((static_cast<double>(m_areaWidth) / rotatedImage.width() * rotatedImage.height()) <= m_areaHeight)
+                return rotatedImage.scaledToWidth(m_areaWidth, Qt::SmoothTransformation);
+            else
+                return rotatedImage.scaledToHeight(m_areaHeight, Qt::SmoothTransformation);
+        }
+        else
+            return rotatedImage.scaledToWidth((int)(rotatedImage.width() * m_scaleFactor), Qt::SmoothTransformation);
+    }();
 
     /*
     QSize newSize = scaledImage.size().expandedTo(size());
