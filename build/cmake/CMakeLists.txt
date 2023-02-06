@@ -78,6 +78,7 @@ FetchContent_Declare(qcoro
         )
 
 FetchContent_MakeAvailable(qcoro)
+qcoro_enable_coroutines()
 
 
 SET(CMAKE_AUTOMOC ON)
