@@ -1,5 +1,4 @@
 #pragma once
-#include <QImage>
 /****************************************************************************
 VookiImageViewer - a tool for showing images.
 Copyright(C) 2023  Michal Duda <github@vookimedlo.cz>
@@ -20,48 +19,22 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include <QImage>
-#include <array>
-#include "transformation/ImageBorder.h"
-#include "transformation/ImageFlip.h"
-#include "transformation/ImageRotation.h"
-#include "transformation/ImageZoom.h"
-#include "../util/RotatingIndex.h"
+#include "ImageTransformation.h"
 
 
-class ImageProcessor
+class ImageBorder : public ImageTransformation
 {
 public:
-    void bind(const QImage &image);
+    void resetProperties() override;
+    QImage transform() override;
 
-    void flipHorizontally();
-    void flipVertically();
-
-    void rotateLeft();
-    void rotateRight();
-
-    void resetTransformation();
-
-    QImage process();
     void setAreaSize(const QSize &size);
 
-    double getScaleFactor() const;
-    void setScaleFactor(double value);
-
-    bool isFitToAreaEnabled() const;
-    void setFitToArea(bool fitToArea);
-
 protected:
-    void flip();
+    void checkScrollOffset(const QImage &image);
 
 private:
-    ImageRotation m_imageRotation {};
-    ImageFlip m_imageFlip {};
-    ImageZoom m_imageZoom {};
-    ImageBorder m_imageBorder {};
-
-    const std::array<ImageTransformation* const, 4> m_transformations {&m_imageRotation, &m_imageFlip, &m_imageZoom, &m_imageBorder};
-
-
-    QImage m_originalImage {};
+    QSize m_areaSize {};
+    int m_imageOffsetY {0};
+    int m_imageOffsetX {0};
 };

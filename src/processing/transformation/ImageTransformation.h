@@ -1,5 +1,4 @@
 #pragma once
-#include <QImage>
 /****************************************************************************
 VookiImageViewer - a tool for showing images.
 Copyright(C) 2023  Michal Duda <github@vookimedlo.cz>
@@ -21,47 +20,25 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #include <QImage>
-#include <array>
-#include "transformation/ImageBorder.h"
-#include "transformation/ImageFlip.h"
-#include "transformation/ImageRotation.h"
-#include "transformation/ImageZoom.h"
-#include "../util/RotatingIndex.h"
 
-
-class ImageProcessor
+class ImageTransformation
 {
 public:
-    void bind(const QImage &image);
+    virtual void bind(const QImage &image) { m_originalImage = image; setIsCacheDirty(true); };
+    virtual QImage transform() = 0;
 
-    void flipHorizontally();
-    void flipVertically();
+    [[nodiscard]] inline bool isCacheDirty() const { return m_isCacheDirty; }
+    inline void setIsCacheDirty(bool isCacheDirty) { m_isCacheDirty = isCacheDirty; }
 
-    void rotateLeft();
-    void rotateRight();
-
-    void resetTransformation();
-
-    QImage process();
-    void setAreaSize(const QSize &size);
-
-    double getScaleFactor() const;
-    void setScaleFactor(double value);
-
-    bool isFitToAreaEnabled() const;
-    void setFitToArea(bool fitToArea);
+    virtual void resetProperties() { m_isCacheDirty = true; }
 
 protected:
-    void flip();
+    inline const QImage &getOriginalImage() const { return m_originalImage; }
+    inline const QImage &getCachedImage() const { return m_cachedImage; }
+    inline void setCachedImage(const QImage &cachedImage) { m_cachedImage = cachedImage; setIsCacheDirty(false); }
 
 private:
-    ImageRotation m_imageRotation {};
-    ImageFlip m_imageFlip {};
-    ImageZoom m_imageZoom {};
-    ImageBorder m_imageBorder {};
-
-    const std::array<ImageTransformation* const, 4> m_transformations {&m_imageRotation, &m_imageFlip, &m_imageZoom, &m_imageBorder};
-
-
+    bool m_isCacheDirty {true};
+    QImage m_cachedImage {};
     QImage m_originalImage {};
 };
