@@ -24,10 +24,11 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 class ImageTransformation
 {
 public:
-    virtual void bind(const QImage &image) { m_originalImage = image; setIsCacheDirty(true); };
+    virtual void bind(const QImage &image) { m_originalImage = image; invalidateCache(); };
     virtual QImage transform() = 0;
 
     [[nodiscard]] inline bool isCacheDirty() const { return m_isCacheDirty; }
+    inline void invalidateCache() { m_isCacheDirty = true; }
     inline void setIsCacheDirty(bool isCacheDirty) { m_isCacheDirty = isCacheDirty; }
 
     virtual void resetProperties() { m_isCacheDirty = true; }

@@ -24,13 +24,13 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 void ImageFlip::flipHorizontally()
 {
     m_flipHorizontally = !m_flipHorizontally;
-    setIsCacheDirty(true);
+    invalidateCache();
 }
 
 void ImageFlip::flipVertically()
 {
     m_flipVertically = !m_flipVertically;
-    setIsCacheDirty(true);
+    invalidateCache();
 }
 
 bool ImageFlip::isFlippedHorizontally() const

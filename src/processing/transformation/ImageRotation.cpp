@@ -23,13 +23,13 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 void ImageRotation::rotateLeft()
 {
     --m_rotateIndex;
-    setIsCacheDirty(true);
+    invalidateCache();
 }
 
 void ImageRotation::rotateRight()
 {
     ++m_rotateIndex;
-    setIsCacheDirty(true);
+    invalidateCache();
 }
 
 QImage ImageRotation::transform()

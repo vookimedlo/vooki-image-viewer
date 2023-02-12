@@ -35,7 +35,7 @@ double ImageZoom::getScaleFactor() const
 void ImageZoom::setScaleFactor(double factor)
 {
     m_scaleFactor = factor;
-    setIsCacheDirty(true);
+    invalidateCache();
 }
 
 bool ImageZoom::isFitToAreaEnabled() const
@@ -46,7 +46,7 @@ bool ImageZoom::isFitToAreaEnabled() const
 void ImageZoom::setFitToArea(bool fitToArea)
 {
     m_fitToArea = fitToArea;
-    setIsCacheDirty(true);
+    invalidateCache();
 }
 
 QImage ImageZoom::transform()
@@ -56,7 +56,6 @@ QImage ImageZoom::transform()
         setCachedImage([this, originalImage]() {
             if (m_fitToArea)
             {
-                // m_imageOffsetX = m_imageOffsetY = 0;
                 if ((static_cast<double>(m_areaWidth) / originalImage.width() * originalImage.height()) <= m_areaHeight)
                     return originalImage.scaledToWidth(m_areaWidth, Qt::SmoothTransformation);
                 else
@@ -65,6 +64,8 @@ QImage ImageZoom::transform()
             else
                 return originalImage.scaledToWidth((int)(originalImage.width() * m_scaleFactor), Qt::SmoothTransformation);
         }());
+
+        m_scaleFactor = getCachedImage().width() / static_cast<double>(originalImage.width());
     }
     return getCachedImage();
 }

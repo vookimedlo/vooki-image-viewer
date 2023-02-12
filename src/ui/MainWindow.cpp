@@ -113,6 +113,7 @@ MainWindow::MainWindow(QWidget *parent)
     if (settings->value(SETTINGS_GENERAL_FULLSCREEN).toBool())
         m_ui.actionFullScreen->toggle();
 
+    propagateBackgroundSettings();
     propagateBorderSettings();
     restoreRecentFiles();
     loadTranslators();
@@ -194,6 +195,12 @@ void MainWindow::loadTranslators()
         else
             application->installTranslators(QLocale(settings->value(SETTINGS_LANGUAGE_CODE).value<QString>()));
     }
+}
+
+void MainWindow::propagateBackgroundSettings() const
+{
+    const std::shared_ptr<QSettings> settings = Settings::userSettings();
+    m_ui.imageAreaWidget->setBackgroundColor(settings->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>());
 }
 
 void MainWindow::propagateBorderSettings() const
@@ -464,6 +471,7 @@ void MainWindow::onSettingsTriggered()
     dialog.populateShortcuts(m_ui.menuHelp);
     if (dialog.exec() == QDialog::Accepted)
     {
+        propagateBackgroundSettings();
         propagateBorderSettings();
         m_ui.imageAreaWidget->repaintWithTransformations();
         loadTranslators();

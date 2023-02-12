@@ -41,10 +41,58 @@ void ImageBorder::checkScrollOffset(const QImage &image)
         m_imageOffsetX = 0;
 }
 
+void ImageBorder::addImageOffsetY(int imageOffsetY)
+{
+    m_imageOffsetY += imageOffsetY;
+}
+
+int ImageBorder::getImageOffsetY() const
+{
+    return m_imageOffsetY;
+}
+
+void ImageBorder::setImageOffsetY(int imageOffsetY)
+{
+    m_imageOffsetY = imageOffsetY;
+}
+
+void ImageBorder::addImageOffsetX(int imageOffsetX)
+{
+    m_imageOffsetX += imageOffsetX;
+}
+
+int ImageBorder::getImageOffsetX() const
+{
+    return m_imageOffsetX;
+}
+
+void ImageBorder::setImageOffsetX(int imageOffsetX)
+{
+    m_imageOffsetX = imageOffsetX;
+}
+
 void ImageBorder::setAreaSize(const QSize &size)
 {
     m_areaSize = size;
-    setIsCacheDirty(true);
+    invalidateCache();
+}
+
+void ImageBorder::setBorderColor(const QColor &color)
+{
+    m_borderColor = color;
+    invalidateCache();
+}
+
+void ImageBorder::setBackgroundColor(const QColor &color)
+{
+    m_backgroundColor = color;
+    invalidateCache();
+}
+
+void ImageBorder::setDrawBorder(bool drawBorder)
+{
+    ImageBorder::m_drawBorder = drawBorder;
+    invalidateCache();
 }
 
 QImage ImageBorder::transform()
@@ -54,7 +102,7 @@ QImage ImageBorder::transform()
         QImage originalImage = getOriginalImage();
         QSize newSize = originalImage.size().expandedTo(m_areaSize);
         QImage newImage(newSize, QImage::Format_RGB32);
-        // newImage.fill(Settings::userSettings()->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>());
+        newImage.fill(m_backgroundColor);
 
         // Update scroll settings
         checkScrollOffset(newImage);
@@ -64,20 +112,19 @@ QImage ImageBorder::transform()
                                originalImage,
                                m_imageOffsetX,
                                m_imageOffsetY);
-        /*
-            if (m_drawBorder)
-            {
-                painterImage.setBrush(Qt::NoBrush);
-                QPen pen = painterImage.pen();
-                pen.setWidth(3);
-                pen.setColor(m_borderColor);
-                painterImage.setPen(pen);
-                painterImage.drawRect((newSize.width() / 2 - scaledImage.width() / 2) - m_imageOffsetX,
-                                      (newSize.height() / 2 - scaledImage.height() / 2) - m_imageOffsetY,
-                                      scaledImage.width(),
-                                      scaledImage.height());
-            }
-            */
+
+        if (m_drawBorder)
+        {
+            painterImage.setBrush(Qt::NoBrush);
+            QPen pen = painterImage.pen();
+            pen.setWidth(3);
+            pen.setColor(m_borderColor);
+            painterImage.setPen(pen);
+            painterImage.drawRect((newSize.width() / 2 - originalImage.width() / 2) - m_imageOffsetX,
+                                  (newSize.height() / 2 - originalImage.height() / 2) - m_imageOffsetY,
+                                  originalImage.width(),
+                                  originalImage.height());
+        }
 
         setCachedImage(newImage);
     }
@@ -87,6 +134,6 @@ QImage ImageBorder::transform()
 
 void ImageBorder::resetProperties()
 {
+    m_imageOffsetX = m_imageOffsetY = 0;
     ImageTransformation::resetProperties();
 }
-

@@ -20,6 +20,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #include "ImageTransformation.h"
+#include <QColor>
 
 
 class ImageBorder : public ImageTransformation
@@ -29,12 +30,24 @@ public:
     QImage transform() override;
 
     void setAreaSize(const QSize &size);
+    void setBorderColor(const QColor &color);
+    void setBackgroundColor(const QColor &color);
+    void setDrawBorder(bool drawBorder);
+    void addImageOffsetY(int imageOffsetY);
+    int getImageOffsetY() const;
+    void setImageOffsetY(int imageOffsetY);
+    void addImageOffsetX(int imageOffsetX);
+    int getImageOffsetX() const;
+    void setImageOffsetX(int imageOffsetX);
 
 protected:
     void checkScrollOffset(const QImage &image);
 
 private:
     QSize m_areaSize {};
+    QColor m_borderColor { Qt::white };
+    QColor m_backgroundColor { Qt::black };
+    bool m_drawBorder{ false };
     int m_imageOffsetY {0};
     int m_imageOffsetX {0};
 };

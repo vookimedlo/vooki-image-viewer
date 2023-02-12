@@ -25,8 +25,6 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QPaintEvent>
 #include <QPainter>
 #include <cmath>
-#include "support/Settings.h"
-#include "support/SettingsStrings.h"
 #include "MainWindow.h"
 #include "../processing/MetadataExtractor.h"
 
@@ -43,10 +41,15 @@ ImageAreaWidget::~ImageAreaWidget() noexcept
     m_animationTimer.stop();
 }
 
+void ImageAreaWidget::setBackgroundColor(const QColor &color)
+{
+    m_imageProcessor.setBackgroundColor(color);
+}
+
 void ImageAreaWidget::drawBorder(const bool draw, const QColor &color)
 {
-    m_drawBorder = draw;
-    m_borderColor = color;
+    m_imageProcessor.setBorderColor(color);
+    m_imageProcessor.setDrawBorder(draw);
 }
 
 bool ImageAreaWidget::showImage(const QString &fileName)
@@ -81,7 +84,6 @@ bool ImageAreaWidget::showImage(const QString &fileName)
 
     emit imageDimensionsChanged(m_originalImage.width(), m_originalImage.height());
 
-    m_imageOffsetX = m_imageOffsetY = 0;
     transformImage();
     update();
 
@@ -106,20 +108,19 @@ void ImageAreaWidget::repaintWithTransformations()
 
 void ImageAreaWidget::onDecreaseOffsetX(const int pixels)
 {
-    m_imageOffsetX -= pixels;
+    m_imageProcessor.addImageOffsetX(-pixels);
     repaintWithTransformations();
 }
 
 void ImageAreaWidget::onDecreaseOffsetY(const int pixels)
 {
-    m_imageOffsetY -= pixels;
+    m_imageProcessor.addImageOffsetY(-pixels);
     repaintWithTransformations();
 }
 
 void ImageAreaWidget::onFlipHorizontallyTriggered()
 {
     m_imageProcessor.flipHorizontally();
-
     transformImage();
     update();
 }
@@ -127,20 +128,19 @@ void ImageAreaWidget::onFlipHorizontallyTriggered()
 void ImageAreaWidget::onFlipVerticallyTriggered()
 {
     m_imageProcessor.flipVertically();
-
     transformImage();
     update();
 }
 
 void ImageAreaWidget::onIncreaseOffsetX(const int pixels)
 {
-    m_imageOffsetX += pixels;
+    m_imageProcessor.addImageOffsetX(pixels);
     repaintWithTransformations();
 }
 
 void ImageAreaWidget::onIncreaseOffsetY(const int pixels)
 {
-    m_imageOffsetY += pixels;
+    m_imageProcessor.addImageOffsetY(pixels);
     repaintWithTransformations();
 }
 
@@ -230,25 +230,6 @@ void ImageAreaWidget::onZoomResetTriggered()
     transformImage();
     update();
     m_imageProcessor.setFitToArea(isFitToWindow);
-}
-
-void ImageAreaWidget::checkScrollOffset()
-{
-    if (m_finalImage.height() < size().height())
-        m_imageOffsetY = 0;
-    else if (m_finalImage.height() - m_imageOffsetY < size().height())
-        m_imageOffsetY = m_finalImage.height() - size().height();
-
-    if (m_finalImage.width() < size().width())
-        m_imageOffsetX = 0;
-    else if (m_finalImage.width() - m_imageOffsetX < size().width())
-        m_imageOffsetX = m_finalImage.width() - size().width();
-
-    if (m_imageOffsetY < 0)
-        m_imageOffsetY = 0;
-
-    if (m_imageOffsetX < 0)
-        m_imageOffsetX = 0;
 }
 
 bool ImageAreaWidget::event(QEvent *ev)
@@ -366,38 +347,9 @@ void ImageAreaWidget::transformImage()
         return;
 
     m_imageProcessor.setAreaSize(size());
-    QImage scaledImage = m_imageProcessor.process();
+    m_finalImage = m_imageProcessor.process();
 
-    QSize newSize = scaledImage.size().expandedTo(size());
-    QImage newImage(newSize, QImage::Format_RGB32);
-    newImage.fill(Settings::userSettings()->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>());
-
-    // Update scroll settings
-    checkScrollOffset();
-    QPainter painterImage(&newImage);
-    painterImage.drawImage(newSize.width() / 2 - scaledImage.size().width() / 2,
-                           newSize.height() / 2 - scaledImage.size().height() / 2,
-                           scaledImage,
-                           m_imageOffsetX,
-                           m_imageOffsetY);
-
-    if (m_drawBorder)
-    {
-        painterImage.setBrush(Qt::NoBrush);
-        QPen pen = painterImage.pen();
-        pen.setWidth(3);
-        pen.setColor(m_borderColor);
-        painterImage.setPen(pen);
-        painterImage.drawRect((newSize.width() / 2 - scaledImage.size().width() / 2) - m_imageOffsetX,
-                              (newSize.height() / 2 - scaledImage.size().height() / 2) - m_imageOffsetY,
-                              scaledImage.width(),
-                              scaledImage.height());
-    }
-
-    m_finalImage = newImage;
-
-    if (!m_originalImage.isNull())
-        emit zoomPercentageChanged(scaledImage.width() / static_cast<qreal>(m_originalImage.width()));
+    emit zoomPercentageChanged(m_imageProcessor.getScaleFactor() * m_originalImage.width() / m_originalImage.width());
 }
 
 void ImageAreaWidget::wheelEvent(QWheelEvent *event)

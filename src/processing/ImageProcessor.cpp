@@ -47,35 +47,7 @@ QImage ImageProcessor::process()
         lastTransformedImage = transformation->transform();
     }
 
-    /*
-    QSize newSize = scaledImage.size().expandedTo(size());
-    QImage newImage(newSize, QImage::Format_RGB32);
-    newImage.fill(Settings::userSettings()->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>());
-
-    // Update scroll settings
-    checkScrollOffset();
-    QPainter painterImage(&newImage);
-    painterImage.drawImage(newSize.width() / 2 - scaledImage.size().width() / 2,
-                           newSize.height() / 2 - scaledImage.size().height() / 2,
-                           scaledImage,
-                           m_imageOffsetX,
-                           m_imageOffsetY);
-
-    if (m_drawBorder)
-    {
-        painterImage.setBrush(Qt::NoBrush);
-        QPen pen = painterImage.pen();
-        pen.setWidth(3);
-        pen.setColor(m_borderColor);
-        painterImage.setPen(pen);
-        painterImage.drawRect((newSize.width() / 2 - scaledImage.size().width() / 2) - m_imageOffsetX,
-                              (newSize.height() / 2 - scaledImage.size().height() / 2) - m_imageOffsetY,
-                              scaledImage.width(),
-                              scaledImage.height());
-    }
-
-    m_finalImage = newImage;
-
+ /*
     if (!m_originalImage.isNull())
         emit zoomPercentageChanged(scaledImage.width() / static_cast<qreal>(m_originalImage.width()));
         */
@@ -86,6 +58,7 @@ QImage ImageProcessor::process()
 void ImageProcessor::setAreaSize(const QSize &size)
 {
     m_imageZoom.setAreaSize(size);
+    m_imageBorder.setAreaSize(size);
 }
 
 void ImageProcessor::setScaleFactor(double value)
@@ -138,7 +111,6 @@ void ImageProcessor::resetTransformation()
     std::for_each(m_transformations.cbegin(),
                   m_transformations.cend(),
                   [](auto const transformation){ transformation->resetProperties();});
-    //m_imageOffsetX = m_imageOffsetY = 0;
 }
 
 double ImageProcessor::getScaleFactor() const
@@ -154,4 +126,49 @@ void ImageProcessor::setFitToArea(bool fitToArea)
 bool ImageProcessor::isFitToAreaEnabled() const
 {
     return m_imageZoom.isFitToAreaEnabled();
+}
+
+void ImageProcessor::addImageOffsetY(int imageOffsetY)
+{
+    m_imageBorder.addImageOffsetY(imageOffsetY);
+}
+
+int ImageProcessor::getImageOffsetY() const
+{
+    return m_imageBorder.getImageOffsetY();
+}
+
+void ImageProcessor::setImageOffsetY(int imageOffsetY)
+{
+    m_imageBorder.setImageOffsetY(imageOffsetY);
+}
+
+void ImageProcessor::addImageOffsetX(int imageOffsetX)
+{
+    m_imageBorder.addImageOffsetX(imageOffsetX);
+}
+
+int ImageProcessor::getImageOffsetX() const
+{
+    return m_imageBorder.getImageOffsetX();
+}
+
+void ImageProcessor::setImageOffsetX(int imageOffsetX)
+{
+    m_imageBorder.setImageOffsetX(imageOffsetX);
+}
+
+void ImageProcessor::setBorderColor(const QColor &color)
+{
+    m_imageBorder.setBorderColor(color);
+}
+
+void ImageProcessor::setBackgroundColor(const QColor &color)
+{
+    m_imageBorder.setBackgroundColor(color);
+}
+
+void ImageProcessor::setDrawBorder(bool drawBorder)
+{
+    m_imageBorder.setDrawBorder(drawBorder);
 }

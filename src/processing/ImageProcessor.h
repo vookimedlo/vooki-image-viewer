@@ -51,6 +51,17 @@ public:
     bool isFitToAreaEnabled() const;
     void setFitToArea(bool fitToArea);
 
+    void addImageOffsetY(int imageOffsetY);
+    int getImageOffsetY() const;
+    void setImageOffsetY(int imageOffsetY);
+    void addImageOffsetX(int imageOffsetX);
+    int getImageOffsetX() const;
+    void setImageOffsetX(int imageOffsetX);
+
+    void setBorderColor(const QColor &color);
+    void setBackgroundColor(const QColor &color);
+    void setDrawBorder(bool drawBorder);
+
 protected:
     void flip();
 
@@ -59,9 +70,6 @@ private:
     ImageFlip m_imageFlip {};
     ImageZoom m_imageZoom {};
     ImageBorder m_imageBorder {};
-
     const std::array<ImageTransformation* const, 4> m_transformations {&m_imageRotation, &m_imageFlip, &m_imageZoom, &m_imageBorder};
-
-
     QImage m_originalImage {};
 };

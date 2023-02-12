@@ -49,6 +49,7 @@ public:
     DISABLE_COPY_MOVE(ImageAreaWidget);
     ~ImageAreaWidget() noexcept override;
 
+    void setBackgroundColor(const QColor &color);
     void drawBorder(bool draw, const QColor &color = QColor(Qt::white));
     bool showImage(const QString &fileName);
     void repaintWithTransformations();
@@ -93,12 +94,8 @@ protected:
     void zoom(const double factor, bool isZoomIn);
 
 private:
-    bool m_drawBorder = {false};
-    QColor m_borderColor {Qt::white};
     QImage m_originalImage {};
     QImage m_finalImage {};
-    int m_imageOffsetY {0};
-    int m_imageOffsetX {0};
     QPoint m_mouseMoveLast {};
     QTimer m_animationTimer {this};
     ImageLoader m_imageLoader {};
