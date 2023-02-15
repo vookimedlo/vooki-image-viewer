@@ -99,7 +99,6 @@ private:
     QImage m_originalImage {};
     QImage m_finalImage {};
     QPoint m_mouseMoveLast {};
-    QTimer m_animationTimer {this};
     ImageLoader m_imageLoader {};
     ImageProcessor m_imageProcessor {};
 

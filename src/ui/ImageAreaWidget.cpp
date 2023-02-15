@@ -40,7 +40,6 @@ ImageAreaWidget::ImageAreaWidget(QWidget *parent)
 
 ImageAreaWidget::~ImageAreaWidget() noexcept
 {
-    m_animationTimer.stop();
 }
 
 void ImageAreaWidget::setBackgroundColor(const QColor &color)
@@ -56,7 +55,6 @@ void ImageAreaWidget::drawBorder(const bool draw, const QColor &color)
 
 QCoro::Task<bool> ImageAreaWidget::showImage(const QString &fileName)
 {
-    m_animationTimer.stop();
     if (!m_imageLoader.loadImage(fileName))
         co_return false;
 
