@@ -21,12 +21,11 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "ImageProcessor.h"
 #include <algorithm>
 
-void ImageProcessor::bind(const QImage &image)
+void ImageProcessor::bind(const QImage &image, bool resetTransformation)
 {
     // shallow copy
     m_originalImage = image;
-
-    resetTransformation();
+    (resetTransformation) ? ImageProcessor::resetTransformation() : m_transformations[0]->setIsCacheDirty(true);
 }
 
 QImage ImageProcessor::process()
@@ -46,11 +45,6 @@ QImage ImageProcessor::process()
 
         lastTransformedImage = transformation->transform();
     }
-
- /*
-    if (!m_originalImage.isNull())
-        emit zoomPercentageChanged(scaledImage.width() / static_cast<qreal>(m_originalImage.width()));
-        */
 
     return lastTransformedImage;
 }

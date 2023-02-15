@@ -26,13 +26,18 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "transformation/ImageFlip.h"
 #include "transformation/ImageRotation.h"
 #include "transformation/ImageZoom.h"
+#include "../util/compiler.h"
 #include "../util/RotatingIndex.h"
 
 
 class ImageProcessor
 {
 public:
-    void bind(const QImage &image);
+    ImageProcessor() = default;
+    DISABLE_COPY_MOVE(ImageProcessor);
+
+
+    void bind(const QImage &image, bool resetTransformation = true);
 
     void flipHorizontally();
     void flipVertically();

@@ -21,6 +21,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include <memory>
 #include <string>
+#include "../util/compiler.h"
 
 namespace Exiv2
 {
@@ -46,5 +47,7 @@ namespace Exiv2
 class Exiv2ImageAutoPtrWrapper
 {
 public:
+    DISABLE_COPY_MOVE(Exiv2ImageAutoPtrWrapper);
+
     static std::unique_ptr<Exiv2::Image> open(const std::string& path, bool useCurl = true);
 };

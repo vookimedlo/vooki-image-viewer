@@ -22,12 +22,15 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QImage>
 #include <QImageReader>
 #include <QString>
+#include "../util/compiler.h"
 #include "../util/RotatingIndex.h"
-
 
 class ImageLoader
 {
 public:
+    ImageLoader() = default;
+    DISABLE_COPY_MOVE(ImageLoader);
+
     bool loadImage(const QString &fileName);
     const QImage &getImage();
     const QImage &getNextImage();
