@@ -19,18 +19,18 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include "../util/RotatingIndex.h"
-#include "../util/compiler.h"
 #include <QColor>
 #include <QTimer>
 #include <QWidget>
 #include <cstdint>
 #include <list>
+#include <qcorotask.h>
 #include <utility>
 #include <vector>
 #include "../processing/ImageLoader.h"
 #include "../processing/ImageProcessor.h"
-
+#include "../util/RotatingIndex.h"
+#include "../util/compiler.h"
 
 // Forward declarations
 class QNativeGestureEvent;
@@ -51,7 +51,7 @@ public:
 
     void setBackgroundColor(const QColor &color);
     void drawBorder(bool draw, const QColor &color = QColor(Qt::white));
-    bool showImage(const QString &fileName);
+    QCoro::Task<bool> showImage(const QString &fileName);
     void repaintWithTransformations();
 
 signals:
@@ -92,6 +92,8 @@ protected:
     void transformImage();
     void wheelEvent(QWheelEvent *event) override;
     void zoom(const double factor, bool isZoomIn);
+
+    void extractMetadata(const QString &fileName);
 
 private:
     QImage m_originalImage {};

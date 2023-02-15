@@ -94,6 +94,7 @@ if (NOT WIN32)
 endif ()
 
 SET(USE_QT_LIBRARIES
+        Concurrent
         Core
         Gui
         Widgets)
@@ -105,6 +106,7 @@ if (Qt6_FOUND)
     SET(QT_UI_LIB Qt6::Gui)
 
     SET(QT_ALL_LIBS
+            Qt6::Concurrent
             Qt6::Core
             Qt6::Gui
             Qt6::Widgets)

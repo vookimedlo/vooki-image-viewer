@@ -19,12 +19,14 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #include "ImageAreaWidget.h"
+#include <QtConcurrent>
 #include <QDebug>
 #include <QFile>
 #include <QGuiApplication>
 #include <QPaintEvent>
 #include <QPainter>
 #include <cmath>
+#include <qcorofuture.h>
 #include "MainWindow.h"
 #include "../processing/MetadataExtractor.h"
 
@@ -52,51 +54,37 @@ void ImageAreaWidget::drawBorder(const bool draw, const QColor &color)
     m_imageProcessor.setDrawBorder(draw);
 }
 
-bool ImageAreaWidget::showImage(const QString &fileName)
+QCoro::Task<bool> ImageAreaWidget::showImage(const QString &fileName)
 {
     m_animationTimer.stop();
     if (!m_imageLoader.loadImage(fileName))
-        return false;
+        co_return false;
 
     m_originalImage = m_imageLoader.getImage();
     if (m_originalImage.isNull())
-        return false;
+        co_return false;
+
+    auto metadataTask = QtConcurrent::run([fileName, this]() {
+        extractMetadata(fileName);
+    });
 
     m_imageProcessor.bind(m_originalImage);
     update();
-
-    MetadataExtractor metadataExtractor;
-    auto connection = connect(&metadataExtractor,
-                              &MetadataExtractor::imageInformationParsed,
-                              this,
-                              [this](const std::vector<std::pair<QString, QString>>& information) {
-                                  emit imageInformationParsed(information);
-                              });
-
-    auto connectionSize = connect(&metadataExtractor,
-                                  &MetadataExtractor::imageSizeParsed,
-                                  this,
-                                  [this](const uint64_t &size) {
-                                      emit imageSizeChanged(size);
-                                  });
-
-    metadataExtractor.extract(fileName, m_originalImage.width(), m_originalImage.height());
 
     emit imageDimensionsChanged(m_originalImage.width(), m_originalImage.height());
 
     transformImage();
     update();
 
+    co_await metadataTask;
+
     if (m_imageLoader.imageCount() > 1)
     {
-        const auto delay = m_imageLoader.nextImageDelay();
-        if (delay > 0)
+        if (const auto delay = m_imageLoader.nextImageDelay(); delay > 0)
             QTimer::singleShot(delay, this, SLOT(onNextImage()));
     }
 
-    disconnect(connection);
-    disconnect(connectionSize);
-    return true;
+    co_return true;
 }
 
 void ImageAreaWidget::repaintWithTransformations()
@@ -147,11 +135,11 @@ void ImageAreaWidget::onIncreaseOffsetY(const int pixels)
 void ImageAreaWidget::onNextImage()
 {
     m_originalImage = m_imageLoader.getNextImage();
+    m_imageProcessor.bind(m_originalImage, false);
     transformImage();
     update();
 
-    const auto delay = m_imageLoader.nextImageDelay();
-    if (delay > 0)
+    if (const auto delay = m_imageLoader.nextImageDelay(); delay > 0)
         QTimer::singleShot(delay, this, SLOT(onNextImage()));
 }
 
@@ -382,4 +370,28 @@ void ImageAreaWidget::wheelEvent(QWheelEvent *event)
     }
 
     event->accept();
+}
+
+void ImageAreaWidget::extractMetadata(const QString &fileName)
+{
+
+    MetadataExtractor metadataExtractor;
+    auto connection = connect(&metadataExtractor,
+                              &MetadataExtractor::imageInformationParsed,
+                              this,
+                              [this](const std::vector<std::pair<QString, QString>>& information) {
+                                  emit imageInformationParsed(information);
+                              });
+
+    auto connectionSize = connect(&metadataExtractor,
+                                  &MetadataExtractor::imageSizeParsed,
+                                  this,
+                                  [this](const uint64_t &size) {
+                                      emit imageSizeChanged(size);
+                                  });
+
+    metadataExtractor.extract(fileName, m_originalImage.width(), m_originalImage.height());
+
+    disconnect(connection);
+    disconnect(connectionSize);
 }
