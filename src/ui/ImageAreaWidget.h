@@ -47,7 +47,6 @@ class ImageAreaWidget : public QWidget
 public:
     explicit ImageAreaWidget(QWidget *parent = nullptr);
     DISABLE_COPY_MOVE(ImageAreaWidget);
-    ~ImageAreaWidget() noexcept override;
 
     void setBackgroundColor(const QColor &color);
     void drawBorder(bool draw, const QColor &color = QColor(Qt::white));

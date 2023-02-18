@@ -45,9 +45,9 @@ public:
     void rotateLeft();
     void rotateRight();
 
-    void resetTransformation();
+    void resetTransformation() const;
 
-    QImage process();
+    QImage process() const;
     void setAreaSize(const QSize &size);
 
     double getScaleFactor() const;

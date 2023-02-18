@@ -27,6 +27,8 @@ template<typename T> requires std::is_same_v<QImage, T> || std::is_same_v<QTrans
 class ImageTransformation
 {
 public:
+    virtual ~ImageTransformation() = default;
+
     template<typename U = T>
     inline void invalidateCache() requires std::is_same_v<QImage, U> { m_isCacheDirty = true; }
 

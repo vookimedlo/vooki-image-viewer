@@ -34,7 +34,7 @@ public:
         if (ImageTransformation<T>::isCacheDirty())
         {
             QImage originalImage = ImageTransformation<T>::getOriginalObject();
-            ImageTransformation<T>::setCachedObject([this, originalImage]() {
+            ImageTransformation<T>::setCachedObject([&originalImage, &m_fitToArea = m_fitToArea, &m_areaWidth = m_areaWidth, &m_areaHeight = m_areaHeight, &m_scaleFactor = m_scaleFactor]() {
                 if (m_fitToArea)
                 {
                     if ((static_cast<double>(m_areaWidth) / originalImage.width() * originalImage.height()) <= m_areaHeight)

@@ -25,10 +25,10 @@ void ImageProcessor::bind(const QImage &image, bool resetTransformation)
 {
     // shallow copy
     m_originalImage = image;
-    (resetTransformation) ? ImageProcessor::resetTransformation() : m_transformations[0]->setIsCacheDirty(true);
+    resetTransformation ? ImageProcessor::resetTransformation() : m_transformations[0]->setIsCacheDirty(true);
 }
 
-QImage ImageProcessor::process()
+QImage ImageProcessor::process() const
 {
     if (m_originalImage.isNull())
         return m_originalImage;
@@ -100,7 +100,7 @@ void ImageProcessor::rotateRight()
         m_imageRotation.rotateRight();
 }
 
-void ImageProcessor::resetTransformation()
+void ImageProcessor::resetTransformation() const
 {
     std::for_each(m_transformations.cbegin(),
                   m_transformations.cend(),

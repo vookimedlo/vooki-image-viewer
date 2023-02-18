@@ -38,10 +38,6 @@ ImageAreaWidget::ImageAreaWidget(QWidget *parent)
     m_finalImage.fill(qRgb(0, 0, 0));
 }
 
-ImageAreaWidget::~ImageAreaWidget() noexcept
-{
-}
-
 void ImageAreaWidget::setBackgroundColor(const QColor &color)
 {
     m_imageProcessor.setBackgroundColor(color);
