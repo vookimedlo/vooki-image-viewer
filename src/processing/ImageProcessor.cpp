@@ -43,7 +43,7 @@ QImage ImageProcessor::process()
         else if (transformation->isCacheDirty())
             needsTransformation = true;
 
-        lastTransformedImage = transformation->transform();
+        lastTransformedImage = transformation->transform().value<QImage>();
     }
 
     return lastTransformedImage;

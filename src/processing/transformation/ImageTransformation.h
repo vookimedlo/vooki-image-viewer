@@ -20,26 +20,43 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #include <QImage>
+#include <QVariant>
+#include <type_traits>
 
+template<typename T> requires std::is_same_v<QImage, T> || std::is_same_v<QTransform, T>
 class ImageTransformation
 {
 public:
-    virtual void bind(const QImage &image) { m_originalImage = image; invalidateCache(); };
-    virtual QImage transform() = 0;
+    template<typename U = T>
+    inline void invalidateCache() requires std::is_same_v<QImage, U> { m_isCacheDirty = true; }
+
+    template<typename U>
+    inline void invalidateCache() requires std::is_same_v<QTransform, U> { m_isCacheDirty = true; m_cachedObject.reset(); }
+
+    virtual void bind(const T &image) {
+        m_originalObject = image;
+        invalidateCache<T>();
+    };
+
+    [[nodiscard]] virtual QVariant transform() = 0;
 
     [[nodiscard]] inline bool isCacheDirty() const { return m_isCacheDirty; }
-    inline void invalidateCache() { m_isCacheDirty = true; }
+
     inline void setIsCacheDirty(bool isCacheDirty) { m_isCacheDirty = isCacheDirty; }
 
     virtual void resetProperties() { m_isCacheDirty = true; }
 
 protected:
-    inline const QImage &getOriginalImage() const { return m_originalImage; }
-    inline const QImage &getCachedImage() const { return m_cachedImage; }
-    inline void setCachedImage(const QImage &cachedImage) { m_cachedImage = cachedImage; setIsCacheDirty(false); }
+    [[nodiscard]] inline const T &getOriginalObject() const { return m_originalObject; }
+    [[nodiscard]] inline const T &getCachedObject() const { return m_cachedObject; }
+
+    inline void setCachedObject(const T &cachedImage) {
+        m_cachedObject = cachedImage;
+        setIsCacheDirty(false);
+    }
 
 private:
     bool m_isCacheDirty {true};
-    QImage m_cachedImage {};
-    QImage m_originalImage {};
+    T m_cachedObject {};
+    T m_originalObject {};
 };

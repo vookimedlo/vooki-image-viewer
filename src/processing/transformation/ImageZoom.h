@@ -21,12 +21,43 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include "ImageTransformation.h"
 
-
-class ImageZoom : public ImageTransformation
+template<typename T>
+class ImageZoom : public ImageTransformation<T>
 {
 public:
     void resetProperties() override;
-    QImage transform() override;
+    QVariant transform() override;
+
+    template<typename U = T>
+    QVariant transformInternal() requires std::is_same_v<QImage, U>
+    {
+        if (ImageTransformation<T>::isCacheDirty())
+        {
+            QImage originalImage = ImageTransformation<T>::getOriginalObject();
+            ImageTransformation<T>::setCachedObject([this, originalImage]() {
+                if (m_fitToArea)
+                {
+                    if ((static_cast<double>(m_areaWidth) / originalImage.width() * originalImage.height()) <= m_areaHeight)
+                        return originalImage.scaledToWidth(m_areaWidth, Qt::SmoothTransformation);
+                    else
+                        return originalImage.scaledToHeight(m_areaHeight, Qt::SmoothTransformation);
+                }
+                else
+                    return originalImage.scaledToWidth((int)(originalImage.width() * m_scaleFactor), Qt::SmoothTransformation);
+            }());
+
+            m_scaleFactor = ImageTransformation<T>::getCachedObject().width() / static_cast<double>(originalImage.width());
+        }
+        return ImageTransformation<T>::getCachedObject();
+    }
+
+    template<typename U = T>
+    QVariant transformInternal() requires std::is_same_v<QTransform, U>
+    {
+        if (ImageTransformation<T>::isCacheDirty())
+            ImageTransformation<T>::setCachedObject(QTransform(ImageTransformation<T>::getOriginalObject()).scale(m_scaleFactor, m_scaleFactor));
+        return ImageTransformation<T>::getCachedObject();
+    }
 
     void setAreaSize(const QSize &size);
     double getScaleFactor() const;
@@ -41,3 +72,49 @@ private:
     bool m_fitToArea {false};
     double m_scaleFactor {1.0};
 };
+
+template<typename T>
+void ImageZoom<T>::setAreaSize(const QSize &size)
+{
+    m_areaHeight = size.height();
+    m_areaWidth = size.width();
+}
+
+template<typename T>
+double ImageZoom<T>::getScaleFactor() const
+{
+    return m_scaleFactor;
+}
+
+template<typename T>
+void ImageZoom<T>::setScaleFactor(double factor)
+{
+    m_scaleFactor = factor;
+    ImageTransformation<T>::invalidateCache();
+}
+
+template<typename T>
+bool ImageZoom<T>::isFitToAreaEnabled() const
+{
+    return m_fitToArea;
+}
+
+template<typename T>
+void ImageZoom<T>::setFitToArea(bool fitToArea)
+{
+    m_fitToArea = fitToArea;
+    ImageTransformation<T>::invalidateCache();
+}
+
+template<typename T>
+void ImageZoom<T>::resetProperties()
+{
+    m_scaleFactor = 1.0;
+    ImageTransformation<T>::resetProperties();
+}
+
+template<typename T>
+QVariant ImageZoom<T>::transform()
+{
+    return transformInternal<T>();
+}

@@ -19,28 +19,3 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #include "ImageRotation.h"
-
-void ImageRotation::rotateLeft()
-{
-    --m_rotateIndex;
-    invalidateCache();
-}
-
-void ImageRotation::rotateRight()
-{
-    ++m_rotateIndex;
-    invalidateCache();
-}
-
-QImage ImageRotation::transform()
-{
-    if (isCacheDirty())
-        setCachedImage(getOriginalImage().transformed(QTransform().rotate(m_rotateIndex * 90), Qt::SmoothTransformation));
-    return getCachedImage();
-}
-
-void ImageRotation::resetProperties()
-{
-    m_rotateIndex.reset(0);
-    ImageTransformation::resetProperties();
-}

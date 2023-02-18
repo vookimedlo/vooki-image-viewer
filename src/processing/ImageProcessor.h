@@ -71,10 +71,10 @@ protected:
     void flip();
 
 private:
-    ImageRotation m_imageRotation {};
-    ImageFlip m_imageFlip {};
-    ImageZoom m_imageZoom {};
-    ImageBorder m_imageBorder {};
-    const std::array<ImageTransformation* const, 4> m_transformations {&m_imageRotation, &m_imageFlip, &m_imageZoom, &m_imageBorder};
+    ImageRotation<QImage> m_imageRotation {};
+    ImageFlip<QImage> m_imageFlip {};
+    ImageZoom<QImage> m_imageZoom {};
+    ImageBorder<QImage> m_imageBorder {};
+    const std::array<ImageTransformation<QImage>* const, 4> m_transformations {&m_imageRotation, &m_imageFlip, &m_imageZoom, &m_imageBorder};
     QImage m_originalImage {};
 };

@@ -21,13 +21,15 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include "ImageTransformation.h"
 #include <QColor>
+#include <QPainter>
 
 
-class ImageBorder : public ImageTransformation
+template<typename T> requires std::is_same_v<QImage, T>
+class ImageBorder : public ImageTransformation<T>
 {
 public:
     void resetProperties() override;
-    QImage transform() override;
+    QVariant transform() override;
 
     void setAreaSize(const QSize &size);
     void setBorderColor(const QColor &color);
@@ -51,3 +53,132 @@ private:
     int m_imageOffsetY {0};
     int m_imageOffsetX {0};
 };
+
+template<typename T> requires std::is_same_v<QImage, T>
+void ImageBorder<T>::checkScrollOffset(const QImage &image)
+{
+    if (image.height() < m_areaSize.height())
+        m_imageOffsetY = 0;
+    else if (image.height() - m_imageOffsetY < m_areaSize.height())
+        m_imageOffsetY = image.height() - m_areaSize.height();
+
+    if (image.width() < m_areaSize.width())
+        m_imageOffsetX = 0;
+    else if (image.width() - m_imageOffsetX < m_areaSize.width())
+        m_imageOffsetX = image.width() - m_areaSize.width();
+
+    if (m_imageOffsetY < 0)
+        m_imageOffsetY = 0;
+
+    if (m_imageOffsetX < 0)
+        m_imageOffsetX = 0;
+}
+
+template<typename T> requires std::is_same_v<QImage, T>
+void ImageBorder<T>::addImageOffsetY(int imageOffsetY)
+{
+    m_imageOffsetY += imageOffsetY;
+}
+
+template<typename T> requires std::is_same_v<QImage, T>
+int ImageBorder<T>::getImageOffsetY() const
+{
+    return m_imageOffsetY;
+}
+
+template<typename T> requires std::is_same_v<QImage, T>
+void ImageBorder<T>::setImageOffsetY(int imageOffsetY)
+{
+    m_imageOffsetY = imageOffsetY;
+}
+
+template<typename T> requires std::is_same_v<QImage, T>
+void ImageBorder<T>::addImageOffsetX(int imageOffsetX)
+{
+    m_imageOffsetX += imageOffsetX;
+}
+
+template<typename T> requires std::is_same_v<QImage, T>
+int ImageBorder<T>::getImageOffsetX() const
+{
+    return m_imageOffsetX;
+}
+
+template<typename T> requires std::is_same_v<QImage, T>
+void ImageBorder<T>::setImageOffsetX(int imageOffsetX)
+{
+    m_imageOffsetX = imageOffsetX;
+}
+
+template<typename T> requires std::is_same_v<QImage, T>
+void ImageBorder<T>::setAreaSize(const QSize &size)
+{
+    m_areaSize = size;
+    ImageTransformation<T>::invalidateCache();
+}
+
+template<typename T> requires std::is_same_v<QImage, T>
+void ImageBorder<T>::setBorderColor(const QColor &color)
+{
+    m_borderColor = color;
+    ImageTransformation<T>::invalidateCache();
+}
+
+template<typename T> requires std::is_same_v<QImage, T>
+void ImageBorder<T>::setBackgroundColor(const QColor &color)
+{
+    m_backgroundColor = color;
+    ImageTransformation<T>::invalidateCache();
+}
+
+template<typename T> requires std::is_same_v<QImage, T>
+void ImageBorder<T>::setDrawBorder(bool drawBorder)
+{
+    ImageBorder::m_drawBorder = drawBorder;
+    ImageTransformation<T>::invalidateCache();
+}
+
+template<typename T> requires std::is_same_v<QImage, T>
+void ImageBorder<T>::resetProperties()
+{
+    m_imageOffsetX = m_imageOffsetY = 0;
+    ImageTransformation<T>::resetProperties();
+}
+
+template<typename T> requires std::is_same_v<QImage, T>
+QVariant ImageBorder<T>::transform()
+{
+    if (ImageTransformation<T>::isCacheDirty())
+    {
+        QImage originalImage = ImageTransformation<T>::getOriginalObject();
+        QSize newSize = originalImage.size().expandedTo(m_areaSize);
+        QImage newImage(newSize, QImage::Format_RGB32);
+        newImage.fill(m_backgroundColor);
+
+        // Update scroll settings
+        checkScrollOffset(newImage);
+        QPainter painterImage(&newImage);
+        painterImage.drawImage(newSize.width() / 2 - originalImage.size().width() / 2,
+                               newSize.height() / 2 - originalImage.size().height() / 2,
+                               originalImage,
+                               m_imageOffsetX,
+                               m_imageOffsetY);
+
+        if (m_drawBorder)
+        {
+            painterImage.setBrush(Qt::NoBrush);
+            QPen pen = painterImage.pen();
+            pen.setWidth(3);
+            pen.setColor(m_borderColor);
+            painterImage.setPen(pen);
+            painterImage.drawRect((newSize.width() / 2 - originalImage.width() / 2) - m_imageOffsetX,
+                                  (newSize.height() / 2 - originalImage.height() / 2) - m_imageOffsetY,
+                                  originalImage.width(),
+                                  originalImage.height());
+        }
+
+        ImageTransformation<T>::setCachedObject(newImage);
+    }
+
+    return ImageTransformation<T>::getCachedObject();
+}
