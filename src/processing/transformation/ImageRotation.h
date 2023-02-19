@@ -22,21 +22,12 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include "../../util/RotatingIndex.h"
 #include "ImageTransformationBase.h"
 
-template<typename T>
+template<typename T> requires std::is_same_v<QTransform, T>
 class ImageRotation : public ImageTransformationBase<T>
 {
 public:
     void resetProperties() override;
     QVariant transform() override;
-
-    template<typename U = T>
-    QVariant transformInternal() requires std::is_same_v<QImage, U>
-    {
-        if (ImageTransformationBase<T>::isCacheDirty())
-            ImageTransformationBase<T>::setCachedObject(
-              ImageTransformationBase<T>::getOriginalObject().transformed(QTransform().rotate(m_rotateIndex * 90), Qt::SmoothTransformation));
-        return ImageTransformationBase<T>::getCachedObject();
-    }
 
     template<typename U = T>
     QVariant transformInternal() requires std::is_same_v<QTransform, U>
@@ -52,28 +43,28 @@ private:
     RotatingIndex<uint8_t> m_rotateIndex {0, 4}; // 4 rotation quadrants
 };
 
-template<typename T>
+template<typename T> requires std::is_same_v<QTransform, T>
 void ImageRotation<T>::rotateLeft()
 {
     --m_rotateIndex;
     ImageTransformationBase<T>::invalidateCache();
 }
 
-template<typename T>
+template<typename T> requires std::is_same_v<QTransform, T>
 void ImageRotation<T>::rotateRight()
 {
     ++m_rotateIndex;
     ImageTransformationBase<T>::invalidateCache();
 }
 
-template<typename T>
+template<typename T> requires std::is_same_v<QTransform, T>
 void ImageRotation<T>::resetProperties()
 {
     m_rotateIndex.reset(0);
     ImageTransformationBase<T>::resetProperties();
 }
 
-template<typename T>
+template<typename T> requires std::is_same_v<QTransform, T>
 QVariant ImageRotation<T>::transform()
 {
     return transformInternal<T>();

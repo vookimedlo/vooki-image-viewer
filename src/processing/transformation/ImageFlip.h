@@ -21,36 +21,12 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include "ImageTransformationBase.h"
 
-template<typename T>
+template<typename T> requires std::is_same_v<QTransform, T>
 class ImageFlip : public ImageTransformationBase<T>
 {
 public:
     void resetProperties() override;
     QVariant transform() override;
-
-    template<typename U = T>
-    QVariant transformInternal() requires std::is_same_v<QImage, U>
-    {
-        if (ImageTransformationBase<T>::isCacheDirty())
-        {
-            QImage newImage = ImageTransformationBase<T>::getOriginalObject();
-            if (m_flipHorizontally)
-            {
-                static QTransform transform{QTransform().rotate(180, Qt::XAxis)};
-                newImage = newImage.transformed(transform, Qt::SmoothTransformation);
-            }
-
-            if (m_flipVertically)
-            {
-                static QTransform transform{QTransform().rotate(180, Qt::YAxis)};
-                newImage = newImage.transformed(transform, Qt::SmoothTransformation);
-            }
-
-            ImageTransformationBase<T>::setCachedObject(newImage);
-        }
-
-        return ImageTransformationBase<T>::getCachedObject();
-    }
 
     template<typename U = T>
     QVariant transformInternal() requires std::is_same_v<QTransform, U>
@@ -82,52 +58,52 @@ private:
     bool m_flipVertically {false};
 };
 
-template<typename T>
+template<typename T> requires std::is_same_v<QTransform, T>
 void ImageFlip<T>::flipHorizontally()
 {
     m_flipHorizontally = !m_flipHorizontally;
     ImageTransformationBase<T>::invalidateCache();
 }
 
-template<typename T>
+template<typename T> requires std::is_same_v<QTransform, T>
 void ImageFlip<T>::flipVertically()
 {
     m_flipVertically = !m_flipVertically;
     ImageTransformationBase<T>::invalidateCache();
 }
 
-template<typename T>
+template<typename T> requires std::is_same_v<QTransform, T>
 bool ImageFlip<T>::isFlippedHorizontally() const
 {
     return m_flipHorizontally;
 }
 
-template<typename T>
+template<typename T> requires std::is_same_v<QTransform, T>
 bool ImageFlip<T>::isFlippedVertically() const
 {
     return m_flipVertically;
 }
 
-template<typename T>
+template<typename T> requires std::is_same_v<QTransform, T>
 void ImageFlip<T>::setFlipHorizontally(bool flipHorizontally)
 {
     m_flipHorizontally = flipHorizontally;
 }
 
-template<typename T>
+template<typename T> requires std::is_same_v<QTransform, T>
 void ImageFlip<T>::setFlipVertically(bool flipVertically)
 {
     m_flipVertically = flipVertically;
 }
 
-template<typename T>
+template<typename T> requires std::is_same_v<QTransform, T>
 void ImageFlip<T>::resetProperties()
 {
     m_flipHorizontally = m_flipVertically = false;
     ImageTransformationBase<T>::resetProperties();
 }
 
-template<typename T>
+template<typename T> requires std::is_same_v<QTransform, T>
 QVariant ImageFlip<T>::transform()
 {
     return transformInternal<T>();
