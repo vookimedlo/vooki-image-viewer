@@ -19,10 +19,10 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include "ImageTransformation.h"
+#include "ImageTransformationBase.h"
 
 template<typename T>
-class ImageZoom : public ImageTransformation<T>
+class ImageZoom : public ImageTransformationBase<T>
 {
 public:
     void resetProperties() override;
@@ -31,10 +31,10 @@ public:
     template<typename U = T>
     QVariant transformInternal() requires std::is_same_v<QImage, U>
     {
-        if (ImageTransformation<T>::isCacheDirty())
+        if (ImageTransformationBase<T>::isCacheDirty())
         {
-            QImage originalImage = ImageTransformation<T>::getOriginalObject();
-            ImageTransformation<T>::setCachedObject([&originalImage, &m_fitToArea = m_fitToArea, &m_areaWidth = m_areaWidth, &m_areaHeight = m_areaHeight, &m_scaleFactor = m_scaleFactor]() {
+            QImage originalImage = ImageTransformationBase<T>::getOriginalObject();
+            ImageTransformationBase<T>::setCachedObject([&originalImage, &m_fitToArea = m_fitToArea, &m_areaWidth = m_areaWidth, &m_areaHeight = m_areaHeight, &m_scaleFactor = m_scaleFactor]() {
                 if (m_fitToArea)
                 {
                     if ((static_cast<double>(m_areaWidth) / originalImage.width() * originalImage.height()) <= m_areaHeight)
@@ -46,21 +46,21 @@ public:
                     return originalImage.scaledToWidth((int)(originalImage.width() * m_scaleFactor), Qt::SmoothTransformation);
             }());
 
-            m_scaleFactor = ImageTransformation<T>::getCachedObject().width() / static_cast<double>(originalImage.width());
+            m_scaleFactor = ImageTransformationBase<T>::getCachedObject().width() / static_cast<double>(originalImage.width());
         }
-        return ImageTransformation<T>::getCachedObject();
+        return ImageTransformationBase<T>::getCachedObject();
     }
 
     template<typename U = T>
     QVariant transformInternal() requires std::is_same_v<QTransform, U>
     {
-        if (ImageTransformation<T>::isCacheDirty())
+        if (ImageTransformationBase<T>::isCacheDirty())
         {
             if (m_fitToArea)
                 m_scaleFactor = m_areaWidth / static_cast<double>(m_originalImageSize.width());
-            ImageTransformation<T>::setCachedObject(QTransform(ImageTransformation<T>::getOriginalObject()).scale(m_scaleFactor, m_scaleFactor));
+            ImageTransformationBase<T>::setCachedObject(QTransform(ImageTransformationBase<T>::getOriginalObject()).scale(m_scaleFactor, m_scaleFactor));
         }
-        return ImageTransformation<T>::getCachedObject();
+        return ImageTransformationBase<T>::getCachedObject();
     }
 
     void setOriginalImageSize(const QSize &size);
@@ -87,7 +87,7 @@ void ImageZoom<T>::setAreaSize(const QSize &size)
 
     m_areaHeight = size.height();
     m_areaWidth = size.width();
-    ImageTransformation<T>::invalidateCache();
+    ImageTransformationBase<T>::invalidateCache();
 }
 
 template<typename T>
@@ -100,7 +100,7 @@ template<typename T>
 void ImageZoom<T>::setScaleFactor(double factor)
 {
     m_scaleFactor = factor;
-    ImageTransformation<T>::invalidateCache();
+    ImageTransformationBase<T>::invalidateCache();
 }
 
 template<typename T>
@@ -113,14 +113,14 @@ template<typename T>
 void ImageZoom<T>::setFitToArea(bool fitToArea)
 {
     m_fitToArea = fitToArea;
-    ImageTransformation<T>::invalidateCache();
+    ImageTransformationBase<T>::invalidateCache();
 }
 
 template<typename T>
 void ImageZoom<T>::resetProperties()
 {
     m_scaleFactor = 1.0;
-    ImageTransformation<T>::resetProperties();
+    ImageTransformationBase<T>::resetProperties();
 }
 
 template<typename T>

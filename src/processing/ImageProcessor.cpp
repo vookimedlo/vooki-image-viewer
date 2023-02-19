@@ -37,15 +37,18 @@ QImage ImageProcessor::process()
 
     QTransform lastTransformation {};
     bool needsTransformation { m_transformations[0]->isCacheDirty() };
-    for (auto const transformation : m_transformations)
+    for (auto const genericTransformation : m_transformations)
     {
-        // Mark as dirty if the previous transformation in stack was dirty too.
-        if (needsTransformation)
-            transformation->bind(lastTransformation);
-        else if (transformation->isCacheDirty())
-            needsTransformation = true;
+        if (const auto transformation = dynamic_cast<ImageTransformationBase<QTransform> *>(genericTransformation))
+        {
+            // Mark as dirty if the previous transformation in stack was dirty too.
+            if (needsTransformation)
+                transformation->bind(lastTransformation);
+            else if (transformation->isCacheDirty())
+                needsTransformation = true;
 
-        lastTransformation = transformation->transform().value<QTransform>();
+            lastTransformation = transformation->transform().value<QTransform>();
+        }
     }
 
     if (needsTransformation)
@@ -127,7 +130,6 @@ void ImageProcessor::resetTransformation()
     std::for_each(m_transformations.cbegin(),
                   m_transformations.cend(),
                   [](auto const transformation){ transformation->resetProperties();});
-    m_imageBorder.resetProperties();
 }
 
 double ImageProcessor::getScaleFactor() const

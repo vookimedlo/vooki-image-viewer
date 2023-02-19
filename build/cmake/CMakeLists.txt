@@ -137,10 +137,6 @@ SET(SOURCES
         ../../src/model/ImageCatalog.cpp
         ../../src/processing/ImageLoader.cpp
         ../../src/processing/ImageProcessor.cpp
-        ../../src/processing/transformation/ImageBorder.cpp
-        ../../src/processing/transformation/ImageFlip.cpp
-        ../../src/processing/transformation/ImageRotation.cpp
-        ../../src/processing/transformation/ImageZoom.cpp
         ../../src/processing/MetadataExtractor.cpp
         ../../src/ui/AboutComponentsDialog.cpp
         ../../src/ui/FileSystemTreeView.cpp

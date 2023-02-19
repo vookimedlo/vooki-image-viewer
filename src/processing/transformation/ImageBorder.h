@@ -19,13 +19,13 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include "ImageTransformation.h"
+#include "ImageTransformationBase.h"
 #include <QColor>
 #include <QPainter>
 
 
 template<typename T> requires std::is_same_v<QImage, T>
-class ImageBorder : public ImageTransformation<T>
+class ImageBorder : public ImageTransformationBase<T>
 {
 public:
     void resetProperties() override;
@@ -114,43 +114,43 @@ template<typename T> requires std::is_same_v<QImage, T>
 void ImageBorder<T>::setAreaSize(const QSize &size)
 {
     m_areaSize = size;
-    ImageTransformation<T>::invalidateCache();
+    ImageTransformationBase<T>::invalidateCache();
 }
 
 template<typename T> requires std::is_same_v<QImage, T>
 void ImageBorder<T>::setBorderColor(const QColor &color)
 {
     m_borderColor = color;
-    ImageTransformation<T>::invalidateCache();
+    ImageTransformationBase<T>::invalidateCache();
 }
 
 template<typename T> requires std::is_same_v<QImage, T>
 void ImageBorder<T>::setBackgroundColor(const QColor &color)
 {
     m_backgroundColor = color;
-    ImageTransformation<T>::invalidateCache();
+    ImageTransformationBase<T>::invalidateCache();
 }
 
 template<typename T> requires std::is_same_v<QImage, T>
 void ImageBorder<T>::setDrawBorder(bool drawBorder)
 {
     ImageBorder::m_drawBorder = drawBorder;
-    ImageTransformation<T>::invalidateCache();
+    ImageTransformationBase<T>::invalidateCache();
 }
 
 template<typename T> requires std::is_same_v<QImage, T>
 void ImageBorder<T>::resetProperties()
 {
     m_imageOffsetX = m_imageOffsetY = 0;
-    ImageTransformation<T>::resetProperties();
+    ImageTransformationBase<T>::resetProperties();
 }
 
 template<typename T> requires std::is_same_v<QImage, T>
 QVariant ImageBorder<T>::transform()
 {
-    if (ImageTransformation<T>::isCacheDirty())
+    if (ImageTransformationBase<T>::isCacheDirty())
     {
-        QImage originalImage = ImageTransformation<T>::getOriginalObject();
+        QImage originalImage = ImageTransformationBase<T>::getOriginalObject();
         QSize newSize = originalImage.size().expandedTo(m_areaSize);
         QImage newImage(newSize, QImage::Format_RGB32);
         newImage.fill(m_backgroundColor);
@@ -177,8 +177,8 @@ QVariant ImageBorder<T>::transform()
                                   originalImage.height());
         }
 
-        ImageTransformation<T>::setCachedObject(newImage);
+        ImageTransformationBase<T>::setCachedObject(newImage);
     }
 
-    return ImageTransformation<T>::getCachedObject();
+    return ImageTransformationBase<T>::getCachedObject();
 }

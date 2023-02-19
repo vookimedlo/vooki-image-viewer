@@ -19,12 +19,11 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include "ImageTransformation.h"
 #include "../../util/RotatingIndex.h"
-
+#include "ImageTransformationBase.h"
 
 template<typename T>
-class ImageRotation : public ImageTransformation<T>
+class ImageRotation : public ImageTransformationBase<T>
 {
 public:
     void resetProperties() override;
@@ -33,17 +32,18 @@ public:
     template<typename U = T>
     QVariant transformInternal() requires std::is_same_v<QImage, U>
     {
-        if (ImageTransformation<T>::isCacheDirty())
-            ImageTransformation<T>::setCachedObject(ImageTransformation<T>::getOriginalObject().transformed(QTransform().rotate(m_rotateIndex * 90), Qt::SmoothTransformation));
-        return ImageTransformation<T>::getCachedObject();
+        if (ImageTransformationBase<T>::isCacheDirty())
+            ImageTransformationBase<T>::setCachedObject(
+              ImageTransformationBase<T>::getOriginalObject().transformed(QTransform().rotate(m_rotateIndex * 90), Qt::SmoothTransformation));
+        return ImageTransformationBase<T>::getCachedObject();
     }
 
     template<typename U = T>
     QVariant transformInternal() requires std::is_same_v<QTransform, U>
     {
-        if (ImageTransformation<T>::isCacheDirty())
-            ImageTransformation<T>::setCachedObject(QTransform(ImageTransformation<T>::getOriginalObject()).rotate(m_rotateIndex * 90));
-        return ImageTransformation<T>::getCachedObject();
+        if (ImageTransformationBase<T>::isCacheDirty())
+            ImageTransformationBase<T>::setCachedObject(QTransform(ImageTransformationBase<T>::getOriginalObject()).rotate(m_rotateIndex * 90));
+        return ImageTransformationBase<T>::getCachedObject();
     }
 
     void rotateLeft();
@@ -56,21 +56,21 @@ template<typename T>
 void ImageRotation<T>::rotateLeft()
 {
     --m_rotateIndex;
-    ImageTransformation<T>::invalidateCache();
+    ImageTransformationBase<T>::invalidateCache();
 }
 
 template<typename T>
 void ImageRotation<T>::rotateRight()
 {
     ++m_rotateIndex;
-    ImageTransformation<T>::invalidateCache();
+    ImageTransformationBase<T>::invalidateCache();
 }
 
 template<typename T>
 void ImageRotation<T>::resetProperties()
 {
     m_rotateIndex.reset(0);
-    ImageTransformation<T>::resetProperties();
+    ImageTransformationBase<T>::resetProperties();
 }
 
 template<typename T>

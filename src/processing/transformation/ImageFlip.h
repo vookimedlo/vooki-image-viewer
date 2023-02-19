@@ -19,10 +19,10 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include "ImageTransformation.h"
+#include "ImageTransformationBase.h"
 
 template<typename T>
-class ImageFlip : public ImageTransformation<T>
+class ImageFlip : public ImageTransformationBase<T>
 {
 public:
     void resetProperties() override;
@@ -31,9 +31,9 @@ public:
     template<typename U = T>
     QVariant transformInternal() requires std::is_same_v<QImage, U>
     {
-        if (ImageTransformation<T>::isCacheDirty())
+        if (ImageTransformationBase<T>::isCacheDirty())
         {
-            QImage newImage = ImageTransformation<T>::getOriginalObject();
+            QImage newImage = ImageTransformationBase<T>::getOriginalObject();
             if (m_flipHorizontally)
             {
                 static QTransform transform{QTransform().rotate(180, Qt::XAxis)};
@@ -46,28 +46,28 @@ public:
                 newImage = newImage.transformed(transform, Qt::SmoothTransformation);
             }
 
-            ImageTransformation<T>::setCachedObject(newImage);
+            ImageTransformationBase<T>::setCachedObject(newImage);
         }
 
-        return ImageTransformation<T>::getCachedObject();
+        return ImageTransformationBase<T>::getCachedObject();
     }
 
     template<typename U = T>
     QVariant transformInternal() requires std::is_same_v<QTransform, U>
     {
-        if (ImageTransformation<T>::isCacheDirty())
+        if (ImageTransformationBase<T>::isCacheDirty())
         {
-            QTransform transform = ImageTransformation<T>::getOriginalObject();
+            QTransform transform = ImageTransformationBase<T>::getOriginalObject();
             if (m_flipHorizontally)
                 transform.rotate(180, Qt::XAxis);
 
             if (m_flipVertically)
                 transform.rotate(180, Qt::YAxis);
 
-            ImageTransformation<T>::setCachedObject(transform);
+            ImageTransformationBase<T>::setCachedObject(transform);
         }
 
-        return ImageTransformation<T>::getCachedObject();
+        return ImageTransformationBase<T>::getCachedObject();
     }
 
     void flipHorizontally();
@@ -86,14 +86,14 @@ template<typename T>
 void ImageFlip<T>::flipHorizontally()
 {
     m_flipHorizontally = !m_flipHorizontally;
-    ImageTransformation<T>::invalidateCache();
+    ImageTransformationBase<T>::invalidateCache();
 }
 
 template<typename T>
 void ImageFlip<T>::flipVertically()
 {
     m_flipVertically = !m_flipVertically;
-    ImageTransformation<T>::invalidateCache();
+    ImageTransformationBase<T>::invalidateCache();
 }
 
 template<typename T>
@@ -124,7 +124,7 @@ template<typename T>
 void ImageFlip<T>::resetProperties()
 {
     m_flipHorizontally = m_flipVertically = false;
-    ImageTransformation<T>::resetProperties();
+    ImageTransformationBase<T>::resetProperties();
 }
 
 template<typename T>

@@ -75,6 +75,6 @@ private:
     ImageFlip<QTransform> m_imageFlip {};
     ImageZoom<QTransform> m_imageZoom {};
     ImageBorder<QImage> m_imageBorder {};
-    const std::array<ImageTransformation<QTransform>* const, 3> m_transformations { &m_imageRotation, &m_imageFlip, &m_imageZoom };
+    const std::array<ImageTransformation* const, 4> m_transformations { &m_imageRotation, &m_imageFlip, &m_imageZoom, &m_imageBorder };
     QImage m_originalImage {};
 };
