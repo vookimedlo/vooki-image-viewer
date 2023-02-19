@@ -55,10 +55,15 @@ public:
     QVariant transformInternal() requires std::is_same_v<QTransform, U>
     {
         if (ImageTransformation<T>::isCacheDirty())
+        {
+            if (m_fitToArea)
+                m_scaleFactor = m_areaWidth / static_cast<double>(m_originalImageSize.width());
             ImageTransformation<T>::setCachedObject(QTransform(ImageTransformation<T>::getOriginalObject()).scale(m_scaleFactor, m_scaleFactor));
+        }
         return ImageTransformation<T>::getCachedObject();
     }
 
+    void setOriginalImageSize(const QSize &size);
     void setAreaSize(const QSize &size);
     double getScaleFactor() const;
     void setScaleFactor(double factor);
@@ -70,14 +75,19 @@ private:
     int m_areaWidth {0};
     int m_areaHeight {0};
     bool m_fitToArea {false};
+    QSize m_originalImageSize {};
     double m_scaleFactor {1.0};
 };
 
 template<typename T>
 void ImageZoom<T>::setAreaSize(const QSize &size)
 {
+    if (m_areaHeight == size.height() && m_areaWidth == size.width())
+        return;
+
     m_areaHeight = size.height();
     m_areaWidth = size.width();
+    ImageTransformation<T>::invalidateCache();
 }
 
 template<typename T>
@@ -117,4 +127,10 @@ template<typename T>
 QVariant ImageZoom<T>::transform()
 {
     return transformInternal<T>();
+}
+
+template<typename T>
+void ImageZoom<T>::setOriginalImageSize(const QSize &size)
+{
+    m_originalImageSize = size;
 }

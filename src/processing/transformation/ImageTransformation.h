@@ -32,11 +32,11 @@ public:
     template<typename U = T>
     inline void invalidateCache() requires std::is_same_v<QImage, U> { m_isCacheDirty = true; }
 
-    template<typename U>
+    template<typename U = T>
     inline void invalidateCache() requires std::is_same_v<QTransform, U> { m_isCacheDirty = true; m_cachedObject.reset(); }
 
-    virtual void bind(const T &image) {
-        m_originalObject = image;
+    virtual void bind(const T &object) {
+        m_originalObject = object;
         invalidateCache<T>();
     };
 
@@ -52,8 +52,8 @@ protected:
     [[nodiscard]] inline const T &getOriginalObject() const { return m_originalObject; }
     [[nodiscard]] inline const T &getCachedObject() const { return m_cachedObject; }
 
-    inline void setCachedObject(const T &cachedImage) {
-        m_cachedObject = cachedImage;
+    inline void setCachedObject(const T &object) {
+        m_cachedObject = object;
         setIsCacheDirty(false);
     }
 

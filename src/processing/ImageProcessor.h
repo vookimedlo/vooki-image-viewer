@@ -45,9 +45,9 @@ public:
     void rotateLeft();
     void rotateRight();
 
-    void resetTransformation() const;
+    void resetTransformation();
 
-    QImage process() const;
+    QImage process();
     void setAreaSize(const QSize &size);
 
     double getScaleFactor() const;
@@ -71,10 +71,10 @@ protected:
     void flip();
 
 private:
-    ImageRotation<QImage> m_imageRotation {};
-    ImageFlip<QImage> m_imageFlip {};
-    ImageZoom<QImage> m_imageZoom {};
+    ImageRotation<QTransform> m_imageRotation {};
+    ImageFlip<QTransform> m_imageFlip {};
+    ImageZoom<QTransform> m_imageZoom {};
     ImageBorder<QImage> m_imageBorder {};
-    const std::array<ImageTransformation<QImage>* const, 4> m_transformations {&m_imageRotation, &m_imageFlip, &m_imageZoom, &m_imageBorder};
+    const std::array<ImageTransformation<QTransform>* const, 3> m_transformations { &m_imageRotation, &m_imageFlip, &m_imageZoom };
     QImage m_originalImage {};
 };
