@@ -45,7 +45,7 @@ public:
     void rotateLeft();
     void rotateRight();
 
-    void resetTransformation();
+    void resetTransformation() const;
 
     QImage process();
     void setAreaSize(const QSize &size);
@@ -75,6 +75,9 @@ private:
     ImageFlip<QTransform> m_imageFlip {};
     ImageZoom<QTransform> m_imageZoom {};
     ImageBorder<QImage> m_imageBorder {};
-    const std::array<ImageTransformation* const, 4> m_transformations { &m_imageRotation, &m_imageFlip, &m_imageZoom, &m_imageBorder };
+
+    constexpr static int m_transformationsSize = 4;
+    const std::array<std::reference_wrapper<ImageTransformation>, m_transformationsSize> m_transformations { m_imageRotation, m_imageFlip, m_imageZoom, m_imageBorder };
+    static_assert(m_transformationsSize > 0, "m_transformationsSize needs to have at least 1 element");
     QImage m_originalImage {};
 };
