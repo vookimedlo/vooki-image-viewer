@@ -36,43 +36,38 @@ QImage ImageProcessor::process()
     m_imageZoom.setOriginalImageSize(m_originalImage.size());
 
     QTransform lastTransformation {};
-    bool needsTransformation { m_genericTransformations.front()->isCacheDirty() };
-    for (auto const genericTransformation : m_genericTransformations)
-    {
-        if (const auto transformation = dynamic_cast<ImageTransformationBase<QTransform> *>(genericTransformation))
-        {
-            // Mark as dirty if the previous transformation in stack was dirty too.
-            if (needsTransformation)
-                transformation->bind(lastTransformation);
-            else if (transformation->isCacheDirty())
-                needsTransformation = true;
-
-            lastTransformation = transformation->transform().value<QTransform>();
-        } else
-            break;
-    }
-
-    if (needsTransformation)
-        m_imageBorder.bind(m_originalImage.transformed(lastTransformation, Qt::SmoothTransformation));
-
-    return m_imageBorder.transform().value<QImage>();
-
-/*
-    QImage lastTransformedImage = m_originalImage;
-    bool needsTransformation { m_transformations[0]->isCacheDirty() };
+    bool needsTransformation { m_transformations.front()->isCacheDirty() };
     for (auto const transformation : m_transformations)
     {
         // Mark as dirty if the previous transformation in stack was dirty too.
         if (needsTransformation)
-            transformation->bind(lastTransformedImage);
+            transformation->bind(lastTransformation);
         else if (transformation->isCacheDirty())
             needsTransformation = true;
 
-        lastTransformedImage = transformation->transform().value<QImage>();
+        lastTransformation = transformation->transform().value<QTransform>();
     }
 
-    return lastTransformedImage;
-*/
+    needsTransformation = needsTransformation || m_imageTransformations.front()->isCacheDirty();
+    if (needsTransformation)
+    {
+        QImage lastTransformedImage = m_originalImage.transformed(lastTransformation, Qt::SmoothTransformation);
+        for (auto const transformation : m_imageTransformations)
+        {
+            // Mark as dirty if the previous transformation in stack was dirty too.
+            if (needsTransformation)
+                transformation->bind(lastTransformedImage);
+            else if (transformation->isCacheDirty())
+                needsTransformation = true;
+
+            lastTransformedImage = transformation->transform().value<QImage>();
+        }
+        return lastTransformedImage;
+    }
+    else
+    {
+        return m_transformations.front()->transform().value<QImage>();
+    }
 }
 
 void ImageProcessor::setAreaSize(const QSize &size)
@@ -126,11 +121,11 @@ void ImageProcessor::rotateRight()
         m_imageRotation.rotateRight();
 }
 
-void ImageProcessor::resetTransformation()
+void ImageProcessor::resetTransformation() const
 {
     std::for_each(
       m_genericTransformations.cbegin(), m_genericTransformations.cend(),
-                  [](auto const transformation){ transformation->resetProperties();});
+                  [](auto const transformation){transformation->resetProperties();});
 }
 
 double ImageProcessor::getScaleFactor() const
