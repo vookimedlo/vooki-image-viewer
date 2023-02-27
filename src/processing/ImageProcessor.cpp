@@ -25,7 +25,7 @@ void ImageProcessor::bind(const QImage &image, bool resetTransformation)
 {
     // shallow copy
     m_originalImage = image;
-    resetTransformation ? ImageProcessor::resetTransformation() : m_transformations.front().get().setIsCacheDirty(true);
+    resetTransformation ? ImageProcessor::resetTransformation() : m_genericTransformations.front()->setIsCacheDirty(true);
 }
 
 QImage ImageProcessor::process()
@@ -36,10 +36,10 @@ QImage ImageProcessor::process()
     m_imageZoom.setOriginalImageSize(m_originalImage.size());
 
     QTransform lastTransformation {};
-    bool needsTransformation { m_transformations.front().get().isCacheDirty() };
-    for (auto const genericTransformation : m_transformations)
+    bool needsTransformation { m_genericTransformations.front()->isCacheDirty() };
+    for (auto const genericTransformation : m_genericTransformations)
     {
-        if (const auto transformation = dynamic_cast<ImageTransformationBase<QTransform> *>(&genericTransformation.get()))
+        if (const auto transformation = dynamic_cast<ImageTransformationBase<QTransform> *>(genericTransformation))
         {
             // Mark as dirty if the previous transformation in stack was dirty too.
             if (needsTransformation)
@@ -126,11 +126,11 @@ void ImageProcessor::rotateRight()
         m_imageRotation.rotateRight();
 }
 
-void ImageProcessor::resetTransformation() const
+void ImageProcessor::resetTransformation()
 {
-    std::for_each(m_transformations.cbegin(),
-                  m_transformations.cend(),
-                  [](auto const transformation){ transformation.get().resetProperties();});
+    std::for_each(
+      m_genericTransformations.cbegin(), m_genericTransformations.cend(),
+                  [](auto const transformation){ transformation->resetProperties();});
 }
 
 double ImageProcessor::getScaleFactor() const
