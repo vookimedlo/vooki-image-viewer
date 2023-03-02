@@ -34,7 +34,24 @@ public:
         if (ImageTransformationBase<T>::isCacheDirty())
         {
             if (m_fitToArea)
-                m_scaleFactor = m_areaWidth / static_cast<double>(m_originalImageSize.width());
+            {
+                const auto&& [originalWidth, originalHeight]
+                {
+                    [&m_originalImageSize = m_originalImageSize, isRotating = ImageTransformationBase<T>::getOriginalObject().isRotating()]() {
+                        // Rotation is reported just for 90 and 270 degrees. That's exactly what we want.
+                        // See https://doc.qt.io/qt-6/qtransform.html#isRotating
+                        if (isRotating)
+                            return std::make_pair(m_originalImageSize.height(), m_originalImageSize.width());
+                        else
+                            return std::make_pair(m_originalImageSize.width(), m_originalImageSize.height());
+                    }()
+                };
+
+                if (auto scaleFactor = m_areaWidth / static_cast<double>(originalWidth); (scaleFactor * originalHeight) < m_areaHeight)
+                    m_scaleFactor = scaleFactor;
+                else
+                    m_scaleFactor = m_areaHeight / static_cast<double>(originalHeight);
+            }
             ImageTransformationBase<T>::setCachedObject(QTransform(ImageTransformationBase<T>::getOriginalObject()).scale(m_scaleFactor, m_scaleFactor));
         }
         return ImageTransformationBase<T>::getCachedObject();
