@@ -94,24 +94,16 @@ protected:
                 case ExivProcessing::Flash:
                     addInformation(name, value->getValue()->toLong() & 0x01 ? tr("Flash fired", "Image Description") : tr("Flash didn't fired", "Image Description"), information);
                     break;
-                case ExivProcessing::GPSLatitude: {
-                    std::array<QString, 3> floats;
-                    for (int i = 0; i < 3; ++i)
-                        floats[i] = QString::number(value->getValue()->toFloat(i));
-                    m_gpsLatitude = QString("%1° %2′ %3″").arg(floats[0], floats[1], floats[2]);
-                    }
+                case ExivProcessing::GPSLatitude:
+                    m_gpsLatitude = decodeGps(value);
                     break;
                 case ExivProcessing::GPSLatitudeRef:
                     m_gpsLatitude.append(" ");
                     m_gpsLatitude.append(value->getValue()->toString().c_str());
                     addInformation(name, m_gpsLatitude, information);
                     break;
-                case ExivProcessing::GPSLongitude: {
-                    std::array<QString, 3> floats;
-                    for (int i = 0; i < 3; ++i)
-                        floats[i] = QString::number(value->getValue()->toFloat(i));
-                    m_gpsLongitude = QString("%1° %2′ %3″").arg(floats[0], floats[1], floats[2]);
-                    }
+                case ExivProcessing::GPSLongitude:
+                    m_gpsLongitude = decodeGps(value);
                     break;
                 case ExivProcessing::GPSLongitudeRef:
                     m_gpsLongitude.append(" ");
@@ -131,6 +123,20 @@ protected:
                     qDebug() << "EXIF - " << name << ": " << value->getValue()->toString().c_str();
             }
         }
+    }
+
+private:
+    template<std::size_t... I1>
+    inline QString decodeGpsImpl(const Exiv2::ExifData::const_iterator &value,
+                                 std::index_sequence<I1...>)
+    {
+        return QString{"%1° %2′ %3″"}.arg(QString::number(value->getValue()->toFloat(I1))...);
+    }
+
+    template<int count = 3>
+    inline QString decodeGps(const Exiv2::ExifData::const_iterator &value)
+    {
+        return count <= value->count() ? decodeGpsImpl(value, std::make_index_sequence<count>{}) : "";
     }
 
 private:
