@@ -62,12 +62,15 @@ void AboutComponentsDialog::onSelectedComponentChanged(const int row)
             showResourceMarkdown("qrc:/text/aboutopenclipart");
             break;
         case 10:
-            showResourceMarkdown("qrc:/text/aboutqt");
+            showResourceMarkdown("qrc:/text/aboutqcoro");
             break;
         case 11:
-            showResourceMarkdown("qrc:/text/aboutx265");
+            showResourceMarkdown("qrc:/text/aboutqt");
             break;
         case 12:
+            showResourceMarkdown("qrc:/text/aboutx265");
+            break;
+        case 13:
             showResourceMarkdown("qrc:/text/aboutzlib");
             break;
         default:
