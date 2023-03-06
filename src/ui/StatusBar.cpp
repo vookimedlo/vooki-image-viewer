@@ -20,8 +20,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include "StatusBar.h"
 
-StatusBar::StatusBar(QWidget *parent)
-                                        : QStatusBar(parent)
+StatusBar::StatusBar(QWidget *parent) : QStatusBar(parent)
 {
     addPermanentWidget(&m_dimensionsLabel);
     addPermanentWidget(createVerticalLine().release());

@@ -139,7 +139,6 @@ private:
         return count <= value->count() ? decodeGpsImpl(value, std::make_index_sequence<count>{}) : "";
     }
 
-private:
     QString m_gpsLatitude;
     QString m_gpsLongitude;
     QString m_gpsAltitude;

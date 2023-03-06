@@ -33,7 +33,7 @@ public:
     {
         if (ImageTransformationBase<T>::isCacheDirty())
         {
-            QTransform transform = ImageTransformationBase<T>::getOriginalObject();
+            QTransform transform {ImageTransformationBase<T>::getOriginalObject()};
             if (m_flipHorizontally)
                 transform.rotate(180, Qt::XAxis);
 

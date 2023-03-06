@@ -24,7 +24,7 @@ ReleaseNotesDialog::ReleaseNotesDialog(QWidget *parent)
                                         : QDialog(parent)
 {
     m_uiReleaseNotesDialog.setupUi(this);
-    const auto changelog = m_uiReleaseNotesDialog.textBrowser->loadResource(QTextDocument::MarkdownResource,
+    const auto &changelog = m_uiReleaseNotesDialog.textBrowser->loadResource(QTextDocument::MarkdownResource,
                                                                       QUrl("qrc:/text/changelog"));
     m_uiReleaseNotesDialog.textBrowser->setMarkdown(changelog.toString());
 }

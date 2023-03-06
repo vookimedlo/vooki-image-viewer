@@ -36,7 +36,6 @@ public:
     ImageProcessor() = default;
     DISABLE_COPY_MOVE(ImageProcessor);
 
-
     void bind(const QImage &image, bool resetTransformation = true);
 
     void flipHorizontally();
@@ -76,9 +75,9 @@ private:
     ImageZoom<QTransform> m_imageZoom {};
     ImageBorder<QImage> m_imageBorder {};
 
-    constexpr static int m_transformationsSize = 3;
-    constexpr static int m_imageTransformationsSize = 1;
-    constexpr static int m_genericTransformationsSize = m_transformationsSize + m_imageTransformationsSize;
+    constexpr static int m_transformationsSize {3};
+    constexpr static int m_imageTransformationsSize {1};
+    constexpr static int m_genericTransformationsSize {m_transformationsSize + m_imageTransformationsSize};
 
     const std::array<ImageTransformationBase<QTransform>* const, m_transformationsSize> m_transformations { &m_imageRotation, &m_imageFlip, &m_imageZoom };
     const std::array<ImageTransformationBase<QImage>* const, m_imageTransformationsSize> m_imageTransformations { &m_imageBorder };

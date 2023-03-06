@@ -21,23 +21,22 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 #include <type_traits>
 
-template<typename T>
+template<typename T> requires std::is_integral_v<T>
 class RotatingIndex
 {
 public:
-    explicit RotatingIndex(T initialValue = 0)
-                                            : RotatingIndex(0, initialValue + 1)
+    constexpr explicit RotatingIndex(T initialValue = 0) :
+                                            RotatingIndex {0, initialValue + 1}
     {
     }
 
-    RotatingIndex(T initialValue, T maxValuePlus1)
-                                            : m_index(initialValue)
-                                            , m_maxValuePlus1(maxValuePlus1)
+    constexpr RotatingIndex(T initialValue, T maxValuePlus1) :
+                                            m_index {initialValue},
+                                            m_maxValuePlus1(maxValuePlus1)
     {
-        static_assert(std::is_integral<T>::value, "Integer required.");
     }
 
-    bool set(T initialValue, T maxValuePlus1)
+    constexpr bool set(T initialValue, T maxValuePlus1)
     {
         // values must be in this relation: initialValue < maxValuePlus1
         if (initialValue < maxValuePlus1)
@@ -49,7 +48,7 @@ public:
         return false;
     }
 
-    bool reset(T indexValue)
+    constexpr bool reset(T indexValue)
     {
         if (indexValue < m_maxValuePlus1)
         {

@@ -25,7 +25,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 
 int main(int argc, char *argv[])
 {
-    const int firstPassedArg = 2;
+    constexpr int firstPassedArg {2};
     const char *requestedPath = nullptr;
 
     switch (argc)

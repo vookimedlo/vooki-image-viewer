@@ -47,12 +47,12 @@ public:
                     }()
                 };
 
-                if (auto scaleFactor = m_areaWidth / static_cast<double>(originalWidth); (scaleFactor * originalHeight) < m_areaHeight)
+                if (auto scaleFactor {m_areaWidth / static_cast<double>(originalWidth)}; (scaleFactor * originalHeight) < m_areaHeight)
                     m_scaleFactor = scaleFactor;
                 else
                     m_scaleFactor = m_areaHeight / static_cast<double>(originalHeight);
             }
-            ImageTransformationBase<T>::setCachedObject(QTransform(ImageTransformationBase<T>::getOriginalObject()).scale(m_scaleFactor, m_scaleFactor));
+            ImageTransformationBase<T>::setCachedObject(QTransform{ImageTransformationBase<T>::getOriginalObject()}.scale(m_scaleFactor, m_scaleFactor));
         }
         return ImageTransformationBase<T>::getCachedObject();
     }

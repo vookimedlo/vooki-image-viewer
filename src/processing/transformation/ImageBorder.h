@@ -150,16 +150,19 @@ QVariant ImageBorder<T>::transform()
 {
     if (ImageTransformationBase<T>::isCacheDirty())
     {
-        QImage originalImage = ImageTransformationBase<T>::getOriginalObject();
-        QSize newSize = originalImage.size().expandedTo(m_areaSize);
-        QImage newImage(newSize, QImage::Format_RGB32);
+        QImage originalImage {ImageTransformationBase<T>::getOriginalObject()};
+        QSize newSize {originalImage.size().expandedTo(m_areaSize)};
+        QImage newImage {newSize, QImage::Format_RGB32};
         newImage.fill(m_backgroundColor);
+
+        const auto x {newSize.width() / 2 - originalImage.width() / 2};
+        const auto y {newSize.height() / 2 - originalImage.height() / 2};
 
         // Update scroll settings
         checkScrollOffset(newImage);
         QPainter painterImage(&newImage);
-        painterImage.drawImage(newSize.width() / 2 - originalImage.size().width() / 2,
-                               newSize.height() / 2 - originalImage.size().height() / 2,
+        painterImage.drawImage(x,
+                               y,
                                originalImage,
                                m_imageOffsetX,
                                m_imageOffsetY);
@@ -171,8 +174,8 @@ QVariant ImageBorder<T>::transform()
             pen.setWidth(3);
             pen.setColor(m_borderColor);
             painterImage.setPen(pen);
-            painterImage.drawRect((newSize.width() / 2 - originalImage.width() / 2) - m_imageOffsetX,
-                                  (newSize.height() / 2 - originalImage.height() / 2) - m_imageOffsetY,
+            painterImage.drawRect(x - m_imageOffsetX,
+                                  y - m_imageOffsetY,
                                   originalImage.width(),
                                   originalImage.height());
         }

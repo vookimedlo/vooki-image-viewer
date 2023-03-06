@@ -299,7 +299,7 @@ void ImageAreaWidget::nativeGestureEvent(QNativeGestureEvent *event)
 void ImageAreaWidget::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    const QRect dirtyRect = event->rect();
+    const QRect& dirtyRect = event->rect();
     painter.drawImage(dirtyRect, m_finalImage, dirtyRect);
 }
 
@@ -356,7 +356,7 @@ void ImageAreaWidget::wheelEvent(QWheelEvent *event)
         // Scroll
         else
         {
-            QPoint numSteps = numDegrees / 15;
+            QPoint numSteps { numDegrees / 15 };
             numSteps.rx() *= m_imageOffsetStep;
             numSteps.ry() *= m_imageOffsetStep;
             scrollTo(numSteps);

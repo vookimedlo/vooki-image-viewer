@@ -33,7 +33,7 @@ public:
     QVariant transformInternal() requires std::is_same_v<QTransform, U>
     {
         if (ImageTransformationBase<T>::isCacheDirty())
-            ImageTransformationBase<T>::setCachedObject(QTransform(ImageTransformationBase<T>::getOriginalObject()).rotate(m_rotateIndex * 90));
+            ImageTransformationBase<T>::setCachedObject(QTransform{ImageTransformationBase<T>::getOriginalObject()}.rotate(m_rotateIndex * 90));
         return ImageTransformationBase<T>::getCachedObject();
     }
 

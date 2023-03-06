@@ -101,5 +101,5 @@ private:
     ImageLoader m_imageLoader {};
     ImageProcessor m_imageProcessor {};
 
-    static constexpr int m_imageOffsetStep = 100;
+    static constexpr int m_imageOffsetStep {100};
 };

@@ -35,5 +35,5 @@ public:
         QString m_language;
     };
 
-    static std::vector<Record> m_localizations;
+    static const std::vector<Record> m_localizations;
 };

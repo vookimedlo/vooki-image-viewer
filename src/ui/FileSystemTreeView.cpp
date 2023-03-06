@@ -38,14 +38,20 @@ void FileSystemTreeView::keyPressEvent(QKeyEvent *event)
     switch (event->key())
     {
         case Qt::Key_Down:
+            [[fallthrough]];
         case Qt::Key_Up:
+            [[fallthrough]];
         case Qt::Key_Left:
+            [[fallthrough]];
         case Qt::Key_Right:
+            [[fallthrough]];
         case Qt::Key_PageUp:
+            [[fallthrough]];
         case Qt::Key_PageDown:
             QTreeView::keyPressEvent(event);
             break;
         case Qt::Key_Enter:
+            [[fallthrough]];
         case Qt::Key_Return:
             emit activated(currentIndex());
             break;

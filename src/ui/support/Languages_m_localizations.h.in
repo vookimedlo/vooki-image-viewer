@@ -1,2 +1,2 @@
 
-std::vector<Languages::Record> Languages::m_localizations = { @TRANSLATION_STRUCT_RECORDS_STRING@ };
+const std::vector<Languages::Record> Languages::m_localizations = { @TRANSLATION_STRUCT_RECORDS_STRING@ };

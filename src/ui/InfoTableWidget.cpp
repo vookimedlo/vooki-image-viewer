@@ -32,7 +32,7 @@ void InfoTableWidget::displayInformation(const std::vector<std::pair<QString, QS
 
     for (const auto &[label, value] :information)
     {
-        const auto row = rowCount();
+        const auto row { rowCount() };
         insertRow(row);
         setItem(row, 0, new QTableWidgetItem(label));
         setItem(row, 1, new QTableWidgetItem(value));
