@@ -41,16 +41,21 @@
     </message>
     <message>
         <location filename="../../ui/forms/AboutComponentsDialog.ui" line="89"/>
-        <source>Qt Framework</source>
+        <source>QCoro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutComponentsDialog.ui" line="94"/>
-        <source>x265</source>
+        <source>Qt Framework</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../ui/forms/AboutComponentsDialog.ui" line="99"/>
+        <source>x265</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="104"/>
         <source>zlib</source>
         <translation type="unfinished"></translation>
     </message>
@@ -865,19 +870,19 @@ Toolbar action tool tip</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/MainWindow.cpp" line="493"/>
+        <location filename="../../ui/MainWindow.cpp" line="495"/>
         <source>%1x%2 px</source>
         <extracomment>Used in the statusbar showing the image dimensions. Example: &quot;1024x760&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/MainWindow.cpp" line="503"/>
+        <location filename="../../ui/MainWindow.cpp" line="505"/>
         <source>%1 %2</source>
         <extracomment>Used in the statusbar showing the image size. Example: &quot;103.4 kB&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/MainWindow.cpp" line="509"/>
+        <location filename="../../ui/MainWindow.cpp" line="511"/>
         <source>%1 %</source>
         <extracomment>Used in the statusbar showing the zooming percentage. Example: &quot;12%&quot;</extracomment>
         <translation type="unfinished"></translation>
@@ -1088,13 +1093,13 @@ Toolbar action tool tip</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.h" line="125"/>
+        <location filename="../../processing/MetadataExtractor.h" line="117"/>
         <source> (below sea level)</source>
         <comment>Image Description</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.h" line="125"/>
+        <location filename="../../processing/MetadataExtractor.h" line="117"/>
         <source> (above sea level)</source>
         <comment>Image Description</comment>
         <translation type="unfinished"></translation>
@@ -1233,17 +1238,17 @@ Toolbar action tool tip</extracomment>
 <context>
     <name>StatusBar</name>
     <message>
-        <location filename="../../ui/StatusBar.cpp" line="32"/>
+        <location filename="../../ui/StatusBar.cpp" line="31"/>
         <source>Image dimensions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/StatusBar.cpp" line="33"/>
+        <location filename="../../ui/StatusBar.cpp" line="32"/>
         <source>Image size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/StatusBar.cpp" line="34"/>
+        <location filename="../../ui/StatusBar.cpp" line="33"/>
         <source>Zoom</source>
         <translation type="unfinished"></translation>
     </message>
