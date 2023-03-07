@@ -1,7 +1,7 @@
 #pragma once
 /****************************************************************************
 VookiImageViewer - a tool for showing images.
-Copyright(C) 2017  Michal Duda <github@vookimedlo.cz>
+Copyright(C) 2023  Michal Duda <github@vookimedlo.cz>
 
 https://github.com/vookimedlo/vooki-image-viewer
 
@@ -19,12 +19,29 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
+#include <QImage>
+#include <QImageReader>
 #include <QString>
+#include "../util/compiler.h"
+#include "../util/RotatingIndex.h"
 
-namespace Util
+class ImageLoader
 {
-    [[nodiscard]] QString getVersionString()
-    {
-        return {"@VERSION@"};
-    }
-}
+public:
+    ImageLoader() = default;
+    DISABLE_COPY_MOVE(ImageLoader);
+
+    bool loadImage(const QString &fileName);
+    const QImage &getImage();
+    const QImage &getNextImage();
+    bool isAnimated() const;
+    int imageCount() const;
+    int nextImageDelay() const;
+
+private:
+    RotatingIndex<int> m_animationIndex {0, 1};
+    QImage m_originalImage {};
+    QImageReader m_reader {};
+
+    static constexpr int m_maxAllocationImageSize = 4096;
+};

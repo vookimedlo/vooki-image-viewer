@@ -22,25 +22,25 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include <QFileInfo>
 #include "Exiv2ImageAutoPtrWrapper.h"
 
-std::vector<QString> MetadataExtractor::m_orientationDescriptions = { "", // EXIF does not use the 0 for the orientation encoding
-                                                                      tr("0°", "Image Description"),
-                                                                      tr("0°, mirrored", "Image Description"),
-                                                                      tr("180°", "Image Description"),
-                                                                      tr("180°, mirrored", "Image Description"),
-                                                                      tr("90°", "Image Description"),
-                                                                      tr("90°, mirrored", "Image Description"),
-                                                                      tr("270°", "Image Description"),
-                                                                      tr("270°, mirrored", "Image Description")
+std::vector<QString> MetadataExtractor::m_orientationDescriptions {"", // EXIF does not use the 0 for the orientation encoding
+                                                                   tr("0°", "Image Description"),
+                                                                   tr("0°, mirrored", "Image Description"),
+                                                                   tr("180°", "Image Description"),
+                                                                   tr("180°, mirrored", "Image Description"),
+                                                                   tr("90°", "Image Description"),
+                                                                   tr("90°, mirrored", "Image Description"),
+                                                                   tr("270°", "Image Description"),
+                                                                   tr("270°, mirrored", "Image Description")
 };
 
 //: Units: Byte
-const QString MetadataExtractor::m_unitByte = tr(" B", "Image Description");
+const QString MetadataExtractor::m_unitByte {tr(" B", "Image Description")};
 //: Units: Meter
-const QString MetadataExtractor::m_unitMeter = tr(" m", "Image Description");
+const QString MetadataExtractor::m_unitMeter {tr(" m", "Image Description")};
 //: Units: Pixel
-const QString MetadataExtractor::m_unitPixel = tr(" px", "Image Description");
+const QString MetadataExtractor::m_unitPixel {tr(" px", "Image Description")};
 //: Units: Second
-const QString MetadataExtractor::m_unitSecond = tr(" s", "Image Description");
+const QString MetadataExtractor::m_unitSecond {tr(" s", "Image Description")};
 
 void MetadataExtractor::extract(const QString &filename, int width, int height)
 {
@@ -49,7 +49,7 @@ void MetadataExtractor::extract(const QString &filename, int width, int height)
     m_gpsAltitude.clear();
 
     QFileInfo fileInfo(filename);
-    std::vector<std::pair<QString, QString>> information{ std::pair{tr("File name", "Image Properties"), fileInfo.fileName()} };
+    std::vector<std::pair<QString, QString>> information{ std::make_pair(tr("File name", "Image Properties"), fileInfo.fileName()) };
     addInformation(tr("Size", "Image Properties"), fileInfo.size(), information, MetadataExtractor::m_unitByte);
     addInformation(tr("Width", "Image Properties"), width, information, MetadataExtractor::m_unitPixel);
     addInformation(tr("Height", "Image Properties"), height, information, MetadataExtractor::m_unitPixel);

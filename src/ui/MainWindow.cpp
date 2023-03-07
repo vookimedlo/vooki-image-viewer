@@ -113,6 +113,7 @@ MainWindow::MainWindow(QWidget *parent)
     if (settings->value(SETTINGS_GENERAL_FULLSCREEN).toBool())
         m_ui.actionFullScreen->toggle();
 
+    propagateBackgroundSettings();
     propagateBorderSettings();
     restoreRecentFiles();
     loadTranslators();
@@ -175,9 +176,9 @@ QString MainWindow::getRecentFile(qsizetype item) const
     const qsizetype index = item + 1;
 
     // The first two actions are Clear History & Menu Separator, which are out of our interest
-    if (auto actions = m_ui.menuRecentFiles->actions(); 2 < actions.size() && index < actions.size())
+    if (const auto actions = m_ui.menuRecentFiles->actions(); 2 < actions.size() && index < actions.size())
     {
-        const auto *recentImage = dynamic_cast<RecentFileAction *>(actions.at(index));
+        const auto * const recentImage = dynamic_cast<RecentFileAction *>(actions.at(index));
         return recentImage->text();
     }
 
@@ -186,8 +187,8 @@ QString MainWindow::getRecentFile(qsizetype item) const
 
 void MainWindow::loadTranslators()
 {
-    const std::shared_ptr<QSettings> settings = Settings::userSettings();
-    if (auto *application = dynamic_cast<Application *>(QCoreApplication::instance()))
+    const auto settings = Settings::userSettings();
+    if (auto * const application = dynamic_cast<Application *>(QCoreApplication::instance()))
     {
         if (settings->value(SETTINGS_LANGUAGE_USE_SYSTEM).toBool())
             application->installTranslators(QLocale());
@@ -196,9 +197,15 @@ void MainWindow::loadTranslators()
     }
 }
 
+void MainWindow::propagateBackgroundSettings() const
+{
+    const auto settings = Settings::userSettings();
+    m_ui.imageAreaWidget->setBackgroundColor(settings->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>());
+}
+
 void MainWindow::propagateBorderSettings() const
 {
-    const std::shared_ptr<QSettings> settings = Settings::userSettings();
+    const auto settings = Settings::userSettings();
     m_ui.imageAreaWidget->drawBorder(settings->value(SETTINGS_IMAGE_BORDER_DRAW).toBool(), settings->value(SETTINGS_IMAGE_BORDER_COLOR).value<QColor>());
 }
 
@@ -213,9 +220,7 @@ QString MainWindow::registerProcessedImage(const QString &filePath, const bool a
 
         // Remove all current actions from menu widget
         for (QAction *action : actions)
-        {
             m_ui.menuRecentFiles->removeAction(action);
-        }
 
         {
             auto recentImage = std::make_unique<RecentFileAction>(filePath, this);
@@ -229,8 +234,7 @@ QString MainWindow::registerProcessedImage(const QString &filePath, const bool a
         }
 
         // Remove the entry exceeding the allowed limit of menu items in recent files menu
-        const int maxRecentFiles = 7;
-        if (actions.size() > maxRecentFiles)
+        if (constexpr int maxRecentFiles = 7; actions.size() > maxRecentFiles)
         {
             std::unique_ptr<RecentFileAction> recentImage(dynamic_cast<RecentFileAction *>(actions.at(maxRecentFiles)));
             QObject::disconnect(recentImage.get(), &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
@@ -245,17 +249,16 @@ QString MainWindow::registerProcessedImage(const QString &filePath, const bool a
 
 void MainWindow::restoreRecentFiles()
 {
-    const std::shared_ptr<QSettings> settings = Settings::userSettings();
-    if (settings->value(SETTINGS_IMAGE_REMEMBER_RECENT).toBool())
+    if (const auto settings = Settings::userSettings(); settings->value(SETTINGS_IMAGE_REMEMBER_RECENT).toBool())
     {
-        const std::vector<QString> settingsKeys = {
+        const std::vector<QString> settingsKeys {
             SETTINGS_RECENT_FILE_5, SETTINGS_RECENT_FILE_4, SETTINGS_RECENT_FILE_3, SETTINGS_RECENT_FILE_2, SETTINGS_RECENT_FILE_1
         };
 
         auto actions = m_ui.menuRecentFiles->actions();
 
         // Remove all current actions from menu widget
-        for (QAction *action : actions)
+        for (QAction * const action : actions)
             m_ui.menuRecentFiles->removeAction(action);
 
         for (const QString &key : settingsKeys)
@@ -291,9 +294,7 @@ void MainWindow::onAboutToQuit() const
     std::shared_ptr<QSettings> settings = Settings::userSettings();
 
     for (size_t i = 0; i < settingsKeys.size(); ++i)
-    {
         settings->setValue(settingsKeys[i], (settings->value(SETTINGS_IMAGE_REMEMBER_RECENT).toBool()) ? getRecentFile(i + 1) : QString());
-    }
 }
 
 void MainWindow::onOpenFileRequested(const QString &path)
@@ -304,7 +305,7 @@ void MainWindow::onOpenFileRequested(const QString &path)
 void MainWindow::onAboutTriggered()
 {
     Ui::aboutDialog uiAbout;
-    QDialog dialog(this);
+    QDialog dialog {this};
     uiAbout.setupUi(&dialog);
     uiAbout.versionLabel->setText(uiAbout.versionLabel->text().arg(Util::getVersionString()));
     const auto resource = uiAbout.textBrowser->loadResource(QTextDocument::MarkdownResource,
@@ -341,7 +342,7 @@ void MainWindow::onClearHistory() const
     // Leave the first two actions intact (Clear History & Menu Separator)
     for (int i = 2; i < actions.size(); i++)
     {
-        auto *recentImage = dynamic_cast<RecentFileAction *>(actions.at(i));
+        auto * const recentImage = dynamic_cast<RecentFileAction *>(actions.at(i));
         QObject::disconnect(recentImage, &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
         m_ui.menuRecentFiles->removeAction(recentImage);
     }
@@ -392,7 +393,7 @@ void MainWindow::onFullScreenToggled([[maybe_unused]] bool toggled)
         m_widgetVisibilityPriorFullscreen.isInformationVisible = m_ui.dockInfoWidget->toggleViewAction()->isChecked();
         m_widgetVisibilityPriorFullscreen.isStatusBarVisible = m_ui.actionStatusBar->isChecked();
 
-        const std::shared_ptr<QSettings> settings = Settings::userSettings();
+        const auto settings = Settings::userSettings();
         if (settings->value(SETTINGS_FULLSCREEN_HIDE_TOOLBAR).toBool())
         {
             m_ui.toolBar->toggleViewAction()->setChecked(false);
@@ -449,14 +450,14 @@ void MainWindow::onRecentFileTriggered(const QString &filePath)
 
 void MainWindow::onReleaseNotesTriggered()
 {
-    ReleaseNotesDialog dialog(this);
+    ReleaseNotesDialog dialog {this};
     dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint & ~Qt::WindowMinMaxButtonsHint);
     dialog.exec();
 }
 
 void MainWindow::onSettingsTriggered()
 {
-    SettingsDialog dialog(this);
+    SettingsDialog dialog {this};
     dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint);
     dialog.populateShortcuts(m_ui.menuFile);
     dialog.populateShortcuts(m_ui.menuView);
@@ -464,6 +465,7 @@ void MainWindow::onSettingsTriggered()
     dialog.populateShortcuts(m_ui.menuHelp);
     if (dialog.exec() == QDialog::Accepted)
     {
+        propagateBackgroundSettings();
         propagateBorderSettings();
         m_ui.imageAreaWidget->repaintWithTransformations();
         loadTranslators();
@@ -495,9 +497,9 @@ void MainWindow::onImageDimensionsChanged(int width, int height) const
 
 void MainWindow::onImageSizeChanged(uint64_t size) const
 {
-    ByteSize byteSize{size};
-    const auto [newSize, unit] = byteSize.humanReadableSize();
-    const auto unitString = byteSize.getUnit(unit);
+    ByteSize byteSize {size};
+    const auto [newSize, unit] { byteSize.humanReadableSize() };
+    const auto unitString { byteSize.getUnit(unit) };
 
     //: Used in the statusbar showing the image size. Example: "103.4 kB"
     m_ui.statusBar->setSizeLabel(tr("%1 %2").arg(QString::number(newSize), unitString));
@@ -518,15 +520,13 @@ void MainWindow::onHomeDirClicked() const
 void MainWindow::onDocsDirClicked() const
 {
     m_ui.fileSystemTreeView->collapseAll();
-    auto locations = QStandardPaths::standardLocations(QStandardPaths::StandardLocation::DocumentsLocation);
-    if (!locations.isEmpty())
+    if (const auto locations = QStandardPaths::standardLocations(QStandardPaths::StandardLocation::DocumentsLocation); !locations.isEmpty())
         m_ui.fileSystemTreeView->setCurrentIndex(m_sortFileSystemModel->mapFromSource(m_fileSystemModel->index(locations.first())));
 }
 
 void MainWindow::onPicturesDirClicked() const
 {
     m_ui.fileSystemTreeView->collapseAll();
-    auto locations = QStandardPaths::standardLocations(QStandardPaths::StandardLocation::PicturesLocation);
-    if (!locations.isEmpty())
+    if (const auto locations = QStandardPaths::standardLocations(QStandardPaths::StandardLocation::PicturesLocation); !locations.isEmpty())
         m_ui.fileSystemTreeView->setCurrentIndex(m_sortFileSystemModel->mapFromSource(m_fileSystemModel->index(locations.first())));
 }

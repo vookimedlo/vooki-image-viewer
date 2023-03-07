@@ -86,6 +86,11 @@
        </item>
        <item>
         <property name="text">
+         <string>QCoro</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>Qt Framework</string>
         </property>
        </item>

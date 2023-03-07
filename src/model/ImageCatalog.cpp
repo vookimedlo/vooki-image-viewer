@@ -30,7 +30,7 @@ ImageCatalog::ImageCatalog(QStringList filter)
 void ImageCatalog::initialize(const QFile &imageFile)
 {
     QFileInfo info(imageFile);
-    const QString filename = info.fileName();
+    const QString &filename {info.fileName()};
     m_absoluteDir = info.absoluteDir().canonicalPath();
     initialize(info.absoluteDir());
 

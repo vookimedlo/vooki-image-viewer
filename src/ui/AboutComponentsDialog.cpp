@@ -62,12 +62,15 @@ void AboutComponentsDialog::onSelectedComponentChanged(const int row)
             showResourceMarkdown("qrc:/text/aboutopenclipart");
             break;
         case 10:
-            showResourceMarkdown("qrc:/text/aboutqt");
+            showResourceMarkdown("qrc:/text/aboutqcoro");
             break;
         case 11:
-            showResourceMarkdown("qrc:/text/aboutx265");
+            showResourceMarkdown("qrc:/text/aboutqt");
             break;
         case 12:
+            showResourceMarkdown("qrc:/text/aboutx265");
+            break;
+        case 13:
             showResourceMarkdown("qrc:/text/aboutzlib");
             break;
         default:
@@ -77,7 +80,7 @@ void AboutComponentsDialog::onSelectedComponentChanged(const int row)
 
 void AboutComponentsDialog::showResourceMarkdown(const QString &resource)
 {
-    const auto markdown = m_uiAboutComponentsDialog.textBrowser->loadResource(QTextDocument::MarkdownResource,
+    const auto &markdown = m_uiAboutComponentsDialog.textBrowser->loadResource(QTextDocument::MarkdownResource,
                                                                               QUrl(resource));
     m_uiAboutComponentsDialog.textBrowser->setMarkdown(markdown.toString());
 }

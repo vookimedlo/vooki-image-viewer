@@ -30,10 +30,10 @@ public:
     Settings() = delete;
     DISABLE_COPY_MOVE(Settings);
 
-    static std::shared_ptr<QSettings> defaultSettings();
+    [[nodiscard]] static std::shared_ptr<QSettings> defaultSettings();
     static void initializeSettings();
     static void initializeSettings(const QMenu *menu);
-    static std::shared_ptr<QSettings> userSettings();
+    [[nodiscard]]  static std::shared_ptr<QSettings> userSettings();
 
 private:
     static void restoreDefaultSettings();

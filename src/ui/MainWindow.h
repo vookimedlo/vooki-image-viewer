@@ -51,8 +51,9 @@ protected:
     void changeEvent(QEvent *) override;
     [[nodiscard]] QString getRecentFile(qsizetype item) const;
     static void loadTranslators();
+    void propagateBackgroundSettings() const;
     void propagateBorderSettings() const;
-    QString registerProcessedImage(const QString &filePath, bool addToRecentFiles = true);
+    [[nodiscard]] QString registerProcessedImage(const QString &filePath, bool addToRecentFiles = true);
     void restoreRecentFiles();
     void showImage(bool addToRecentFiles);
 

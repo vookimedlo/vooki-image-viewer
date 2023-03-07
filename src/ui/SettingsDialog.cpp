@@ -105,10 +105,11 @@ void SettingsDialog::initializeUI(std::shared_ptr<QSettings> settings)
     m_backgroundColor = settings->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>();
     m_languageCode = settings->value(SETTINGS_LANGUAGE_CODE).value<QString>();
 
-    auto findIt = std::find_if(
-      begin(Languages::m_localizations), end(Languages::m_localizations), [&](const Languages::Record &record) { return m_languageCode == record.m_code; });
-
-    if (findIt != std::end(Languages::m_localizations))
+    if (auto findIt = std::find_if(begin(Languages::m_localizations),
+                                   end(Languages::m_localizations),
+                                   [&m_languageCode = m_languageCode](const Languages::Record &record){
+                                       return m_languageCode == record.m_code;
+                                   }); findIt != std::end(Languages::m_localizations))
     {
         const auto position = std::distance(Languages::m_localizations.begin(), findIt);
         m_uiSettingsDialog.comboBoxLanguage->setCurrentIndex(position);
@@ -167,11 +168,9 @@ void SettingsDialog::onRejected()
     const std::shared_ptr<QSettings> settings = Settings::userSettings();
 
     // restore all shortcuts from user settings
-    for (int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); i++)
+    for (int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); ++i)
     {
-        QTableWidgetItem *item = m_uiSettingsDialog.tableShortcutsWidget->item(i, 0);
-
-        if (item->type() == SettingsShortcutsTableWidgetItem::type)
+        if (auto * const item = m_uiSettingsDialog.tableShortcutsWidget->item(i, 0); item->type() == SettingsShortcutsTableWidgetItem::type)
         {
             if (const auto *shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
                 shortcutItem->action().setShortcut(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
@@ -183,17 +182,15 @@ void SettingsDialog::onRejected()
 
 void SettingsDialog::onRestoreDefaultsTriggered()
 {
-    const std::shared_ptr<QSettings> settings = Settings::defaultSettings();
+    const auto settings { Settings::defaultSettings() };
     initializeUI(settings);
 
     // restore all shortcuts from default settings
-    for (int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); i++)
+    for (int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); ++i)
     {
-        QTableWidgetItem *item = m_uiSettingsDialog.tableShortcutsWidget->item(i, 0);
-
-        if (item->type() == SettingsShortcutsTableWidgetItem::type)
+        if (auto * const item = m_uiSettingsDialog.tableShortcutsWidget->item(i, 0); item->type() == SettingsShortcutsTableWidgetItem::type)
         {
-            if (auto *shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
+            if (auto * const shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
                 shortcutItem->onKeySequenceChanged(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
         }
     }
@@ -204,14 +201,12 @@ void SettingsDialog::onRestoreDefaultsTriggered()
 
 void SettingsDialog::onToolButtonBorderColorClicked()
 {
-    QColor borderColor = QColorDialog::getColor(m_borderColor);
-    if (borderColor.isValid())
-        m_borderColor = borderColor;
+    if (QColor borderColor { QColorDialog::getColor(m_borderColor) }; borderColor.isValid())
+        m_borderColor = std::move(borderColor);
 }
 
 void SettingsDialog::onToolButtonBackgroundColorClicked()
 {
-    QColor backgroundColor = QColorDialog::getColor(m_backgroundColor);
-    if (backgroundColor.isValid())
-        m_backgroundColor = backgroundColor;
+    if (QColor backgroundColor { QColorDialog::getColor(m_backgroundColor) }; backgroundColor.isValid())
+        m_backgroundColor = std::move(backgroundColor);
 }

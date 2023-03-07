@@ -35,19 +35,19 @@ if (NOT VERSION)
     STRING(REGEX MATCHALL "^${VERSION_REGEXP}$" VERSION_MATCH "${VERSION}")
     if (NOT VERSION_MATCH)
         STRING(REGEX REPLACE "^(......).*$" "\\1" VERSION_HASH "${HEAD_HASH}")
-        if("${VERSION_HASH}" STREQUAL "")
+        if ("${VERSION_HASH}" STREQUAL "")
             SET(VERSION_HASH "DEVEL")
-        endif()
+        endif ()
         STRING(REGEX MATCHALL "^refs/heads/([^/]+)$" VERSION_MATCH "${HEAD_REFS}")
         if (VERSION_MATCH AND CMAKE_MATCH_COUNT EQUAL 1)
             STRING(TIMESTAMP BUILD_DATE_DOTTED "%Y.%m.%d")
             SET(VERSION "${BUILD_DATE_DOTTED}-${CMAKE_MATCH_1}-${VERSION_HASH}")
-        else()
+        else ()
             STRING(TIMESTAMP BUILD_DATE_DOTTED "%Y.%m.%d")
             SET(VERSION "${BUILD_DATE_DOTTED}-${VERSION_HASH}")
         endif ()
-    endif()
-endif()
+    endif ()
+endif ()
 
 MESSAGE("-- Application version is ${VERSION}")
 CONFIGURE_FILE(../../src/util/version.h.in "${CMAKE_BINARY_DIR}/version.h" @ONLY)
@@ -55,11 +55,31 @@ CONFIGURE_FILE(../../src/util/version.h.in "${CMAKE_BINARY_DIR}/version.h" @ONLY
 if (APPLE)
     SET(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "")
     MESSAGE("-- Requested architectures are x86_64 & arm64")
-endif()
+endif ()
 
-SET(CMAKE_CXX_STANDARD 17)
+SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 SET(CMAKE_CXX_EXTENSIONS OFF)
+
+include(FetchContent)
+
+SET(QCORO_BUILD_EXAMPLES OFF)
+SET(QCORO_WITH_QTDBUS OFF)
+SET(QCORO_WITH_QTNETWORK OFF)
+SET(QCORO_WITH_QTWEBSOCKETS OFF)
+SET(QCORO_WITH_QTQUICK OFF)
+SET(QCORO_WITH_QML OFF)
+SET(BUILD_TESTING OFF)
+
+FetchContent_Declare(qcoro
+        GIT_REPOSITORY https://github.com/danvratil/qcoro.git
+        GIT_TAG v0.8.0
+        GIT_SHALLOW true
+        )
+
+FetchContent_MakeAvailable(qcoro)
+qcoro_enable_coroutines()
+
 
 SET(CMAKE_AUTOMOC ON)
 SET(CMAKE_AUTORCC ON)
@@ -71,12 +91,13 @@ SET(CMAKE_VERBOSE_MAKEFILE OFF)
 if (NOT WIN32)
     SET(CMAKE_CXX_FLAGS "-Wall -Wextra ${CMAKE_CXX_FLAGS}")
     SET(CMAKE_CXX_FLAGS_RELEASE "-O2 ${CMAKE_CXX_FLAGS}")
-endif()
+endif ()
 
 SET(USE_QT_LIBRARIES
-    Core
-    Gui
-    Widgets)
+        Concurrent
+        Core
+        Gui
+        Widgets)
 
 FIND_PACKAGE(Qt6 REQUIRED COMPONENTS ${USE_QT_LIBRARIES} LinguistTools)
 if (Qt6_FOUND)
@@ -85,9 +106,10 @@ if (Qt6_FOUND)
     SET(QT_UI_LIB Qt6::Gui)
 
     SET(QT_ALL_LIBS
-        Qt6::Core
-        Qt6::Gui
-        Qt6::Widgets)
+            Qt6::Concurrent
+            Qt6::Core
+            Qt6::Gui
+            Qt6::Widgets)
 
     macro(QT_RESOURCES FIRST SECOND)
         QT6_ADD_RESOURCES(${FIRST} ${SECOND})
@@ -95,13 +117,13 @@ if (Qt6_FOUND)
 
     macro(QT_WRAP_UIS)
         QT6_WRAP_UI(UI_HEADERS
-                   ${UIS})
+                ${UIS})
     endmacro()
-endif()
+endif ()
 
 if (NOT LIB_INSTALL_DIR)
     SET(LIB_INSTALL_DIR lib)
-endif()
+endif ()
 
 # Include a path to the sources root location
 #
@@ -109,36 +131,38 @@ GET_FILENAME_COMPONENT(SOURCES_ABSOLUTE_PATH ../../src/ ABSOLUTE)
 SET(CMAKE_CXX_FLAGS "-I${SOURCES_ABSOLUTE_PATH} ${CMAKE_CXX_FLAGS}")
 
 SET(SOURCES
-    ../../src/application/Application.cpp
-    ../../src/application/main.cpp
-    ../../src/model/FileSystemSortFilterProxyModel.cpp
-    ../../src/model/ImageCatalog.cpp
-    ../../src/processing/MetadataExtractor.cpp
-    ../../src/ui/AboutComponentsDialog.cpp
-    ../../src/ui/FileSystemTreeView.cpp
-    ../../src/ui/ImageAreaWidget.cpp
-    ../../src/ui/InfoTableWidget.cpp
-    ../../src/ui/MainWindow.cpp
-    ../../src/ui/ReleaseNotesDialog.cpp
-    ../../src/ui/SettingsDialog.cpp
-    ../../src/ui/SettingsShortcutsTableWidget.cpp
-    ../../src/ui/StatusBar.cpp
-    ../../src/ui/support/Languages.cpp
-    ../../src/ui/support/RecentFileAction.cpp
-    ../../src/ui/support/Settings.cpp
-    ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp
-    ../../src/util/ByteSize.cpp
-    ../../src/util/misc.cpp
-)
+        ../../src/application/Application.cpp
+        ../../src/application/main.cpp
+        ../../src/model/FileSystemSortFilterProxyModel.cpp
+        ../../src/model/ImageCatalog.cpp
+        ../../src/processing/ImageLoader.cpp
+        ../../src/processing/ImageProcessor.cpp
+        ../../src/processing/MetadataExtractor.cpp
+        ../../src/ui/AboutComponentsDialog.cpp
+        ../../src/ui/FileSystemTreeView.cpp
+        ../../src/ui/ImageAreaWidget.cpp
+        ../../src/ui/InfoTableWidget.cpp
+        ../../src/ui/MainWindow.cpp
+        ../../src/ui/ReleaseNotesDialog.cpp
+        ../../src/ui/SettingsDialog.cpp
+        ../../src/ui/SettingsShortcutsTableWidget.cpp
+        ../../src/ui/StatusBar.cpp
+        ../../src/ui/support/Languages.cpp
+        ../../src/ui/support/RecentFileAction.cpp
+        ../../src/ui/support/Settings.cpp
+        ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp
+        ../../src/util/ByteSize.cpp
+        ../../src/util/misc.cpp
+        )
 
 SET(UIS
-    ../../src/ui/forms/AboutComponentsDialog.ui
-    ../../src/ui/forms/AboutDialog.ui
-    ../../src/ui/forms/AboutSupportedFormatsDialog.ui
-    ../../src/ui/forms/MainWindow.ui
-    ../../src/ui/forms/ReleaseNotesDialog.ui
-    ../../src/ui/forms/SettingsDialog.ui
-)
+        ../../src/ui/forms/AboutComponentsDialog.ui
+        ../../src/ui/forms/AboutDialog.ui
+        ../../src/ui/forms/AboutSupportedFormatsDialog.ui
+        ../../src/ui/forms/MainWindow.ui
+        ../../src/ui/forms/ReleaseNotesDialog.ui
+        ../../src/ui/forms/SettingsDialog.ui
+        )
 
 QT_WRAP_UIS()
 
@@ -173,24 +197,27 @@ if (APPLE)
     SET_SOURCE_FILES_PROPERTIES(../../src/resource/openclipart/vookiimageviewericon.icns PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
     SET(SOURCES
-        ${SOURCES}
-        ../../src/abstraction/mac/init.mm
-        ../../src/abstraction/mac/darkmode.mm
-        ../../components/KDMacTouchBar/src/kdmactouchbar.mm
-    )
+            ${SOURCES}
+            ../../src/abstraction/mac/init.mm
+            ../../src/abstraction/mac/darkmode.mm
+            ../../components/KDMacTouchBar/src/kdmactouchbar.mm
+            )
 
     GET_FILENAME_COMPONENT(COMPONENTS_ABSOLUTE_PATH ../../components/KDMacTouchBar/src ABSOLUTE)
     SET(CMAKE_CXX_FLAGS "-I${COMPONENTS_ABSOLUTE_PATH} ${CMAKE_CXX_FLAGS}")
 
     ADD_EXECUTABLE(${APPLICATION_NAME}
-        MACOSX_BUNDLE
-        ../../src/resource/openclipart/vookiimageviewericon.icns
-        ${SOURCES}
-        ${UI_HEADERS}
-        ${UI_RESOURCES})
+            MACOSX_BUNDLE
+            ../../src/resource/openclipart/vookiimageviewericon.icns
+            ${SOURCES}
+            ${UI_HEADERS}
+            ${UI_RESOURCES})
 
     GET_FILENAME_COMPONENT(PLIST_IN_ABSOLUTE_PATH platform/mac/support/MacOSXBundleInfo.plist.in ABSOLUTE)
     SET_TARGET_PROPERTIES(${APPLICATION_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${PLIST_IN_ABSOLUTE_PATH})
+
+    TARGET_COMPILE_OPTIONS(${APPLICATION_NAME} PRIVATE
+            "$<$<OR:$<OR:$<CONFIG:Release>,$<CONFIG:RelWithDebInfo>>,$<CONFIG:MinSizeRel>>:-DQT_NO_DEBUG_OUTPUT>")
 
     FIND_PACKAGE(ZLIB REQUIRED)
     FIND_PACKAGE(Iconv REQUIRED)
@@ -202,19 +229,19 @@ if (APPLE)
     SET(CMAKE_EXE_LINKER_FLAGS "-L${EXIV2}/lib ${CMAKE_EXE_LINKER_FLAGS}")
 
     TARGET_LINK_LIBRARIES(VookiImageViewer libexiv2.a libexiv2-xmp.a ZLIB::ZLIB Iconv::Iconv EXPAT::EXPAT)
-elseif(WIN32)
+elseif (WIN32)
     SET(SOURCES
-        ${SOURCES}
-        ../../src/abstraction/win/init.cpp
-        ../../src/abstraction/win/darkmode.cpp
-    )
+            ${SOURCES}
+            ../../src/abstraction/win/init.cpp
+            ../../src/abstraction/win/darkmode.cpp
+            )
 
     ADD_EXECUTABLE(${APPLICATION_NAME}
-        WIN32
+            WIN32
             platform/windows/support/application.rc
-        ${SOURCES}
-        ${UI_HEADERS}
-        ${UI_RESOURCES})
+            ${SOURCES}
+            ${UI_HEADERS}
+            ${UI_RESOURCES})
 
     SET(EXIV2_LOC "3rdPartyLibs/Exiv2-0.27.6")
     GET_FILENAME_COMPONENT(EXIV2 platform/windows/${EXIV2_LOC} ABSOLUTE)
@@ -227,25 +254,26 @@ elseif(WIN32)
     SET(CMAKE_EXE_LINKER_FLAGS "/LIBPATH:${EXIV2}/lib /LIBPATH:${ZLIB}/lib /LIBPATH:${EXPAT}/lib ${CMAKE_EXE_LINKER_FLAGS}")
 
     TARGET_LINK_LIBRARIES(VookiImageViewer exiv2.lib exiv2-xmp.lib zlibstatic.lib libexpatMD.lib wsock32 ws2_32 Psapi.lib exiv2wrapper)
-else()
+else ()
     SET(SOURCES
-        ${SOURCES}
-        ../../src/abstraction/unix/init.cpp
-        ../../src/abstraction/unix/darkmode.cpp
-    )
+            ${SOURCES}
+            ../../src/abstraction/unix/init.cpp
+            ../../src/abstraction/unix/darkmode.cpp
+            )
 
     ADD_EXECUTABLE(VookiImageViewer
-        ${SOURCES}
-        ${UI_HEADERS}
-        ${UI_RESOURCES})
+            ${SOURCES}
+            ${UI_HEADERS}
+            ${UI_RESOURCES})
 
     FIND_LIBRARY(LIBEXIV2 NAMES libexiv2 exiv2 REQUIRED)
     TARGET_LINK_LIBRARIES(VookiImageViewer ${LIBEXIV2})
-endif()
+endif ()
 
 TARGET_LINK_LIBRARIES(VookiImageViewer ${QT_ALL_LIBS})
 TARGET_LINK_LIBRARIES(VookiImageViewer ${OS_LIBS})
 TARGET_LINK_LIBRARIES(VookiImageViewer exiv2wrapper)
+TARGET_LINK_LIBRARIES(VookiImageViewer QCoro6Core)
 
 #### Translations ####
 #
@@ -364,7 +392,7 @@ if (APPLE)
     deployqt()
 
     INCLUDE(platform/mac/CPack.cmake)
-elseif(WIN32)
+elseif (WIN32)
     # Windows
     #
     ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS)
@@ -405,7 +433,7 @@ elseif(WIN32)
     GET_FILENAME_COMPONENT(LIBDE265 "${LIBDE265}/lib/libde265.dll" ABSOLUTE)
     GET_FILENAME_COMPONENT(LIBHEIF "${LIBHEIF}/lib/heif.dll" ABSOLUTE)
     ADD_CUSTOM_COMMAND(TARGET copy-heif-deps PRE_BUILD
-                       COMMAND ${CMAKE_COMMAND} -E copy ${LIBDE265} ${LIBHEIF} $<TARGET_FILE_DIR:${APPLICATION_NAME}>)
+            COMMAND ${CMAKE_COMMAND} -E copy ${LIBDE265} ${LIBHEIF} $<TARGET_FILE_DIR:${APPLICATION_NAME}>)
     ADD_DEPENDENCIES(vooki_kimg_heif copy-heif-deps)
     ADD_DEPENDENCIES(copy-heif-deps ${APPLICATION_NAME})
 
@@ -413,7 +441,7 @@ elseif(WIN32)
     deployqt()
 
     INCLUDE(platform/windows/CPack.cmake)
-else()
+else ()
     # Unix-like systems
     #
     MESSAGE("-- ${APPLICATION_NAME} expects its plugins located either in /usr/lib/vookiimageviewer/imageformats or in /usr/local/lib/vookiimageviewer/imageformats")
@@ -423,7 +451,7 @@ else()
     if (LIBRAW)
         ADD_IMAGE_PLUGIN(vooki_raw_thumb MODULE ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
         TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} ${LIBRAW})
-    endif()
+    endif ()
 
     INCLUDE(platform/unix/CPack.cmake)
-endif()
+endif ()

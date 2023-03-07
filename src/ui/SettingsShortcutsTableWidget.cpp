@@ -40,7 +40,7 @@ void SettingsShortcutsTableWidget::setItemAtCoordinates(int row, int column, QTa
 
     if (item->type() == SettingsShortcutsTableWidgetItem::type)
     {
-        if (const auto *shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
+        if (const auto * const shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
         {
             auto keySequenceEdit = std::make_unique<QKeySequenceEdit>(shortcutItem->keySequence());
             QObject::connect(keySequenceEdit.get(), &QKeySequenceEdit::keySequenceChanged, shortcutItem, &SettingsShortcutsTableWidgetItem::onKeySequenceChanged);
@@ -53,11 +53,11 @@ void SettingsShortcutsTableWidget::updateShortcuts() const
 {
     for (int row = 0; row < rowCount(); ++row)
     {
-        if (const auto *item = QTableWidget::item(row, 0); item->type() == SettingsShortcutsTableWidgetItem::type)
+        if (const auto * const item = QTableWidget::item(row, 0); item->type() == SettingsShortcutsTableWidgetItem::type)
         {
-            if (const auto *shortcutItem = dynamic_cast<const SettingsShortcutsTableWidgetItem *>(item))
+            if (const auto * const shortcutItem = dynamic_cast<const SettingsShortcutsTableWidgetItem *>(item))
             {
-                if (auto *widget = dynamic_cast<QKeySequenceEdit *>(cellWidget(row, 0)))
+                if (auto * const widget = dynamic_cast<QKeySequenceEdit *>(cellWidget(row, 0)))
                 {
                     widget->setKeySequence(shortcutItem->keySequence());
                 }

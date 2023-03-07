@@ -61,7 +61,7 @@ void Settings::initializeSettings(const QMenu *menu)
     QSettings userSettings(QSettings::UserScope, QCoreApplication::organizationName(), QCoreApplication::applicationName());
 
     auto actions = menu->actions();
-    for (QAction *action : actions)
+    for (auto * const action : actions)
     {
         if (action->isSeparator())
             continue;
@@ -87,9 +87,7 @@ void Settings::restoreDefaultSettings()
     QSettings userSettings(QSettings::UserScope, QCoreApplication::organizationName(), QCoreApplication::applicationName());
 
     for (const QString &key : defaultSettings.allKeys())
-    {
         userSettings.setValue(key, defaultSettings.value(key));
-    }
 }
 
 std::shared_ptr<QSettings> Settings::userSettings()

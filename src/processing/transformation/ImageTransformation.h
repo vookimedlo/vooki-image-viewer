@@ -1,7 +1,7 @@
 #pragma once
 /****************************************************************************
 VookiImageViewer - a tool for showing images.
-Copyright(C) 2017  Michal Duda <github@vookimedlo.cz>
+Copyright(C) 2023  Michal Duda <github@vookimedlo.cz>
 
 https://github.com/vookimedlo/vooki-image-viewer
 
@@ -19,12 +19,18 @@ You should have received a copy of the GNU General Public License
 along with this program.If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
-#include <QString>
-
-namespace Util
+class ImageTransformation
 {
-    [[nodiscard]] QString getVersionString()
-    {
-        return {"@VERSION@"};
-    }
-}
+public:
+    virtual ~ImageTransformation() = default;
+
+    [[nodiscard]] virtual QVariant transform() = 0;
+
+    [[nodiscard]] inline bool isCacheDirty() const { return m_isCacheDirty; }
+    inline void setIsCacheDirty(bool isCacheDirty) { m_isCacheDirty = isCacheDirty; }
+
+    virtual void resetProperties() { m_isCacheDirty = true; }
+
+private:
+    bool m_isCacheDirty {true};
+};
