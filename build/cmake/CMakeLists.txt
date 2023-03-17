@@ -16,9 +16,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.If not, see <http://www.gnu.org/licenses/>.
 
-PROJECT(vookiimageviewer HOMEPAGE_URL "https://vookiimageviewer.cz")
-
 CMAKE_MINIMUM_REQUIRED(VERSION 3.18.4)
+
+PROJECT(vookiimageviewer HOMEPAGE_URL "https://vookiimageviewer.cz")
 
 SET(APPLICATION_NAME VookiImageViewer)
 MESSAGE("-- ${APPLICATION_NAME} - https://vookiimageviewer.cz")
