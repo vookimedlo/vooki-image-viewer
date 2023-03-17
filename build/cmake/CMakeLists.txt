@@ -77,7 +77,12 @@ FetchContent_Declare(qcoro
         GIT_SHALLOW true
         )
 
-FetchContent_MakeAvailable(qcoro)
+FetchContent_GetProperties(qcoro POPULATED qcoro_POPULATED)
+if(NOT qcoro_POPULATED)
+    FetchContent_Populate(qcoro)
+    add_subdirectory(${qcoro_SOURCE_DIR} ${qcoro_BINARY_DIR} EXCLUDE_FROM_ALL)
+endif()
+
 qcoro_enable_coroutines()
 
 
