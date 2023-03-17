@@ -1,5 +1,5 @@
 # VookiImageViewer - a tool for showing images.
-# Copyright(C) 2017-2022 Michal Duda <github@vookimedlo.cz>
+# Copyright(C) 2017-2023 Michal Duda <github@vookimedlo.cz>
 #
 # https://github.com/vookimedlo/vooki-image-viewer
 #
@@ -14,7 +14,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.If not, see <http://www.gnu.org/licenses/>.
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 CMAKE_MINIMUM_REQUIRED(VERSION 3.18.4)
 
@@ -56,6 +56,14 @@ if (APPLE)
     SET(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "")
     MESSAGE("-- Requested architectures are x86_64 & arm64")
 endif ()
+
+
+SET(3RD_PARTY_LIBS platform/mac/3rdPartyLibs/cmake-build-release/3rd-party)
+SET(3RD_PARTY_LIBS_DOWNLOAD "${3RD_PARTY_LIBS}/download")
+SET(3RD_PARTY_LIBS_INSTALL "${3RD_PARTY_LIBS}/install")
+
+LIST(APPEND CMAKE_PREFIX_PATH "${3RD_PARTY_LIBS_INSTALL}/lib/cmake")
+FIND_PACKAGE(exiv2 REQUIRED)
 
 SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -186,6 +194,8 @@ ADD_LIBRARY(exiv2wrapper STATIC ../../src/processing/Exiv2ImageAutoPtrWrapper.cp
 SET_TARGET_PROPERTIES(exiv2wrapper PROPERTIES CXX_STANDARD 11)
 TARGET_COMPILE_OPTIONS(exiv2wrapper PRIVATE
         "$<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>:-Wno-deprecated>")
+GET_TARGET_PROPERTY(exiv2_headers exiv2lib INTERFACE_INCLUDE_DIRECTORIES)
+TARGET_INCLUDE_DIRECTORIES(exiv2wrapper PRIVATE ${exiv2_headers})
 
 if (APPLE)
     FIND_LIBRARY(APPKIT AppKit)
@@ -228,12 +238,7 @@ if (APPLE)
     FIND_PACKAGE(Iconv REQUIRED)
     FIND_PACKAGE(EXPAT REQUIRED)
 
-    SET(EXIV2_LOC "3rdPartyLibs/Exiv2-0.27.6")
-    GET_FILENAME_COMPONENT(EXIV2 platform/mac/${EXIV2_LOC} ABSOLUTE)
-    SET(CMAKE_CXX_FLAGS "-I${EXIV2}/include ${CMAKE_CXX_FLAGS}")
-    SET(CMAKE_EXE_LINKER_FLAGS "-L${EXIV2}/lib ${CMAKE_EXE_LINKER_FLAGS}")
-
-    TARGET_LINK_LIBRARIES(VookiImageViewer libexiv2.a libexiv2-xmp.a ZLIB::ZLIB Iconv::Iconv EXPAT::EXPAT)
+    TARGET_LINK_LIBRARIES(VookiImageViewer exiv2-xmp exiv2lib ZLIB::ZLIB Iconv::Iconv EXPAT::EXPAT)
 elseif (WIN32)
     SET(SOURCES
             ${SOURCES}
