@@ -64,7 +64,9 @@ SET(3RD_PARTY_LIBS_INSTALL "${3RD_PARTY_LIBS}/install")
 GET_FILENAME_COMPONENT(3RD_PARTY_LIBS_INSTALL_ABSOLUTE "${3RD_PARTY_LIBS_INSTALL}" ABSOLUTE)
 
 LIST(APPEND CMAKE_PREFIX_PATH "${3RD_PARTY_LIBS_INSTALL}/lib/cmake")
+
 FIND_PACKAGE(exiv2 REQUIRED)
+FIND_PACKAGE(libjpeg-turbo REQUIRED)
 
 SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -386,16 +388,11 @@ if (APPLE)
     #
     SET(3RD_LIB_LOC "platform/mac/3rdPartyLibs")
 
-    SET(LIBJPEG_LOC "libjpeg-turbo-2.1.4")
-    GET_FILENAME_COMPONENT(LIBJPEG "${3RD_LIB_LOC}/${LIBJPEG_LOC}" ABSOLUTE)
-    SET(CMAKE_CXX_FLAGS "-I${LIBJPEG}/include ${CMAKE_CXX_FLAGS}")
-    SET(CMAKE_MODULE_LINKER_FLAGS "-L${LIBJPEG}/lib ${CMAKE_MODULE_LINKER_FLAGS}")
-
     SET(CMAKE_CXX_FLAGS "-I${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include ${CMAKE_CXX_FLAGS}")
     SET(CMAKE_MODULE_LINKER_FLAGS "-L${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib ${CMAKE_MODULE_LINKER_FLAGS}")
 
     ADD_IMAGE_PLUGIN(vooki_raw_thumb ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
-    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_r.a libturbojpeg.a -lz)
+    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_r.a libjpeg-turbo::turbojpeg-static -lz)
 
     include(platform/mac/MacdeployQt.cmake)
     deployqt()
