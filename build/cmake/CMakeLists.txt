@@ -17,7 +17,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 CMAKE_MINIMUM_REQUIRED(VERSION 3.18.4)
-
 PROJECT(vookiimageviewer HOMEPAGE_URL "https://vookiimageviewer.cz")
 
 SET(APPLICATION_NAME VookiImageViewer)
@@ -56,14 +55,6 @@ if (APPLE)
     SET(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "")
     MESSAGE("-- Requested architectures are x86_64 & arm64")
 endif ()
-
-
-SET(3RD_PARTY_LIBS platform/mac/3rdPartyLibs/cmake-build-release/3rd-party)
-SET(3RD_PARTY_LIBS_DOWNLOAD "${3RD_PARTY_LIBS}/download")
-SET(3RD_PARTY_LIBS_INSTALL "${3RD_PARTY_LIBS}/install")
-GET_FILENAME_COMPONENT(3RD_PARTY_LIBS_INSTALL_ABSOLUTE "${3RD_PARTY_LIBS_INSTALL}" ABSOLUTE)
-
-LIST(APPEND CMAKE_PREFIX_PATH "${3RD_PARTY_LIBS_INSTALL}/lib/cmake")
 
 FIND_PACKAGE(exiv2 REQUIRED)
 FIND_PACKAGE(libjpeg-turbo REQUIRED)
@@ -141,11 +132,7 @@ if (NOT LIB_INSTALL_DIR)
     SET(LIB_INSTALL_DIR lib)
 endif ()
 
-# Include a path to the sources root location
-#
 GET_FILENAME_COMPONENT(SOURCES_ABSOLUTE_PATH ../../src/ ABSOLUTE)
-SET(CMAKE_CXX_FLAGS "-I${SOURCES_ABSOLUTE_PATH} ${CMAKE_CXX_FLAGS}")
-
 SET(SOURCES
         ../../src/application/Application.cpp
         ../../src/application/main.cpp
@@ -222,7 +209,6 @@ if (APPLE)
             )
 
     GET_FILENAME_COMPONENT(COMPONENTS_ABSOLUTE_PATH ../../components/KDMacTouchBar/src ABSOLUTE)
-    SET(CMAKE_CXX_FLAGS "-I${COMPONENTS_ABSOLUTE_PATH} ${CMAKE_CXX_FLAGS}")
 
     ADD_EXECUTABLE(${APPLICATION_NAME}
             MACOSX_BUNDLE
@@ -230,6 +216,8 @@ if (APPLE)
             ${SOURCES}
             ${UI_HEADERS}
             ${UI_RESOURCES})
+
+    TARGET_INCLUDE_DIRECTORIES(${APPLICATION_NAME} BEFORE PRIVATE ${COMPONENTS_ABSOLUTE_PATH})
 
     GET_FILENAME_COMPONENT(PLIST_IN_ABSOLUTE_PATH platform/mac/support/MacOSXBundleInfo.plist.in ABSOLUTE)
     SET_TARGET_PROPERTIES(${APPLICATION_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${PLIST_IN_ABSOLUTE_PATH})
@@ -241,7 +229,7 @@ if (APPLE)
     FIND_PACKAGE(Iconv REQUIRED)
     FIND_PACKAGE(EXPAT REQUIRED)
 
-    TARGET_LINK_LIBRARIES(VookiImageViewer exiv2-xmp exiv2lib ZLIB::ZLIB Iconv::Iconv EXPAT::EXPAT)
+    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} exiv2-xmp exiv2lib ZLIB::ZLIB Iconv::Iconv EXPAT::EXPAT)
 elseif (WIN32)
     SET(SOURCES
             ${SOURCES}
@@ -266,7 +254,7 @@ elseif (WIN32)
     SET(CMAKE_CXX_FLAGS "-I${EXIV2}/include -I${ZLIB}/include -I${EXPAT}/include ${CMAKE_CXX_FLAGS}")
     SET(CMAKE_EXE_LINKER_FLAGS "/LIBPATH:${EXIV2}/lib /LIBPATH:${ZLIB}/lib /LIBPATH:${EXPAT}/lib ${CMAKE_EXE_LINKER_FLAGS}")
 
-    TARGET_LINK_LIBRARIES(VookiImageViewer exiv2.lib exiv2-xmp.lib zlibstatic.lib libexpatMD.lib wsock32 ws2_32 Psapi.lib exiv2wrapper)
+    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} exiv2.lib exiv2-xmp.lib zlibstatic.lib libexpatMD.lib wsock32 ws2_32 Psapi.lib exiv2wrapper)
 else ()
     SET(SOURCES
             ${SOURCES}
@@ -274,19 +262,17 @@ else ()
             ../../src/abstraction/unix/darkmode.cpp
             )
 
-    ADD_EXECUTABLE(VookiImageViewer
+    ADD_EXECUTABLE(${APPLICATION_NAME}
             ${SOURCES}
             ${UI_HEADERS}
             ${UI_RESOURCES})
 
     FIND_LIBRARY(LIBEXIV2 NAMES libexiv2 exiv2 REQUIRED)
-    TARGET_LINK_LIBRARIES(VookiImageViewer ${LIBEXIV2})
+    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} ${LIBEXIV2})
 endif ()
 
-TARGET_LINK_LIBRARIES(VookiImageViewer ${QT_ALL_LIBS})
-TARGET_LINK_LIBRARIES(VookiImageViewer ${OS_LIBS})
-TARGET_LINK_LIBRARIES(VookiImageViewer exiv2wrapper)
-TARGET_LINK_LIBRARIES(VookiImageViewer QCoro6Core)
+TARGET_LINK_LIBRARIES(${APPLICATION_NAME} ${QT_ALL_LIBS} ${OS_LIBS} exiv2wrapper QCoro6Core)
+TARGET_INCLUDE_DIRECTORIES(${APPLICATION_NAME} BEFORE PRIVATE ${SOURCES_ABSOLUTE_PATH} ${CMAKE_BINARY_DIR})
 
 #### Translations ####
 #
@@ -386,12 +372,13 @@ ADD_IMAGE_PLUGIN(vooki_kimg_rgb ../../src/plugins/kimageformats/rgb.cpp)
 if (APPLE)
     # MacOS
     #
-    SET(3RD_LIB_LOC "platform/mac/3rdPartyLibs")
 
     SET(CMAKE_CXX_FLAGS "-I${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include ${CMAKE_CXX_FLAGS}")
     SET(CMAKE_MODULE_LINKER_FLAGS "-L${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib ${CMAKE_MODULE_LINKER_FLAGS}")
 
     ADD_IMAGE_PLUGIN(vooki_raw_thumb ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
+    TARGET_INCLUDE_DIRECTORIES(vooki_raw_thumb BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
+    TARGET_LINK_DIRECTORIES(vooki_raw_thumb BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
     TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_r.a libjpeg-turbo::turbojpeg-static -lz)
 
     include(platform/mac/MacdeployQt.cmake)

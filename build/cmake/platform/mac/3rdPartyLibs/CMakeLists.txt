@@ -6,9 +6,7 @@ include(ExternalProject)
 
 SET(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "")
 
-SET(3RD_PARTY_LIBS ${CMAKE_BINARY_DIR}/3rd-party)
 SET(3RD_PARTY_LIBS_DOWNLOAD "${3RD_PARTY_LIBS}/download")
-SET(3RD_PARTY_LIBS_INSTALL "${3RD_PARTY_LIBS}/install")
 
 ExternalProject_Add(
         ext_libexiv2
