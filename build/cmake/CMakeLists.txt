@@ -56,8 +56,10 @@ if (APPLE)
     MESSAGE("-- Requested architectures are x86_64 & arm64")
 endif ()
 
-FIND_PACKAGE(exiv2 REQUIRED)
-FIND_PACKAGE(libjpeg-turbo REQUIRED)
+if (APPLE OR WIN32)
+    FIND_PACKAGE(exiv2 REQUIRED)
+    FIND_PACKAGE(libjpeg-turbo REQUIRED)
+endif()
 
 SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -244,17 +246,9 @@ elseif (WIN32)
             ${UI_HEADERS}
             ${UI_RESOURCES})
 
-    SET(EXIV2_LOC "3rdPartyLibs/Exiv2-0.27.6")
-    GET_FILENAME_COMPONENT(EXIV2 platform/windows/${EXIV2_LOC} ABSOLUTE)
-    SET(ZLIB_LOC "3rdPartyLibs/zlib-1.2.13")
-    GET_FILENAME_COMPONENT(ZLIB platform/windows/${ZLIB_LOC} ABSOLUTE)
-    SET(EXPAT_LOC "3rdPartyLibs/expat-2.5.0")
-    GET_FILENAME_COMPONENT(EXPAT platform/windows/${EXPAT_LOC} ABSOLUTE)
-
-    SET(CMAKE_CXX_FLAGS "-I${EXIV2}/include -I${ZLIB}/include -I${EXPAT}/include ${CMAKE_CXX_FLAGS}")
-    SET(CMAKE_EXE_LINKER_FLAGS "/LIBPATH:${EXIV2}/lib /LIBPATH:${ZLIB}/lib /LIBPATH:${EXPAT}/lib ${CMAKE_EXE_LINKER_FLAGS}")
-
-    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} exiv2.lib exiv2-xmp.lib zlibstatic.lib libexpatMD.lib wsock32 ws2_32 Psapi.lib exiv2wrapper)
+    TARGET_INCLUDE_DIRECTORIES(${APPLICATION_NAME} BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
+    TARGET_LINK_DIRECTORIES(${APPLICATION_NAME} BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
+    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} exiv2-xmp.lib exiv2.lib libexpatMD.lib zlibstatic.lib wsock32 ws2_32 Psapi exiv2wrapper)
 else ()
     SET(SOURCES
             ${SOURCES}
@@ -372,7 +366,6 @@ ADD_IMAGE_PLUGIN(vooki_kimg_rgb ../../src/plugins/kimageformats/rgb.cpp)
 if (APPLE)
     # MacOS
     #
-
     SET(CMAKE_CXX_FLAGS "-I${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include ${CMAKE_CXX_FLAGS}")
     SET(CMAKE_MODULE_LINKER_FLAGS "-L${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib ${CMAKE_MODULE_LINKER_FLAGS}")
 
@@ -388,49 +381,30 @@ if (APPLE)
 elseif (WIN32)
     # Windows
     #
-    ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS)
-
-    SET(3RD_LIB_LOC "platform/windows/3rdPartyLibs")
-
-    SET(ZLIB_LOC "zlib-1.2.13")
-    GET_FILENAME_COMPONENT(ZLIB "${3RD_LIB_LOC}/${ZLIB_LOC}" ABSOLUTE)
-    SET(CMAKE_CXX_FLAGS "-I${ZLIB}/include ${CMAKE_CXX_FLAGS}")
-
-    SET(LIBJPEG_LOC "libjpeg-turbo-2.1.4")
-    GET_FILENAME_COMPONENT(LIBJPEG "${3RD_LIB_LOC}/${LIBJPEG_LOC}" ABSOLUTE)
-    SET(CMAKE_CXX_FLAGS "-I${LIBJPEG}/include ${CMAKE_CXX_FLAGS}")
-
-    SET(LIBRAW_LOC "LibRaw-0.21.0")
-    ADD_DEFINITIONS(-DLIBRAW_NODLL)
-    GET_FILENAME_COMPONENT(LIBRAW "${3RD_LIB_LOC}/${LIBRAW_LOC}" ABSOLUTE)
-    SET(CMAKE_CXX_FLAGS "-I${LIBRAW}/include ${CMAKE_CXX_FLAGS}")
+    ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DLIBRAW_NODLL -DLIBHEIF_STATIC_BUILD -DLIBDE265_STATIC_BUILD)
 
     ADD_IMAGE_PLUGIN(vooki_raw_thumb ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
-    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} ${LIBRAW}/lib/libraw_static.lib ${LIBJPEG}/lib/turbojpeg-static.lib ${ZLIB}/lib/zlibstatic.lib)
-
-    SET(LIBRAW_LOC "libheif-1.14.0")
-    GET_FILENAME_COMPONENT(LIBHEIF "${3RD_LIB_LOC}/${LIBRAW_LOC}" ABSOLUTE)
-    SET(CMAKE_CXX_FLAGS "-I${LIBHEIF}/include ${CMAKE_CXX_FLAGS}")
+    TARGET_INCLUDE_DIRECTORIES(vooki_raw_thumb BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
+    TARGET_LINK_DIRECTORIES(vooki_raw_thumb BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
+    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_static.lib turbojpeg-static zlibstatic.lib)
 
     ADD_IMAGE_PLUGIN(vooki_kimg_heif ../../src/plugins/kimageformats/heif.cpp)
-    TARGET_LINK_LIBRARIES(vooki_kimg_heif ${QT_UI_LIB} ${LIBHEIF}/lib/heif.lib)
-
-    SET(LIBDE265_LOC "libde265-1.0.9")
-    GET_FILENAME_COMPONENT(LIBDE265 "${3RD_LIB_LOC}/${LIBDE265_LOC}" ABSOLUTE)
+    TARGET_INCLUDE_DIRECTORIES(vooki_kimg_heif BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
+    TARGET_LINK_DIRECTORIES(vooki_kimg_heif BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
+    TARGET_LINK_LIBRARIES(vooki_kimg_heif ${QT_UI_LIB} de265.lib heif.lib)
 
     SET(PLUGINS "$<TARGET_FILE_DIR:${APPLICATION_NAME}>/imageformats")
     SET_TARGET_PROPERTIES(${IMAGE_PLUGINS}
             PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PLUGINS})
 
     ADD_CUSTOM_TARGET(copy-heif-deps)
-    GET_FILENAME_COMPONENT(LIBDE265 "${LIBDE265}/lib/libde265.dll" ABSOLUTE)
-    GET_FILENAME_COMPONENT(LIBHEIF "${LIBHEIF}/lib/heif.dll" ABSOLUTE)
+    GET_FILENAME_COMPONENT(LIBDE265 "${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/bin/de265.dll" ABSOLUTE)
     ADD_CUSTOM_COMMAND(TARGET copy-heif-deps PRE_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy ${LIBDE265} ${LIBHEIF} $<TARGET_FILE_DIR:${APPLICATION_NAME}>)
     ADD_DEPENDENCIES(vooki_kimg_heif copy-heif-deps)
     ADD_DEPENDENCIES(copy-heif-deps ${APPLICATION_NAME})
 
-    include(platform/windows/WindeployQt.cmake)
+    INCLUDE(platform/windows/WindeployQt.cmake)
     deployqt()
 
     INCLUDE(platform/windows/CPack.cmake)
