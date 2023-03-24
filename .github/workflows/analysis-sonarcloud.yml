@@ -33,22 +33,32 @@ jobs:
           arch: ${{ env.MINGW_VERSION }}
           dir: "${{github.workspace}}/qt"
           install-deps: "true"
+
+      - name: build 3rd-party sources [configuration]
+        env:
+          CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}
+        run: |
+          "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          cmake -DBUILD_DEPENDENCIES=ON -A x64 -G "Visual Studio 17 2022" -Bbuild_sonar ${{github.workspace}} -Wno-dev
+
+      - name: build 3rd-party sources
+        run: |
+          cmake --build build_sonar --config ${{env.BUILD_TYPE}}    
+
       - name: Install sonar-scanner and build-wrapper
         uses: SonarSource/sonarcloud-github-c-cpp@v1
+
       - name: Run build-wrapper
         env:
           CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}
         run: |
-          New-Item -ItemType directory -Path buildx64
           "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-          cmake -A x64 -G "Visual Studio 17 2022" -Bbuildx64 build/cmake -Wno-dev -DINSTALL_SYSTEM_RUNTIME=1
-          build-wrapper-win-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build buildx64 --config ${{env.BUILD_TYPE}}
+          cmake -DBUILD_DEPENDENCIES=OFF -A x64 -G "Visual Studio 17 2022" -Bbuild_sonar -Wno-dev -DINSTALL_SYSTEM_RUNTIME=1
+          build-wrapper-win-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build_sonar --config ${{env.BUILD_TYPE}}
+
       - name: Analyze with SonarCloud
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           sonar-scanner --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
-
-
- 
