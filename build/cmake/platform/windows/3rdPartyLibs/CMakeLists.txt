@@ -10,11 +10,10 @@ set_property(DIRECTORY PROPERTY EP_BASE "c:/_tmp")
 if (CMAKE_BUILD_TYPE)
     SET(CONFIG_ARGS "--config ${CMAKE_BUILD_TYPE}")
 else()
-    SET(CONFIG_ARGS "")
+    SET(CONFIG_ARGS "--config $<CONFIG>")
 endif()
 
-MESSAGE("Configuration arguments: ${CONFIG_ARGS}")
-
+MESSAGE("-- Configuration arguments: ${CONFIG_ARGS}")
 
 ExternalProject_Add(
         ext_zlib
