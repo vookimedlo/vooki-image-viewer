@@ -56,8 +56,8 @@ if (APPLE)
     MESSAGE("-- Requested architectures are x86_64 & arm64")
 endif ()
 
+FIND_PACKAGE(exiv2 REQUIRED)
 if (APPLE OR WIN32)
-    FIND_PACKAGE(exiv2 REQUIRED)
     FIND_PACKAGE(libjpeg-turbo REQUIRED)
 endif()
 
@@ -261,8 +261,7 @@ else ()
             ${UI_HEADERS}
             ${UI_RESOURCES})
 
-    FIND_LIBRARY(LIBEXIV2 NAMES libexiv2 exiv2 REQUIRED)
-    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} ${LIBEXIV2})
+    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} exiv2-xmp exiv2lib)
 endif ()
 
 TARGET_LINK_LIBRARIES(${APPLICATION_NAME} ${QT_ALL_LIBS} ${OS_LIBS} exiv2wrapper QCoro6Core)
