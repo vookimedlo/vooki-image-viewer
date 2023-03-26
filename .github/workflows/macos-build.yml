@@ -33,7 +33,7 @@ jobs:
         cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_DEPENDENCIES=ON -H. -Bbuild $WORKDIR
         cd build
         make -j
-        gls -Q | grep -v 3rd-party | xargs rm -rf
+        gls -Q | grep -v EPs | xargs rm -rf
         cd ..
         echo "==============================================="
         cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild $WORKDIR
