@@ -6,7 +6,6 @@ include(../../../ExternalProjectVersions.cmake)
 include(ExternalProject)
 
 SET(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "")
-
 SET(3RD_PARTY_LIBS_DOWNLOAD "${3RD_PARTY_LIBS}/download")
 
 ExternalProject_Add(
@@ -14,8 +13,8 @@ ExternalProject_Add(
         GIT_REPOSITORY https://github.com/Exiv2/exiv2.git
         GIT_TAG ${EXT_LIBEXIV2_VERSION}
         GIT_SHALLOW true
-
-        CMAKE_ARGS -DCMAKE_OSX_ARCHITECTURES:STRING=${CMAKE_OSX_ARCHITECTURES} -DCMAKE_INSTALL_PREFIX=${3RD_PARTY_LIBS_INSTALL} -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DBUILD_SHARED_LIBS=OFF -DEXIV2_BUILD_SAMPLES=OFF -DEXIV2_BUILD_EXIV2_COMMAND=OFF
+        LIST_SEPARATOR |
+        CMAKE_ARGS -DCMAKE_OSX_ARCHITECTURES:STRING=x86_64|arm64 -DCMAKE_INSTALL_PREFIX=${3RD_PARTY_LIBS_INSTALL} -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DBUILD_SHARED_LIBS=OFF -DEXIV2_BUILD_SAMPLES=OFF -DEXIV2_BUILD_EXIV2_COMMAND=OFF
         UPDATE_COMMAND ""
 )
 
@@ -24,7 +23,6 @@ ExternalProject_Add(
         GIT_REPOSITORY https://github.com/libjpeg-turbo/libjpeg-turbo.git
         GIT_TAG ${EXT_LIBJPEG-TURBO_VERSION}
         GIT_SHALLOW true
-
         CONFIGURE_COMMAND ""
         COMMAND mkdir <BINARY_DIR>/build-x86_64 || true &&
                 cd <BINARY_DIR>/build-x86_64 &&
@@ -53,7 +51,6 @@ ExternalProject_Add(
         CONFIGURE_COMMAND autoreconf -fiv <SOURCE_DIR> && "${CMAKE_COMMAND}" -E echo CC="$(CC) -arch x86_64 -arch arm64" CXX="$(CXX) -arch x86_64 -arch arm64" CPPFLAGS="-I${3RD_PARTY_LIBS_INSTALL}/include \${CPPFLAGS}" LDFLAGS="-L${3RD_PARTY_LIBS_INSTALL}/lib \${LDFLAGS}" <SOURCE_DIR>/configure --disable-examples --enable-static=yes --enable-shared=no -prefix=${3RD_PARTY_LIBS_INSTALL} > configure.sh
         COMMAND sh configure.sh
         BUILD_COMMAND cd <BINARY_DIR> && $(MAKE) -j
-
         UPDATE_COMMAND ""
         DEPENDS ext_libjpeg-turbo
 )
