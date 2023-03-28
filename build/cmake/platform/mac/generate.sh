@@ -1,8 +1,4 @@
 #!/bin/sh
-cd $(dirname "$0")
+cd $(dirname "$0")/../../../../../vooki-image-viewer-build
 
-rm -rf build || true
-
-mkdir build
-cd build
-cmake -DCMAKE_BUILD_TYPE=Release ../../../
+cmake -DBUILD_DEPENDENCIES=OFF -DCMAKE_BUILD_TYPE=Release -Bbuild -S../vooki-image-viewer/

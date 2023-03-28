@@ -51,11 +51,6 @@ endif ()
 MESSAGE("-- Application version is ${VERSION}")
 CONFIGURE_FILE(../../src/util/version.h.in "${CMAKE_BINARY_DIR}/version.h" @ONLY)
 
-if (APPLE)
-    SET(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "")
-    MESSAGE("-- Requested architectures are x86_64 & arm64")
-endif ()
-
 FIND_PACKAGE(exiv2 REQUIRED)
 if (APPLE OR WIN32)
     FIND_PACKAGE(libjpeg-turbo REQUIRED)

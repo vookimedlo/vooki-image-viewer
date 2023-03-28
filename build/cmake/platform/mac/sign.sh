@@ -1,7 +1,7 @@
 #!/bin/sh
-cd $(dirname "$0")
+cd $(dirname "$0")/../../../../../vooki-image-viewer-build
 
-cd build
+cd build/build/cmake
 
 find VookiImageViewer.app -name "*.dylib" | xargs codesign --force --verify --verbose --sign "${DEVELOPER_IDENTITY_VOOKIIMAGEVIEWER}"
 find VookiImageViewer.app -name "*.so" | xargs codesign --force --verify --verbose --sign "${DEVELOPER_IDENTITY_VOOKIIMAGEVIEWER}"

@@ -1,5 +1,13 @@
 #!/bin/sh
 cd $(dirname "$0")
+rm -rf ./../../../../../vooki-image-viewer-build || true
+mkdir ./../../../../../vooki-image-viewer-build
+
+echo "\n == Generating external projects makefiles ..."
+./generate-ep.sh
+
+echo "\n == Building external projects ..."
+./build-ep.sh
 
 echo "\n == Generating makefiles ..."
 ./generate.sh

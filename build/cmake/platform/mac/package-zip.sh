@@ -1,11 +1,11 @@
 #!/bin/sh
-cd $(dirname "$0")
+cd $(dirname "$0")/../../../../../vooki-image-viewer-build
 
 set -e
 
 LANG="C"
 
-PLIST_FILE=build/VookiImageViewer.app/Contents/Info.plist
+PLIST_FILE=build/build/cmake/VookiImageViewer.app/Contents/Info.plist
 
 VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" $PLIST_FILE)
 SHORT_VERSION_STRING=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" $PLIST_FILE)
@@ -14,7 +14,7 @@ ZIP_NAME="VookiImageViewer-brew-macos.zip"
 ZIP_PATH="./$ZIP_NAME"
 
 rm -f "$ZIP_PATH" || true
-ditto -c -k --sequesterRsrc --keepParent build/VookiImageViewer.app $ZIP_PATH
+ditto -c -k --sequesterRsrc --keepParent build/build/cmake/VookiImageViewer.app $ZIP_PATH
 echo "$ZIP_NAME was created."
 SHASUM=$(shasum -ba 256 $ZIP_PATH)
 SHA=$(echo $SHASUM | cut -f 1 -d\ )
