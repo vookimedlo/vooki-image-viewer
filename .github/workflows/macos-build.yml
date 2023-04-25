@@ -30,13 +30,13 @@ jobs:
       run: |
         WORKDIR=`pwd`
         cd ..
-        cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_DEPENDENCIES=ON -H. -Bbuild $WORKDIR
+        cmake -DCMAKE_BUILD_TYPE=Release -DAPPLE_FAT_ARCH=OFF -DBUILD_DEPENDENCIES=ON -H. -Bbuild $WORKDIR
         cd build
         make -j
         gls -Q | grep -v EPs | xargs rm -rf
         cd ..
         echo "==============================================="
-        cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild $WORKDIR
+        cmake -DCMAKE_BUILD_TYPE=Release -DAPPLE_FAT_ARCH=OFF -H. -Bbuild $WORKDIR
         cd build
         make -j install
         ls -l

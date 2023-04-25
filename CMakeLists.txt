@@ -28,9 +28,13 @@ LIST(PREPEND CMAKE_PREFIX_PATH "${3RD_PARTY_LIBS_INSTALL}/lib/cmake")
 LIST(PREPEND CMAKE_PREFIX_PATH "${3RD_PARTY_LIBS_INSTALL}")
 
 if (APPLE)
-    SET(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
-    MESSAGE("-- Requested architectures are x86_64 & arm64")
-endif ()
+    option(APPLE_FAT_ARCH "Requested a fat architecture (x86_64 & arm64)" ON)
+
+    if (APPLE_FAT_ARCH)
+        SET(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
+        MESSAGE("-- Requested architectures are x86_64 & arm64")
+    endif()
+endif()
 
 MESSAGE("-- 3RD_PARTY_LIBS: ${3RD_PARTY_LIBS}")
 
