@@ -7,7 +7,7 @@ on:
   pull_request:
   
 env:
-  QT_VERSION:              "6.4.3"
+  QT_VERSION:              "6.5.1"
   MINGW_VERSION:           "win64_msvc2019_64"
   BUILD_TYPE:              Release
   artifact_retention_days: 5
@@ -61,7 +61,10 @@ jobs:
     -
       name: build sources
       working-directory: ${{github.workspace}}\..
+      env:
+        VCINSTALLDIR: "C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\"
       run: |
+        "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
         cmake --build build --config ${{env.BUILD_TYPE}} --target package
 
         cd build
