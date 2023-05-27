@@ -320,39 +320,39 @@ endfunction()
 
 # Personal Computer Exchange (pcx)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_pcx ../../src/plugins/kimageformats/pcx.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_pcx ../../components/kimageformats/src/imageformats/pcx.cpp)
 
 # Gimp (xcf)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_xcf ../../src/plugins/kimageformats/xcf.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_xcf ../../components/kimageformats/src/imageformats/xcf.cpp)
 
 # Targa (tga): supports more formats than Qt's version
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_tga ../../src/plugins/kimageformats/tga.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_tga ../../components/kimageformats/src/imageformats/tga.cpp)
 
 # Photoshop documents (psd)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_psd ../../src/plugins/kimageformats/psd.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_psd ../../components/kimageformats/src/imageformats/psd.cpp)
 
 # Windows Animated Cursor (ani)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_ani ../../src/plugins/kimageformats/ani.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_ani ../../components/kimageformats/src/imageformats/ani.cpp)
 
 # Radiance HDR (hdr)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_hdr ../../src/plugins/kimageformats/hdr.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_hdr ../../components/kimageformats/src/imageformats/hdr.cpp)
 
 # Sun Raster (ras)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_ras ../../src/plugins/kimageformats/ras.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_ras ../../components/kimageformats/src/imageformats/ras.cpp)
 
 # Softimage PIC (pic)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_pic ../../src/plugins/kimageformats/pic.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_pic ../../components/kimageformats/src/imageformats/pic.cpp)
 
 # SGI images (rgb, rgba, sgi, bw)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_rgb ../../src/plugins/kimageformats/rgb.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_rgb ../../components/kimageformats/src/imageformats/rgb.cpp)
 
 # Camera RAW Thumbnails (raf, mos, cr2, erf, dng, mrw, nef, orf, rw2, pef, x3f, srw, x3f, arw)
 # Prebuilt library for the MacOS/Windows only, Linux uses a distro package
@@ -382,7 +382,7 @@ elseif (WIN32)
     TARGET_LINK_DIRECTORIES(vooki_raw_thumb BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
     TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_static.lib turbojpeg-static zlibstatic.lib)
 
-    ADD_IMAGE_PLUGIN(vooki_kimg_heif ../../src/plugins/kimageformats/heif.cpp)
+    ADD_IMAGE_PLUGIN(vooki_kimg_heif ../../components/kimageformats/src/imageformats/heif.cpp)
     TARGET_INCLUDE_DIRECTORIES(vooki_kimg_heif BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
     TARGET_LINK_DIRECTORIES(vooki_kimg_heif BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
     TARGET_LINK_LIBRARIES(vooki_kimg_heif ${QT_UI_LIB} de265.lib heif.lib)
