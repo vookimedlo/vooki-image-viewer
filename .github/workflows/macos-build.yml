@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-12
+    runs-on: macos-13
 
     steps:
     - name: checkout 
@@ -22,7 +22,7 @@ jobs:
         brew update
         brew upgrade || true
         brew link --overwrite python
-        brew install automake
+        brew install pkg-config m4 libtool automake autoconf
         brew install coreutils
         brew install qt
         brew link --force qt
