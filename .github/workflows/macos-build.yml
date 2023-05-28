@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-12
+    runs-on: macos-13
 
     steps:
     - name: checkout 
@@ -22,13 +22,21 @@ jobs:
         brew update
         brew upgrade || true
         brew link --overwrite python
+        brew install pkg-config m4 libtool automake autoconf
+        brew install coreutils
         brew install qt
         brew link --force qt
     - name: build sources
       run: |
         WORKDIR=`pwd`
         cd ..
-        cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild $WORKDIR/build/cmake
+        cmake -DCMAKE_BUILD_TYPE=Release -DAPPLE_FAT_ARCH=OFF -DBUILD_DEPENDENCIES=ON -H. -Bbuild $WORKDIR
+        cd build
+        make -j
+        gls -Q | grep -v EPs | xargs rm -rf
+        cd ..
+        echo "==============================================="
+        cmake -DCMAKE_BUILD_TYPE=Release -DAPPLE_FAT_ARCH=OFF -H. -Bbuild $WORKDIR
         cd build
         make -j install
         ls -l

@@ -1,7 +1,7 @@
 #!/bin/sh
-cd $(dirname "$0")
+cd $(dirname "$0")/../../../../../vooki-image-viewer-build
 
-xcrun stapler staple build/VookiImageViewer.App
+xcrun stapler staple build/build/cmake/VookiImageViewer.App
 
 # Check the DMG
 #

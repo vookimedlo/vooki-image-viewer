@@ -1,5 +1,5 @@
 # VookiImageViewer - a tool for showing images.
-# Copyright(C) 2017-2022 Michal Duda <github@vookimedlo.cz>
+# Copyright(C) 2017-2023 Michal Duda <github@vookimedlo.cz>
 #
 # https://github.com/vookimedlo/vooki-image-viewer
 #
@@ -14,11 +14,10 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.If not, see <http://www.gnu.org/licenses/>.
-
-PROJECT(vookiimageviewer HOMEPAGE_URL "https://vookiimageviewer.cz")
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 CMAKE_MINIMUM_REQUIRED(VERSION 3.18.4)
+PROJECT(vookiimageviewer HOMEPAGE_URL "https://vookiimageviewer.cz")
 
 SET(APPLICATION_NAME VookiImageViewer)
 MESSAGE("-- ${APPLICATION_NAME} - https://vookiimageviewer.cz")
@@ -52,10 +51,10 @@ endif ()
 MESSAGE("-- Application version is ${VERSION}")
 CONFIGURE_FILE(../../src/util/version.h.in "${CMAKE_BINARY_DIR}/version.h" @ONLY)
 
-if (APPLE)
-    SET(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "")
-    MESSAGE("-- Requested architectures are x86_64 & arm64")
-endif ()
+FIND_PACKAGE(exiv2 REQUIRED)
+if (APPLE OR WIN32)
+    FIND_PACKAGE(libjpeg-turbo REQUIRED)
+endif()
 
 SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -77,7 +76,12 @@ FetchContent_Declare(qcoro
         GIT_SHALLOW true
         )
 
-FetchContent_MakeAvailable(qcoro)
+FetchContent_GetProperties(qcoro POPULATED qcoro_POPULATED)
+if(NOT qcoro_POPULATED)
+    FetchContent_Populate(qcoro)
+    add_subdirectory(${qcoro_SOURCE_DIR} ${qcoro_BINARY_DIR} EXCLUDE_FROM_ALL)
+endif()
+
 qcoro_enable_coroutines()
 
 
@@ -125,11 +129,7 @@ if (NOT LIB_INSTALL_DIR)
     SET(LIB_INSTALL_DIR lib)
 endif ()
 
-# Include a path to the sources root location
-#
 GET_FILENAME_COMPONENT(SOURCES_ABSOLUTE_PATH ../../src/ ABSOLUTE)
-SET(CMAKE_CXX_FLAGS "-I${SOURCES_ABSOLUTE_PATH} ${CMAKE_CXX_FLAGS}")
-
 SET(SOURCES
         ../../src/application/Application.cpp
         ../../src/application/main.cpp
@@ -181,6 +181,8 @@ ADD_LIBRARY(exiv2wrapper STATIC ../../src/processing/Exiv2ImageAutoPtrWrapper.cp
 SET_TARGET_PROPERTIES(exiv2wrapper PROPERTIES CXX_STANDARD 11)
 TARGET_COMPILE_OPTIONS(exiv2wrapper PRIVATE
         "$<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>:-Wno-deprecated>")
+GET_TARGET_PROPERTY(exiv2_headers exiv2lib INTERFACE_INCLUDE_DIRECTORIES)
+TARGET_INCLUDE_DIRECTORIES(exiv2wrapper PRIVATE ${exiv2_headers})
 
 if (APPLE)
     FIND_LIBRARY(APPKIT AppKit)
@@ -204,7 +206,6 @@ if (APPLE)
             )
 
     GET_FILENAME_COMPONENT(COMPONENTS_ABSOLUTE_PATH ../../components/KDMacTouchBar/src ABSOLUTE)
-    SET(CMAKE_CXX_FLAGS "-I${COMPONENTS_ABSOLUTE_PATH} ${CMAKE_CXX_FLAGS}")
 
     ADD_EXECUTABLE(${APPLICATION_NAME}
             MACOSX_BUNDLE
@@ -212,6 +213,8 @@ if (APPLE)
             ${SOURCES}
             ${UI_HEADERS}
             ${UI_RESOURCES})
+
+    TARGET_INCLUDE_DIRECTORIES(${APPLICATION_NAME} BEFORE PRIVATE ${COMPONENTS_ABSOLUTE_PATH})
 
     GET_FILENAME_COMPONENT(PLIST_IN_ABSOLUTE_PATH platform/mac/support/MacOSXBundleInfo.plist.in ABSOLUTE)
     SET_TARGET_PROPERTIES(${APPLICATION_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${PLIST_IN_ABSOLUTE_PATH})
@@ -223,12 +226,7 @@ if (APPLE)
     FIND_PACKAGE(Iconv REQUIRED)
     FIND_PACKAGE(EXPAT REQUIRED)
 
-    SET(EXIV2_LOC "3rdPartyLibs/Exiv2-0.27.6")
-    GET_FILENAME_COMPONENT(EXIV2 platform/mac/${EXIV2_LOC} ABSOLUTE)
-    SET(CMAKE_CXX_FLAGS "-I${EXIV2}/include ${CMAKE_CXX_FLAGS}")
-    SET(CMAKE_EXE_LINKER_FLAGS "-L${EXIV2}/lib ${CMAKE_EXE_LINKER_FLAGS}")
-
-    TARGET_LINK_LIBRARIES(VookiImageViewer libexiv2.a libexiv2-xmp.a ZLIB::ZLIB Iconv::Iconv EXPAT::EXPAT)
+    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} exiv2-xmp exiv2lib ZLIB::ZLIB Iconv::Iconv EXPAT::EXPAT)
 elseif (WIN32)
     SET(SOURCES
             ${SOURCES}
@@ -243,17 +241,9 @@ elseif (WIN32)
             ${UI_HEADERS}
             ${UI_RESOURCES})
 
-    SET(EXIV2_LOC "3rdPartyLibs/Exiv2-0.27.6")
-    GET_FILENAME_COMPONENT(EXIV2 platform/windows/${EXIV2_LOC} ABSOLUTE)
-    SET(ZLIB_LOC "3rdPartyLibs/zlib-1.2.13")
-    GET_FILENAME_COMPONENT(ZLIB platform/windows/${ZLIB_LOC} ABSOLUTE)
-    SET(EXPAT_LOC "3rdPartyLibs/expat-2.5.0")
-    GET_FILENAME_COMPONENT(EXPAT platform/windows/${EXPAT_LOC} ABSOLUTE)
-
-    SET(CMAKE_CXX_FLAGS "-I${EXIV2}/include -I${ZLIB}/include -I${EXPAT}/include ${CMAKE_CXX_FLAGS}")
-    SET(CMAKE_EXE_LINKER_FLAGS "/LIBPATH:${EXIV2}/lib /LIBPATH:${ZLIB}/lib /LIBPATH:${EXPAT}/lib ${CMAKE_EXE_LINKER_FLAGS}")
-
-    TARGET_LINK_LIBRARIES(VookiImageViewer exiv2.lib exiv2-xmp.lib zlibstatic.lib libexpatMD.lib wsock32 ws2_32 Psapi.lib exiv2wrapper)
+    TARGET_INCLUDE_DIRECTORIES(${APPLICATION_NAME} BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
+    TARGET_LINK_DIRECTORIES(${APPLICATION_NAME} BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
+    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} exiv2-xmp.lib exiv2.lib libexpatMD.lib zlibstatic.lib wsock32 ws2_32 Psapi exiv2wrapper)
 else ()
     SET(SOURCES
             ${SOURCES}
@@ -261,19 +251,16 @@ else ()
             ../../src/abstraction/unix/darkmode.cpp
             )
 
-    ADD_EXECUTABLE(VookiImageViewer
+    ADD_EXECUTABLE(${APPLICATION_NAME}
             ${SOURCES}
             ${UI_HEADERS}
             ${UI_RESOURCES})
 
-    FIND_LIBRARY(LIBEXIV2 NAMES libexiv2 exiv2 REQUIRED)
-    TARGET_LINK_LIBRARIES(VookiImageViewer ${LIBEXIV2})
+    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} exiv2-xmp exiv2lib)
 endif ()
 
-TARGET_LINK_LIBRARIES(VookiImageViewer ${QT_ALL_LIBS})
-TARGET_LINK_LIBRARIES(VookiImageViewer ${OS_LIBS})
-TARGET_LINK_LIBRARIES(VookiImageViewer exiv2wrapper)
-TARGET_LINK_LIBRARIES(VookiImageViewer QCoro6Core)
+TARGET_LINK_LIBRARIES(${APPLICATION_NAME} ${QT_ALL_LIBS} ${OS_LIBS} exiv2wrapper QCoro6Core)
+TARGET_INCLUDE_DIRECTORIES(${APPLICATION_NAME} BEFORE PRIVATE ${SOURCES_ABSOLUTE_PATH} ${CMAKE_BINARY_DIR})
 
 #### Translations ####
 #
@@ -333,39 +320,39 @@ endfunction()
 
 # Personal Computer Exchange (pcx)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_pcx ../../src/plugins/kimageformats/pcx.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_pcx ../../components/kimageformats/src/imageformats/pcx.cpp)
 
 # Gimp (xcf)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_xcf ../../src/plugins/kimageformats/xcf.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_xcf ../../components/kimageformats/src/imageformats/xcf.cpp)
 
 # Targa (tga): supports more formats than Qt's version
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_tga ../../src/plugins/kimageformats/tga.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_tga ../../components/kimageformats/src/imageformats/tga.cpp)
 
 # Photoshop documents (psd)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_psd ../../src/plugins/kimageformats/psd.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_psd ../../components/kimageformats/src/imageformats/psd.cpp)
 
 # Windows Animated Cursor (ani)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_ani ../../src/plugins/kimageformats/ani.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_ani ../../components/kimageformats/src/imageformats/ani.cpp)
 
 # Radiance HDR (hdr)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_hdr ../../src/plugins/kimageformats/hdr.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_hdr ../../components/kimageformats/src/imageformats/hdr.cpp)
 
 # Sun Raster (ras)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_ras ../../src/plugins/kimageformats/ras.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_ras ../../components/kimageformats/src/imageformats/ras.cpp)
 
 # Softimage PIC (pic)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_pic ../../src/plugins/kimageformats/pic.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_pic ../../components/kimageformats/src/imageformats/pic.cpp)
 
 # SGI images (rgb, rgba, sgi, bw)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_rgb ../../src/plugins/kimageformats/rgb.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_rgb ../../components/kimageformats/src/imageformats/rgb.cpp)
 
 # Camera RAW Thumbnails (raf, mos, cr2, erf, dng, mrw, nef, orf, rw2, pef, x3f, srw, x3f, arw)
 # Prebuilt library for the MacOS/Windows only, Linux uses a distro package
@@ -373,20 +360,13 @@ ADD_IMAGE_PLUGIN(vooki_kimg_rgb ../../src/plugins/kimageformats/rgb.cpp)
 if (APPLE)
     # MacOS
     #
-    SET(3RD_LIB_LOC "platform/mac/3rdPartyLibs")
-
-    SET(LIBJPEG_LOC "libjpeg-turbo-2.1.4")
-    GET_FILENAME_COMPONENT(LIBJPEG "${3RD_LIB_LOC}/${LIBJPEG_LOC}" ABSOLUTE)
-    SET(CMAKE_CXX_FLAGS "-I${LIBJPEG}/include ${CMAKE_CXX_FLAGS}")
-    SET(CMAKE_MODULE_LINKER_FLAGS "-L${LIBJPEG}/lib ${CMAKE_MODULE_LINKER_FLAGS}")
-
-    SET(LIBRAW_LOC "LibRaw-0.21.0")
-    GET_FILENAME_COMPONENT(LIBRAW "${3RD_LIB_LOC}/${LIBRAW_LOC}" ABSOLUTE)
-    SET(CMAKE_CXX_FLAGS "-I${LIBRAW}/include ${CMAKE_CXX_FLAGS}")
-    SET(CMAKE_MODULE_LINKER_FLAGS "-L${LIBRAW}/lib ${CMAKE_MODULE_LINKER_FLAGS}")
+    SET(CMAKE_CXX_FLAGS "-I${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include ${CMAKE_CXX_FLAGS}")
+    SET(CMAKE_MODULE_LINKER_FLAGS "-L${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib ${CMAKE_MODULE_LINKER_FLAGS}")
 
     ADD_IMAGE_PLUGIN(vooki_raw_thumb ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
-    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_r.a libturbojpeg.a -lz)
+    TARGET_INCLUDE_DIRECTORIES(vooki_raw_thumb BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
+    TARGET_LINK_DIRECTORIES(vooki_raw_thumb BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
+    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_r.a libjpeg-turbo::turbojpeg-static -lz)
 
     include(platform/mac/MacdeployQt.cmake)
     deployqt()
@@ -395,49 +375,30 @@ if (APPLE)
 elseif (WIN32)
     # Windows
     #
-    ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS)
-
-    SET(3RD_LIB_LOC "platform/windows/3rdPartyLibs")
-
-    SET(ZLIB_LOC "zlib-1.2.13")
-    GET_FILENAME_COMPONENT(ZLIB "${3RD_LIB_LOC}/${ZLIB_LOC}" ABSOLUTE)
-    SET(CMAKE_CXX_FLAGS "-I${ZLIB}/include ${CMAKE_CXX_FLAGS}")
-
-    SET(LIBJPEG_LOC "libjpeg-turbo-2.1.4")
-    GET_FILENAME_COMPONENT(LIBJPEG "${3RD_LIB_LOC}/${LIBJPEG_LOC}" ABSOLUTE)
-    SET(CMAKE_CXX_FLAGS "-I${LIBJPEG}/include ${CMAKE_CXX_FLAGS}")
-
-    SET(LIBRAW_LOC "LibRaw-0.21.0")
-    ADD_DEFINITIONS(-DLIBRAW_NODLL)
-    GET_FILENAME_COMPONENT(LIBRAW "${3RD_LIB_LOC}/${LIBRAW_LOC}" ABSOLUTE)
-    SET(CMAKE_CXX_FLAGS "-I${LIBRAW}/include ${CMAKE_CXX_FLAGS}")
+    ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DLIBRAW_NODLL -DLIBHEIF_STATIC_BUILD -DLIBDE265_STATIC_BUILD)
 
     ADD_IMAGE_PLUGIN(vooki_raw_thumb ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
-    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} ${LIBRAW}/lib/libraw_static.lib ${LIBJPEG}/lib/turbojpeg-static.lib ${ZLIB}/lib/zlibstatic.lib)
+    TARGET_INCLUDE_DIRECTORIES(vooki_raw_thumb BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
+    TARGET_LINK_DIRECTORIES(vooki_raw_thumb BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
+    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_static.lib turbojpeg-static zlibstatic.lib)
 
-    SET(LIBRAW_LOC "libheif-1.14.0")
-    GET_FILENAME_COMPONENT(LIBHEIF "${3RD_LIB_LOC}/${LIBRAW_LOC}" ABSOLUTE)
-    SET(CMAKE_CXX_FLAGS "-I${LIBHEIF}/include ${CMAKE_CXX_FLAGS}")
-
-    ADD_IMAGE_PLUGIN(vooki_kimg_heif ../../src/plugins/kimageformats/heif.cpp)
-    TARGET_LINK_LIBRARIES(vooki_kimg_heif ${QT_UI_LIB} ${LIBHEIF}/lib/heif.lib)
-
-    SET(LIBDE265_LOC "libde265-1.0.9")
-    GET_FILENAME_COMPONENT(LIBDE265 "${3RD_LIB_LOC}/${LIBDE265_LOC}" ABSOLUTE)
+    ADD_IMAGE_PLUGIN(vooki_kimg_heif ../../components/kimageformats/src/imageformats/heif.cpp)
+    TARGET_INCLUDE_DIRECTORIES(vooki_kimg_heif BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
+    TARGET_LINK_DIRECTORIES(vooki_kimg_heif BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
+    TARGET_LINK_LIBRARIES(vooki_kimg_heif ${QT_UI_LIB} de265.lib heif.lib)
 
     SET(PLUGINS "$<TARGET_FILE_DIR:${APPLICATION_NAME}>/imageformats")
     SET_TARGET_PROPERTIES(${IMAGE_PLUGINS}
             PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PLUGINS})
 
     ADD_CUSTOM_TARGET(copy-heif-deps)
-    GET_FILENAME_COMPONENT(LIBDE265 "${LIBDE265}/lib/libde265.dll" ABSOLUTE)
-    GET_FILENAME_COMPONENT(LIBHEIF "${LIBHEIF}/lib/heif.dll" ABSOLUTE)
+    GET_FILENAME_COMPONENT(LIBDE265 "${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/bin/de265.dll" ABSOLUTE)
     ADD_CUSTOM_COMMAND(TARGET copy-heif-deps PRE_BUILD
             COMMAND ${CMAKE_COMMAND} -E copy ${LIBDE265} ${LIBHEIF} $<TARGET_FILE_DIR:${APPLICATION_NAME}>)
     ADD_DEPENDENCIES(vooki_kimg_heif copy-heif-deps)
     ADD_DEPENDENCIES(copy-heif-deps ${APPLICATION_NAME})
 
-    include(platform/windows/WindeployQt.cmake)
+    INCLUDE(platform/windows/WindeployQt.cmake)
     deployqt()
 
     INCLUDE(platform/windows/CPack.cmake)

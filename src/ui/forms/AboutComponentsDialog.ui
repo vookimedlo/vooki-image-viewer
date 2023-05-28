@@ -96,11 +96,6 @@
        </item>
        <item>
         <property name="text">
-         <string>x265</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
          <string>zlib</string>
         </property>
        </item>

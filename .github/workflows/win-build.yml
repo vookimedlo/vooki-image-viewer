@@ -7,7 +7,7 @@ on:
   pull_request:
   
 env:
-  QT_VERSION:              "6.4.2"
+  QT_VERSION:              "6.5.1"
   MINGW_VERSION:           "win64_msvc2019_64"
   BUILD_TYPE:              Release
   artifact_retention_days: 5
@@ -16,9 +16,16 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
+    - name: Prepare git
+      run: |-
+        git config --global core.symlinks true
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
+        submodules: true
+    - uses: ilammy/setup-nasm@v1
+      with:
+        version: '2.16.01'
     - name: install qt
       uses: jurplel/install-qt-action@v3
       with:
@@ -32,17 +39,36 @@ jobs:
         install-deps: "true"
 
     -
+      name: build 3rd-party sources [configuration]
+      working-directory: ${{github.workspace}}\..
+      env:
+        CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}
+      run: |
+        "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        cmake -DBUILD_DEPENDENCIES=ON -A x64 -G "Visual Studio 17 2022" -Bbuild ${{github.workspace}} -Wno-dev
+
+    -
+      name: build 3rd-party sources
+      working-directory: ${{github.workspace}}\..
+      run: |
+        cmake --build build --config ${{env.BUILD_TYPE}}
+
+    -
       name: build sources [configuration]
       working-directory: ${{github.workspace}}\..
       env:
         CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}
       run: |
         "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-        cmake -A x64 -G "Visual Studio 17 2022" -Bbuild ${{github.workspace}}\build\cmake -Wno-dev -DINSTALL_SYSTEM_RUNTIME=1
+        cmake -DBUILD_DEPENDENCIES=OFF -A x64 -G "Visual Studio 17 2022" -Bbuild ${{github.workspace}} -Wno-dev -DINSTALL_SYSTEM_RUNTIME=1
+
     -
       name: build sources
       working-directory: ${{github.workspace}}\..
+      env:
+        VCINSTALLDIR: "C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\"
       run: |
+        "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
         cmake --build build --config ${{env.BUILD_TYPE}} --target package
 
         cd build

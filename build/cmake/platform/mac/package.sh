@@ -1,5 +1,5 @@
 #!/bin/sh
-cd $(dirname "$0")
+cd $(dirname "$0")/../../../../../vooki-image-viewer-build
 
 set -e;
 
@@ -8,8 +8,8 @@ rm VookiImageViewer.dmg || true
 VOLUME_NAME="VookiImageViewer"
 DMG_NAME="VookiImageViewer.dmg"
 DMG_TEMP_NAME="tmp-$DMG_NAME"
-VOLUME_ICON_FILE="../../../../src/resource/openclipart/vookiimageviewericon.icns"
-BACKGROUND_FILE="support/vookiimageviewer-dmg-bg.png"
+VOLUME_ICON_FILE="../vooki-image-viewer/src/resource/openclipart/vookiimageviewericon.icns"
+BACKGROUND_FILE="../vooki-image-viewer/build/cmake/platform/mac/support/vookiimageviewer-dmg-bg.png"
 
 TARGET=package
 
@@ -20,7 +20,7 @@ rm -rf "$TARGET" || true
 mkdir "$TARGET" || true
 
 echo "Creating disk image"
-cp -Rf ./build/VookiImageViewer.app "$TARGET/"
+cp -Rf ./build/build/cmake/VookiImageViewer.app "$TARGET/"
 ln -s /Applications "$TARGET/Applications"
 hdiutil create -volname "$VOLUME_NAME" -srcfolder "$TARGET/" -nocrossdev -ov -fs HFS+ -fsargs "-c c=64,a=16,e=16" -format UDRW "$DMG_TEMP_NAME"
 

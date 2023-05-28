@@ -44,7 +44,7 @@ jobs:
     - name: docker [build sources]
       run: |
         docker exec linux_docker ls -la /root/sources/vooki-image-viewer
-        docker exec linux_docker bash -c 'source /etc/profile && cd /root/sources/ && cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild vooki-image-viewer/build/cmake && cmake --build build --config Release --target package'
+        docker exec linux_docker bash -c 'source /etc/profile && cd /root/sources/ && cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild vooki-image-viewer && cmake --build build --config Release --target package'
     - name: docker [collect artifacts]
       run: |
         docker exec linux_docker /bin/sh -c 'cd /root/sources/build/ && tar -cf - *.deb *.rpm' | tar -xvf -

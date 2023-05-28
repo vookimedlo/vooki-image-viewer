@@ -1,0 +1,18 @@
+function(ADD_EP_VERSION ep version)
+    STRING(TOUPPER ext_${ep}_version name)
+    SET(${name} ${version} PARENT_SCOPE)
+    MESSAGE("-- External Project ${ep} version ... ${version}")
+endfunction()
+
+if (APPLE OR WIN32)
+    ADD_EP_VERSION(libexiv2 v0.27.6)
+    ADD_EP_VERSION(libjpeg-turbo 2.1.91)
+    ADD_EP_VERSION(libraw 0.21.1)
+endif()
+
+if (WIN32)
+    ADD_EP_VERSION(zlib v1.2.13)
+    ADD_EP_VERSION(libexpat R_2_5_0)
+    ADD_EP_VERSION(libde265 v1.0.11)
+    ADD_EP_VERSION(libheif v1.16.2)
+endif()

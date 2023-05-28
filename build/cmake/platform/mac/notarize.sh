@@ -1,5 +1,5 @@
 #!/bin/sh
-cd $(dirname "$0")
+cd $(dirname "$0")/../../../../../vooki-image-viewer-build
 
 xcrun notarytool submit --wait --keychain-profile "AC_PRIVATE" VookiImageViewer.dmg
 
