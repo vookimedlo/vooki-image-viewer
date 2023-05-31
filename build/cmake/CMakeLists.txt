@@ -243,7 +243,7 @@ elseif (WIN32)
 
     TARGET_INCLUDE_DIRECTORIES(${APPLICATION_NAME} BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
     TARGET_LINK_DIRECTORIES(${APPLICATION_NAME} BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
-    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} exiv2-xmp.lib exiv2.lib libexpatMD.lib zlibstatic.lib wsock32 ws2_32 Psapi exiv2wrapper)
+    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} exiv2.lib libexpatMD.lib zlibstatic.lib wsock32 ws2_32 Psapi exiv2wrapper)
 else ()
     SET(SOURCES
             ${SOURCES}
