@@ -126,7 +126,7 @@ protected:
     }
 
 private:
-    long toLong(std::unique_ptr<Exiv2::Value> value) const
+    int64_t toLong(std::unique_ptr<Exiv2::Value> value) const
     {
 #if EXIV2_TEST_VERSION(0,28,0)
         return value->toInt64();
