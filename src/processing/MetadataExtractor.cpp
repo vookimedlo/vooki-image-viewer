@@ -93,7 +93,11 @@ void MetadataExtractor::extract(const QString &filename, int width, int height)
         for (const auto &it : exifData)
             qDebug() << "+ " << it.key().c_str() << " - " << it.value().toString().c_str();
     }
+#if EXIV2_TEST_VERSION(0,28,0)
+    catch (const Exiv2::Error&)
+#else
     catch (const Exiv2::AnyError&)
+#endif
     {
         qDebug() << "Cannot parse the EXIF/XMP data. Skipping ...";
     }

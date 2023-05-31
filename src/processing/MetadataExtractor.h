@@ -82,17 +82,17 @@ protected:
                     break;
                 case ExivProcessing::Int:
                     addInformation(name, value->getValue()->toFloat(), information);
-                    qDebug() << "EXIF - " << name << ": " << value->getValue()->toLong();
+                    qDebug() << "EXIF - " << name << ": " << toLong(value->getValue());
                     break;
                 case ExivProcessing::Orientation:
-                    if (value->getValue()->toLong() == 0 || value->getValue()->toLong() >= static_cast<long>(m_orientationDescriptions.size()))
+                    if (toLong(value->getValue()) == 0 || toLong(value->getValue()) >= static_cast<long>(m_orientationDescriptions.size()))
                         return;
 
-                    addInformation(name, m_orientationDescriptions[value->getValue()->toLong()], information);
+                    addInformation(name, m_orientationDescriptions[toLong(value->getValue())], information);
                     qDebug() << "EXIF - " << name << ": " << value->getValue()->toString().c_str();
                     break;
                 case ExivProcessing::Flash:
-                    addInformation(name, value->getValue()->toLong() & 0x01 ? tr("Flash fired", "Image Description") : tr("Flash didn't fired", "Image Description"), information);
+                    addInformation(name, toLong(value->getValue()) & 0x01 ? tr("Flash fired", "Image Description") : tr("Flash didn't fired", "Image Description"), information);
                     break;
                 case ExivProcessing::GPSLatitude:
                     m_gpsLatitude = decodeGps(value);
@@ -114,7 +114,7 @@ protected:
                     m_gpsAltitude = QString::number(value->getValue()->toFloat()) + units;
                     break;
                 case ExivProcessing::GPSAltitudeRef:
-                    m_gpsAltitude.append(value->getValue()->toLong() ? tr(" (below sea level)", "Image Description") : tr(" (above sea level)", "Image Description"));
+                    m_gpsAltitude.append(toLong(value->getValue()) ? tr(" (below sea level)", "Image Description") : tr(" (above sea level)", "Image Description"));
                     addInformation(name, m_gpsAltitude, information);
                     break;
                 case ExivProcessing::String: [[fallthrough]];
@@ -126,6 +126,15 @@ protected:
     }
 
 private:
+    long toLong(std::unique_ptr<Exiv2::Value> value) const
+    {
+#if EXIV2_TEST_VERSION(0,28,0)
+        return value->toInt64();
+#else
+        return value->toLong();
+#endif
+    }
+
     template<std::size_t... I1>
     inline QString decodeGpsImpl(const Exiv2::ExifData::const_iterator &value,
                                  std::index_sequence<I1...>)
