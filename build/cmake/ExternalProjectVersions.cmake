@@ -6,7 +6,7 @@ endfunction()
 
 if (APPLE OR WIN32)
     ADD_EP_VERSION(libexiv2 v0.28.0)
-    ADD_EP_VERSION(libjpeg-turbo 2.1.91)
+    ADD_EP_VERSION(libjpeg-turbo 3.0.0)
     ADD_EP_VERSION(libraw 0.21.1)
 endif()
 
