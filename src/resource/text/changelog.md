@@ -1,6 +1,14 @@
 # Release Notes
 
 --------------------------------------------------------------
+## v2023.07.07
+- Components: Updated to the latest versions.
+- Translations: Czech updated. (Looking for translators to other languages).
+- Core: Minor bug fixes.
+- Image: Metadata information.
+- Image: Image transformations redesigned.
+- Build: Prebuilt components were removed and now they are built as a part of the build process.
+--------------------------------------------------------------
 ## v2023.01.08
 - Components: Updated to the latest versions.
 - Translations: Czech (Looking for translators to other languages).

@@ -15,6 +15,7 @@ The main goal is to have a free of charge cross-platform viewer with a simple de
   - Flip _(horizontal, vertical)._
   - Rotation _(clockwise and counterclockwise in 90° steps)._
   - Zoom _(in, out, original size, fit to window)._
+- Metadata information.
 - Fullscreen or Window mode.
 - Custom background color.
 - Custom image border color.
@@ -74,33 +75,34 @@ Supported image formats cover the very common formats as well as the rare ones. 
 All operations have assigned shortcuts and all of them can be user re-assigned except the one which is used for Preferences on macOS.
 
 
-| MacOS            | Windows                     | GNU/Linux                   | OPERATION                                |
-|------------------|-----------------------------|-----------------------------|------------------------------------------|
-| ﻿<kbd>﻿⌥c</kbd>  | <kbd>ALT</kbd>+<kbd>c</kbd> | <kbd>ALT</kbd>+<kbd>c</kbd> | Clear recent file                        |
-| ﻿<kbd>﻿q</kbd>   | <kbd>q</kbd>                | <kbd>q</kbd>                | Quit application                         |
-| ﻿<kbd>﻿﻿⌘,</kbd> | <kbd>p</kbd>                | <kbd>p</kbd>                | Preferences                              |
-| ﻿<kbd>﻿f</kbd>   | <kbd>f</kbd>                | <kbd>f</kbd>                | Show image in fullscreen mode            |
-| ﻿<kbd>﻿,</kbd>   | <kbd>,</kbd>                | <kbd>,</kbd>                | Rotate left                              |
-| ﻿<kbd>﻿.</kbd>   | <kbd>.</kbd>                | <kbd>.</kbd>                | Rotate right                             |
-| ﻿<kbd>﻿h</kbd>   | <kbd>h</kbd>                | <kbd>h</kbd>                | Flip horizontally                        |
-| ﻿<kbd>﻿v</kbd>   | <kbd>v</kbd>                | <kbd>v</kbd>                | Flip vertically                          |
-| ﻿<kbd>﻿+</kbd>   | <kbd>+</kbd>                | <kbd>+</kbd>                | Zoom in                                  |
-| ﻿<kbd>﻿-</kbd>   | <kbd>-</kbd>                | <kbd>-</kbd>                | Zoom out                                 |
-| ﻿<kbd>﻿*</kbd>   | <kbd>*</kbd>                | <kbd>*</kbd>                | Zoom reset                               |
-| ﻿<kbd>﻿w</kbd>   | <kbd>w</kbd>                | <kbd>w</kbd>                | Fit to window                            |
-| ﻿<kbd>﻿[</kbd>   | <kbd>[</kbd>                | <kbd>[</kbd>                | Previous image                           |
-| ﻿<kbd>﻿]</kbd>   | <kbd>]</kbd>                | <kbd>]</kbd>                | Next image                               |
-| ﻿<kbd>﻿i</kbd>   | <kbd>i</kbd>                | <kbd>i</kbd>                | Scroll up                                |
-| ﻿<kbd>﻿k</kbd>   | <kbd>k</kbd>                | <kbd>k</kbd>                | Scroll down                              |
-| ﻿<kbd>﻿j</kbd>   | <kbd>j</kbd>                | <kbd>j</kbd>                | Scroll left                              |
-| ﻿<kbd>﻿l</kbd>   | <kbd>l</kbd>                | <kbd>l</kbd>                | Scroll right                             |
-| ﻿<kbd>﻿s</kbd>   | <kbd>s</kbd>                | <kbd>s</kbd>                | Toggle statusbar                         |
-| ﻿<kbd>﻿n</kbd>   | <kbd>n</kbd>                | <kbd>n</kbd>                | Toggle filesystem navigation             |
-| ﻿<kbd>﻿t</kbd>   | <kbd>t</kbd>                | <kbd>t</kbd>                | Toggle toolbar                           |
-| ﻿<kbd>﻿F1</kbd>  | <kbd>F1</kbd>               | <kbd>F1</kbd>               | About application                        |
-| ﻿none            | none                        | none                        | About components                         |
-| ﻿none            | none                        | none                        | About Qt                                 |
-| ﻿none            | none                        | none                        | About supported formats                  |
+| MacOS            | Windows                     | GNU/Linux                   | OPERATION                     |
+|------------------|-----------------------------|-----------------------------|-------------------------------|
+| ﻿<kbd>﻿⌥c</kbd>  | <kbd>ALT</kbd>+<kbd>c</kbd> | <kbd>ALT</kbd>+<kbd>c</kbd> | Clear recent file             |
+| ﻿<kbd>﻿q</kbd>   | <kbd>q</kbd>                | <kbd>q</kbd>                | Quit application              |
+| ﻿<kbd>﻿﻿⌘,</kbd> | <kbd>p</kbd>                | <kbd>p</kbd>                | Preferences                   |
+| ﻿<kbd>﻿f</kbd>   | <kbd>f</kbd>                | <kbd>f</kbd>                | Show image in fullscreen mode |
+| ﻿<kbd>﻿,</kbd>   | <kbd>,</kbd>                | <kbd>,</kbd>                | Rotate left                   |
+| ﻿<kbd>﻿.</kbd>   | <kbd>.</kbd>                | <kbd>.</kbd>                | Rotate right                  |
+| ﻿<kbd>﻿h</kbd>   | <kbd>h</kbd>                | <kbd>h</kbd>                | Flip horizontally             |
+| ﻿<kbd>﻿v</kbd>   | <kbd>v</kbd>                | <kbd>v</kbd>                | Flip vertically               |
+| ﻿<kbd>﻿+</kbd>   | <kbd>+</kbd>                | <kbd>+</kbd>                | Zoom in                       |
+| ﻿<kbd>﻿-</kbd>   | <kbd>-</kbd>                | <kbd>-</kbd>                | Zoom out                      |
+| ﻿<kbd>﻿*</kbd>   | <kbd>*</kbd>                | <kbd>*</kbd>                | Zoom reset                    |
+| ﻿<kbd>﻿w</kbd>   | <kbd>w</kbd>                | <kbd>w</kbd>                | Fit to window                 |
+| ﻿<kbd>﻿[</kbd>   | <kbd>[</kbd>                | <kbd>[</kbd>                | Previous image                |
+| ﻿<kbd>﻿]</kbd>   | <kbd>]</kbd>                | <kbd>]</kbd>                | Next image                    |
+| ﻿<kbd>﻿i</kbd>   | <kbd>i</kbd>                | <kbd>i</kbd>                | Scroll up                     |
+| ﻿<kbd>﻿k</kbd>   | <kbd>k</kbd>                | <kbd>k</kbd>                | Scroll down                   |
+| ﻿<kbd>﻿j</kbd>   | <kbd>j</kbd>                | <kbd>j</kbd>                | Scroll left                   |
+| ﻿<kbd>﻿l</kbd>   | <kbd>l</kbd>                | <kbd>l</kbd>                | Scroll right                  |
+| ﻿<kbd>﻿s</kbd>   | <kbd>s</kbd>                | <kbd>s</kbd>                | Toggle statusbar              |
+| ﻿<kbd>﻿n</kbd>   | <kbd>n</kbd>                | <kbd>n</kbd>                | Toggle filesystem navigation  |
+| ﻿<kbd>﻿t</kbd>   | <kbd>t</kbd>                | <kbd>t</kbd>                | Toggle toolbar                |
+| ﻿<kbd>﻿e</kbd>   | <kbd>e</kbd>                | <kbd>e</kbd>                | Toggle metadata information   |
+| ﻿<kbd>﻿F1</kbd>  | <kbd>F1</kbd>               | <kbd>F1</kbd>               | About application             |
+| ﻿none            | none                        | none                        | About components              |
+| ﻿none            | none                        | none                        | About Qt                      |
+| ﻿none            | none                        | none                        | About supported formats       |
 
 All code developed during this project is [GPLv3][2] licensed. Images as well as the 3rd-party components have their own licenses, see proper LICENSE files in a [GitHub Source Tree][3].
 
@@ -139,6 +141,18 @@ apt-get update
 apt-get install vookiimageviewer
 ```
 
+Debian Trixie users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
+```
+apt-get install -y debian-keyring
+apt-get install -y debian-archive-keyring
+apt-get install -y apt-transport-https
+keyring_location=/usr/share/keyrings/michal-duda-vookiimageviewer-archive-keyring.gpg
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/gpg.EF5E62B51DE78AFF.key' |  gpg --dearmor > ${keyring_location}
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.deb.txt?distro=debian&codename=trixie' > /etc/apt/sources.list.d/michal-duda-vookiimageviewer.list
+apt-get update
+apt-get install vookiimageviewer
+```
+
 Ubuntu Jammy users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
 ```
 apt-get install -y apt-transport-https
@@ -159,14 +173,14 @@ apt-get update
 apt-get install vookiimageviewer
 ```
 
-Fedora 36 users can install the VookiImageViewer from the repository hosted by the [cloudsmith.io][6] for free.
+Ubuntu Lunar users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
 ```
-dnf install yum-utils pygpgme
-rpm --import 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/gpg.EF5E62B51DE78AFF.key'
-curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.rpm.txt?distro=fedora&codename=36' > /tmp/michal-duda-vookiimageviewer.repo
-dnf config-manager --add-repo '/tmp/michal-duda-vookiimageviewer.repo'
-dnf -q makecache -y --disablerepo='*' --enablerepo='michal-duda-vookiimageviewer' --enablerepo='michal-duda-vookiimageviewer-source'
-dnf install vookiimageviewer
+apt-get install -y apt-transport-https
+keyring_location=/usr/share/keyrings/michal-duda-vookiimageviewer-archive-keyring.gpg
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/gpg.EF5E62B51DE78AFF.key' |  gpg --dearmor > ${keyring_location}
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.deb.txt?distro=ubuntu&codename=lunar' > /etc/apt/sources.list.d/michal-duda-vookiimageviewer.list
+apt-get update
+apt-get install vookiimageviewer
 ```
 
 Fedora 37 users can install the VookiImageViewer from the repository hosted by the [cloudsmith.io][6] for free.
@@ -174,6 +188,16 @@ Fedora 37 users can install the VookiImageViewer from the repository hosted by t
 dnf install yum-utils pygpgme
 rpm --import 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/gpg.EF5E62B51DE78AFF.key'
 curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.rpm.txt?distro=fedora&codename=37' > /tmp/michal-duda-vookiimageviewer.repo
+dnf config-manager --add-repo '/tmp/michal-duda-vookiimageviewer.repo'
+dnf -q makecache -y --disablerepo='*' --enablerepo='michal-duda-vookiimageviewer' --enablerepo='michal-duda-vookiimageviewer-source'
+dnf install vookiimageviewer
+```
+
+Fedora 38 users can install the VookiImageViewer from the repository hosted by the [cloudsmith.io][6] for free.
+```
+dnf install yum-utils pygpgme
+rpm --import 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/gpg.EF5E62B51DE78AFF.key'
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.rpm.txt?distro=fedora&codename=38' > /tmp/michal-duda-vookiimageviewer.repo
 dnf config-manager --add-repo '/tmp/michal-duda-vookiimageviewer.repo'
 dnf -q makecache -y --disablerepo='*' --enablerepo='michal-duda-vookiimageviewer' --enablerepo='michal-duda-vookiimageviewer-source'
 dnf install vookiimageviewer
