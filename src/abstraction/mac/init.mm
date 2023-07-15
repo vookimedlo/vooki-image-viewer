@@ -41,7 +41,7 @@ namespace SystemDependant
         // - View -> Enter/Exit Fullscreen
         // - Edit -> Start Dictation
         // - Edit -> Emoji & Symbols
-        
+
         [[NSUserDefaults standardUserDefaults] setBool:NO  forKey:@"NSFullScreenMenuItemEverywhere"];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSDisabledDictationMenuItem"];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NSDisabledCharacterPaletteMenuItem"];

@@ -1,0 +1,28 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-yaml
+      - id: trailing-whitespace
+        exclude: |
+          (?x)^(
+              .*\.ts
+          )$
+      - id: detect-private-key
+      - id: end-of-file-fixer
+        exclude: |
+          (?x)^(
+              .*\.ts
+          )$
+      - id: check-shebang-scripts-are-executable
+        exclude: |
+          (?x)^(
+              .*\.in
+          )$
+      - id: check-case-conflict
+      - id: check-added-large-files
+        args: ['--maxkb=512']
+  - repo: https://github.com/vookimedlo/pre-commit-hooks
+    rev: 2023.07.14
+    hooks:
+      - id: forbid-symlinks

@@ -1,6 +1,6 @@
 name: Linux Builds
 
-on: 
+on:
   workflow_dispatch:
   workflow_call:
   push:
@@ -17,7 +17,7 @@ jobs:
     with:
       docker_image: ghcr.io/vookimedlo/ubuntu-qt:qt6_latestdistroofficial_${{ matrix.compiler }}_${{ matrix.distribution }}
       artifact_name: ubuntu_${{ matrix.distribution }}_${{ matrix.compiler }}
-  
+
   debian:
     strategy:
       fail-fast: true

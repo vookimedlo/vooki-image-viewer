@@ -37,7 +37,7 @@ jobs:
     - name: docker [copy sources]
       run: |
         docker exec linux_docker mkdir -p /root/sources/vooki-image-viewer
-        docker cp -L ./ linux_docker:/root/sources/vooki-image-viewer  
+        docker cp -L ./ linux_docker:/root/sources/vooki-image-viewer
         docker exec linux_docker git config --global core.autocrlf false
         docker exec linux_docker git config --global core.eof lf
         docker exec linux_docker git config --global --add safe.directory /root/sources/vooki-image-viewer

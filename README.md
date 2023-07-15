@@ -211,7 +211,7 @@ All binaries could be built easily. For your convenience, GitHub's Actions are u
 [![Linux Builds](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/linux-build.yml/badge.svg)](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/linux-build.yml)
 [![Windows Builds](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/win-build.yml/badge.svg)](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/win-build.yml)
 [![macos Builds](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/macos-build.yml/badge.svg)](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/macos-build.yml)
- 
+
 -----------------
 
 Homepage: [https://vookiimageviewer.cz/][4]
