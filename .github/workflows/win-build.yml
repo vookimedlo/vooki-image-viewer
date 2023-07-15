@@ -1,11 +1,11 @@
 name: Windows Builds
 
-on: 
+on:
   workflow_dispatch:
   workflow_call:
   push:
   pull_request:
-  
+
 env:
   QT_VERSION:              "6.5.1"
   MINGW_VERSION:           "win64_msvc2019_64"
@@ -32,7 +32,7 @@ jobs:
         aqtversion: '==2.1.*'
         host: 'windows'
         target: 'desktop'
-        modules: 'qtimageformats'        
+        modules: 'qtimageformats'
         version: ${{ env.QT_VERSION }}
         arch: ${{ env.MINGW_VERSION }}
         dir: "${{github.workspace}}/qt"
@@ -80,7 +80,7 @@ jobs:
         echo "artifact_name_7z=$name" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
         $name = Get-Childitem -Filter *.msi -Name
         echo "artifact_name_msi=$name" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-        
+
     - name: archive artifacts [zip]
       uses: actions/upload-artifact@v3
       with:

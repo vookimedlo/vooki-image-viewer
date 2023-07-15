@@ -3,7 +3,7 @@
 -----------------
 
 - WWW: https://libjpeg-turbo.org/
-- License: 
+- License:
   - [https://github.com/libjpeg-turbo/libjpeg-turbo/blob/main/LICENSE.md][1]
   - [https://github.com/libjpeg-turbo/libjpeg-turbo/blob/main/README.ijg][2]
 

@@ -4,12 +4,12 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
   workflow_dispatch:
-   
+
 env:
   QT_VERSION:              "6.5.1"
   MINGW_VERSION:           "win64_msvc2019_64"
   BUILD_TYPE:              Release
-   
+
 permissions:
   pull-requests: read # allows SonarCloud to decorate PRs with analysis results
 
@@ -29,7 +29,7 @@ jobs:
           aqtversion: '==2.1.*'
           host: 'windows'
           target: 'desktop'
-          modules: 'qtimageformats'        
+          modules: 'qtimageformats'
           version: ${{ env.QT_VERSION }}
           arch: ${{ env.MINGW_VERSION }}
           dir: "${{github.workspace}}/qt"
@@ -44,7 +44,7 @@ jobs:
 
       - name: build 3rd-party sources
         run: |
-          cmake --build build_sonar --config ${{env.BUILD_TYPE}}    
+          cmake --build build_sonar --config ${{env.BUILD_TYPE}}
 
       - name: Install sonar-scanner and build-wrapper
         uses: SonarSource/sonarcloud-github-c-cpp@v1
