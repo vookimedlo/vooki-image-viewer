@@ -4,6 +4,18 @@ repos:
     hooks:
       - id: check-yaml
       - id: trailing-whitespace
+        exclude: |
+          (?x)^(
+              .*\.ts
+          )$
       - id: detect-private-key
       - id: end-of-file-fixer
+        exclude: |
+          (?x)^(
+              .*\.ts
+          )$
       - id: check-shebang-scripts-are-executable
+        exclude: |
+          (?x)^(
+              .*\.in
+          )$
