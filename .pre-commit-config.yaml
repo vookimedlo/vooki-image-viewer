@@ -19,6 +19,9 @@ repos:
           (?x)^(
               .*\.in
           )$
+      - id: check-case-conflict
+      - id: check-added-large-files
+        args: ['--maxkb=512']
   - repo: https://github.com/vookimedlo/pre-commit-hooks
     rev: 2023.07.14
     hooks:
