@@ -19,3 +19,7 @@ repos:
           (?x)^(
               .*\.in
           )$
+  - repo: https://github.com/vookimedlo/pre-commit-hooks
+    rev: 2023.07.14
+    hooks:
+      - id: forbid-symlinks
