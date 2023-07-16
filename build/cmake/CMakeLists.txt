@@ -394,6 +394,14 @@ elseif (WIN32)
     TARGET_LINK_DIRECTORIES(vooki_kimg_heif BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
     TARGET_LINK_LIBRARIES(vooki_kimg_heif ${QT_UI_LIB} de265.lib heif.lib)
 
+    # JPEG XL (jxl)
+    #
+    ADD_DEFINITIONS(-DJXL_STATIC_DEFINE)
+    ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/kimageformats/src/imageformats/jxl.cpp)
+    TARGET_INCLUDE_DIRECTORIES(vooki_kimg_jxl BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
+    TARGET_LINK_DIRECTORIES(vooki_kimg_jxl BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
+    TARGET_LINK_LIBRARIES(vooki_kimg_jxl ${QT_UI_LIB} jxl-static.lib jxl_dec-static.lib jxl_threads-static.lib hwy.lib brotlicommon-static.lib brotlidec-static.lib brotlienc-static.lib)
+
     SET(PLUGINS "$<TARGET_FILE_DIR:${APPLICATION_NAME}>/imageformats")
     SET_TARGET_PROPERTIES(${IMAGE_PLUGINS}
             PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${PLUGINS})
