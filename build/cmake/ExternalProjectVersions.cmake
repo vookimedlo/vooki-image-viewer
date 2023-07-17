@@ -10,7 +10,6 @@ if (APPLE OR WIN32)
     ADD_EP_VERSION(libraw 0.21.1)
     ADD_EP_VERSION(brotli v1.0.9)
     ADD_EP_VERSION(highway 1.0.4)
-    ADD_EP_VERSION(libpng v1.6.40)
     ADD_EP_VERSION(libjxl v0.8.2)
 endif()
 
