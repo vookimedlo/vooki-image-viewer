@@ -110,16 +110,6 @@ ExternalProject_Add(
 )
 
 ExternalProject_Add(
-        ext_libpng
-        GIT_REPOSITORY https://github.com/glennrp/libpng.git
-        GIT_TAG ${EXT_LIBPNG_VERSION}
-        GIT_SHALLOW true
-        LIST_SEPARATOR |
-        CMAKE_ARGS -DCMAKE_PREFIX_PATH=${3RD_PARTY_LIBS_INSTALL} -DCMAKE_OSX_ARCHITECTURES:STRING=x86_64|arm64 -DCMAKE_INSTALL_PREFIX=${3RD_PARTY_LIBS_INSTALL} -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DBUILD_SHARED_LIBS=OFF -DPNG_SHARED=OFF -DPNG_EXECUTABLES=OFF -DPNG_FRAMEWORK=OFF -DPNG_TESTS=OFF -DPNG_DEBUG=OFF
-        UPDATE_COMMAND ""
-)
-
-ExternalProject_Add(
         ext_highway
         GIT_REPOSITORY https://github.com/google/highway.git
         GIT_TAG ${EXT_HIGHWAY_VERSION}
