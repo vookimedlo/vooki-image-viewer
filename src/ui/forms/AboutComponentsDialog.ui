@@ -36,12 +36,22 @@
        </property>
        <item>
         <property name="text">
+         <string>brotli</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>Exiv2</string>
         </property>
        </item>
        <item>
         <property name="text">
          <string>Expat</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>highway</string>
         </property>
        </item>
        <item>
@@ -67,6 +77,11 @@
        <item>
         <property name="text">
          <string>libheif</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>libjlx</string>
         </property>
        </item>
        <item>

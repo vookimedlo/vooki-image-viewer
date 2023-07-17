@@ -59,5 +59,8 @@
         <file alias="aboutkdmactouchbar">text/aboutKDMacTouchBar.md</file>
         <file alias="aboutzlib">text/aboutzlib.md</file>
         <file alias="aboutqcoro">text/aboutqcoro.md</file>
+        <file alias="aboutbrotli">text/aboutbrotli.md</file>
+        <file alias="abouthighway">text/abouthighway.md</file>
+        <file alias="aboutlibjxl">text/aboutlibjxl.md</file>
     </qresource>
 </RCC>

@@ -32,42 +32,51 @@ void AboutComponentsDialog::onSelectedComponentChanged(const int row)
     switch (row)
     {
         case 0:
-            showResourceMarkdown("qrc:/text/aboutexiv2");
+            showResourceMarkdown("qrc:/text/aboutbrotli");
             break;
         case 1:
-            showResourceMarkdown("qrc:/text/aboutexpat");
+            showResourceMarkdown("qrc:/text/aboutexiv2");
             break;
         case 2:
-            showResourceMarkdown("qrc:/text/abouticon54");
+            showResourceMarkdown("qrc:/text/aboutexpat");
             break;
         case 3:
-            showResourceMarkdown("qrc:/text/aboutkimageformats");
+            showResourceMarkdown("qrc:/text/abouthighway");
             break;
         case 4:
-            showResourceMarkdown("qrc:/text/aboutkdmactouchbar");
+            showResourceMarkdown("qrc:/text/abouticon54");
             break;
         case 5:
-            showResourceMarkdown("qrc:/text/aboutlibde265");
+            showResourceMarkdown("qrc:/text/aboutkimageformats");
             break;
         case 6:
-            showResourceMarkdown("qrc:/text/aboutlibheif");
+            showResourceMarkdown("qrc:/text/aboutkdmactouchbar");
             break;
         case 7:
-            showResourceMarkdown("qrc:/text/aboutlibjpegturbo");
+            showResourceMarkdown("qrc:/text/aboutlibde265");
             break;
         case 8:
-            showResourceMarkdown("qrc:/text/aboutlibraw");
+            showResourceMarkdown("qrc:/text/aboutlibheif");
             break;
         case 9:
-            showResourceMarkdown("qrc:/text/aboutopenclipart");
+            showResourceMarkdown("qrc:/text/aboutlibjxl");
             break;
         case 10:
-            showResourceMarkdown("qrc:/text/aboutqcoro");
+            showResourceMarkdown("qrc:/text/aboutlibjpegturbo");
             break;
         case 11:
-            showResourceMarkdown("qrc:/text/aboutqt");
+            showResourceMarkdown("qrc:/text/aboutlibraw");
             break;
         case 12:
+            showResourceMarkdown("qrc:/text/aboutopenclipart");
+            break;
+        case 13:
+            showResourceMarkdown("qrc:/text/aboutqcoro");
+            break;
+        case 14:
+            showResourceMarkdown("qrc:/text/aboutqt");
+            break;
+        case 15:
             showResourceMarkdown("qrc:/text/aboutzlib");
             break;
         default:
