@@ -89,7 +89,7 @@ foreach(GENERATOR IN LISTS CPACK_GENERATOR)
         SET(CPACK_RPM_PACKAGE_REQUIRES_POST "qt6-qtimageformats")
         SET(CPACK_RPM_SPEC_MORE_DEFINE "%global __provides_exclude_from /%{name}/imageformats/.*\\\\.so.*$")
 
-        SET(CPACK_RPM_BUILDREQUIRES "LibRaw-devel, cmake, git, make, qt6-qtbase, qt6-qtbase-devel, desktop-file-utils")
+        SET(CPACK_RPM_BUILDREQUIRES "libjxl-devel, LibRaw-devel, cmake, git, make, qt6-qtbase, qt6-qtbase-devel, desktop-file-utils")
         SET(CPACK_RPM_PACKAGE_SOURCES OFF)
 
         CONFIGURE_FILE(${TOP_LEVEL_ABSOLUTE_PATH}/build/cmake/platform/unix/support/package/rpm/changelog/git2changelog/scripts/git2changelog "${CMAKE_BINARY_DIR}/" COPYONLY)
