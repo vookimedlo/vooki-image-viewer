@@ -354,6 +354,10 @@ ADD_IMAGE_PLUGIN(vooki_kimg_pic ../../components/kimageformats/src/imageformats/
 #
 ADD_IMAGE_PLUGIN(vooki_kimg_rgb ../../components/kimageformats/src/imageformats/rgb.cpp)
 
+# QOI images (qoi)
+#
+ADD_IMAGE_PLUGIN(vooki_kimg_qoi ../../components/kimageformats/src/imageformats/qoi.cpp)
+
 # Camera RAW Thumbnails (raf, mos, cr2, erf, dng, mrw, nef, orf, rw2, pef, x3f, srw, x3f, arw)
 # Prebuilt library for the MacOS/Windows only, Linux uses a distro package
 #
