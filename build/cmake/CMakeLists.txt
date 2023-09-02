@@ -101,6 +101,7 @@ SET(USE_QT_LIBRARIES
         Concurrent
         Core
         Gui
+        Test
         Widgets)
 
 FIND_PACKAGE(Qt6 REQUIRED COMPONENTS ${USE_QT_LIBRARIES} LinguistTools)
@@ -114,6 +115,10 @@ if (Qt6_FOUND)
             Qt6::Core
             Qt6::Gui
             Qt6::Widgets)
+
+    SET(QT_ALL_TEST_LIBS
+            Qt6::Test
+            ${USE_QT_LIBRARIES})
 
     macro(QT_RESOURCES FIRST SECOND)
         QT6_ADD_RESOURCES(${FIRST} ${SECOND})
@@ -165,6 +170,24 @@ SET(UIS
         )
 
 QT_WRAP_UIS()
+
+qt_add_executable(tests
+        ../../src/processing/transformation/test/ImageRotationTest.cpp
+)
+
+set_target_properties(tests PROPERTIES
+        WIN32_EXECUTABLE TRUE
+        MACOSX_BUNDLE TRUE
+)
+
+target_link_libraries(tests PRIVATE
+        Qt6::Core
+        Qt6::Gui
+        Qt6::Test
+        Qt6::Widgets
+)
+
+
 
 # Satisfy new Policy CMP0071
 #
