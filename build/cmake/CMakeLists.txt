@@ -465,3 +465,8 @@ ADD_TESTS(tests_transformation
         ../../src/processing/transformation/test/ImageFlipTest.cpp
         ../../src/processing/transformation/test/ImageRotationTest.cpp
 )
+
+ADD_TESTS(tests_util
+        ../../src/util/test/main.cpp
+        ../../src/util/test/RotatingIndexTest.cpp
+)

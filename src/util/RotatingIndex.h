@@ -15,8 +15,8 @@ template<typename T> requires std::is_integral_v<T>
 class RotatingIndex
 {
 public:
-    constexpr explicit RotatingIndex(T initialValue = 0) :
-                                            RotatingIndex {0, initialValue + 1}
+    constexpr explicit RotatingIndex(T maxValuePlus1 = 1) :
+                                            RotatingIndex {0, maxValuePlus1}
     {
     }
 
