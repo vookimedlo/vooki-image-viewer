@@ -169,9 +169,11 @@ SET(UIS
         ../../src/ui/forms/SettingsDialog.ui
         )
 
-QT_WRAP_UIS()
+
 
 qt_add_executable(tests
+        ../../src/processing/transformation/test/main.cpp
+        ../../src/processing/transformation/test/ImageFlipTest.cpp
         ../../src/processing/transformation/test/ImageRotationTest.cpp
 )
 
@@ -187,6 +189,7 @@ target_link_libraries(tests PRIVATE
         Qt6::Widgets
 )
 
+QT_WRAP_UIS()
 
 
 # Satisfy new Policy CMP0071
