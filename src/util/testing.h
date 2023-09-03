@@ -8,17 +8,15 @@ VookiImageViewer - a tool for showing images.
 
 ****************************************************************************/
 
-#include "ImageFlipTest.h"
-#include "ImageRotationTest.h"
-#include "../../../util/testing.h"
+#include <QTest>
 
-
-int main(int argc, char *argv[])
+template <typename TestClass>
+void runTests(int argc, char* argv[], int* status)
 {
-    int status = 0;
-
-    runTests<ImageRotationTest>(argc, argv, &status);
-    runTests<ImageFlipTest>(argc, argv, &status);
-
-    return status;
+    ::QTest::Internal::callInitMain<TestClass>();
+    QApplication app(argc, argv);
+    app.setAttribute(Qt::AA_Use96Dpi, true);
+    QTEST_DISABLE_KEYPAD_NAVIGATION TestClass tc;
+    QTEST_SET_MAIN_SOURCE_PATH
+    *status |= QTest::qExec(&tc, argc, argv);
 }
