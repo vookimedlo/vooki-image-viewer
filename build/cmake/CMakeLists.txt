@@ -118,7 +118,7 @@ if (Qt6_FOUND)
 
     SET(QT_ALL_TEST_LIBS
             Qt6::Test
-            ${USE_QT_LIBRARIES})
+            ${QT_ALL_LIBS})
 
     macro(QT_RESOURCES FIRST SECOND)
         QT6_ADD_RESOURCES(${FIRST} ${SECOND})
@@ -169,28 +169,7 @@ SET(UIS
         ../../src/ui/forms/SettingsDialog.ui
         )
 
-
-
-qt_add_executable(tests
-        ../../src/processing/transformation/test/main.cpp
-        ../../src/processing/transformation/test/ImageFlipTest.cpp
-        ../../src/processing/transformation/test/ImageRotationTest.cpp
-)
-
-set_target_properties(tests PROPERTIES
-        WIN32_EXECUTABLE TRUE
-        MACOSX_BUNDLE TRUE
-)
-
-target_link_libraries(tests PRIVATE
-        Qt6::Core
-        Qt6::Gui
-        Qt6::Test
-        Qt6::Widgets
-)
-
 QT_WRAP_UIS()
-
 
 # Satisfy new Policy CMP0071
 #
@@ -469,3 +448,20 @@ else ()
 
     INCLUDE(platform/unix/CPack.cmake)
 endif ()
+
+#### TESTS ####
+#
+function(ADD_TESTS name source)
+    QT_ADD_EXECUTABLE(${name} ${source} ${ARGN})
+    SET_TARGET_PROPERTIES(${name} PROPERTIES
+            WIN32_EXECUTABLE TRUE
+            MACOSX_BUNDLE TRUE
+    )
+    TARGET_LINK_LIBRARIES(${name} PRIVATE ${QT_ALL_TEST_LIBS})
+endfunction()
+
+ADD_TESTS(tests_transformation
+        ../../src/processing/transformation/test/main.cpp
+        ../../src/processing/transformation/test/ImageFlipTest.cpp
+        ../../src/processing/transformation/test/ImageRotationTest.cpp
+)
