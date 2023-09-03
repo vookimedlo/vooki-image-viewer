@@ -77,13 +77,21 @@ bool ImageFlip<T>::isFlippedVertically() const
 template<typename T> requires std::is_same_v<QTransform, T>
 void ImageFlip<T>::setFlipHorizontally(bool flipHorizontally)
 {
-    m_flipHorizontally = flipHorizontally;
+    if (m_flipHorizontally != flipHorizontally)
+    {
+        m_flipHorizontally = flipHorizontally;
+        ImageTransformationBase<T>::invalidateCache();
+    }
 }
 
 template<typename T> requires std::is_same_v<QTransform, T>
 void ImageFlip<T>::setFlipVertically(bool flipVertically)
 {
-    m_flipVertically = flipVertically;
+    if (m_flipVertically != flipVertically)
+    {
+        m_flipVertically = flipVertically;
+        ImageTransformationBase<T>::invalidateCache();
+    }
 }
 
 template<typename T> requires std::is_same_v<QTransform, T>
