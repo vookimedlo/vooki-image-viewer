@@ -483,4 +483,5 @@ ADD_TESTS(tests_transformation
 ADD_TESTS(tests_util
         ../../src/util/test/main.cpp
         ../../src/util/test/RotatingIndexTest.cpp
+        ../../src/util/test/EnumClassArrayTest.cpp
 )
