@@ -13,12 +13,12 @@ VookiImageViewer - a tool for showing images.
 #include "RotatingIndexTest.h"
 #include "../RotatingIndex.h"
 
-void RotatingIndexTest::postDecrement4x()
+void RotatingIndexTest::postDecrement4x() const
 {
-    constexpr int maxValuePlus1 = 4;
-    constexpr int initialValue = 0;
+    constexpr unsigned char maxValuePlus1 = 4;
+    constexpr unsigned char initialValue = 0;
 
-    RotatingIndex<int> index(initialValue, maxValuePlus1);
+    RotatingIndex<unsigned char> index(initialValue, maxValuePlus1);
     const int indexBefore = index;
     QCOMPARE(indexBefore, initialValue);
 
@@ -35,12 +35,12 @@ void RotatingIndexTest::postDecrement4x()
     }
 }
 
-void RotatingIndexTest::preDecrement4x()
+void RotatingIndexTest::preDecrement4x() const
 {
-    constexpr int maxValuePlus1 = 4;
-    constexpr int initialValue = 0;
+    constexpr unsigned char maxValuePlus1 = 4;
+    constexpr unsigned char initialValue = 0;
 
-    RotatingIndex<int> index(initialValue, maxValuePlus1);
+    RotatingIndex<unsigned char> index(initialValue, maxValuePlus1);
     const int indexBefore = index;
     QCOMPARE(indexBefore, initialValue);
 
@@ -57,11 +57,11 @@ void RotatingIndexTest::preDecrement4x()
     }
 }
 
-void RotatingIndexTest::postIncrement4x()
+void RotatingIndexTest::postIncrement4x() const
 {
-    constexpr int initialValue = 0;
-    constexpr int maxValuePlus1 = 4;
-    RotatingIndex<int> index(initialValue, maxValuePlus1);
+    constexpr unsigned char initialValue = 0;
+    constexpr unsigned char maxValuePlus1 = 4;
+    RotatingIndex<unsigned char> index(initialValue, maxValuePlus1);
     const int indexBefore = index;
     QCOMPARE(indexBefore, initialValue);
 
@@ -78,11 +78,11 @@ void RotatingIndexTest::postIncrement4x()
     QCOMPARE(index, initialValue);
 }
 
-void RotatingIndexTest::preIncrement4x()
+void RotatingIndexTest::preIncrement4x() const
 {
-    constexpr int initialValue = 0;
-    constexpr int maxValuePlus1 = 4;
-    RotatingIndex<int> index(initialValue, maxValuePlus1);
+    constexpr unsigned char initialValue = 0;
+    constexpr unsigned char maxValuePlus1 = 4;
+    RotatingIndex<unsigned char> index(initialValue, maxValuePlus1);
     const int indexBefore = index;
     QCOMPARE(indexBefore, initialValue);
 
@@ -97,4 +97,40 @@ void RotatingIndexTest::preIncrement4x()
     const int indexAfter = ++index;
     QCOMPARE(indexAfter, initialValue);
     QCOMPARE(index, initialValue);
+}
+
+void RotatingIndexTest::reset() const
+{
+    constexpr unsigned char maxValuePlus1 = 4;
+    constexpr unsigned char initialValue = 2;
+
+    RotatingIndex<unsigned char> index(initialValue, maxValuePlus1);
+    const int indexBefore = index;
+    QCOMPARE(indexBefore, initialValue);
+
+    bool isSuccessful = index.reset(maxValuePlus1);
+    QCOMPARE(isSuccessful, false);
+    QCOMPARE(index, initialValue);
+
+    isSuccessful = index.reset(maxValuePlus1 - 1);
+    QCOMPARE(isSuccessful, true);
+    QCOMPARE(index, maxValuePlus1 - 1);
+}
+
+void RotatingIndexTest::set() const
+{
+    constexpr unsigned char maxValuePlus1 = 4;
+    constexpr unsigned char initialValue = 2;
+
+    RotatingIndex<unsigned char> index(initialValue, maxValuePlus1);
+    const int indexBefore = index;
+    QCOMPARE(indexBefore, initialValue);
+
+    bool isSuccessful = index.set(maxValuePlus1, maxValuePlus1 - 1);
+    QCOMPARE(isSuccessful, false);
+    QCOMPARE(index, initialValue);
+
+    isSuccessful = index.set(maxValuePlus1, maxValuePlus1 + 1);
+    QCOMPARE(isSuccessful, true);
+    QCOMPARE(index, maxValuePlus1);
 }

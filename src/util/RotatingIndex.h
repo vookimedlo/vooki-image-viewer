@@ -11,7 +11,7 @@ VookiImageViewer - a tool for showing images.
 
 #include <type_traits>
 
-template<typename T> requires std::is_integral_v<T>
+template<typename T = unsigned> requires std::is_integral_v<T> && std::is_unsigned_v<T>
 class RotatingIndex
 {
 public:

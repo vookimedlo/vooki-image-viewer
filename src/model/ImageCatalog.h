@@ -31,11 +31,11 @@ public:
     [[nodiscard]] QString getPrevious();
 
 protected:
-    [[nodiscard]] QString getCatalogItem(const RotatingIndex<qsizetype> &catalogIndex) const;
+    [[nodiscard]] QString getCatalogItem(const RotatingIndex<QIntegerForSizeof<std::size_t>::Unsigned> &catalogIndex) const;
 
 private:
     QString m_absoluteDir;
     QStringList m_catalog;
-    RotatingIndex<qsizetype> m_catalogIndex;
+    RotatingIndex<QIntegerForSizeof<std::size_t>::Unsigned> m_catalogIndex;
     QStringList m_filter;
 };

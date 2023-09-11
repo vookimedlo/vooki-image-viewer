@@ -29,7 +29,7 @@ public:
     int nextImageDelay() const;
 
 private:
-    RotatingIndex<int> m_animationIndex {0, 1};
+    RotatingIndex<> m_animationIndex {0, 1};
     QImage m_originalImage {};
     QImageReader m_reader {};
 
