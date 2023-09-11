@@ -8,19 +8,13 @@ VookiImageViewer - a tool for showing images.
 
 ****************************************************************************/
 
-#include "MiscTest.h"
-#include "EnumClassArrayTest.h"
-#include "RotatingIndexTest.h"
-#include "../testing.h"
+#include <QTest>
 
-
-int main(int argc, char *argv[])
+class MiscTest: public QObject
 {
-    int status = 0;
+    Q_OBJECT
 
-    runTests<RotatingIndexTest>(argc, argv, &status);
-    runTests<EnumClassArrayTest>(argc, argv, &status);
-    runTests<MiscTest>(argc, argv, &status);
+private slots:
+    void convertFormatsToFilters() const;
 
-    return status;
-}
+};
