@@ -15,9 +15,10 @@ class RotatingIndexTest: public QObject
     Q_OBJECT
 
 private slots:
-    void postDecrement4x();
-    void preDecrement4x();
-
-    void postIncrement4x();
-    void preIncrement4x();
+    void postDecrement4x() const;
+    void preDecrement4x() const;
+    void postIncrement4x() const;
+    void preIncrement4x() const;
+    void reset() const;
+    void set() const;
 };

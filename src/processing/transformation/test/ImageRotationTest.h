@@ -15,9 +15,9 @@ class ImageRotationTest: public QObject
     Q_OBJECT
 
 private slots:
-    void rotateLeft4x();
-    void rotateRight4x();
-    void rotateLeftRight();
-    void rotateRightLeft();
-    void resetProperties();
+    void rotateLeft4x() const;
+    void rotateRight4x() const;
+    void rotateLeftRight() const;
+    void rotateRightLeft() const;
+    void resetProperties() const;
 };

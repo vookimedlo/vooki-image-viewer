@@ -13,7 +13,7 @@ VookiImageViewer - a tool for showing images.
 #include "ImageRotationTest.h"
 #include "../ImageRotation.h"
 
-void ImageRotationTest::rotateLeft4x()
+void ImageRotationTest::rotateLeft4x() const
 {
     ImageRotation<QTransform> m_imageRotation {};
     auto transformBefore =  m_imageRotation.transform().value<QTransform>();
@@ -27,7 +27,7 @@ void ImageRotationTest::rotateLeft4x()
     }
 }
 
-void ImageRotationTest::rotateRight4x()
+void ImageRotationTest::rotateRight4x() const
 {
     ImageRotation<QTransform> m_imageRotation {};
     auto transformBefore =  m_imageRotation.transform().value<QTransform>();
@@ -41,7 +41,7 @@ void ImageRotationTest::rotateRight4x()
     }
 }
 
-void ImageRotationTest::rotateLeftRight()
+void ImageRotationTest::rotateLeftRight() const
 {
     ImageRotation<QTransform> m_imageRotation {};
     const auto transformBefore =  m_imageRotation.transform().value<QTransform>();
@@ -55,7 +55,7 @@ void ImageRotationTest::rotateLeftRight()
     QCOMPARE(transformAfter, transformBefore);
 }
 
-void ImageRotationTest::rotateRightLeft()
+void ImageRotationTest::rotateRightLeft() const
 {
     ImageRotation<QTransform> m_imageRotation {};
     const auto transformBefore =  m_imageRotation.transform().value<QTransform>();
@@ -69,7 +69,7 @@ void ImageRotationTest::rotateRightLeft()
     QCOMPARE(transformAfter, transformBefore);
 }
 
-void ImageRotationTest::resetProperties()
+void ImageRotationTest::resetProperties() const
 {
     ImageRotation<QTransform> m_imageRotation {};
     const auto transformBefore =  m_imageRotation.transform().value<QTransform>();

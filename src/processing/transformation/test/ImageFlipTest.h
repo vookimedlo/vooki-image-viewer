@@ -15,11 +15,11 @@ class ImageFlipTest: public QObject
     Q_OBJECT
 
 private slots:
-    void flipHorizontally2x();
-    void flipVertically2x();
-    void setFlipHorizontallyTrueFalse();
-    void setFlipVerticallyTrueFalse();
-    void setFlipHorizontallyFalse();
-    void setFlipVerticallyFalse();
-    void resetProperties();
+    void flipHorizontally2x() const;
+    void flipVertically2x() const;
+    void setFlipHorizontallyTrueFalse() const;
+    void setFlipVerticallyTrueFalse() const;
+    void setFlipHorizontallyFalse() const;
+    void setFlipVerticallyFalse() const;
+    void resetProperties() const;
 };

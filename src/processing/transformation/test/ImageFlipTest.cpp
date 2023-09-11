@@ -14,7 +14,7 @@ VookiImageViewer - a tool for showing images.
 #include "ImageFlipTest.h"
 #include "../ImageFlip.h"
 
-void ImageFlipTest::flipHorizontally2x()
+void ImageFlipTest::flipHorizontally2x() const
 {
     ImageFlip<QTransform> m_imageFlip{};
     auto transformBefore = m_imageFlip.transform().value<QTransform>();
@@ -32,7 +32,7 @@ void ImageFlipTest::flipHorizontally2x()
     }
 }
 
-void ImageFlipTest::flipVertically2x()
+void ImageFlipTest::flipVertically2x() const
 {
     ImageFlip<QTransform> m_imageFlip{};
     auto transformBefore = m_imageFlip.transform().value<QTransform>();
@@ -50,7 +50,7 @@ void ImageFlipTest::flipVertically2x()
     }
 }
 
-void ImageFlipTest::setFlipHorizontallyTrueFalse()
+void ImageFlipTest::setFlipHorizontallyTrueFalse() const
 {
     ImageFlip<QTransform> m_imageFlip{};
     auto transformBefore = m_imageFlip.transform().value<QTransform>();
@@ -69,7 +69,7 @@ void ImageFlipTest::setFlipHorizontallyTrueFalse()
     }
 }
 
-void ImageFlipTest::setFlipVerticallyTrueFalse()
+void ImageFlipTest::setFlipVerticallyTrueFalse() const
 {
     ImageFlip<QTransform> m_imageFlip{};
     auto transformBefore = m_imageFlip.transform().value<QTransform>();
@@ -88,7 +88,7 @@ void ImageFlipTest::setFlipVerticallyTrueFalse()
     }
 }
 
-void ImageFlipTest::setFlipHorizontallyFalse()
+void ImageFlipTest::setFlipHorizontallyFalse() const
 {
     ImageFlip<QTransform> m_imageFlip{};
     auto transformBefore = m_imageFlip.transform().value<QTransform>();
@@ -103,7 +103,7 @@ void ImageFlipTest::setFlipHorizontallyFalse()
     QCOMPARE(transformAfter, transformBefore);
 }
 
-void ImageFlipTest::setFlipVerticallyFalse()
+void ImageFlipTest::setFlipVerticallyFalse() const
 {
     ImageFlip<QTransform> m_imageFlip{};
     auto transformBefore = m_imageFlip.transform().value<QTransform>();
@@ -118,7 +118,7 @@ void ImageFlipTest::setFlipVerticallyFalse()
     QCOMPARE(transformAfter, transformBefore);
 }
 
-void ImageFlipTest::resetProperties()
+void ImageFlipTest::resetProperties() const
 {
     ImageFlip<QTransform> m_imageFlip{};
     const auto transformBefore = m_imageFlip.transform().value<QTransform>();

@@ -60,7 +60,7 @@ QString ImageCatalog::getPrevious()
     return getCatalogItem(--m_catalogIndex);
 }
 
-QString ImageCatalog::getCatalogItem(const RotatingIndex<qsizetype> &catalogIndex) const
+QString ImageCatalog::getCatalogItem(const RotatingIndex<QIntegerForSizeof<std::size_t>::Unsigned> &catalogIndex) const
 {
     if (m_catalog.isEmpty())
         return {};
