@@ -8,6 +8,7 @@ VookiImageViewer - a tool for showing images.
 
 ****************************************************************************/
 
+#include "ByteSizeTest.h"
 #include "MiscTest.h"
 #include "EnumClassArrayTest.h"
 #include "RotatingIndexTest.h"
@@ -21,6 +22,7 @@ int main(int argc, char *argv[])
     runTests<RotatingIndexTest>(argc, argv, &status);
     runTests<EnumClassArrayTest>(argc, argv, &status);
     runTests<MiscTest>(argc, argv, &status);
+    runTests<ByteSizeTest>(argc, argv, &status);
 
     return status;
 }
