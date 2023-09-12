@@ -5,61 +5,73 @@ on:
     types: [opened, synchronize, reopened]
   workflow_dispatch:
 
-env:
-  QT_VERSION:              "6.5.2"
-  MINGW_VERSION:           "win64_msvc2019_64"
-  BUILD_TYPE:              Release
-
 permissions:
   pull-requests: read # allows SonarCloud to decorate PRs with analysis results
 
 jobs:
   Analysis:
-    runs-on: windows-latest
+    runs-on: macos-13
     env:
-      BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory # Directory where build-wrapper output will be placed
+      BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0
           submodules: true
-      - name: install qt
-        uses: jurplel/install-qt-action@v3
-        with:
-          aqtversion: '==2.1.*'
-          host: 'windows'
-          target: 'desktop'
-          modules: 'qtimageformats'
-          version: ${{ env.QT_VERSION }}
-          arch: ${{ env.MINGW_VERSION }}
-          dir: "${{github.workspace}}/qt"
-          install-deps: "true"
 
-      - name: build 3rd-party sources [configuration]
-        env:
-          CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}
+      - name: Brewing ...
         run: |
-          "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-          cmake -DBUILD_DEPENDENCIES=ON -A x64 -G "Visual Studio 17 2022" -Bbuild_sonar ${{github.workspace}} -Wno-dev
-
-      - name: build 3rd-party sources
-        run: |
-          cmake --build build_sonar --config ${{env.BUILD_TYPE}}
+          brew update
+          brew upgrade || true
+          brew link --overwrite python
+          brew install pkg-config m4 libtool automake autoconf
+          brew install coreutils
+          brew install qt
+          brew link --force qt
 
       - name: Install sonar-scanner and build-wrapper
         uses: SonarSource/sonarcloud-github-c-cpp@v2
 
-      - name: Run build-wrapper
-        env:
-          CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}
+      - name: Build 3rd-party sources
         run: |
-          "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-          cmake -DBUILD_DEPENDENCIES=OFF -A x64 -G "Visual Studio 17 2022" -Bbuild_sonar -Wno-dev -DINSTALL_SYSTEM_RUNTIME=1
-          build-wrapper-win-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build_sonar --config ${{env.BUILD_TYPE}}
+          cmake -DCMAKE_BUILD_TYPE=Release -DAPPLE_FAT_ARCH=OFF -DBUILD_DEPENDENCIES=ON -H. -Bbuild_sonar ${{github.workspace}}
+          cmake --build build_sonar
+          cd build_sonar
+          gls -Q | grep -v EPs | xargs rm -rf
+          cd ..
+
+      - name:  Run build-wrapper
+        run: |
+          cmake -DCMAKE_BUILD_TYPE=Release -DAPPLE_FAT_ARCH=OFF -H. -Bbuild_sonar ${{github.workspace}}
+          build-wrapper-macosx-x86 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build_sonar
+          find build_sonar -type f
+
+      - name:  Run tests
+        run: |
+          test_execs=($(find . -type f -name "tests_*" | grep '\.app/Contents/MacOS/tests_'))
+          echo "^^ ${test_execs[@]} ^^"
+          i=0
+          for test_exec in ${test_execs[@]}
+          do
+            i=$((i+1))
+            chmod 755 $test_exec
+            LLVM_PROFILE_FILE="$i.profraw" $test_exec
+          done
+
+          xcrun llvm-profdata merge -sparse *.profraw -o voo_tests.profdata
+
+          cov_arguments=""
+          for test_exec in ${test_execs[@]}
+          do
+            cov_arguments="$cov_arguments -object $test_exec"
+          done
+
+          xcrun llvm-cov show --show-branches=count -instr-profile=voo_tests.profdata $cov_arguments > coverage.txt
 
       - name: Analyze with SonarCloud
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          sonar-scanner --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
+          sonar-scanner --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}" \
+          --define sonar.cfamily.llvm-cov.reportPath=coverage.txt
