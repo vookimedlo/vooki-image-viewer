@@ -185,7 +185,7 @@ QT_RESOURCES(UI_RESOURCES ../../src/resource/vookiimageviewer.qrc)
 ADD_LIBRARY(exiv2wrapper STATIC ../../src/processing/Exiv2ImageAutoPtrWrapper.cpp)
 SET_TARGET_PROPERTIES(exiv2wrapper PROPERTIES CXX_STANDARD 11)
 TARGET_COMPILE_OPTIONS(exiv2wrapper PRIVATE
-        "$<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>:-Wno-deprecated>")
+        "$<$<OR:$<CXX_COMPILER_ID:AppleClang,Clang>,$<CXX_COMPILER_ID:GNU>>:-Wno-deprecated>")
 GET_TARGET_PROPERTY(exiv2_headers exiv2lib INTERFACE_INCLUDE_DIRECTORIES)
 TARGET_INCLUDE_DIRECTORIES(exiv2wrapper PRIVATE ${exiv2_headers})
 
@@ -457,6 +457,20 @@ function(ADD_TESTS name source)
             WIN32_EXECUTABLE TRUE
             MACOSX_BUNDLE TRUE
     )
+
+    SET(COMPILING_TESTS_WITH_CLANG -fprofile-instr-generate -fcoverage-mapping)
+    SET(LINKING_TESTS_WITH_CLANG ${COMPILING_TESTS_WITH_CLANG})
+    SET(COMPILING_TESTS_WITH_GNU -fprofile-arcs -ftest-coverage)
+    SET(LINKING_TESTS_WITH_GNU -lgcov --coverage)
+
+    TARGET_COMPILE_OPTIONS(${name} PRIVATE
+            "$<$<CXX_COMPILER_ID:AppleClang,Clang>:${COMPILING_TESTS_WITH_CLANG}>"
+            "$<$<CXX_COMPILER_ID:GNU>:${COMPILING_TESTS_WITH_GNU}>")
+
+    TARGET_LINK_OPTIONS(${name} PRIVATE
+            "$<$<CXX_COMPILER_ID:AppleClang,Clang>:${LINKING_TESTS_WITH_CLANG}>"
+            "$<$<CXX_COMPILER_ID:GNU>:${LINKING_TESTS_WITH_GNU}>")
+
     TARGET_LINK_LIBRARIES(${name} PRIVATE ${QT_ALL_TEST_LIBS})
 endfunction()
 
