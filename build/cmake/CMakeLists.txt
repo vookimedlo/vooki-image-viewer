@@ -486,4 +486,6 @@ ADD_TESTS(tests_util
         ../../src/util/test/EnumClassArrayTest.cpp
         ../../src/util/test/MiscTest.cpp
         ../../src/util/misc.cpp
+        ../../src/util/test/ByteSizeTest.cpp
+        ../../src/util/ByteSize.cpp
 )
