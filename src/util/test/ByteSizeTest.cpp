@@ -26,7 +26,7 @@ void ByteSizeTest::humanReadableSize() const
 
     for (unsigned int i = 0; i < sizeUnits.size(); ++i)
     {
-        ByteSize byteSize(1llu << i * 10);
+        ByteSize byteSize(1LLU << i * 10);
         const auto [size, unit] = byteSize.humanReadableSize();
         QCOMPARE(size, 1);
         QCOMPARE(unit, sizeUnits[i]);
