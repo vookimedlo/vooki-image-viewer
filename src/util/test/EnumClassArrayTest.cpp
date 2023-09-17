@@ -32,6 +32,7 @@ void EnumClassArrayTest::constructionAndRetrival() const
 
     QString one = units[Index::one];
     QCOMPARE(one_p, one);
-    const QString &two = units[Index::two];
+
+    const QString two(units[Index::two]);
     QCOMPARE(two_p, two);
 }

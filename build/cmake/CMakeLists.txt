@@ -488,4 +488,5 @@ ADD_TESTS(tests_util
         ../../src/util/misc.cpp
         ../../src/util/test/ByteSizeTest.cpp
         ../../src/util/ByteSize.cpp
+        ../../src/util/test/ArrayTest.cpp
 )
