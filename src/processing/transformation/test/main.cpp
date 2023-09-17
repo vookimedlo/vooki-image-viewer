@@ -10,6 +10,7 @@ VookiImageViewer - a tool for showing images.
 
 #include "ImageFlipTest.h"
 #include "ImageRotationTest.h"
+#include "ImageTransformationBaseTest.h"
 #include "../../../util/testing.h"
 
 
@@ -17,6 +18,7 @@ int main(int argc, char *argv[])
 {
     int status = 0;
 
+    runTests<ImageTransformationBaseTest>(argc, argv, &status);
     runTests<ImageRotationTest>(argc, argv, &status);
     runTests<ImageFlipTest>(argc, argv, &status);
 

@@ -10,15 +10,18 @@ VookiImageViewer - a tool for showing images.
 
 #include <QTest>
 
-class ImageRotationTest: public QObject
+
+class ImageTransformationBaseTest: public QObject
 {
     Q_OBJECT
 
 private slots:
-    void rotateLeft4x() const;
-    void rotateRight4x() const;
-    void rotateLeftRight() const;
-    void rotateRightLeft() const;
-    void transform2x() const;
-    void resetProperties() const;
+    void setCachedObjectTransform() const;
+    void setCachedObjectImage() const;
+
+    void invalidateCacheTransform() const;
+    void invalidateCacheImage() const;
+
+    void bindTransform() const;
+    void bindImage() const;
 };
