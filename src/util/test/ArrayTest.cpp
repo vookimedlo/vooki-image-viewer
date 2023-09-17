@@ -13,7 +13,10 @@ VookiImageViewer - a tool for showing images.
 
 void ArrayTest::constructArray() const
 {
-    ArrayTest testingObject1, testingObject2, testingObject3, testingObject4;
+    ArrayTest testingObject1;
+    ArrayTest testingObject2;
+    ArrayTest testingObject3;
+    ArrayTest testingObject4;
 
     const std::array<const ArrayTest* const, 2> firstArray { &testingObject1, &testingObject2 };
     const std::array<const ArrayTest* const, 2> secondArray { &testingObject3, &testingObject4 };

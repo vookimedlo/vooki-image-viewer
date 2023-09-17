@@ -113,9 +113,7 @@ void ImageProcessor::rotateRight()
 
 void ImageProcessor::resetTransformation() const
 {
-    std::for_each(
-      m_genericTransformations.cbegin(), m_genericTransformations.cend(),
-                  [](auto const transformation){transformation->resetProperties();});
+    std::ranges::for_each( m_genericTransformations, [](auto const transformation){transformation->resetProperties();});
 }
 
 double ImageProcessor::getScaleFactor() const

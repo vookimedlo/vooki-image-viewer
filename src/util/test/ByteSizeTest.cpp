@@ -64,7 +64,7 @@ void ByteSizeTest::humanReadableSize() const
 
         for (unsigned int i = 0; i < arraySize; ++i)
         {
-            ByteSize byteSize((1llu << i * 10) - 1);
+            ByteSize byteSize((1LLU << i * 10) - 1);
             const auto [size, unit] = byteSize.humanReadableSize();
             QCOMPARE(size, expectedSizes_minus1[i]);
             QCOMPARE(unit, expectedUnits_minus1[i]);
@@ -90,7 +90,7 @@ void ByteSizeTest::humanReadableSize() const
 
         for (unsigned int i = 0; i < arraySize; ++i)
         {
-            ByteSize byteSize((1llu << i * 10) + 1);
+            ByteSize byteSize((1LLU << i * 10) + 1);
             const auto [size, unit] = byteSize.humanReadableSize();
             QCOMPARE(size, expectedSizes_plus1[i]);
             QCOMPARE(unit, expectedUnits_plus1[i]);
