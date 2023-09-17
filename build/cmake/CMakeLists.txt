@@ -478,6 +478,7 @@ ADD_TESTS(tests_transformation
         ../../src/processing/transformation/test/main.cpp
         ../../src/processing/transformation/test/ImageFlipTest.cpp
         ../../src/processing/transformation/test/ImageRotationTest.cpp
+        ../../src/processing/transformation/test/ImageTransformationBaseTest.cpp
 )
 
 ADD_TESTS(tests_util
@@ -488,4 +489,5 @@ ADD_TESTS(tests_util
         ../../src/util/misc.cpp
         ../../src/util/test/ByteSizeTest.cpp
         ../../src/util/ByteSize.cpp
+        ../../src/util/test/ArrayTest.cpp
 )

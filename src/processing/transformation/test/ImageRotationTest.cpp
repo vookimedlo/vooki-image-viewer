@@ -18,7 +18,7 @@ void ImageRotationTest::rotateLeft4x() const
     ImageRotation<QTransform> m_imageRotation {};
     auto transformBefore =  m_imageRotation.transform().value<QTransform>();
 
-    for (int i = 0; i < 4; ++i )
+    for (int i = 0; i < 4; ++i)
     {
         m_imageRotation.rotateLeft();
 
@@ -32,7 +32,7 @@ void ImageRotationTest::rotateRight4x() const
     ImageRotation<QTransform> m_imageRotation {};
     auto transformBefore =  m_imageRotation.transform().value<QTransform>();
 
-    for (int i = 0; i < 4; ++i )
+    for (int i = 0; i < 4; ++i)
     {
         m_imageRotation.rotateRight();
 
@@ -67,6 +67,22 @@ void ImageRotationTest::rotateRightLeft() const
 
     QCOMPARE(transformAfter.isRotating(), false);
     QCOMPARE(transformAfter, transformBefore);
+}
+
+void ImageRotationTest::transform2x() const
+{
+    ImageRotation<QTransform> m_imageRotation {};
+    auto transformBefore =  m_imageRotation.transform().value<QTransform>();
+    QCOMPARE(m_imageRotation.transform().value<QTransform>(), transformBefore);
+
+    for (int i = 0; i < 4; ++i)
+    {
+        m_imageRotation.rotateRight();
+
+        const auto transformAfter =  m_imageRotation.transform().value<QTransform>();
+        QCOMPARE(m_imageRotation.transform().value<QTransform>(), transformAfter);
+        QCOMPARE(transformAfter, transformBefore.rotate(90));
+    }
 }
 
 void ImageRotationTest::resetProperties() const

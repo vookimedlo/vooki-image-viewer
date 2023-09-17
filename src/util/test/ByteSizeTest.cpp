@@ -16,27 +16,84 @@ VookiImageViewer - a tool for showing images.
 
 void ByteSizeTest::humanReadableSize() const
 {
-    constexpr std::array<enum ByteSize::SizeUnits, 5> sizeUnits {
-        ByteSize::SizeUnits::B,
-        ByteSize::SizeUnits::kB,
-        ByteSize::SizeUnits::MB,
-        ByteSize::SizeUnits::GB,
-        ByteSize::SizeUnits::TB,
-    };
+    constexpr int arraySize = 5;
 
-    for (unsigned int i = 0; i < sizeUnits.size(); ++i)
     {
-        ByteSize byteSize(1LLU << i * 10);
-        const auto [size, unit] = byteSize.humanReadableSize();
-        QCOMPARE(size, 1);
-        QCOMPARE(unit, sizeUnits[i]);
+        constexpr std::array<enum ByteSize::SizeUnits, arraySize> sizeUnits{
+            ByteSize::SizeUnits::B,
+            ByteSize::SizeUnits::kB,
+            ByteSize::SizeUnits::MB,
+            ByteSize::SizeUnits::GB,
+            ByteSize::SizeUnits::TB,
+        };
+
+        constexpr std::array<const char *const, arraySize> units{
+            "B",
+            "kB",
+            "MB",
+            "GB",
+            "TB",
+        };
+
+        for (unsigned int i = 0; i < arraySize; ++i)
+        {
+            ByteSize byteSize(1LLU << i * 10);
+            const auto [size, unit] = byteSize.humanReadableSize();
+            QCOMPARE(size, 1);
+            QCOMPARE(unit, sizeUnits[i]);
+            QCOMPARE(byteSize.getUnit(unit), units[i]);
+        }
     }
-#if 0
-    for (unsigned int i = 0; i < sizeUnits.size(); ++i)
+
     {
-        ByteSize byteSize((1llu << i * 10)-1);
-        const auto [size, unit] = byteSize.humanReadableSize();
-        qDebug() << static_cast<int>(unit) << size << (1llu << i * 10)-1;
+        constexpr std::array<enum ByteSize::SizeUnits, arraySize> expectedUnits_minus1{
+            ByteSize::SizeUnits::B,
+            ByteSize::SizeUnits::B,
+            ByteSize::SizeUnits::kB,
+            ByteSize::SizeUnits::MB,
+            ByteSize::SizeUnits::GB,
+        };
+
+        constexpr std::array<double, arraySize> expectedSizes_minus1{
+            0,
+            1023,
+            1024,
+            1024,
+            1024,
+        };
+
+        for (unsigned int i = 0; i < arraySize; ++i)
+        {
+            ByteSize byteSize((1llu << i * 10) - 1);
+            const auto [size, unit] = byteSize.humanReadableSize();
+            QCOMPARE(size, expectedSizes_minus1[i]);
+            QCOMPARE(unit, expectedUnits_minus1[i]);
+        }
     }
-#endif
+
+    {
+        constexpr std::array<enum ByteSize::SizeUnits, arraySize> expectedUnits_plus1{
+            ByteSize::SizeUnits::B,
+            ByteSize::SizeUnits::kB,
+            ByteSize::SizeUnits::MB,
+            ByteSize::SizeUnits::GB,
+            ByteSize::SizeUnits::TB,
+        };
+
+        constexpr std::array<double, arraySize> expectedSizes_plus1{
+            2,
+            1.1,
+            1.1,
+            1.1,
+            1.1,
+        };
+
+        for (unsigned int i = 0; i < arraySize; ++i)
+        {
+            ByteSize byteSize((1llu << i * 10) + 1);
+            const auto [size, unit] = byteSize.humanReadableSize();
+            QCOMPARE(size, expectedSizes_plus1[i]);
+            QCOMPARE(unit, expectedUnits_plus1[i]);
+        }
+    }
 }
