@@ -8,7 +8,6 @@ VookiImageViewer - a tool for showing images.
 
 ****************************************************************************/
 
-#include <QTest>
 #include <QTransform>
 
 #include "ImageFlipTest.h"
