@@ -479,15 +479,16 @@ ADD_TESTS(tests_transformation
         ../../src/processing/transformation/test/ImageFlipTest.cpp
         ../../src/processing/transformation/test/ImageRotationTest.cpp
         ../../src/processing/transformation/test/ImageTransformationBaseTest.cpp
+        ../../src/processing/transformation/test/ImageBorderTest.cpp
 )
 
 ADD_TESTS(tests_util
-        ../../src/util/test/main.cpp
-        ../../src/util/test/RotatingIndexTest.cpp
-        ../../src/util/test/EnumClassArrayTest.cpp
-        ../../src/util/test/MiscTest.cpp
-        ../../src/util/misc.cpp
-        ../../src/util/test/ByteSizeTest.cpp
         ../../src/util/ByteSize.cpp
+        ../../src/util/misc.cpp
         ../../src/util/test/ArrayTest.cpp
+        ../../src/util/test/ByteSizeTest.cpp
+        ../../src/util/test/EnumClassArrayTest.cpp
+        ../../src/util/test/main.cpp
+        ../../src/util/test/MiscTest.cpp
+        ../../src/util/test/RotatingIndexTest.cpp
 )

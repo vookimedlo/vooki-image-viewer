@@ -21,16 +21,22 @@ public:
     void resetProperties() override;
     QVariant transform() override;
 
+    [[nodiscard]] const QSize &getAreaSize() const;
     void setAreaSize(const QSize &size);
+    [[nodiscard]] const QColor &getBorderColor() const;
     void setBorderColor(const QColor &color);
+    [[nodiscard]] const QColor &getBackgroundColor() const;
     void setBackgroundColor(const QColor &color);
+    [[nodiscard]] bool getDrawBorder() const;
     void setDrawBorder(bool drawBorder);
     void addImageOffsetY(int imageOffsetY);
-    int getImageOffsetY() const;
+    [[nodiscard]] int getImageOffsetY() const;
     void setImageOffsetY(int imageOffsetY);
     void addImageOffsetX(int imageOffsetX);
-    int getImageOffsetX() const;
+    [[nodiscard]] int getImageOffsetX() const;
     void setImageOffsetX(int imageOffsetX);
+
+    static const int borderWidth {3};
 
 protected:
     void checkScrollOffset(const QImage &image);
@@ -101,10 +107,22 @@ void ImageBorder<T>::setImageOffsetX(int imageOffsetX)
 }
 
 template<typename T> requires std::is_same_v<QImage, T>
+const QSize &ImageBorder<T>::getAreaSize() const
+{
+    return m_areaSize;
+}
+
+template<typename T> requires std::is_same_v<QImage, T>
 void ImageBorder<T>::setAreaSize(const QSize &size)
 {
     m_areaSize = size;
     ImageTransformationBase<T>::invalidateCache();
+}
+
+template<typename T> requires std::is_same_v<QImage, T>
+const QColor &ImageBorder<T>::getBorderColor() const
+{
+    return m_borderColor;
 }
 
 template<typename T> requires std::is_same_v<QImage, T>
@@ -115,10 +133,22 @@ void ImageBorder<T>::setBorderColor(const QColor &color)
 }
 
 template<typename T> requires std::is_same_v<QImage, T>
+const QColor &ImageBorder<T>::getBackgroundColor() const
+{
+    return m_backgroundColor;
+}
+
+template<typename T> requires std::is_same_v<QImage, T>
 void ImageBorder<T>::setBackgroundColor(const QColor &color)
 {
     m_backgroundColor = color;
     ImageTransformationBase<T>::invalidateCache();
+}
+
+template<typename T> requires std::is_same_v<QImage, T>
+bool ImageBorder<T>::getDrawBorder() const
+{
+    return m_drawBorder;
 }
 
 template<typename T> requires std::is_same_v<QImage, T>
@@ -161,7 +191,7 @@ QVariant ImageBorder<T>::transform()
         {
             painterImage.setBrush(Qt::NoBrush);
             QPen pen = painterImage.pen();
-            pen.setWidth(3);
+            pen.setWidth(ImageBorder::borderWidth);
             pen.setColor(m_borderColor);
             painterImage.setPen(pen);
             painterImage.drawRect(x - m_imageOffsetX,
