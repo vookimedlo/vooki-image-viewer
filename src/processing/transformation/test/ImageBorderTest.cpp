@@ -12,6 +12,7 @@ VookiImageViewer - a tool for showing images.
 
 #include "ImageBorderTest.h"
 #include "../ImageBorder.h"
+#include "../../../util/testing.h"
 
 void ImageBorderTest::areaSize() const
 {
