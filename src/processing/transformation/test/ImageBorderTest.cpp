@@ -113,3 +113,298 @@ void ImageBorderTest::resetProperties() const
     QCOMPARE(imageBorder.getBackgroundColor(), color);
     QCOMPARE(imageBorder.getAreaSize(), size);
 }
+
+void ImageBorderTest::checkAllPixels(const QImage &image, const QRgb color, const int x, const int y, const int xMax, const int yMax) const
+{
+    for (int i = x; i < xMax; ++i)
+        for (int j = y; j < yMax; ++j)
+            QCOMPARE(image.pixel(i, j), color);
+}
+
+void ImageBorderTest::checkBorder(const QImage &image, const QRgb borderColor, const int borderSize, const BorderPosition position, const int x, const int y, const int xMax, const int yMax) const
+{
+    switch (position)
+    {
+        case BorderPosition::TOP:
+            checkAllPixels(image, borderColor, x, y, xMax - borderSize, y + borderSize);
+            break;
+        case BorderPosition::BOTTOM:
+            checkAllPixels(image, borderColor, x, yMax - borderSize, xMax - borderSize, yMax);
+            break;
+        case BorderPosition::LEFT:
+            checkAllPixels(image, borderColor, x, y, x + borderSize, yMax);
+            break;
+        case BorderPosition::RIGHT:
+            checkAllPixels(image, borderColor, xMax - borderSize, y, xMax, yMax);
+            break;
+    }
+}
+
+
+void ImageBorderTest::checkBorder(const QImage &image, const QRgb borderColor, const int borderSize, const BorderPosition position) const
+{
+    checkBorder(image, borderColor, borderSize, position, 0, 0, image.width(), image.height());
+}
+
+void ImageBorderTest::checkTranformationWithOffset(int offsetX, int offsetY) const
+{
+    constexpr auto fillingColor = Qt::blue;
+
+    // Area size is set, border is drawn, test the input image is the same as the output one with respect to borders and area on all sides while offset is changed.
+
+    QImage image(50, 120, QImage::Format_RGB32);
+    image.fill(fillingColor);
+
+    const auto areaBorderWidth = offsetX;
+    const auto areaBorderHeight = offsetY;
+
+    ImageBorder<QImage> imageBorder;
+    imageBorder.bind(image);
+    imageBorder.setDrawBorder(true);
+    imageBorder.setAreaSize({ 20, 24 });
+    imageBorder.setImageOffsetX(areaBorderWidth);
+    imageBorder.setImageOffsetY(areaBorderHeight);
+    QCOMPARE(imageBorder.isCacheDirty(), true);
+    QCOMPARE_NE(imageBorder.getBorderColor(), fillingColor);
+    QCOMPARE_NE(imageBorder.getBackgroundColor(), fillingColor);
+
+    const QImage outputImage = imageBorder.transform().value<QImage>();
+
+    for (const auto position : { BorderPosition::TOP, BorderPosition::TOP })
+    {
+        const auto borderWidth = [imageBorder, position, areaBorderWidth, areaBorderHeight] {
+            switch (position)
+            {
+                case BorderPosition::TOP:
+                    return (imageBorder.borderWidth - areaBorderHeight) > 0 ? imageBorder.borderWidth - areaBorderHeight : 1;
+                case BorderPosition::LEFT:
+                    return (imageBorder.borderWidth - areaBorderWidth) > 0 ? imageBorder.borderWidth - areaBorderWidth : 1;
+                case BorderPosition::BOTTOM:
+                    [[fallthrough]];
+                case BorderPosition::RIGHT:
+                    return imageBorder.borderWidth;
+            }
+        }();
+
+        checkBorder(outputImage,
+                    imageBorder.getBorderColor().rgba(),
+                    borderWidth,
+                    position,
+                    0,
+                    0,
+                    outputImage.width() - areaBorderWidth,
+                    outputImage.height() - areaBorderHeight);
+    }
+
+    for (const auto position : { BorderPosition::BOTTOM, BorderPosition::RIGHT })
+    {
+        checkBorder(outputImage,
+                    imageBorder.getBorderColor().rgba(),
+                    imageBorder.borderWidth,
+                    position,
+                    areaBorderWidth,
+                    areaBorderHeight,
+                    outputImage.width() - areaBorderWidth,
+                    outputImage.height() - areaBorderHeight);
+    }
+
+    checkAllPixels(outputImage,
+                   QColor(fillingColor).rgba(),
+                   (imageBorder.borderWidth - areaBorderWidth) > 0 ? imageBorder.borderWidth - areaBorderWidth : 1,
+                   (imageBorder.borderWidth - areaBorderHeight) > 0 ? imageBorder.borderWidth - areaBorderHeight : 1,
+                   outputImage.width() - areaBorderWidth - imageBorder.borderWidth,
+                   outputImage.height() - areaBorderHeight - imageBorder.borderWidth);
+
+}
+
+
+void ImageBorderTest::transform() const
+{
+    constexpr auto fillingColor = Qt::blue;
+
+    {
+        // Area size is not set, border is not drawn, test the input image is the same as the output one.
+
+        QImage image(10, 10, QImage::Format_RGB32);
+        image.fill(fillingColor);
+
+        ImageBorder<QImage> imageBorder;
+        imageBorder.bind(image);
+        QCOMPARE(imageBorder.isCacheDirty(), true);
+        QCOMPARE_NE(imageBorder.getBorderColor(), fillingColor);
+        QCOMPARE_NE(imageBorder.getBackgroundColor(), fillingColor);
+        QCOMPARE(imageBorder.transform().value<QImage>(), image);
+    }
+
+    {
+        // Area size is not set, border is not drawn, test the input image is the same as the output one. Cache is not dirty after transform.
+
+        QImage image(10, 10, QImage::Format_RGB32);
+        image.fill(fillingColor);
+
+        ImageBorder<QImage> imageBorder;
+        imageBorder.bind(image);
+        QCOMPARE(imageBorder.isCacheDirty(), true);
+        QCOMPARE_NE(imageBorder.getBorderColor(), fillingColor);
+        QCOMPARE_NE(imageBorder.getBackgroundColor(), fillingColor);
+        QCOMPARE(imageBorder.transform().value<QImage>(), image);
+        QCOMPARE(imageBorder.isCacheDirty(), false);
+        QCOMPARE(imageBorder.transform().value<QImage>(), image);
+        QCOMPARE(imageBorder.isCacheDirty(), false);
+    }
+
+    {
+        // Area size is not set, border is drawn, test the input image is the same as the output one with respect to borders on all sides.
+
+        QImage image(12, 12, QImage::Format_RGB32);
+        image.fill(fillingColor);
+
+        ImageBorder<QImage> imageBorder;
+        imageBorder.bind(image);
+        imageBorder.setDrawBorder(true);
+        QCOMPARE(imageBorder.isCacheDirty(), true);
+        QCOMPARE_NE(imageBorder.getBorderColor(), fillingColor);
+        QCOMPARE_NE(imageBorder.getBackgroundColor(), fillingColor);
+
+        const QImage outputImage = imageBorder.transform().value<QImage>();
+        for (const auto position : { BorderPosition::TOP, BorderPosition::BOTTOM, BorderPosition::LEFT, BorderPosition::RIGHT })
+            checkBorder(outputImage, imageBorder.getBorderColor().rgba(), imageBorder.borderWidth, position);
+
+        checkAllPixels(outputImage,
+                       QColor(fillingColor).rgba(),
+                       imageBorder.borderWidth,
+                       imageBorder.borderWidth,
+                       outputImage.width() - imageBorder.borderWidth,
+                       outputImage.height() - imageBorder.borderWidth);
+    }
+
+    {
+        // Area size is set (equal to the input image), border is drawn, test the input image is the same as the output one with respect to borders on all sides.
+
+        QImage image(12, 12, QImage::Format_RGB32);
+        image.fill(fillingColor);
+
+        ImageBorder<QImage> imageBorder;
+        imageBorder.bind(image);
+        imageBorder.setDrawBorder(true);
+        imageBorder.setAreaSize({ 12, 12 });
+        QCOMPARE(imageBorder.isCacheDirty(), true);
+        QCOMPARE_NE(imageBorder.getBorderColor(), fillingColor);
+        QCOMPARE_NE(imageBorder.getBackgroundColor(), fillingColor);
+
+        const QImage outputImage = imageBorder.transform().value<QImage>();
+        for (const auto position : { BorderPosition::TOP, BorderPosition::BOTTOM, BorderPosition::LEFT, BorderPosition::RIGHT })
+            checkBorder(outputImage, imageBorder.getBorderColor().rgba(), imageBorder.borderWidth, position);
+
+        checkAllPixels(outputImage,
+                       QColor(fillingColor).rgba(),
+                       imageBorder.borderWidth,
+                       imageBorder.borderWidth,
+                       outputImage.width() - imageBorder.borderWidth,
+                       outputImage.height() - imageBorder.borderWidth);
+    }
+
+    {
+        // Area size is set (the input image size multiplied by 2), border is drawn, test the input image is the same as the output one with respect to borders and area on all sides.
+
+        QImage image(12, 12, QImage::Format_RGB32);
+        image.fill(fillingColor);
+
+        ImageBorder<QImage> imageBorder;
+        imageBorder.bind(image);
+        imageBorder.setDrawBorder(true);
+        imageBorder.setAreaSize({ 24, 24 });
+        QCOMPARE(imageBorder.isCacheDirty(), true);
+        QCOMPARE_NE(imageBorder.getBorderColor(), fillingColor);
+        QCOMPARE_NE(imageBorder.getBackgroundColor(), fillingColor);
+
+        const QImage outputImage = imageBorder.transform().value<QImage>();
+        const auto areaBorderWidth = (imageBorder.getAreaSize().width() - image.width()) / 2;
+        const auto areaBorderHeight = (imageBorder.getAreaSize().height() - image.height()) / 2;
+
+        for (const auto position : { BorderPosition::TOP, BorderPosition::BOTTOM, BorderPosition::LEFT, BorderPosition::RIGHT })
+        {
+            checkBorder(outputImage,
+                        imageBorder.getBorderColor().rgba(),
+                        imageBorder.borderWidth,
+                        position,
+                        areaBorderWidth,
+                        areaBorderHeight,
+                        outputImage.width() - areaBorderWidth,
+                        outputImage.height() - areaBorderHeight);
+        }
+
+        checkAllPixels(outputImage,
+                       QColor(fillingColor).rgba(),
+                       areaBorderWidth + imageBorder.borderWidth,
+                       areaBorderHeight + imageBorder.borderWidth,
+                       outputImage.width() - areaBorderWidth - imageBorder.borderWidth,
+                       outputImage.height() - areaBorderHeight - imageBorder.borderWidth);
+    }
+
+    {
+        // Area size is not set, border is not drawn, test the input image is the same as the output one.
+        // Negative offsets are zeroed during transformation.
+
+        QImage image(10, 10, QImage::Format_RGB32);
+        image.fill(fillingColor);
+
+        ImageBorder<QImage> imageBorder;
+        imageBorder.bind(image);
+        imageBorder.setImageOffsetX(-20);
+        imageBorder.setImageOffsetY(-10);
+        QCOMPARE(imageBorder.isCacheDirty(), true);
+        QCOMPARE_NE(imageBorder.getBorderColor(), fillingColor);
+        QCOMPARE_NE(imageBorder.getBackgroundColor(), fillingColor);
+        QCOMPARE(imageBorder.transform().value<QImage>(), image);
+        QCOMPARE(imageBorder.getImageOffsetX(), 0);
+        QCOMPARE(imageBorder.getImageOffsetY(), 0);
+    }
+
+    {
+        // Area size is set (image size - offsets are smaller than the area size), border is drawn, test the input image is the same as the output one.
+        // Offsets are zeroed during transformation.
+
+        QImage image(10, 10, QImage::Format_RGB32);
+        image.fill(fillingColor);
+
+        ImageBorder<QImage> imageBorder;
+        imageBorder.bind(image);
+        imageBorder.setAreaSize({ 80, 60 });
+        imageBorder.setImageOffsetX(200);
+        imageBorder.setImageOffsetY(100);
+        imageBorder.setDrawBorder(true);
+        QCOMPARE(imageBorder.isCacheDirty(), true);
+        QCOMPARE_NE(imageBorder.getBorderColor(), fillingColor);
+        QCOMPARE_NE(imageBorder.getBackgroundColor(), fillingColor);
+        const QImage outputImage = imageBorder.transform().value<QImage>();
+        QCOMPARE(imageBorder.getImageOffsetX(), 0);
+        QCOMPARE(imageBorder.getImageOffsetY(), 0);
+
+        for (const auto position : { BorderPosition::TOP, BorderPosition::LEFT,  BorderPosition::BOTTOM, BorderPosition::RIGHT })
+            checkBorder(outputImage,
+                        imageBorder.getBorderColor().rgba(),
+                        imageBorder.borderWidth,
+                        position,
+                        (outputImage.width() - image.width()) / 2,
+                        (outputImage.height() - image.height()) / 2,
+                        outputImage.width() - (outputImage.width() - image.width()) / 2,
+                        outputImage.height() - (outputImage.height() - image.height()) / 2);
+    }
+
+    {
+        for (int x = 1; x < 10; ++x)
+            checkTranformationWithOffset(x, 1);
+    }
+
+    {
+        for (int y = 1; y < 10; ++y)
+            checkTranformationWithOffset(2, y);
+    }
+
+    {
+        for (int x = 1; x < 10; ++x)
+            for (int y = 1; y < 10; ++y)
+                checkTranformationWithOffset(x, y);
+    }
+}

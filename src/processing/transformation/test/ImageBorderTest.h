@@ -14,6 +14,18 @@ class ImageBorderTest: public QObject
 {
     Q_OBJECT
 
+    enum class BorderPosition {
+        TOP,
+        BOTTOM,
+        LEFT,
+        RIGHT
+    };
+
+    void checkAllPixels(const QImage &image, const QRgb color, const int x, const int y, const int xMax, const int yMax) const;
+    void checkBorder(const QImage &image, const QRgb borderColor, const int borderSize, const BorderPosition position) const;
+    void checkBorder(const QImage &image, const QRgb borderColor, const int borderSize, const BorderPosition position, const int x, const int y, const int xMax, const int yMax) const;
+    void checkTranformationWithOffset(int offsetX, int offsetY) const;
+
 private slots:
     void areaSize() const;
     void borderColor() const;
@@ -21,4 +33,5 @@ private slots:
     void drawBorder() const;
     void imageOffsets() const;
     void resetProperties() const;
+    void transform() const;
 };

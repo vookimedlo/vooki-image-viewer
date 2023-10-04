@@ -37,6 +37,7 @@ public:
     void setImageOffsetX(int imageOffsetX);
 
     static const int borderWidth {3};
+    static const auto format {QImage::Format_RGB32};
 
 protected:
     void checkScrollOffset(const QImage &image);
@@ -172,7 +173,7 @@ QVariant ImageBorder<T>::transform()
     {
         QImage originalImage {ImageTransformationBase<T>::getOriginalObject()};
         QSize newSize {originalImage.size().expandedTo(m_areaSize)};
-        QImage newImage {newSize, QImage::Format_RGB32};
+        QImage newImage {newSize, ImageBorder::format};
         newImage.fill(m_backgroundColor);
 
         const auto x {newSize.width() / 2 - originalImage.width() / 2};
@@ -189,15 +190,21 @@ QVariant ImageBorder<T>::transform()
 
         if (m_drawBorder)
         {
-            painterImage.setBrush(Qt::NoBrush);
+            constexpr int penWidth = 1;
             QPen pen = painterImage.pen();
-            pen.setWidth(ImageBorder::borderWidth);
+            pen.setWidth(penWidth);
             pen.setColor(m_borderColor);
+            pen.setStyle(Qt::SolidLine);
             painterImage.setPen(pen);
-            painterImage.drawRect(x - m_imageOffsetX,
-                                  y - m_imageOffsetY,
-                                  originalImage.width(),
-                                  originalImage.height());
+            painterImage.setBrush(Qt::NoBrush);
+
+            for (int i = 0; i < ImageBorder::borderWidth; ++i)
+            {
+                painterImage.drawRect(QRect(QPoint{std::max(0, x - m_imageOffsetX + i),
+                                                    std::max(0, y - m_imageOffsetY + i)},
+                                            QPoint{originalImage.width() + x - m_imageOffsetX - i - penWidth - 1,
+                                                    originalImage.height() + y - m_imageOffsetY - i - penWidth - 1}));
+            }
         }
 
         ImageTransformationBase<T>::setCachedObject(newImage);
