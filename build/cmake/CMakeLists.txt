@@ -476,10 +476,11 @@ endfunction()
 
 ADD_TESTS(tests_transformation
         ../../src/processing/transformation/test/main.cpp
+        ../../src/processing/transformation/test/ImageBorderTest.cpp
         ../../src/processing/transformation/test/ImageFlipTest.cpp
         ../../src/processing/transformation/test/ImageRotationTest.cpp
         ../../src/processing/transformation/test/ImageTransformationBaseTest.cpp
-        ../../src/processing/transformation/test/ImageBorderTest.cpp
+        ../../src/processing/transformation/test/ImageZoomTest.cpp
 )
 
 ADD_TESTS(tests_util

@@ -47,12 +47,13 @@ public:
         return ImageTransformationBase<T>::getCachedObject();
     }
 
+    [[nodiscard]] QSize getOriginalImageSize() const;
     void setOriginalImageSize(const QSize &size);
+    [[nodiscard]] QSize getAreaSize() const;
     void setAreaSize(const QSize &size);
-    double getScaleFactor() const;
+    [[nodiscard]] double getScaleFactor() const;
     void setScaleFactor(double factor);
-
-    bool isFitToAreaEnabled() const;
+    [[nodiscard]] bool isFitToAreaEnabled() const;
     void setFitToArea(bool fitToArea);
 
 private:
@@ -62,6 +63,12 @@ private:
     QSize m_originalImageSize {};
     double m_scaleFactor {1.0};
 };
+
+template<typename T> requires std::is_same_v<QTransform, T>
+QSize ImageZoom<T>::getAreaSize() const
+{
+    return { m_areaWidth, m_areaHeight };
+}
 
 template<typename T> requires std::is_same_v<QTransform, T>
 void ImageZoom<T>::setAreaSize(const QSize &size)
@@ -114,7 +121,14 @@ QVariant ImageZoom<T>::transform()
 }
 
 template<typename T> requires std::is_same_v<QTransform, T>
+QSize ImageZoom<T>::getOriginalImageSize() const
+{
+    return m_originalImageSize;
+}
+
+template<typename T> requires std::is_same_v<QTransform, T>
 void ImageZoom<T>::setOriginalImageSize(const QSize &size)
 {
     m_originalImageSize = size;
+    ImageTransformationBase<T>::invalidateCache();
 }
