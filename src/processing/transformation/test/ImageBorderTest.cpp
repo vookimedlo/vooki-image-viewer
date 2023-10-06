@@ -114,28 +114,33 @@ void ImageBorderTest::resetProperties() const
     QCOMPARE(imageBorder.getAreaSize(), size);
 }
 
-void ImageBorderTest::checkAllPixels(const QImage &image, const QRgb color, const int x, const int y, const int xMax, const int yMax) const
+void ImageBorderTest::checkAllPixels(const QImage &image, const QRgb color, const QPoint& origin, const QPoint& originMax) const
 {
+    const auto& [x, y] = origin;
+    const auto& [xMax, yMax] = originMax;
     for (int i = x; i < xMax; ++i)
         for (int j = y; j < yMax; ++j)
             QCOMPARE(image.pixel(i, j), color);
 }
 
-void ImageBorderTest::checkBorder(const QImage &image, const QRgb borderColor, const int borderSize, const BorderPosition position, const int x, const int y, const int xMax, const int yMax) const
+void ImageBorderTest::checkBorder(const QImage &image, const QRgb borderColor, const int borderSize, const BorderPosition position, const QPoint& origin, const QPoint& originMax) const
 {
+    const auto& [x, y] = origin;
+    const auto& [xMax, yMax] = originMax;
     switch (position)
     {
-        case BorderPosition::TOP:
-            checkAllPixels(image, borderColor, x, y, xMax - borderSize, y + borderSize);
+        using enum BorderPosition;
+        case TOP:
+            checkAllPixels(image, borderColor, {x, y}, {xMax - borderSize, y + borderSize});
             break;
-        case BorderPosition::BOTTOM:
-            checkAllPixels(image, borderColor, x, yMax - borderSize, xMax - borderSize, yMax);
+        case BOTTOM:
+            checkAllPixels(image, borderColor, {x, yMax - borderSize}, {xMax - borderSize, yMax});
             break;
-        case BorderPosition::LEFT:
-            checkAllPixels(image, borderColor, x, y, x + borderSize, yMax);
+        case LEFT:
+            checkAllPixels(image, borderColor, {x, y}, {x + borderSize, yMax});
             break;
-        case BorderPosition::RIGHT:
-            checkAllPixels(image, borderColor, xMax - borderSize, y, xMax, yMax);
+        case RIGHT:
+            checkAllPixels(image, borderColor, {xMax - borderSize, y}, {xMax, yMax});
             break;
     }
 }
@@ -143,10 +148,10 @@ void ImageBorderTest::checkBorder(const QImage &image, const QRgb borderColor, c
 
 void ImageBorderTest::checkBorder(const QImage &image, const QRgb borderColor, const int borderSize, const BorderPosition position) const
 {
-    checkBorder(image, borderColor, borderSize, position, 0, 0, image.width(), image.height());
+    checkBorder(image, borderColor, borderSize, position, {0, 0}, {image.width(), image.height()});
 }
 
-void ImageBorderTest::checkTranformationWithOffset(int offsetX, int offsetY) const
+void ImageBorderTest::checkTransformationWithOffset(int offsetX, int offsetY) const
 {
     constexpr auto fillingColor = Qt::blue;
 
@@ -170,19 +175,20 @@ void ImageBorderTest::checkTranformationWithOffset(int offsetX, int offsetY) con
 
     const QImage outputImage = imageBorder.transform().value<QImage>();
 
-    for (const auto position : { BorderPosition::TOP, BorderPosition::TOP })
+    for (const auto position : { BorderPosition::TOP, BorderPosition::LEFT })
     {
-        const auto borderWidth = [imageBorder, position, areaBorderWidth, areaBorderHeight] {
+        const auto borderWidth = [&position, &areaBorderWidth, &areaBorderHeight] {
             switch (position)
             {
-                case BorderPosition::TOP:
-                    return (imageBorder.borderWidth - areaBorderHeight) > 0 ? imageBorder.borderWidth - areaBorderHeight : 1;
-                case BorderPosition::LEFT:
-                    return (imageBorder.borderWidth - areaBorderWidth) > 0 ? imageBorder.borderWidth - areaBorderWidth : 1;
-                case BorderPosition::BOTTOM:
+                using enum BorderPosition;
+                case TOP:
+                    return (ImageBorder<QImage>::borderWidth - areaBorderHeight) > 0 ? ImageBorder<QImage>::borderWidth - areaBorderHeight : 1;
+                case LEFT:
+                    return (ImageBorder<QImage>::borderWidth - areaBorderWidth) > 0 ? ImageBorder<QImage>::borderWidth - areaBorderWidth : 1;
+                case BOTTOM:
                     [[fallthrough]];
-                case BorderPosition::RIGHT:
-                    return imageBorder.borderWidth;
+                case RIGHT:
+                    return ImageBorder<QImage>::borderWidth;
             }
         }();
 
@@ -190,31 +196,26 @@ void ImageBorderTest::checkTranformationWithOffset(int offsetX, int offsetY) con
                     imageBorder.getBorderColor().rgba(),
                     borderWidth,
                     position,
-                    0,
-                    0,
-                    outputImage.width() - areaBorderWidth,
-                    outputImage.height() - areaBorderHeight);
+                    {0, 0},
+                    {outputImage.width() - areaBorderWidth, outputImage.height() - areaBorderHeight});
     }
 
     for (const auto position : { BorderPosition::BOTTOM, BorderPosition::RIGHT })
     {
         checkBorder(outputImage,
                     imageBorder.getBorderColor().rgba(),
-                    imageBorder.borderWidth,
+                    ImageBorder<QImage>::borderWidth,
                     position,
-                    areaBorderWidth,
-                    areaBorderHeight,
-                    outputImage.width() - areaBorderWidth,
-                    outputImage.height() - areaBorderHeight);
+                    {areaBorderWidth, areaBorderHeight},
+                    {outputImage.width() - areaBorderWidth, outputImage.height() - areaBorderHeight});
     }
 
     checkAllPixels(outputImage,
                    QColor(fillingColor).rgba(),
-                   (imageBorder.borderWidth - areaBorderWidth) > 0 ? imageBorder.borderWidth - areaBorderWidth : 1,
-                   (imageBorder.borderWidth - areaBorderHeight) > 0 ? imageBorder.borderWidth - areaBorderHeight : 1,
-                   outputImage.width() - areaBorderWidth - imageBorder.borderWidth,
-                   outputImage.height() - areaBorderHeight - imageBorder.borderWidth);
-
+                   {(ImageBorder<QImage>::borderWidth - areaBorderWidth) > 0 ? ImageBorder<QImage>::borderWidth - areaBorderWidth : 1,
+                   (ImageBorder<QImage>::borderWidth - areaBorderHeight) > 0 ? ImageBorder<QImage>::borderWidth - areaBorderHeight : 1},
+                   {outputImage.width() - areaBorderWidth - ImageBorder<QImage>::borderWidth,
+                   outputImage.height() - areaBorderHeight - ImageBorder<QImage>::borderWidth});
 }
 
 
@@ -268,14 +269,12 @@ void ImageBorderTest::transform() const
 
         const QImage outputImage = imageBorder.transform().value<QImage>();
         for (const auto position : { BorderPosition::TOP, BorderPosition::BOTTOM, BorderPosition::LEFT, BorderPosition::RIGHT })
-            checkBorder(outputImage, imageBorder.getBorderColor().rgba(), imageBorder.borderWidth, position);
+            checkBorder(outputImage, imageBorder.getBorderColor().rgba(), ImageBorder<QImage>::borderWidth, position);
 
         checkAllPixels(outputImage,
                        QColor(fillingColor).rgba(),
-                       imageBorder.borderWidth,
-                       imageBorder.borderWidth,
-                       outputImage.width() - imageBorder.borderWidth,
-                       outputImage.height() - imageBorder.borderWidth);
+                       {ImageBorder<QImage>::borderWidth, ImageBorder<QImage>::borderWidth},
+                       {outputImage.width() - ImageBorder<QImage>::borderWidth, outputImage.height() - ImageBorder<QImage>::borderWidth});
     }
 
     {
@@ -294,14 +293,12 @@ void ImageBorderTest::transform() const
 
         const QImage outputImage = imageBorder.transform().value<QImage>();
         for (const auto position : { BorderPosition::TOP, BorderPosition::BOTTOM, BorderPosition::LEFT, BorderPosition::RIGHT })
-            checkBorder(outputImage, imageBorder.getBorderColor().rgba(), imageBorder.borderWidth, position);
+            checkBorder(outputImage, imageBorder.getBorderColor().rgba(), ImageBorder<QImage>::borderWidth, position);
 
         checkAllPixels(outputImage,
                        QColor(fillingColor).rgba(),
-                       imageBorder.borderWidth,
-                       imageBorder.borderWidth,
-                       outputImage.width() - imageBorder.borderWidth,
-                       outputImage.height() - imageBorder.borderWidth);
+                       {ImageBorder<QImage>::borderWidth, ImageBorder<QImage>::borderWidth},
+                       {outputImage.width() - ImageBorder<QImage>::borderWidth, outputImage.height() - ImageBorder<QImage>::borderWidth});
     }
 
     {
@@ -326,20 +323,16 @@ void ImageBorderTest::transform() const
         {
             checkBorder(outputImage,
                         imageBorder.getBorderColor().rgba(),
-                        imageBorder.borderWidth,
+                        ImageBorder<QImage>::borderWidth,
                         position,
-                        areaBorderWidth,
-                        areaBorderHeight,
-                        outputImage.width() - areaBorderWidth,
-                        outputImage.height() - areaBorderHeight);
+                        {areaBorderWidth, areaBorderHeight},
+                        {outputImage.width() - areaBorderWidth, outputImage.height() - areaBorderHeight});
         }
 
         checkAllPixels(outputImage,
                        QColor(fillingColor).rgba(),
-                       areaBorderWidth + imageBorder.borderWidth,
-                       areaBorderHeight + imageBorder.borderWidth,
-                       outputImage.width() - areaBorderWidth - imageBorder.borderWidth,
-                       outputImage.height() - areaBorderHeight - imageBorder.borderWidth);
+                       {areaBorderWidth + ImageBorder<QImage>::borderWidth, areaBorderHeight + ImageBorder<QImage>::borderWidth},
+                       {outputImage.width() - areaBorderWidth - ImageBorder<QImage>::borderWidth, outputImage.height() - areaBorderHeight - ImageBorder<QImage>::borderWidth});
     }
 
     {
@@ -384,27 +377,25 @@ void ImageBorderTest::transform() const
         for (const auto position : { BorderPosition::TOP, BorderPosition::LEFT,  BorderPosition::BOTTOM, BorderPosition::RIGHT })
             checkBorder(outputImage,
                         imageBorder.getBorderColor().rgba(),
-                        imageBorder.borderWidth,
+                        ImageBorder<QImage>::borderWidth,
                         position,
-                        (outputImage.width() - image.width()) / 2,
-                        (outputImage.height() - image.height()) / 2,
-                        outputImage.width() - (outputImage.width() - image.width()) / 2,
-                        outputImage.height() - (outputImage.height() - image.height()) / 2);
+                        {(outputImage.width() - image.width()) / 2, (outputImage.height() - image.height()) / 2},
+                        {outputImage.width() - (outputImage.width() - image.width()) / 2, outputImage.height() - (outputImage.height() - image.height()) / 2});
     }
 
     {
         for (int x = 1; x < 10; ++x)
-            checkTranformationWithOffset(x, 1);
+            checkTransformationWithOffset(x, 1);
     }
 
     {
         for (int y = 1; y < 10; ++y)
-            checkTranformationWithOffset(2, y);
+            checkTransformationWithOffset(2, y);
     }
 
     {
         for (int x = 1; x < 10; ++x)
             for (int y = 1; y < 10; ++y)
-                checkTranformationWithOffset(x, y);
+                checkTransformationWithOffset(x, y);
     }
 }
