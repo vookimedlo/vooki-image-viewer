@@ -70,13 +70,95 @@ void ImageZoomTest::scaleFactor() const
 
 void ImageZoomTest::resetProperties() const
 {
+    const QSize size{10, 20};
     ImageZoom<QTransform> imageZoom;
     imageZoom.setIsCacheDirty(false);
+    imageZoom.setAreaSize(size);
+    imageZoom.setFitToArea(true);
+    imageZoom.setOriginalImageSize(size);
+    imageZoom.setScaleFactor(8.3);
+
     imageZoom.resetProperties();
+
+    QCOMPARE(imageZoom.getAreaSize(), size);
+    QCOMPARE(imageZoom.getOriginalImageSize(), size);
+    QCOMPARE(imageZoom.getScaleFactor(), 1);
+    QCOMPARE(imageZoom.isFitToAreaEnabled(), true);
     QCOMPARE(imageZoom.isCacheDirty(), true);
 }
 
 void ImageZoomTest::transform() const
 {
+    {
+        ImageZoom<QTransform> imageZoom{};
+        auto transformBefore = imageZoom.transform().value<QTransform>();
+        QCOMPARE(imageZoom.transform().value<QTransform>(), transformBefore);
+        QCOMPARE(imageZoom.transform().value<QTransform>(), QTransform().scale(1, 1));
+    }
 
+    {
+        ImageZoom<QTransform> imageZoom{};
+        imageZoom.setScaleFactor(2.5);
+        QCOMPARE(imageZoom.transform().value<QTransform>(), QTransform().scale(2.5, 2.5));
+    }
+
+    {
+        ImageZoom<QTransform> imageZoom{};
+        imageZoom.setScaleFactor(11111111.1);
+        imageZoom.setFitToArea(true);
+        QCOMPARE(imageZoom.transform().value<QTransform>(), QTransform().scale(0, 0));
+    }
+
+    {
+        ImageZoom<QTransform> imageZoom{};
+        imageZoom.setScaleFactor(1111111.1);
+        imageZoom.setFitToArea(true);
+        imageZoom.setAreaSize({200, 100});
+        imageZoom.setOriginalImageSize({100, 10});
+        QCOMPARE(imageZoom.transform().value<QTransform>(), QTransform().scale(2, 2));
+    }
+
+    {
+        ImageZoom<QTransform> imageZoom{};
+        imageZoom.setFitToArea(true);
+        imageZoom.setAreaSize({200, 100});
+        imageZoom.setOriginalImageSize({100, 10});
+        QCOMPARE(imageZoom.transform().value<QTransform>(), QTransform().scale(2, 2));
+    }
+
+    {
+        ImageZoom<QTransform> imageZoom{};
+        imageZoom.setFitToArea(true);
+        imageZoom.setAreaSize({20000, 100});
+        imageZoom.setOriginalImageSize({100, 10});
+        QCOMPARE(imageZoom.transform().value<QTransform>(), QTransform().scale(10, 10));
+    }
+
+    {
+        for (int i = 0; i < 10; ++i)
+        {
+            QTransform transformation;
+            transformation.rotate(90 + 180 * i);
+            ImageZoom<QTransform> imageZoom{};
+            imageZoom.bind(transformation);
+            imageZoom.setFitToArea(true);
+            imageZoom.setAreaSize({ 200, 150 });
+            imageZoom.setOriginalImageSize({ 100, 10 });
+            QCOMPARE(imageZoom.transform().value<QTransform>(), QTransform().rotate(90 + 180 * i).scale(1.5, 1.5));
+        }
+    }
+
+    {
+        for (int i = 0; i < 10; ++i)
+        {
+            QTransform transformation;
+            transformation.rotate(90 + 180 * i);
+            ImageZoom<QTransform> imageZoom{};
+            imageZoom.bind(transformation);
+            imageZoom.setFitToArea(true);
+            imageZoom.setAreaSize({ 200, 100 });
+            imageZoom.setOriginalImageSize({ 10, 80 });
+            QCOMPARE(imageZoom.transform().value<QTransform>(), QTransform().rotate(90 + 180 * i).scale(2.5, 2.5));
+        }
+    }
 }
