@@ -129,7 +129,14 @@ void ImageBorderTest::checkBorder(const QImage &image, const QRgb borderColor, c
     const auto& [xMax, yMax] = originMax;
     switch (position)
     {
+#if not __cpp_using_enum
+        #define TOP BorderPosition::TOP
+        #define BOTTOM BorderPosition::BOTTOM
+        #define LEFT BorderPosition::LEFT
+        #define RIGHT BorderPosition::RIGHT
+#else
         using enum BorderPosition;
+#endif
         case TOP:
             checkAllPixels(image, borderColor, {x, y}, {xMax - borderSize, y + borderSize});
             break;
@@ -143,6 +150,12 @@ void ImageBorderTest::checkBorder(const QImage &image, const QRgb borderColor, c
             checkAllPixels(image, borderColor, {xMax - borderSize, y}, {xMax, yMax});
             break;
     }
+#if not __cpp_using_enum
+    #undef TOP
+    #undef BOTTOM
+    #undef LEFT
+    #undef RIGHT
+#endif
 }
 
 
@@ -180,7 +193,14 @@ void ImageBorderTest::checkTransformationWithOffset(int offsetX, int offsetY) co
         const auto borderWidth = [&position, &areaBorderWidth, &areaBorderHeight] {
             switch (position)
             {
+#if not __cpp_using_enum
+                #define TOP BorderPosition::TOP
+                #define BOTTOM BorderPosition::BOTTOM
+                #define LEFT BorderPosition::LEFT
+                #define RIGHT BorderPosition::RIGHT
+#else
                 using enum BorderPosition;
+#endif
                 case TOP:
                     return (ImageBorder<QImage>::borderWidth - areaBorderHeight) > 0 ? ImageBorder<QImage>::borderWidth - areaBorderHeight : 1;
                 case LEFT:
@@ -191,6 +211,13 @@ void ImageBorderTest::checkTransformationWithOffset(int offsetX, int offsetY) co
                     return ImageBorder<QImage>::borderWidth;
             }
         }();
+
+#if not __cpp_using_enum
+#undef TOP
+#undef BOTTOM
+#undef LEFT
+#undef RIGHT
+#endif
 
         checkBorder(outputImage,
                     imageBorder.getBorderColor().rgba(),
