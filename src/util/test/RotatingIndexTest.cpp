@@ -29,8 +29,8 @@ void RotatingIndexTest::postDecrement4x() const
 
     for (int i = maxValuePlus1 - 1; initialValue < i; --i )
     {
-        const int indexAfter = index--;
-        QCOMPARE(indexAfter, i);
+        const int indexAfterInLoop = index--;
+        QCOMPARE(indexAfterInLoop, i);
         QCOMPARE(index, i - 1);
     }
 }

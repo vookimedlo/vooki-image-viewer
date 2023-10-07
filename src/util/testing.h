@@ -20,3 +20,7 @@ void runTests(int argc, char* argv[], int* status)
     QTEST_SET_MAIN_SOURCE_PATH
     *status |= QTest::qExec(&tc, argc, argv);
 }
+
+#if not defined QCOMPARE_NE
+    #define QCOMPARE_NE(lhs, rhs) QVERIFY(lhs != rhs)
+#endif
