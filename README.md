@@ -7,6 +7,10 @@
 [![Windows Builds](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/win-build.yml/badge.svg)](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/win-build.yml)
 [![macos Builds](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/macos-build.yml/badge.svg)](https://github.com/vookimedlo/vooki-image-viewer/actions/workflows/macos-build.yml)
 
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=vookimedlo_vooki-image-viewer&metric=coverage)](https://sonarcloud.io/summary/new_code?id=vookimedlo_vooki-image-viewer)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=vookimedlo_vooki-image-viewer&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=vookimedlo_vooki-image-viewer)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=vookimedlo_vooki-image-viewer&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=vookimedlo_vooki-image-viewer)
+
 A lightweight image viewer for a fast image preview. It has been developed to have the same viewer available for all major operating systems - Microsoft Windows 11, macos and GNU/Linux.
 
 The main goal is to have a free of charge cross-platform viewer with a simple design and minimum functions that are commonly used.
