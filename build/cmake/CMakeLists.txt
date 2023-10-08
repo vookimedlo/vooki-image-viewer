@@ -382,7 +382,7 @@ if (APPLE)
     ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/kimageformats/src/imageformats/jxl.cpp)
     TARGET_INCLUDE_DIRECTORIES(vooki_kimg_jxl BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
     TARGET_LINK_DIRECTORIES(vooki_kimg_jxl BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
-    TARGET_LINK_LIBRARIES(vooki_kimg_jxl ${QT_UI_LIB} libjxl.a libjxl_threads.a libhwy.a libbrotlicommon-static.a libbrotlidec-static.a libbrotlienc-static.a)
+    TARGET_LINK_LIBRARIES(vooki_kimg_jxl ${QT_UI_LIB} libjxl.a libjxl_threads.a libhwy.a libbrotlicommon.a libbrotlidec.a libbrotlienc.a)
 
     include(platform/mac/MacdeployQt.cmake)
     deployqt()
@@ -409,7 +409,7 @@ elseif (WIN32)
     ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/kimageformats/src/imageformats/jxl.cpp)
     TARGET_INCLUDE_DIRECTORIES(vooki_kimg_jxl BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
     TARGET_LINK_DIRECTORIES(vooki_kimg_jxl BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
-    TARGET_LINK_LIBRARIES(vooki_kimg_jxl ${QT_UI_LIB} jxl-static.lib jxl_dec-static.lib jxl_threads-static.lib hwy.lib brotlicommon-static.lib brotlidec-static.lib brotlienc-static.lib)
+    TARGET_LINK_LIBRARIES(vooki_kimg_jxl ${QT_UI_LIB} jxl-static.lib jxl_dec-static.lib jxl_threads-static.lib hwy.lib brotlicommon.lib brotlidec.lib brotlienc.lib)
 
     SET(PLUGINS "$<TARGET_FILE_DIR:${APPLICATION_NAME}>/imageformats")
     SET_TARGET_PROPERTIES(${IMAGE_PLUGINS}
