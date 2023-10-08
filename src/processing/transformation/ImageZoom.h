@@ -27,13 +27,13 @@ public:
             {
                 const auto&& [originalWidth, originalHeight]
                 {
-                    [&m_originalImageSize = m_originalImageSize, isRotating = ImageTransformationBase<T>::getOriginalObject().isRotating()]() {
+                    [&originalImageSize = m_originalImageSize, isRotating = ImageTransformationBase<T>::getOriginalObject().isRotating() && ImageTransformationBase<T>::getOriginalObject().type() != QTransform::TxProject]() {
                         // Rotation is reported just for 90 and 270 degrees. That's exactly what we want.
                         // See https://doc.qt.io/qt-6/qtransform.html#isRotating
                         if (isRotating)
-                            return std::make_pair(m_originalImageSize.height(), m_originalImageSize.width());
+                            return std::make_pair(originalImageSize.height(), originalImageSize.width());
                         else
-                            return std::make_pair(m_originalImageSize.width(), m_originalImageSize.height());
+                            return std::make_pair(originalImageSize.width(), originalImageSize.height());
                     }()
                 };
 

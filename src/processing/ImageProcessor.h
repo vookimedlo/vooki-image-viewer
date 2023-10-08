@@ -69,7 +69,7 @@ private:
     constexpr static int m_imageTransformationsSize {1};
     constexpr static int m_genericTransformationsSize {m_transformationsSize + m_imageTransformationsSize};
 
-    const std::array<ImageTransformationBase<QTransform>* const, m_transformationsSize> m_transformations { &m_imageRotation, &m_imageFlip, &m_imageZoom };
+    const std::array<ImageTransformationBase<QTransform>* const, m_transformationsSize> m_transformations { &m_imageFlip, &m_imageRotation, &m_imageZoom };
     const std::array<ImageTransformationBase<QImage>* const, m_imageTransformationsSize> m_imageTransformations { &m_imageBorder };
     const std::array<ImageTransformation* const, m_genericTransformationsSize> m_genericTransformations { Array::concatenate<ImageTransformation* const>(m_transformations, m_imageTransformations) };
     static_assert(m_transformationsSize > 0, "m_transformations needs to have at least 1 element");
