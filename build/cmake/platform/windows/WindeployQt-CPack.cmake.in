@@ -1,3 +1,12 @@
+#############################################################################
+# VookiImageViewer - a tool for showing images.
+# - https://github.com/vookimedlo/vooki-image-viewer
+#
+# SPDX-FileCopyrightText: 2023 Michal Duda <github@vookimedlo.cz>
+# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-FileType: SOURCE
+#############################################################################
+
 execute_process(COMMAND     "@WINDEPLOYQT_EXECUTABLE@" --no-quick-import --no-system-d3d-compiler --compiler-runtime --no-opengl-sw "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/@APPLICATION_NAME@.exe"
                 ERROR_FILE  windeployqt_out.err
                 OUTPUT_FILE windeployqt_out.std)
