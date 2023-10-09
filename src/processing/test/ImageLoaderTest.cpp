@@ -13,19 +13,24 @@ VookiImageViewer - a tool for showing images.
 #include "ImageLoaderTest.h"
 #include "../ImageLoader.h"
 
+QString ImageLoaderTest::makeAbsolutePath(const QString &file) const
+{
+    return QDir::cleanPath(m_absolutePath + QDir::separator() + file);
+}
+
 void ImageLoaderTest::open() const
 {
     ImageLoader loader;
     QCOMPARE(loader.loadImage("@#$%"), false);
-    QCOMPARE(loader.loadImage(ImageLoaderTest::png1FilePath), true);
+    QCOMPARE(loader.loadImage(makeAbsolutePath(ImageLoaderTest::png1FilePath)), true);
 }
 
 void ImageLoaderTest::getImageNotAnimated() const
 {
     ImageLoader loader;
-    QCOMPARE(loader.loadImage(ImageLoaderTest::png1FilePath), true);
+    QCOMPARE(loader.loadImage(makeAbsolutePath(ImageLoaderTest::png1FilePath)), true);
 
-    QImageReader reader(ImageLoaderTest::png1FilePath);
+    QImageReader reader(makeAbsolutePath(ImageLoaderTest::png1FilePath));
     const QImage expectedImage(reader.read());
     QCOMPARE(loader.getImage(), expectedImage);
     QCOMPARE(loader.getNextImage(), expectedImage);
@@ -38,10 +43,10 @@ void ImageLoaderTest::getImageNotAnimated() const
 void ImageLoaderTest::getImageAnimated() const
 {
     ImageLoader loader;
-    QCOMPARE(loader.loadImage(ImageLoaderTest::animatedNumbersFilePath), true);
+    QCOMPARE(loader.loadImage(makeAbsolutePath(ImageLoaderTest::animatedNumbersFilePath)), true);
 
     constexpr auto expectedDelay = 200;
-    QImageReader reader(ImageLoaderTest::animatedNumbersFilePath);
+    QImageReader reader(makeAbsolutePath(ImageLoaderTest::animatedNumbersFilePath));
     const QImage expectedImage1(reader.read());
     QCOMPARE(loader.getImage(), expectedImage1);
     QCOMPARE(loader.isAnimated(), true);

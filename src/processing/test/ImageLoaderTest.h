@@ -20,9 +20,12 @@ class ImageLoaderTest: public QObject
 {
     Q_OBJECT
 
-static constexpr const char *png1FilePath = PREFIX("1.png");
-static constexpr const char *animatedNumbersFilePath = PREFIX("animated_numbers.webp");
+    QString makeAbsolutePath(const QString &file) const;
+    static constexpr const char *png1FilePath = PREFIX("1.png");
+    static constexpr const char *animatedNumbersFilePath = PREFIX("animated_numbers.webp");
 
+
+    const QString m_absolutePath {QCoreApplication::applicationDirPath()};
 
 private slots:
     void open() const;
