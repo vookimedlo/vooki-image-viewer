@@ -40,6 +40,9 @@ const QImage &ImageLoader::getImage()
 
 const QImage &ImageLoader::getNextImage()
 {
+    if (!isAnimated())
+        return getImage();
+
     if (++m_animationIndex == 0)
         m_reader.setFileName(m_reader.fileName());
 

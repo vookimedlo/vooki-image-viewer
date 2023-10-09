@@ -466,6 +466,17 @@ function(ADD_TESTS name source)
     TARGET_LINK_LIBRARIES(${name} PRIVATE ${QT_ALL_TEST_LIBS})
 endfunction()
 
+function(ADD_TEST_RESOURCE path file)
+    add_custom_command(
+            OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${file}
+            COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_CURRENT_SOURCE_DIR}/${path}/${file}
+            ${CMAKE_CURRENT_BINARY_DIR}/${file}
+            DEPENDS  ${CMAKE_CURRENT_SOURCE_DIR}/${path}/${file}
+    )
+endfunction()
+
+
 ADD_TESTS(tests_transformation
         ../../src/processing/transformation/test/main.cpp
         ../../src/processing/transformation/test/ImageBorderTest.cpp
@@ -473,6 +484,16 @@ ADD_TESTS(tests_transformation
         ../../src/processing/transformation/test/ImageRotationTest.cpp
         ../../src/processing/transformation/test/ImageTransformationBaseTest.cpp
         ../../src/processing/transformation/test/ImageZoomTest.cpp
+)
+
+ADD_TEST_RESOURCE(../../src/processing/test/resources 1.png)
+ADD_TEST_RESOURCE(../../src/processing/test/resources animated_numbers.webp)
+ADD_TESTS(tests_processing
+        ${CMAKE_CURRENT_BINARY_DIR}/1.png
+        ${CMAKE_CURRENT_BINARY_DIR}/animated_numbers.webp
+        ../../src/processing/ImageLoader.cpp
+        ../../src/processing/test/main.cpp
+        ../../src/processing/test/ImageLoaderTest.cpp
 )
 
 ADD_TESTS(tests_util
