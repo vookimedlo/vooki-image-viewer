@@ -22,11 +22,11 @@ public:
     DISABLE_COPY_MOVE(ImageLoader);
 
     bool loadImage(const QString &fileName);
-    const QImage &getImage();
-    const QImage &getNextImage();
-    bool isAnimated() const;
-    int imageCount() const;
-    int nextImageDelay() const;
+    [[nodiscard]] const QImage &getImage();
+    [[nodiscard]] const QImage &getNextImage();
+    [[nodiscard]] bool isAnimated() const;
+    [[nodiscard]] int imageCount() const;
+    [[nodiscard]] int nextImageDelay() const;
 
 private:
     RotatingIndex<> m_animationIndex {0, 1};

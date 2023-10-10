@@ -116,7 +116,7 @@ protected:
     }
 
 private:
-    int64_t toLong(std::unique_ptr<Exiv2::Value> value) const
+    [[nodiscard]] int64_t toLong(std::unique_ptr<Exiv2::Value> value) const
     {
 #if EXIV2_TEST_VERSION(0,28,0)
         return value->toInt64();
@@ -126,14 +126,14 @@ private:
     }
 
     template<std::size_t... I1>
-    inline QString decodeGpsImpl(const Exiv2::ExifData::const_iterator &value,
+    [[nodiscard]] inline QString decodeGpsImpl(const Exiv2::ExifData::const_iterator &value,
                                  std::index_sequence<I1...>)
     {
         return QString{"%1° %2′ %3″"}.arg(QString::number(value->getValue()->toFloat(I1))...);
     }
 
     template<int count = 3>
-    inline QString decodeGps(const Exiv2::ExifData::const_iterator &value)
+    [[nodiscard]] inline QString decodeGps(const Exiv2::ExifData::const_iterator &value)
     {
         return count <= value->count() ? decodeGpsImpl(value, std::make_index_sequence<count>{}) : "";
     }

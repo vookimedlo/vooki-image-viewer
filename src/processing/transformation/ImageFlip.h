@@ -38,8 +38,8 @@ public:
 
     void flipHorizontally();
     void flipVertically();
-    bool isFlippedHorizontally() const;
-    bool isFlippedVertically() const;
+    [[nodiscard]] bool isFlippedHorizontally() const;
+    [[nodiscard]] bool isFlippedVertically() const;
     void setFlipHorizontally(bool flipHorizontally);
     void setFlipVertically(bool flipVertically);
 
