@@ -5,7 +5,6 @@
 [submodule "components/KDMacTouchBar"]
 	path = components/KDMacTouchBar
 	url = https://github.com/vookimedlo/KDMacTouchBar
-	branch = qt6
 [submodule "components/kimageformats"]
 	path = components/kimageformats
 	url = https://github.com/KDE/kimageformats
