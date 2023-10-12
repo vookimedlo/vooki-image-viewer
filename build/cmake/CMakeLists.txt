@@ -506,3 +506,9 @@ ADD_TESTS(tests_util
         ../../src/util/test/MiscTest.cpp
         ../../src/util/test/RotatingIndexTest.cpp
 )
+
+ADD_TESTS(tests_model
+        ../../src/model/ImageCatalog.cpp
+        ../../src/model/test/main.cpp
+        ../../src/model/test/ImageCatalogTest.cpp
+)

@@ -65,5 +65,5 @@ QString ImageCatalog::getCatalogItem(const RotatingIndex<QIntegerForSizeof<std::
     if (m_catalog.isEmpty())
         return {};
 
-    return QFileInfo(m_absoluteDir + QDir::separator() + m_catalog.at(catalogIndex)).canonicalFilePath();
+    return QFileInfo{m_absoluteDir + QDir::separator() + m_catalog.at(catalogIndex)}.canonicalFilePath();
 }
