@@ -16,5 +16,6 @@ class ArrayTest: public QObject
 
 private slots:
     void constructArray() const;
+    void constructPointerArray() const;
 
 };

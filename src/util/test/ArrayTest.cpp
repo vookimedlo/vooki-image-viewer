@@ -13,6 +13,23 @@ VookiImageViewer - a tool for showing images.
 
 void ArrayTest::constructArray() const
 {
+    QString testingObject1;
+    QString testingObject2;
+    QString testingObject3;
+    QString testingObject4;
+
+    const std::array<QString, 2> firstArray { testingObject1, testingObject2 };
+    const std::array<QString, 2> secondArray { testingObject3, testingObject4 };
+    const std::array<QString, firstArray.size() + secondArray.size()> joinedArray { Array::concatenate<QString>(firstArray, secondArray) };
+
+    QCOMPARE(joinedArray[0], firstArray[0]);
+    QCOMPARE(joinedArray[1], firstArray[1]);
+    QCOMPARE(joinedArray[2], secondArray[0]);
+    QCOMPARE(joinedArray[3], secondArray[1]);
+}
+
+void ArrayTest::constructPointerArray() const
+{
     ArrayTest testingObject1;
     ArrayTest testingObject2;
     ArrayTest testingObject3;
