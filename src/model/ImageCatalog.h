@@ -27,8 +27,8 @@ public:
 
     [[nodiscard]] qsizetype getCatalogSize() const;
     [[nodiscard]] QString getCurrent() const;
-    [[nodiscard]] QString getNext();
-    [[nodiscard]] QString getPrevious();
+    QString getNext();
+    QString getPrevious();
 
 protected:
     [[nodiscard]] QString getCatalogItem(const RotatingIndex<QIntegerForSizeof<std::size_t>::Unsigned> &catalogIndex) const;

@@ -8,8 +8,11 @@ VookiImageViewer - a tool for showing images.
 
 ****************************************************************************/
 
-#include "../ImageCatalog.h"
 #include "ImageCatalogTest.h"
+
+#include <ranges>
+#include "../ImageCatalog.h"
+#include "../../util/array.h"
 
 QString ImageCatalogTest::makeAbsolutePath(const QString &file) const
 {
@@ -23,4 +26,136 @@ void ImageCatalogTest::noInitialization() const
     QCOMPARE(imageCatalog.getNext(), QString{});
     QCOMPARE(imageCatalog.getPrevious(), QString{});
     QCOMPARE(imageCatalog.getCatalogSize(), 0);
+}
+
+void ImageCatalogTest::initializationWithNonExistingDir() const
+{
+    ImageCatalog imageCatalog {QStringList {}};
+    imageCatalog.initialize(QDir{"@#$"});
+    QCOMPARE(imageCatalog.getCurrent(), QString{});
+    QCOMPARE(imageCatalog.getNext(), QString{});
+    QCOMPARE(imageCatalog.getPrevious(), QString{});
+    QCOMPARE(imageCatalog.getCatalogSize(), 0);
+}
+
+void ImageCatalogTest::initializationWithNonExistingFile() const
+{
+    ImageCatalog imageCatalog {QStringList {}};
+    imageCatalog.initialize(QFile{"/@#$#$#$/@#$"});
+    QCOMPARE(imageCatalog.getCurrent(), QString{});
+    QCOMPARE(imageCatalog.getNext(), QString{});
+    QCOMPARE(imageCatalog.getPrevious(), QString{});
+    QCOMPARE(imageCatalog.getCatalogSize(), 0);
+}
+
+void ImageCatalogTest::initializationWithExistingFile() const
+{
+    ImageCatalog imageCatalog {QStringList {}};
+    imageCatalog.initialize(QDir(ImageCatalogTest::makeAbsolutePath(singleFileDirPath)));
+
+    const auto expectedFilePath {ImageCatalogTest::makeAbsolutePath(singleFilePath)};
+    QCOMPARE(imageCatalog.getCurrent(), expectedFilePath);
+    QCOMPARE(imageCatalog.getNext(), expectedFilePath);
+    QCOMPARE(imageCatalog.getPrevious(), expectedFilePath);
+    QCOMPARE(imageCatalog.getCatalogSize(), 1);
+}
+
+void ImageCatalogTest::initializationWithExistingFileFiltered() const
+{
+    for (const auto &filter: {QStringList{"*.first_ext"}, QStringList{"*.first_*"}, QStringList{"*.first_ext"}, QStringList{"*.*_ext"}, QStringList{"*"}, QStringList{"f*"}})
+    {
+        ImageCatalog imageCatalog{ filter };
+        imageCatalog.initialize(QDir(ImageCatalogTest::makeAbsolutePath(singleFileDirPath)));
+
+        const auto expectedFilePath{ ImageCatalogTest::makeAbsolutePath(singleFilePath) };
+        QCOMPARE(imageCatalog.getCurrent(), expectedFilePath);
+        QCOMPARE(imageCatalog.getNext(), expectedFilePath);
+        QCOMPARE(imageCatalog.getPrevious(), expectedFilePath);
+        QCOMPARE(imageCatalog.getCatalogSize(), 1);
+    }
+}
+
+void ImageCatalogTest::initializationWithExistingFileNegativeFiltered() const
+{
+    for (const auto &filter: {QStringList{"*.first_ext1"}, QStringList{"*.first"}, QStringList{"1.first_ext"}, QStringList{"*f"}})
+    {
+        ImageCatalog imageCatalog{ filter };
+        imageCatalog.initialize(QDir(ImageCatalogTest::makeAbsolutePath(singleFileDirPath)));
+
+        QCOMPARE(imageCatalog.getCurrent(), QString{});
+        QCOMPARE(imageCatalog.getNext(), QString{});
+        QCOMPARE(imageCatalog.getPrevious(), QString{});
+        QCOMPARE(imageCatalog.getCatalogSize(), 0);
+    }
+}
+
+void ImageCatalogTest::initializationWithExistingDir() const
+{
+    for (const auto &list: {QStringList {}, QStringList {"*"}, QStringList {"*.*"}, QStringList {"BLAH", "*.*"}})
+    {
+        ImageCatalog imageCatalog{ list };
+        imageCatalog.initialize(QDir(ImageCatalogTest::makeAbsolutePath(multipleFilesDirPath)));
+
+        auto expectedFiles{ Array::concatenate<QString>(multipleFilesExtA, multipleFilesExtB) };
+        std::ranges::transform(expectedFiles, expectedFiles.begin(), [absolutePath = m_absolutePath](const QString &s) {
+            return QDir::cleanPath(absolutePath + QDir::separator() + s);
+        });
+        std::ranges::sort(expectedFiles, [](const QString &left, const QString &right) { return left < right; });
+        QCOMPARE(imageCatalog.getCatalogSize(), expectedFiles.size());
+
+        for (const auto &expectedFile : expectedFiles)
+        {
+            QCOMPARE(imageCatalog.getCurrent(), expectedFile);
+            imageCatalog.getNext();
+        }
+
+        std::ranges::for_each(std::ranges::reverse_view(expectedFiles), [&imageCatalog](const auto &expectedFile) {
+            imageCatalog.getPrevious();
+            QCOMPARE(imageCatalog.getCurrent(), expectedFile);
+        });
+    }
+}
+
+void ImageCatalogTest::initializationWithExistingDirExtBFiltered() const
+{
+    ImageCatalog imageCatalog {{"*.b_ext"}};
+    imageCatalog.initialize(QDir(ImageCatalogTest::makeAbsolutePath(multipleFilesDirPath)));
+
+    auto expectedFiles {multipleFilesExtB};
+    std::ranges::transform(expectedFiles, expectedFiles.begin(), [absolutePath = m_absolutePath](const QString& s) { return QDir::cleanPath(absolutePath + QDir::separator() + s); });
+
+    QCOMPARE(imageCatalog.getCatalogSize(), expectedFiles.size());
+
+    for (const auto &expectedFile: expectedFiles)
+    {
+        QCOMPARE(imageCatalog.getCurrent(), expectedFile);
+        imageCatalog.getNext();
+    }
+
+    std::ranges::for_each(std::ranges::reverse_view(expectedFiles), [&imageCatalog](const auto& expectedFile){
+        imageCatalog.getPrevious();
+        QCOMPARE(imageCatalog.getCurrent(), expectedFile);
+    });
+}
+
+void ImageCatalogTest::initializationWithExistingFileExtBFiltered() const
+{
+    ImageCatalog imageCatalog {{"*.a_ext"}};
+    imageCatalog.initialize(QFile(ImageCatalogTest::makeAbsolutePath(fourthFilePath)));
+
+    auto expectedFiles {multipleFilesExtA};
+    std::ranges::transform(expectedFiles, expectedFiles.begin(), [absolutePath = m_absolutePath](const QString& s) { return QDir::cleanPath(absolutePath + QDir::separator() + s); });
+
+    QCOMPARE(imageCatalog.getCatalogSize(), expectedFiles.size());
+
+    std::ranges::for_each(std::ranges::reverse_view(expectedFiles), [&imageCatalog](const auto& expectedFile){
+        QCOMPARE(imageCatalog.getCurrent(), expectedFile);
+        imageCatalog.getNext();
+    });
+
+    for (const auto &expectedFile: expectedFiles)
+    {
+        imageCatalog.getPrevious();
+        QCOMPARE(imageCatalog.getCurrent(), expectedFile);
+    }
 }

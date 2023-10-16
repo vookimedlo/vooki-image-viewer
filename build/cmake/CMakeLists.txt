@@ -476,6 +476,15 @@ function(ADD_TEST_RESOURCE path file)
     )
 endfunction()
 
+function(ADD_TEST_RESOURCE_DIRECTORY path directory)
+    add_custom_command(
+            OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${directory}
+            COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${CMAKE_CURRENT_SOURCE_DIR}/${path}/${directory}
+            ${CMAKE_CURRENT_BINARY_DIR}/${directory}
+            DEPENDS  ${CMAKE_CURRENT_SOURCE_DIR}/${path}/${directory}
+    )
+endfunction()
 
 ADD_TESTS(tests_transformation
         ../../src/processing/transformation/test/main.cpp
@@ -507,7 +516,9 @@ ADD_TESTS(tests_util
         ../../src/util/test/RotatingIndexTest.cpp
 )
 
+ADD_TEST_RESOURCE_DIRECTORY(../../src/model/test/resource model)
 ADD_TESTS(tests_model
+        ${CMAKE_CURRENT_BINARY_DIR}/model
         ../../src/model/ImageCatalog.cpp
         ../../src/model/test/main.cpp
         ../../src/model/test/ImageCatalogTest.cpp
