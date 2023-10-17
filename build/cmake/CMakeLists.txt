@@ -520,6 +520,8 @@ ADD_TEST_RESOURCE_DIRECTORY(../../src/model/test/resource model)
 ADD_TESTS(tests_model
         ${CMAKE_CURRENT_BINARY_DIR}/model
         ../../src/model/ImageCatalog.cpp
+        ../../src/model/FileSystemSortFilterProxyModel.cpp
         ../../src/model/test/main.cpp
         ../../src/model/test/ImageCatalogTest.cpp
+        ../../src/model/test/FileSystemSortFilterProxyModelTest.cpp
 )

@@ -51,9 +51,9 @@ void ImageCatalogTest::initializationWithNonExistingFile() const
 void ImageCatalogTest::initializationWithExistingFile() const
 {
     ImageCatalog imageCatalog {QStringList {}};
-    imageCatalog.initialize(QDir(ImageCatalogTest::makeAbsolutePath(singleFileDirPath)));
+    imageCatalog.initialize(QDir(ImageCatalogTest::makeAbsolutePath(m_singleFileDirPath)));
 
-    const auto expectedFilePath {ImageCatalogTest::makeAbsolutePath(singleFilePath)};
+    const auto expectedFilePath {ImageCatalogTest::makeAbsolutePath(m_singleFilePath)};
     QCOMPARE(imageCatalog.getCurrent(), expectedFilePath);
     QCOMPARE(imageCatalog.getNext(), expectedFilePath);
     QCOMPARE(imageCatalog.getPrevious(), expectedFilePath);
@@ -65,9 +65,9 @@ void ImageCatalogTest::initializationWithExistingFileFiltered() const
     for (const auto &filter: {QStringList{"*.first_ext"}, QStringList{"*.first_*"}, QStringList{"*.first_ext"}, QStringList{"*.*_ext"}, QStringList{"*"}, QStringList{"f*"}})
     {
         ImageCatalog imageCatalog{ filter };
-        imageCatalog.initialize(QDir(ImageCatalogTest::makeAbsolutePath(singleFileDirPath)));
+        imageCatalog.initialize(QDir(ImageCatalogTest::makeAbsolutePath(m_singleFileDirPath)));
 
-        const auto expectedFilePath{ ImageCatalogTest::makeAbsolutePath(singleFilePath) };
+        const auto expectedFilePath{ ImageCatalogTest::makeAbsolutePath(m_singleFilePath) };
         QCOMPARE(imageCatalog.getCurrent(), expectedFilePath);
         QCOMPARE(imageCatalog.getNext(), expectedFilePath);
         QCOMPARE(imageCatalog.getPrevious(), expectedFilePath);
@@ -80,7 +80,7 @@ void ImageCatalogTest::initializationWithExistingFileNegativeFiltered() const
     for (const auto &filter: {QStringList{"*.first_ext1"}, QStringList{"*.first"}, QStringList{"1.first_ext"}, QStringList{"*f"}})
     {
         ImageCatalog imageCatalog{ filter };
-        imageCatalog.initialize(QDir(ImageCatalogTest::makeAbsolutePath(singleFileDirPath)));
+        imageCatalog.initialize(QDir(ImageCatalogTest::makeAbsolutePath(m_singleFileDirPath)));
 
         QCOMPARE(imageCatalog.getCurrent(), QString{});
         QCOMPARE(imageCatalog.getNext(), QString{});
@@ -94,9 +94,9 @@ void ImageCatalogTest::initializationWithExistingDir() const
     for (const auto &list: {QStringList {}, QStringList {"*"}, QStringList {"*.*"}, QStringList {"BLAH", "*.*"}})
     {
         ImageCatalog imageCatalog{ list };
-        imageCatalog.initialize(QDir(ImageCatalogTest::makeAbsolutePath(multipleFilesDirPath)));
+        imageCatalog.initialize(QDir(ImageCatalogTest::makeAbsolutePath(m_multipleFilesDirPath)));
 
-        auto expectedFiles{ Array::concatenate<QString>(multipleFilesExtA, multipleFilesExtB) };
+        auto expectedFiles{ Array::concatenate<QString>(m_multipleFilesExtA, m_multipleFilesExtB) };
         std::ranges::transform(expectedFiles, expectedFiles.begin(), [absolutePath = m_absolutePath](const QString &s) {
             return QDir::cleanPath(absolutePath + QDir::separator() + s);
         });
@@ -119,9 +119,9 @@ void ImageCatalogTest::initializationWithExistingDir() const
 void ImageCatalogTest::initializationWithExistingDirExtBFiltered() const
 {
     ImageCatalog imageCatalog {{"*.b_ext"}};
-    imageCatalog.initialize(QDir(ImageCatalogTest::makeAbsolutePath(multipleFilesDirPath)));
+    imageCatalog.initialize(QDir(ImageCatalogTest::makeAbsolutePath(m_multipleFilesDirPath)));
 
-    auto expectedFiles {multipleFilesExtB};
+    auto expectedFiles { m_multipleFilesExtB };
     std::ranges::transform(expectedFiles, expectedFiles.begin(), [absolutePath = m_absolutePath](const QString& s) { return QDir::cleanPath(absolutePath + QDir::separator() + s); });
 
     QCOMPARE(imageCatalog.getCatalogSize(), expectedFiles.size());
@@ -141,9 +141,9 @@ void ImageCatalogTest::initializationWithExistingDirExtBFiltered() const
 void ImageCatalogTest::initializationWithExistingFileExtBFiltered() const
 {
     ImageCatalog imageCatalog {{"*.a_ext"}};
-    imageCatalog.initialize(QFile(ImageCatalogTest::makeAbsolutePath(fourthFilePath)));
+    imageCatalog.initialize(QFile(ImageCatalogTest::makeAbsolutePath(m_fourthFilePath)));
 
-    auto expectedFiles {multipleFilesExtA};
+    auto expectedFiles { m_multipleFilesExtA };
     std::ranges::transform(expectedFiles, expectedFiles.begin(), [absolutePath = m_absolutePath](const QString& s) { return QDir::cleanPath(absolutePath + QDir::separator() + s); });
 
     QCOMPARE(imageCatalog.getCatalogSize(), expectedFiles.size());

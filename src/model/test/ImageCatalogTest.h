@@ -26,13 +26,16 @@ class ImageCatalogTest: public QObject
 
     const QString m_absolutePath {QCoreApplication::applicationDirPath()};
     const QString m_modelPath {PREFIX("model")};
-    const QString singleFileDirPath {m_modelPath + QDir::separator() + "single_file"};
-    const QString singleFilePath {singleFileDirPath + QDir::separator() + "first.first_ext"};
-    const QString multipleFilesDirPath {m_modelPath + QDir::separator() + "multiple_files"};
-    const QString fourthFilePath{multipleFilesDirPath + QDir::separator() + "fourth.a_ext"};
+    const QString m_singleFileDirPath{m_modelPath + QDir::separator() + "single_file"};
+    const QString m_singleFilePath{ m_singleFileDirPath + QDir::separator() + "first.first_ext"};
+    const QString m_multipleFilesDirPath{m_modelPath + QDir::separator() + "multiple_files"};
+    const QString m_fourthFilePath{ m_multipleFilesDirPath + QDir::separator() + "fourth.a_ext"};
 
-    const std::array<QString, 3> multipleFilesExtA {multipleFilesDirPath + QDir::separator() + "first.a_ext", multipleFilesDirPath + QDir::separator() + "third.a_ext", multipleFilesDirPath + QDir::separator() + "fourth.a_ext"};
-    const std::array<QString, 2> multipleFilesExtB {multipleFilesDirPath + QDir::separator() + "first.b_ext", multipleFilesDirPath + QDir::separator() + "second.b_ext"};
+    const std::array<QString, 3> m_multipleFilesExtA{ m_multipleFilesDirPath + QDir::separator() + "first.a_ext",
+                                                      m_multipleFilesDirPath + QDir::separator() + "third.a_ext",
+                                                      m_multipleFilesDirPath + QDir::separator() + "fourth.a_ext"};
+    const std::array<QString, 2> m_multipleFilesExtB{ m_multipleFilesDirPath + QDir::separator() + "first.b_ext",
+                                                      m_multipleFilesDirPath + QDir::separator() + "second.b_ext"};
 
 private slots:
     void noInitialization() const;

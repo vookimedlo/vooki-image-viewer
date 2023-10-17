@@ -8,6 +8,7 @@ VookiImageViewer - a tool for showing images.
 
 ****************************************************************************/
 
+#include "FileSystemSortFilterProxyModelTest.h"
 #include "ImageCatalogTest.h"
 
 #include "../../util/testing.h"
@@ -18,6 +19,7 @@ int main(int argc, char *argv[])
     int status = 0;
 
     runTests<ImageCatalogTest>(argc, argv, &status);
+    runTests<FileSystemSortFilterProxyModelTest>(argc, argv, &status);
 
     return status;
 }
