@@ -23,7 +23,7 @@ QString FileSystemSortFilterProxyModelTest::makeAbsolutePath(const QString &file
 
 void FileSystemSortFilterProxyModelTest::directoryLoaded([[maybe_unused]] QString path)
 {
-#ifdef __cpp_binary_literals
+#ifdef __cpp_lib_semaphore
     m_directoryLoadedSemaphore.release();
 #endif
 }
@@ -37,17 +37,17 @@ void FileSystemSortFilterProxyModelTest::sorting()
     model.setNameFilterDisables(false);
     auto modelIndex = model.setRootPath(makeAbsolutePath(m_multipleFilesDirPath));
 
-#ifdef __cpp_binary_literals
+#ifdef __cpp_lib_semaphore
     // Model is populated in the dedicated thread so we need to wait for its completion.
     bool isDirectoryLoaded {QTest::qWaitFor([&directoryLoadedSemaphore = m_directoryLoadedSemaphore]() {
         return directoryLoadedSemaphore.try_acquire();
     }, 3000)};
+    QCOMPARE(isDirectoryLoaded, true);
 #else
     QTest::qWait(3000);
 #endif
 
     disconnect(&model, SIGNAL(directoryLoaded(QString)), this, SLOT(directoryLoaded(QString)));
-    QCOMPARE(isDirectoryLoaded, true);
 
     FileSystemSortFilterProxyModel proxyModel;
     proxyModel.setSourceModel(&model);

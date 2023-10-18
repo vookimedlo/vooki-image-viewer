@@ -50,7 +50,7 @@ class FileSystemSortFilterProxyModelTest: public QObject
                                                             "first.b_ext",
                                                             "second.b_ext"};
 
-#ifdef __cpp_binary_literals
+#ifdef __cpp_lib_semaphore
     std::binary_semaphore m_directoryLoadedSemaphore {0};
 #endif
 
