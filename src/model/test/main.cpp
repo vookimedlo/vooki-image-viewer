@@ -8,14 +8,18 @@ VookiImageViewer - a tool for showing images.
 
 ****************************************************************************/
 
-#include <QTest>
+#include "FileSystemSortFilterProxyModelTest.h"
+#include "ImageCatalogTest.h"
 
-class ArrayTest: public QObject
+#include "../../util/testing.h"
+
+
+int main(int argc, char *argv[])
 {
-    Q_OBJECT
+    int status = 0;
 
-private slots:
-    void constructArray() const;
-    void constructPointerArray() const;
+    runTests<ImageCatalogTest>(argc, argv, &status);
+    runTests<FileSystemSortFilterProxyModelTest>(argc, argv, &status);
 
-};
+    return status;
+}

@@ -45,4 +45,29 @@ namespace Array
     {
         return Helper::construct_array<BASE>(array1, array2);
     }
+
+    namespace Helper
+    {
+            template<typename T, std::size_t... I1, std::size_t... I2>
+            std::array<T, sizeof...(I1) + sizeof...(I2)> construct_array_impl(const std::array<T, sizeof...(I1)> &array1,
+                                                                              std::index_sequence<I1...>,
+                                                                              const std::array<T, sizeof...(I2)> &array2,
+                                                                              std::index_sequence<I2...>)
+            {
+                return { { array1[I1]..., array2[I2]... } };
+            }
+
+            template<typename T, std::size_t N1, std::size_t N2>
+            std::array<T, N1 + N2> construct_array(const std::array<T, N1> &array1, const std::array<T, N2> &array2)
+            {
+                return construct_array_impl<T>(array1, std::make_index_sequence<N1>{}, array2, std::make_index_sequence<N2>{});
+            }
+    }
+
+    /// Joins arrays so all elements are copied over to the base array.
+    template<typename T, std::size_t N1, std::size_t N2>
+    std::array<T, N1 + N2> concatenate(const std::array<T, N1> &array1, const std::array<T, N2> &array2)
+    {
+        return Helper::construct_array<T>(array1, array2);
+    }
 }
