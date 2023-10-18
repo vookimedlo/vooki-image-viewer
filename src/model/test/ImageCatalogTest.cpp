@@ -109,7 +109,7 @@ void ImageCatalogTest::initializationWithExistingDir() const
             imageCatalog.getNext();
         }
 
-        std::ranges::for_each(std::ranges::reverse_view(expectedFiles), [&imageCatalog](const auto &expectedFile) {
+        std::ranges::for_each(expectedFiles.rbegin(), expectedFiles.rend(), [&imageCatalog](const auto &expectedFile) {
             imageCatalog.getPrevious();
             QCOMPARE(imageCatalog.getCurrent(), expectedFile);
         });
@@ -132,7 +132,7 @@ void ImageCatalogTest::initializationWithExistingDirExtBFiltered() const
         imageCatalog.getNext();
     }
 
-    std::ranges::for_each(std::ranges::reverse_view(expectedFiles), [&imageCatalog](const auto& expectedFile){
+    std::ranges::for_each(expectedFiles.rbegin(), expectedFiles.rend(), [&imageCatalog](const auto &expectedFile) {
         imageCatalog.getPrevious();
         QCOMPARE(imageCatalog.getCurrent(), expectedFile);
     });
@@ -148,7 +148,7 @@ void ImageCatalogTest::initializationWithExistingFileExtBFiltered() const
 
     QCOMPARE(imageCatalog.getCatalogSize(), expectedFiles.size());
 
-    std::ranges::for_each(std::ranges::reverse_view(expectedFiles), [&imageCatalog](const auto& expectedFile){
+    std::ranges::for_each(expectedFiles.rbegin(), expectedFiles.rend(), [&imageCatalog](const auto &expectedFile) {
         QCOMPARE(imageCatalog.getCurrent(), expectedFile);
         imageCatalog.getNext();
     });
