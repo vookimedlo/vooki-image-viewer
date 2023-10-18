@@ -21,9 +21,11 @@ QString FileSystemSortFilterProxyModelTest::makeAbsolutePath(const QString &file
     return QDir::cleanPath(m_absolutePath + QDir::separator() + file);
 }
 
-void FileSystemSortFilterProxyModelTest::directoryLoaded(QString f)
+void FileSystemSortFilterProxyModelTest::directoryLoaded([[maybe_unused]] QString path)
 {
+#ifdef __cpp_binary_literals
     m_directoryLoadedSemaphore.release();
+#endif
 }
 
 void FileSystemSortFilterProxyModelTest::sorting()
@@ -35,30 +37,44 @@ void FileSystemSortFilterProxyModelTest::sorting()
     model.setNameFilterDisables(false);
     auto modelIndex = model.setRootPath(makeAbsolutePath(m_multipleFilesDirPath));
 
+#ifdef __cpp_binary_literals
     // Model is populated in the dedicated thread so we need to wait for its completion.
-    while (!m_directoryLoadedSemaphore.try_acquire())
-        QTest::qWait(100);
+    bool isDirectoryLoaded {QTest::qWaitFor([&directoryLoadedSemaphore = m_directoryLoadedSemaphore]() {
+        return directoryLoadedSemaphore.try_acquire();
+    }, 3000)};
+#else
+    QTest::qWait(3000);
+#endif
+
+    disconnect(&model, SIGNAL(directoryLoaded(QString)), this, SLOT(directoryLoaded(QString)));
+    QCOMPARE(isDirectoryLoaded, true);
 
     FileSystemSortFilterProxyModel proxyModel;
     proxyModel.setSourceModel(&model);
     proxyModel.sort(0, Qt::SortOrder::AscendingOrder);
 
-    QCOMPARE(model.rowCount(modelIndex), m_multipleFilesContent.size());
-    QCOMPARE(model.data(modelIndex).value<QString>(), "multiple_files");
-    QCOMPARE(proxyModel.rowCount(proxyModel.mapFromSource(modelIndex)), m_multipleFilesContent.size());
-    QCOMPARE(proxyModel.data(proxyModel.mapFromSource(modelIndex)).value<QString>(), "multiple_files");
+    std::vector<QString> expectedMultipleFilesContentOrdered;
+    std::ranges::copy(m_multipleFilesDirectories, std::back_inserter(expectedMultipleFilesContentOrdered));
+    std::ranges::copy(m_multipleFilesFiles, std::back_inserter(expectedMultipleFilesContentOrdered));
+    const std::unordered_set<QString> expectedMultipleFilesContent {expectedMultipleFilesContentOrdered.begin(), expectedMultipleFilesContentOrdered.end()};
 
-    std::unordered_set<QString> expectedMultipleFilesContent {m_multipleFilesContent.cbegin(), m_multipleFilesContent.cend()};
+    QCOMPARE(model.rowCount(modelIndex), expectedMultipleFilesContent.size());
+    QCOMPARE(model.data(modelIndex).value<QString>(), m_multipleFiles);
+    QCOMPARE(proxyModel.rowCount(proxyModel.mapFromSource(modelIndex)), expectedMultipleFilesContent.size());
+    QCOMPARE(proxyModel.data(proxyModel.mapFromSource(modelIndex)).value<QString>(), m_multipleFiles);
+
     std::unordered_set<QString> multipleFilesContent {};
-
     for (auto row = 0; row < model.rowCount(modelIndex); ++row)
-        multipleFilesContent.insert(m_multipleFilesDirPath + QDir::separator() + model.data(model.index(row, 0, modelIndex)).value<QString>());
-
+        multipleFilesContent.insert(model.data(model.index(row, 0, modelIndex)).value<QString>());
     QCOMPARE(multipleFilesContent, expectedMultipleFilesContent);
 
     multipleFilesContent.clear();
     for (auto row = 0; row < proxyModel.rowCount(proxyModel.mapFromSource(modelIndex)); ++row)
-        multipleFilesContent.insert(m_multipleFilesDirPath + QDir::separator() + proxyModel.data(proxyModel.index(row, 0, proxyModel.mapFromSource(modelIndex))).value<QString>());
-
+        multipleFilesContent.insert(proxyModel.data(proxyModel.index(row, 0, proxyModel.mapFromSource(modelIndex))).value<QString>());
     QCOMPARE(multipleFilesContent, expectedMultipleFilesContent);
+
+    std::vector<QString> multipleFilesContentOrdered;
+    for (auto row = 0; row < proxyModel.rowCount(proxyModel.mapFromSource(modelIndex)); ++row)
+        multipleFilesContentOrdered.push_back(proxyModel.data(proxyModel.index(row, 0, proxyModel.mapFromSource(modelIndex))).value<QString>());
+    QCOMPARE(multipleFilesContentOrdered, expectedMultipleFilesContentOrdered);
 }

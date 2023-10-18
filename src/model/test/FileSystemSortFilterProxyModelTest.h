@@ -9,9 +9,13 @@ VookiImageViewer - a tool for showing images.
 ****************************************************************************/
 
 #include <array>
-#include <semaphore>
+#include <set>
 #include <QDir>
 #include <QTest>
+
+#if __has_include(<semaphore>)
+    #include <semaphore>
+#endif
 
 #ifdef __APPLE__
     #define PREFIX(X) "../../../" X
@@ -27,18 +31,28 @@ class FileSystemSortFilterProxyModelTest: public QObject
 
     const QString m_absolutePath {QCoreApplication::applicationDirPath()};
     const QString m_modelPath {PREFIX("model")};
-    const QString m_multipleFilesDirPath{m_modelPath + QDir::separator() + "multiple_files"};
+    const QString m_multipleFiles {"multiple_files"};
+    const QString m_multipleFilesDirPath{m_modelPath + QDir::separator() + m_multipleFiles};
 
-    const std::array<QString, 7> m_multipleFilesContent {m_multipleFilesDirPath + QDir::separator() + "Folder1",
-                                                         m_multipleFilesDirPath + QDir::separator() + "folder2",
-                                                         m_multipleFilesDirPath + QDir::separator() + "first.a_ext",
-                                                         m_multipleFilesDirPath + QDir::separator() + "third.a_ext",
-                                                         m_multipleFilesDirPath + QDir::separator() + "fourth.a_ext",
-                                                         m_multipleFilesDirPath + QDir::separator() + "first.b_ext",
-                                                         m_multipleFilesDirPath + QDir::separator() + "second.b_ext"};
 
+    struct LessThan {
+        bool operator()(const QString& a, const QString& b) const {
+            return a < b;
+        }
+    };
+
+    const std::set<QString, LessThan> m_multipleFilesDirectories {"Folder1",
+                                                                 "folder2"};
+
+    const std::set<QString, LessThan> m_multipleFilesFiles {"first.a_ext",
+                                                            "third.a_ext",
+                                                            "fourth.a_ext",
+                                                            "first.b_ext",
+                                                            "second.b_ext"};
+
+#ifdef __cpp_binary_literals
     std::binary_semaphore m_directoryLoadedSemaphore {0};
-
+#endif
 
 private slots:
     void directoryLoaded(QString);
