@@ -525,3 +525,9 @@ ADD_TESTS(tests_model
         ../../src/model/test/ImageCatalogTest.cpp
         ../../src/model/test/FileSystemSortFilterProxyModelTest.cpp
 )
+
+ADD_TESTS(tests_ui_support
+        ../../src/ui/support/RecentFileAction.cpp
+        ../../src/ui/support/test/main.cpp
+        ../../src/ui/support/test/RecentFileActionTest.cpp
+)
