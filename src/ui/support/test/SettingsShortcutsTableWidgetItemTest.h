@@ -8,18 +8,15 @@ VookiImageViewer - a tool for showing images.
 
 ****************************************************************************/
 
-#include "RecentFileActionTest.h"
-#include "SettingsShortcutsTableWidgetItemTest.h"
+#include <QTest>
 
-#include "../../../util/testing.h"
-
-
-int main(int argc, char *argv[])
+class SettingsShortcutsTableWidgetItemTest: public QObject
 {
-    int status = 0;
+    Q_OBJECT
 
-    runTests<RecentFileActionTest>(argc, argv, &status);
-    runTests<SettingsShortcutsTableWidgetItemTest>(argc, argv, &status);
+signals:
+    void keySequenceChanged(const QKeySequence &) const;
 
-    return status;
-}
+private slots:
+    void onKeySequenceChanged() const;
+};

@@ -10,8 +10,6 @@ VookiImageViewer - a tool for showing images.
 
 #include "SettingsShortcutsTableWidgetItem.h"
 
-const int SettingsShortcutsTableWidgetItem::type = QTableWidgetItem::UserType + 1;
-
 SettingsShortcutsTableWidgetItem::SettingsShortcutsTableWidgetItem(QAction &action)
                                         : QObject()
                                         , QTableWidgetItem(SettingsShortcutsTableWidgetItem::type)

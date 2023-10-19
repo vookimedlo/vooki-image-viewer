@@ -28,7 +28,7 @@ public:
     [[nodiscard]] QAction &action() const;
     [[nodiscard]] QKeySequence keySequence() const;
 
-    static const int type;
+    static constexpr int type {QTableWidgetItem::UserType + 1};
 
 public Q_SLOTS:
     void onKeySequenceChanged(const QKeySequence &keySequence);
