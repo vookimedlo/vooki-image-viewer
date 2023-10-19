@@ -528,8 +528,10 @@ ADD_TESTS(tests_model
 
 ADD_TESTS(tests_ui_support
         ../../src/ui/support/RecentFileAction.cpp
+        ../../src/ui/support/Settings.cpp
         ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp
         ../../src/ui/support/test/main.cpp
         ../../src/ui/support/test/RecentFileActionTest.cpp
+        ../../src/ui/support/test/SettingsTest.cpp
         ../../src/ui/support/test/SettingsShortcutsTableWidgetItemTest.cpp
 )

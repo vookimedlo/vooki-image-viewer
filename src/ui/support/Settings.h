@@ -23,7 +23,7 @@ public:
     [[nodiscard]] static std::unique_ptr<QSettings> defaultSettings();
     static void initializeSettings();
     static void initializeSettings(const QMenu *menu);
-    [[nodiscard]]  static std::unique_ptr<QSettings> userSettings();
+    [[nodiscard]] static std::unique_ptr<QSettings> userSettings();
 
 protected:
     static void initializeSettings(QSettings &defaultSettings);

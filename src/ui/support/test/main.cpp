@@ -9,6 +9,7 @@ VookiImageViewer - a tool for showing images.
 ****************************************************************************/
 
 #include "RecentFileActionTest.h"
+#include "SettingsTest.h"
 #include "SettingsShortcutsTableWidgetItemTest.h"
 
 #include "../../../util/testing.h"
@@ -19,6 +20,7 @@ int main(int argc, char *argv[])
     int status = 0;
 
     runTests<RecentFileActionTest>(argc, argv, &status);
+    runTests<SettingsTest>(argc, argv, &status);
     runTests<SettingsShortcutsTableWidgetItemTest>(argc, argv, &status);
 
     return status;
