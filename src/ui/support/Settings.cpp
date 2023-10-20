@@ -9,8 +9,10 @@ VookiImageViewer - a tool for showing images.
 ****************************************************************************/
 
 #include "Settings.h"
-#include "SettingsStrings.h"
 #include <QCoreApplication>
+#include <queue>
+#include "SettingsStrings.h"
+
 
 std::unique_ptr<QSettings> Settings::defaultSettings()
 {
@@ -58,24 +60,32 @@ void Settings::initializeSettings(const QMenu *menu)
 
 void Settings::initializeSettings(const QMenu *menu, QSettings &defaultSettings, const QSettings &userSettings)
 {
-    auto actions = menu->actions();
-    for (auto * const action : actions)
+    std::queue<const QMenu *> unprocessedMenus;
+    unprocessedMenus.push(menu);
+
+    while(!unprocessedMenus.empty())
     {
-        if (action->isSeparator())
-            continue;
+        const QMenu *const menu = unprocessedMenus.front();
+        unprocessedMenus.pop();
 
-        // I don't like recursion, but menus are usually not too nested, so it doesn't matter.
-        if (action->menu() && action->menu() != menu)
+        const auto actions = menu->actions();
+        for (auto * const action : actions)
         {
-            Settings::initializeSettings(action->menu(), defaultSettings, userSettings);
-            continue;
+            if (action->isSeparator())
+                continue;
+
+            if (action->menu() && action->menu() != menu)
+            {
+                unprocessedMenus.push(action->menu());
+                continue;
+            }
+
+            if (action->whatsThis().isEmpty())
+                continue;
+
+            defaultSettings.setValue(action->whatsThis(), action->shortcut());
+            action->setShortcut(userSettings.value(action->whatsThis(), defaultSettings.value(action->whatsThis())).value<QKeySequence>());
         }
-
-        if (action->whatsThis().isEmpty())
-            continue;
-
-        defaultSettings.setValue(action->whatsThis(), action->shortcut());
-        action->setShortcut(userSettings.value(action->whatsThis(), defaultSettings.value(action->whatsThis())).value<QKeySequence>());
     }
 }
 
