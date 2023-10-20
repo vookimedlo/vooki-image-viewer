@@ -9,6 +9,9 @@ VookiImageViewer - a tool for showing images.
 ****************************************************************************/
 
 #include <QTest>
+#include <QMenu>
+#include <QSettings>
+#include <queue>
 #include <unordered_set>
 #include "../SettingsStrings.h"
 
@@ -24,7 +27,40 @@ class SettingsTest: public QObject
             return expectedKeys;
         }();
 
+    template <typename T, size_t N>
+    void getAllShortcuts(QSettings &settings, const std::array<T,N>& menus) const
+    {
+        std::queue<const QMenu *> unprocessedMenus;
+        std::ranges::for_each(menus, [&unprocessedMenus](const QMenu * const menu){
+            unprocessedMenus.push(menu);
+        });
+
+        while(!unprocessedMenus.empty())
+        {
+            const QMenu *const menu = unprocessedMenus.front();
+            unprocessedMenus.pop();
+
+            for (auto *const action : menu->actions())
+            {
+                if (action->isSeparator())
+                    continue;
+
+                if (action->menu() && action->menu() != menu)
+                {
+                    unprocessedMenus.push(action->menu());
+                    continue;
+                }
+
+                if (action->whatsThis().isEmpty())
+                    continue;
+
+                settings.setValue(action->whatsThis(), action->shortcut());
+            }
+        }
+    }
+
 
 private slots:
     void initializeSettings() const;
+    void initializeSettingsByMenu() const;
 };
