@@ -12,15 +12,19 @@ VookiImageViewer - a tool for showing images.
 #include "SettingsStrings.h"
 #include <QCoreApplication>
 
-std::shared_ptr<QSettings> Settings::defaultSettings()
+std::unique_ptr<QSettings> Settings::defaultSettings()
 {
-    return std::make_shared<QSettings>(QSettings::UserScope, QCoreApplication::organizationName());
+    return std::make_unique<QSettings>(QSettings::UserScope, QCoreApplication::organizationName());
 }
 
 void Settings::initializeSettings()
 {
     QSettings defaultSettings(QSettings::UserScope, QCoreApplication::organizationName());
+    Settings::initializeSettings(defaultSettings);
+}
 
+void Settings::initializeSettings(QSettings &defaultSettings)
+{
     defaultSettings.setValue(SETTINGS_GENERAL_FULLSCREEN, false);
     defaultSettings.setValue(SETTINGS_WINDOW_HIDE_STATUSBAR, false);
     defaultSettings.setValue(SETTINGS_WINDOW_HIDE_TOOLBAR, false);
@@ -49,7 +53,11 @@ void Settings::initializeSettings(const QMenu *menu)
 {
     QSettings defaultSettings(QSettings::UserScope, QCoreApplication::organizationName());
     QSettings userSettings(QSettings::UserScope, QCoreApplication::organizationName(), QCoreApplication::applicationName());
+    Settings::initializeSettings(menu, defaultSettings, userSettings);
+}
 
+void Settings::initializeSettings(const QMenu *menu, QSettings &defaultSettings, const QSettings &userSettings)
+{
     auto actions = menu->actions();
     for (auto * const action : actions)
     {
@@ -59,7 +67,7 @@ void Settings::initializeSettings(const QMenu *menu)
         // I don't like recursion, but menus are usually not too nested, so it doesn't matter.
         if (action->menu() && action->menu() != menu)
         {
-            initializeSettings(action->menu());
+            Settings::initializeSettings(action->menu(), defaultSettings, userSettings);
             continue;
         }
 
@@ -75,12 +83,16 @@ void Settings::restoreDefaultSettings()
 {
     QSettings defaultSettings(QSettings::UserScope, QCoreApplication::organizationName());
     QSettings userSettings(QSettings::UserScope, QCoreApplication::organizationName(), QCoreApplication::applicationName());
+    Settings::restoreDefaultSettings(defaultSettings, userSettings);
+}
 
+void Settings::restoreDefaultSettings(const QSettings &defaultSettings, QSettings &userSettings)
+{
     for (const QString &key : defaultSettings.allKeys())
         userSettings.setValue(key, defaultSettings.value(key));
 }
 
-std::shared_ptr<QSettings> Settings::userSettings()
+std::unique_ptr<QSettings> Settings::userSettings()
 {
-    return std::make_shared<QSettings>(QSettings::UserScope, QCoreApplication::organizationName(), QCoreApplication::applicationName());
+    return std::make_unique<QSettings>(QSettings::UserScope, QCoreApplication::organizationName(), QCoreApplication::applicationName());
 }

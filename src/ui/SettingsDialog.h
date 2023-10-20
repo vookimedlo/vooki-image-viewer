@@ -28,7 +28,7 @@ public:
     void populateShortcuts(const QMenu *menu) const;
 
 protected:
-    void initializeUI(std::shared_ptr<QSettings> settings);
+    void initializeUI(const std::unique_ptr<QSettings> &settings);
 
 protected slots:
     virtual void onAccept();
