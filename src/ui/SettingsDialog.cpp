@@ -31,7 +31,7 @@ SettingsDialog::SettingsDialog(QWidget *parent)
     }
 
     auto settings = Settings::userSettings();
-    initializeUI(settings);
+    initializeUI(settings.get());
 
     // restore all shortcuts from user settings
     for (int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); i++)
@@ -75,7 +75,7 @@ void SettingsDialog::populateShortcuts(const QMenu *menu) const
     }
 }
 
-void SettingsDialog::initializeUI(const std::unique_ptr<QSettings> &settings)
+void SettingsDialog::initializeUI(const QSettings * const settings)
 {
     m_uiSettingsDialog.checkBoxUseSystemLanguage->setChecked(settings->value(m_uiSettingsDialog.checkBoxUseSystemLanguage->whatsThis()).toBool());
     m_uiSettingsDialog.checkBoxGeneralStartInFullscreen->setChecked(settings->value(m_uiSettingsDialog.checkBoxGeneralStartInFullscreen->whatsThis()).toBool());
@@ -173,7 +173,7 @@ void SettingsDialog::onRejected()
 void SettingsDialog::onRestoreDefaultsTriggered()
 {
     auto settings { Settings::defaultSettings() };
-    initializeUI(settings);
+    initializeUI(settings.get());
 
     // restore all shortcuts from default settings
     for (int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); ++i)

@@ -20,7 +20,7 @@ class SettingsTest: public QObject
     const std::unordered_set<QString> m_expectedKeys =
         []() {
             std::unordered_set<QString> expectedKeys;
-            std::ranges::for_each(settingsSet, [&expectedKeys](const char *string) { expectedKeys.insert(QString(string)); });
+            std::ranges::for_each(settingsSet, [&expectedKeys](const char *string) { expectedKeys.emplace(QString(string)); });
             return expectedKeys;
         }();
 
