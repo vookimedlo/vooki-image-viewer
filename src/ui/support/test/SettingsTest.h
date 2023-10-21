@@ -59,8 +59,14 @@ class SettingsTest: public QObject
         }
     }
 
+public:
+    explicit SettingsTest(QObject *parent = nullptr) : QObject(parent){
+        QCoreApplication::setOrganizationName("this is testing organization");
+    }
 
 private slots:
     void initializeSettings() const;
     void initializeSettingsByMenu() const;
+    void getDefaultSettings() const;
+    void getUserSettings() const;
 };

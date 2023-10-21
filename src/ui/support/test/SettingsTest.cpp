@@ -89,3 +89,17 @@ void SettingsTest::initializeSettingsByMenu() const
     for (const auto &key : allKeysUserSettings)
         QCOMPARE(settingsAfterUserInitialization.value(key).value<QKeySequence>(), userSettings.value(key).value<QKeySequence>());
 }
+
+void SettingsTest::getDefaultSettings() const
+{
+    const auto defaultSettings = SettingsMock::defaultSettings();
+    QCOMPARE(defaultSettings->applicationName(), "");
+    QCOMPARE(defaultSettings->organizationName(), QCoreApplication::organizationName());
+}
+
+void SettingsTest::getUserSettings() const
+{
+    const auto userSettings = SettingsMock::userSettings();
+    QCOMPARE(userSettings->applicationName(), QCoreApplication::applicationName());
+    QCOMPARE(userSettings->organizationName(), QCoreApplication::organizationName());
+}
