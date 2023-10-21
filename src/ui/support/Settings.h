@@ -26,9 +26,9 @@ public:
     [[nodiscard]] static std::unique_ptr<QSettings> userSettings();
 
 protected:
-    static void initializeSettings(QSettings &defaultSettings);
-    static void initializeSettings(const QMenu *menu, QSettings &defaultSettings, const QSettings &userSettings);
-    static void restoreDefaultSettings(const QSettings &defaultSettings, QSettings &userSettings);
+    static void initializeSettings(QSettings * const defaultSettings);
+    static void initializeSettings(const QMenu *menu, QSettings * const defaultSettings, const QSettings * const userSettings);
+    static void restoreDefaultSettings(const QSettings * const defaultSettings, QSettings * const userSettings);
 
 private:
     static void restoreDefaultSettings();

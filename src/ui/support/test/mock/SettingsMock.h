@@ -19,16 +19,16 @@ public:
 
     static void initializeSettings(QSettings &defaultSettings)
     {
-        Settings::initializeSettings(defaultSettings);
+        Settings::initializeSettings(&defaultSettings);
     }
 
     static void initializeSettings(const QMenu *menu, QSettings &defaultSettings, const QSettings &userSettings)
     {
-        Settings::initializeSettings(menu, defaultSettings, userSettings);
+        Settings::initializeSettings(menu, &defaultSettings, &userSettings);
     }
 
     static void restoreDefaultSettings(const QSettings &defaultSettings, QSettings &userSettings)
     {
-        Settings::restoreDefaultSettings(defaultSettings, userSettings);
+        Settings::restoreDefaultSettings(&defaultSettings, &userSettings);
     }
 };
