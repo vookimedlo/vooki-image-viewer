@@ -17,12 +17,6 @@ class FileSystemTreeView final : public QTreeView
     Q_OBJECT
 
 public:
-    explicit FileSystemTreeView(QWidget *parent = nullptr) : QTreeView(parent) {};
+    using QTreeView::QTreeView;
     DISABLE_COPY_MOVE(FileSystemTreeView);
-
-public slots:
-    void setCurrentIndex([[maybe_unused]] const QModelIndex &index) {};
-
-private slots:
-    void onExpanded([[maybe_unused]] const QModelIndex &index) {};
 };

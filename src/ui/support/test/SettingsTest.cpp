@@ -11,7 +11,6 @@ VookiImageViewer - a tool for showing images.
 
 #include "SettingsTest.h"
 
-#include <queue>
 #include "mock/QSettingsMock.h"
 #include "mock/SettingsMock.h"
 #include "mock/ui/MainWindow.h"

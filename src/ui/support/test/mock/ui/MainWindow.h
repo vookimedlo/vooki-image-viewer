@@ -15,7 +15,7 @@ VookiImageViewer - a tool for showing images.
 #include "ui_MainWindow.h"
 
 
-class MainWindow : public QMainWindow
+class MainWindow final : public QMainWindow
 {
     Q_OBJECT
 
@@ -25,33 +25,33 @@ public:
         m_ui.setupUi(this);
     };
 
-    const std::array<const QMenu *, 4> allMenus() { return {m_ui.menuFile, m_ui.menuView, m_ui.menuWindow, m_ui.menuHelp}; };
+    std::array<const QMenu *, 4> allMenus() const { return {m_ui.menuFile, m_ui.menuView, m_ui.menuWindow, m_ui.menuHelp}; };
 
 public slots:
     void onAboutToQuit() const {};
-    void onOpenFileRequested([[maybe_unused]] const QString &path) {};
+    void onOpenFileRequested([[maybe_unused]] const QString &path) const {};
 
-protected slots:
-    void onAboutTriggered() {};
-    void onAboutComponentsTriggered() {};
-    void onAboutQtTriggered() {};
-    void onAboutSupportedImageFormats() {};
+private slots:
+    void onAboutTriggered() const {};
+    void onAboutComponentsTriggered() const {};
+    void onAboutQtTriggered() const {};
+    void onAboutSupportedImageFormats() const {};
     void onClearHistory() const {};
     void onDocsDirClicked() const {};
-    void onFileSystemTreeViewActivated([[maybe_unused]] const QModelIndex &index) {};
+    void onFileSystemTreeViewActivated([[maybe_unused]] const QModelIndex &index) const {};
     void onFitToWindowToggled([[maybe_unused]] bool toggled) const {};
-    void onFullScreenToggled([[maybe_unused]] bool toggled) {};
+    void onFullScreenToggled([[maybe_unused]] bool toggled) const {};
     void onHomeDirClicked() const {};
     void onImageDimensionsChanged([[maybe_unused]] int width, [[maybe_unused]] int height) const {};
     void onImageSizeChanged([[maybe_unused]] uint64_t size) const {};
-    void onNextImageTriggered() {};
+    void onNextImageTriggered() const {};
     void onOriginalSizeTriggered() const {};
     void onPicturesDirClicked() const {};
-    void onPreviousImageTriggered() {};
-    void onQuitTriggered() {};
-    void onRecentFileTriggered([[maybe_unused]] const QString &filePath) {};
-    void onReleaseNotesTriggered() {};
-    void onSettingsTriggered() {};
+    void onPreviousImageTriggered() const {};
+    void onQuitTriggered() const {};
+    void onRecentFileTriggered([[maybe_unused]] const QString &filePath) const {};
+    void onReleaseNotesTriggered() const {};
+    void onSettingsTriggered() const {};
     void onStatusBarToggled([[maybe_unused]] bool toggled) const {};
     void onZoomInTriggered() const {};
     void onZoomOutTriggered() const {};

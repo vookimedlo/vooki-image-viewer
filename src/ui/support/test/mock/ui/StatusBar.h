@@ -13,9 +13,9 @@ VookiImageViewer - a tool for showing images.
 #include <QStatusBar>
 #include <memory>
 
-class StatusBar : public QStatusBar
+class StatusBar final : public QStatusBar
 {
 public:
-    explicit StatusBar(QWidget *parent = nullptr) : QStatusBar(parent) {};
+    using QStatusBar::QStatusBar;
     DISABLE_COPY_MOVE(StatusBar);
 };

@@ -23,7 +23,7 @@ class SettingsTest: public QObject
     const std::unordered_set<QString> m_expectedKeys =
         []() {
             std::unordered_set<QString> expectedKeys;
-            std::ranges::for_each(settingsSet, [&expectedKeys](const char *string) { expectedKeys.emplace(QString(string)); });
+            std::ranges::for_each(settingsSet, [&expectedKeys](const char *string) { expectedKeys.emplace(string); });
             return expectedKeys;
         }();
 
@@ -40,7 +40,7 @@ class SettingsTest: public QObject
             const QMenu *const menu = unprocessedMenus.front();
             unprocessedMenus.pop();
 
-            for (auto *const action : menu->actions())
+            for (const auto *const action : menu->actions())
             {
                 if (action->isSeparator())
                     continue;

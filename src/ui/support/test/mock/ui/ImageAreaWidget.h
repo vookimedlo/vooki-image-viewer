@@ -17,14 +17,14 @@ VookiImageViewer - a tool for showing images.
 #include <vector>
 
 
-class ImageAreaWidget : public QWidget
+class ImageAreaWidget final : public QWidget
 {
     Q_OBJECT
 
     static constexpr int m_imageOffsetStep {0};
 
 public:
-    explicit ImageAreaWidget(QWidget *parent = nullptr) : QWidget(parent) {};
+    using QWidget::QWidget;
     DISABLE_COPY_MOVE(ImageAreaWidget);
 
 signals:
@@ -34,21 +34,21 @@ signals:
     void zoomPercentageChanged(qreal value);
 
 public slots:
-    void onDecreaseOffsetX([[maybe_unused]] int pixels = m_imageOffsetStep) {};
-    void onDecreaseOffsetY([[maybe_unused]] int pixels = m_imageOffsetStep) {};
-    void onFlipHorizontallyTriggered() {};
-    void onFlipVerticallyTriggered() {};
-    void onIncreaseOffsetY([[maybe_unused]] int pixels = m_imageOffsetStep) {};
-    void onIncreaseOffsetX([[maybe_unused]] int pixels = m_imageOffsetStep) {};
-    void onNextImage() {};
-    void onRotateLeftTriggered() {};
-    void onRotateRightTriggered() {};
-    void onScrollDownTriggered() {};
-    void onScrollLeftTriggered() {};
-    void onScrollRightTriggered() {};
-    void onScrollUpTriggered() {};
-    void onSetFitToWindowTriggered([[maybe_unused]] bool enabled) {};
-    void onZoomImageInTriggered([[maybe_unused]] double factor) {};
-    void onZoomImageOutTriggered([[maybe_unused]] double factor) {};
-    void onZoomResetTriggered() {};
+    void onDecreaseOffsetX([[maybe_unused]] int pixels = m_imageOffsetStep) const {};
+    void onDecreaseOffsetY([[maybe_unused]] int pixels = m_imageOffsetStep) const {};
+    void onFlipHorizontallyTriggered() const {};
+    void onFlipVerticallyTriggered() const {};
+    void onIncreaseOffsetY([[maybe_unused]] int pixels = m_imageOffsetStep) const {};
+    void onIncreaseOffsetX([[maybe_unused]] int pixels = m_imageOffsetStep) const {};
+    void onNextImage() const {};
+    void onRotateLeftTriggered() const {};
+    void onRotateRightTriggered() const {};
+    void onScrollDownTriggered() const {};
+    void onScrollLeftTriggered() const {};
+    void onScrollRightTriggered() const {};
+    void onScrollUpTriggered() const {};
+    void onSetFitToWindowTriggered([[maybe_unused]] bool enabled) const {};
+    void onZoomImageInTriggered([[maybe_unused]] double factor) const {};
+    void onZoomImageOutTriggered([[maybe_unused]] double factor) const {};
+    void onZoomResetTriggered() const {};
 };

@@ -9,6 +9,7 @@ VookiImageViewer - a tool for showing images.
 
 ****************************************************************************/
 
+#include "../../../../../util/compiler.h"
 #include <QString>
 #include <QTableWidget>
 #include <utility>
@@ -19,8 +20,9 @@ class InfoTableWidget final : public QTableWidget
     Q_OBJECT
 
 public:
-    explicit InfoTableWidget(QWidget *parent = nullptr) : QTableWidget(parent) {};
+    using QTableWidget::QTableWidget;
+    DISABLE_COPY_MOVE(InfoTableWidget);
 
 public slots:
-    void displayInformation([[maybe_unused]] const std::vector<std::pair<QString, QString>>& information) {};
+    void displayInformation([[maybe_unused]] const std::vector<std::pair<QString, QString>>& information) const {};
 };

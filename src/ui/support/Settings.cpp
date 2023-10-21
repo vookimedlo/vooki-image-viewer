@@ -65,16 +65,16 @@ void Settings::initializeSettings(const QMenu *menu, QSettings &defaultSettings,
 
     while(!unprocessedMenus.empty())
     {
-        const QMenu *const menu = unprocessedMenus.front();
+        const QMenu *const unprocessedMenu = unprocessedMenus.front();
         unprocessedMenus.pop();
 
-        const auto actions = menu->actions();
+        const auto actions = unprocessedMenu->actions();
         for (auto * const action : actions)
         {
             if (action->isSeparator())
                 continue;
 
-            if (action->menu() && action->menu() != menu)
+            if (action->menu() && action->menu() != unprocessedMenu)
             {
                 unprocessedMenus.push(action->menu());
                 continue;
