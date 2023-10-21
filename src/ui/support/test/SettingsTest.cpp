@@ -88,6 +88,24 @@ void SettingsTest::initializeSettingsByMenu() const
     QCOMPARE(allKeysUserSettings, allKeysAfterUserInitialization);
     for (const auto &key : allKeysUserSettings)
         QCOMPARE(settingsAfterUserInitialization.value(key).value<QKeySequence>(), userSettings.value(key).value<QKeySequence>());
+
+    // Test the Settings::restoreDefaultSettings
+    QSettings settingsRestoredFromUserSettings(QSettingsMock::nullFormat, QSettings::UserScope, "test6", "test6");
+    SettingsMock::restoreDefaultSettings(userSettings, settingsRestoredFromUserSettings);
+
+    auto allKeysAfterRestorationFromUserSettings {settingsRestoredFromUserSettings.allKeys()};
+    allKeysAfterRestorationFromUserSettings.sort();
+
+    QCOMPARE(allKeysUserSettings, allKeysAfterRestorationFromUserSettings);
+    for (const auto &key : allKeysUserSettings)
+        QCOMPARE(settingsRestoredFromUserSettings.value(key).value<QKeySequence>(), userSettings.value(key).value<QKeySequence>());
+
+    QMenu topLevelMenu;
+    topLevelMenu.addMenu("submenu")->addMenu("submenu");
+    QSettings emptyDefaultSettings(QSettingsMock::nullFormat, QSettings::UserScope, "test7", "test7");
+    QSettings emptyUserSettings(QSettingsMock::nullFormat, QSettings::UserScope, "test8", "test8");
+    SettingsMock::initializeSettings(&topLevelMenu, emptyDefaultSettings, emptyUserSettings);
+    QCOMPARE(emptyDefaultSettings.allKeys().size(), emptyUserSettings.allKeys().size());
 }
 
 void SettingsTest::getDefaultSettings() const
