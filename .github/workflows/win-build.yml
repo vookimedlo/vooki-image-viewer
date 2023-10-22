@@ -39,6 +39,9 @@ jobs:
         install-deps: "true"
 
     -
+      name: install graphviz
+      run: choco install graphviz
+    -
       name: build 3rd-party sources [configuration]
       working-directory: ${{github.workspace}}\..
       env:
