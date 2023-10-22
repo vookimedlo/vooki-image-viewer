@@ -17,9 +17,14 @@ VookiImageViewer - a tool for showing images.
 #include <QColorDialog>
 #include <QSignalBlocker>
 
-SettingsDialog::SettingsDialog(QWidget *parent)
-                                        : QDialog(parent)
+SettingsDialog::SettingsDialog(std::unique_ptr<QSettings> defaultSettings,
+                               std::unique_ptr<QSettings> userSettings,
+                               QWidget *parent)
+                                        : QDialog(parent), m_defaultSettings(defaultSettings.release()), m_userSettings(userSettings.release())
 {
+    Q_ASSERT(defaultSettings);
+    Q_ASSERT(userSettings);
+
     m_uiSettingsDialog.setupUi(this);
 
     {
@@ -30,18 +35,15 @@ SettingsDialog::SettingsDialog(QWidget *parent)
             m_uiSettingsDialog.comboBoxLanguage->addItem(record.m_language, record.m_code);
     }
 
-    auto settings = Settings::userSettings();
-    initializeUI(settings.get());
+    initializeUI(m_userSettings.get());
 
     // restore all shortcuts from user settings
-    for (int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); i++)
+    for (int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); ++i)
     {
-        QTableWidgetItem *item = m_uiSettingsDialog.tableShortcutsWidget->item(i, 0);
-
-        if (item->type() == SettingsShortcutsTableWidgetItem::type)
+        if (QTableWidgetItem *item = m_uiSettingsDialog.tableShortcutsWidget->item(i, 0); item->type() == SettingsShortcutsTableWidgetItem::type)
         {
             if (auto *shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
-                shortcutItem->onKeySequenceChanged(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
+                shortcutItem->onKeySequenceChanged(m_userSettings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
         }
     }
 }
@@ -108,33 +110,30 @@ void SettingsDialog::initializeUI(const QSettings * const settings)
 
 void SettingsDialog::onAccept()
 {
-    std::shared_ptr<QSettings> settings = Settings::userSettings();
-    settings->setValue(m_uiSettingsDialog.checkBoxUseSystemLanguage->whatsThis(), m_uiSettingsDialog.checkBoxUseSystemLanguage->isChecked());
-    settings->setValue(m_uiSettingsDialog.checkBoxGeneralStartInFullscreen->whatsThis(), m_uiSettingsDialog.checkBoxGeneralStartInFullscreen->isChecked());
-    settings->setValue(m_uiSettingsDialog.checkBoxWindowHideStatusbar->whatsThis(), m_uiSettingsDialog.checkBoxWindowHideStatusbar->isChecked());
-    settings->setValue(m_uiSettingsDialog.checkBoxWindowHideToolbar->whatsThis(), m_uiSettingsDialog.checkBoxWindowHideToolbar->isChecked());
-    settings->setValue(m_uiSettingsDialog.checkBoxWindowHideNavigation->whatsThis(), m_uiSettingsDialog.checkBoxWindowHideNavigation->isChecked());
-    settings->setValue(m_uiSettingsDialog.checkBoxWindowHideInformation->whatsThis(), m_uiSettingsDialog.checkBoxWindowHideInformation->isChecked());
-    settings->setValue(m_uiSettingsDialog.checkBoxFullscreenHideStatusbar->whatsThis(), m_uiSettingsDialog.checkBoxFullscreenHideStatusbar->isChecked());
-    settings->setValue(m_uiSettingsDialog.checkBoxFullscreenHideToolbar->whatsThis(), m_uiSettingsDialog.checkBoxFullscreenHideToolbar->isChecked());
-    settings->setValue(m_uiSettingsDialog.checkBoxFullscreenHideNavigation->whatsThis(), m_uiSettingsDialog.checkBoxFullscreenHideNavigation->isChecked());
-    settings->setValue(m_uiSettingsDialog.checkBoxFullscreenHideInformation->whatsThis(), m_uiSettingsDialog.checkBoxFullscreenHideInformation->isChecked());
-    settings->setValue(m_uiSettingsDialog.checkBoxRemeberRecentImages->whatsThis(), m_uiSettingsDialog.checkBoxRemeberRecentImages->isChecked());
-    settings->setValue(m_uiSettingsDialog.checkBoxImageFitToWindow->whatsThis(), m_uiSettingsDialog.checkBoxImageFitToWindow->isChecked());
-    settings->setValue(m_uiSettingsDialog.checkBoxImageDrawBorder->whatsThis(), m_uiSettingsDialog.checkBoxImageDrawBorder->isChecked());
-    settings->setValue(SETTINGS_IMAGE_BORDER_COLOR, m_borderColor);
-    settings->setValue(SETTINGS_IMAGE_BACKGROUND_COLOR, m_backgroundColor);
-    settings->setValue(SETTINGS_LANGUAGE_CODE, m_languageCode);
+    m_userSettings->setValue(m_uiSettingsDialog.checkBoxUseSystemLanguage->whatsThis(), m_uiSettingsDialog.checkBoxUseSystemLanguage->isChecked());
+    m_userSettings->setValue(m_uiSettingsDialog.checkBoxGeneralStartInFullscreen->whatsThis(), m_uiSettingsDialog.checkBoxGeneralStartInFullscreen->isChecked());
+    m_userSettings->setValue(m_uiSettingsDialog.checkBoxWindowHideStatusbar->whatsThis(), m_uiSettingsDialog.checkBoxWindowHideStatusbar->isChecked());
+    m_userSettings->setValue(m_uiSettingsDialog.checkBoxWindowHideToolbar->whatsThis(), m_uiSettingsDialog.checkBoxWindowHideToolbar->isChecked());
+    m_userSettings->setValue(m_uiSettingsDialog.checkBoxWindowHideNavigation->whatsThis(), m_uiSettingsDialog.checkBoxWindowHideNavigation->isChecked());
+    m_userSettings->setValue(m_uiSettingsDialog.checkBoxWindowHideInformation->whatsThis(), m_uiSettingsDialog.checkBoxWindowHideInformation->isChecked());
+    m_userSettings->setValue(m_uiSettingsDialog.checkBoxFullscreenHideStatusbar->whatsThis(), m_uiSettingsDialog.checkBoxFullscreenHideStatusbar->isChecked());
+    m_userSettings->setValue(m_uiSettingsDialog.checkBoxFullscreenHideToolbar->whatsThis(), m_uiSettingsDialog.checkBoxFullscreenHideToolbar->isChecked());
+    m_userSettings->setValue(m_uiSettingsDialog.checkBoxFullscreenHideNavigation->whatsThis(), m_uiSettingsDialog.checkBoxFullscreenHideNavigation->isChecked());
+    m_userSettings->setValue(m_uiSettingsDialog.checkBoxFullscreenHideInformation->whatsThis(), m_uiSettingsDialog.checkBoxFullscreenHideInformation->isChecked());
+    m_userSettings->setValue(m_uiSettingsDialog.checkBoxRemeberRecentImages->whatsThis(), m_uiSettingsDialog.checkBoxRemeberRecentImages->isChecked());
+    m_userSettings->setValue(m_uiSettingsDialog.checkBoxImageFitToWindow->whatsThis(), m_uiSettingsDialog.checkBoxImageFitToWindow->isChecked());
+    m_userSettings->setValue(m_uiSettingsDialog.checkBoxImageDrawBorder->whatsThis(), m_uiSettingsDialog.checkBoxImageDrawBorder->isChecked());
+    m_userSettings->setValue(SETTINGS_IMAGE_BORDER_COLOR, m_borderColor);
+    m_userSettings->setValue(SETTINGS_IMAGE_BACKGROUND_COLOR, m_backgroundColor);
+    m_userSettings->setValue(SETTINGS_LANGUAGE_CODE, m_languageCode);
 
     // store all shortcuts in user settings
-    for (int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); i++)
+    for (int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); ++i)
     {
-        QTableWidgetItem *item = m_uiSettingsDialog.tableShortcutsWidget->item(i, 0);
-
-        if (item->type() == SettingsShortcutsTableWidgetItem::type)
+        if (QTableWidgetItem *item = m_uiSettingsDialog.tableShortcutsWidget->item(i, 0); item->type() == SettingsShortcutsTableWidgetItem::type)
         {
-            if (const auto *shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
-                settings->setValue(shortcutItem->action().whatsThis(), shortcutItem->keySequence());
+            if (const auto * const shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
+                m_userSettings->setValue(shortcutItem->action().whatsThis(), shortcutItem->keySequence());
         }
     }
 
@@ -155,15 +154,13 @@ void SettingsDialog::onLanguageChanged(int index)
 
 void SettingsDialog::onRejected()
 {
-    const std::shared_ptr<QSettings> settings = Settings::userSettings();
-
     // restore all shortcuts from user settings
     for (int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); ++i)
     {
         if (auto * const item = m_uiSettingsDialog.tableShortcutsWidget->item(i, 0); item->type() == SettingsShortcutsTableWidgetItem::type)
         {
-            if (const auto *shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
-                shortcutItem->action().setShortcut(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
+            if (const auto * const shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
+                shortcutItem->action().setShortcut(m_userSettings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
         }
     }
 
@@ -172,8 +169,7 @@ void SettingsDialog::onRejected()
 
 void SettingsDialog::onRestoreDefaultsTriggered()
 {
-    auto settings { Settings::defaultSettings() };
-    initializeUI(settings.get());
+    initializeUI(m_defaultSettings.get());
 
     // restore all shortcuts from default settings
     for (int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); ++i)
@@ -181,7 +177,7 @@ void SettingsDialog::onRestoreDefaultsTriggered()
         if (auto * const item = m_uiSettingsDialog.tableShortcutsWidget->item(i, 0); item->type() == SettingsShortcutsTableWidgetItem::type)
         {
             if (auto * const shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
-                shortcutItem->onKeySequenceChanged(settings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
+                shortcutItem->onKeySequenceChanged(m_defaultSettings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
         }
     }
 
@@ -192,11 +188,11 @@ void SettingsDialog::onRestoreDefaultsTriggered()
 void SettingsDialog::onToolButtonBorderColorClicked()
 {
     if (QColor borderColor { QColorDialog::getColor(m_borderColor) }; borderColor.isValid())
-        m_borderColor = std::move(borderColor);
+        m_borderColor = borderColor;
 }
 
 void SettingsDialog::onToolButtonBackgroundColorClicked()
 {
     if (QColor backgroundColor { QColorDialog::getColor(m_backgroundColor) }; backgroundColor.isValid())
-        m_backgroundColor = std::move(backgroundColor);
+        m_backgroundColor = backgroundColor;
 }
