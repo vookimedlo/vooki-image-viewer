@@ -11,7 +11,6 @@ VookiImageViewer - a tool for showing images.
 #include "SettingsDialog.h"
 
 #include "../ui/support/Languages.h"
-#include "../ui/support/Settings.h"
 #include "../ui/support/SettingsStrings.h"
 #include "support/SettingsShortcutsTableWidgetItem.h"
 #include <QColorDialog>
@@ -36,16 +35,6 @@ SettingsDialog::SettingsDialog(std::unique_ptr<QSettings> defaultSettings,
     }
 
     initializeUI(m_userSettings.get());
-
-    // restore all shortcuts from user settings
-    for (int i = 0; i < m_uiSettingsDialog.tableShortcutsWidget->rowCount(); ++i)
-    {
-        if (QTableWidgetItem *item = m_uiSettingsDialog.tableShortcutsWidget->item(i, 0); item->type() == SettingsShortcutsTableWidgetItem::type)
-        {
-            if (auto *shortcutItem = dynamic_cast<SettingsShortcutsTableWidgetItem *>(item))
-                shortcutItem->onKeySequenceChanged(m_userSettings->value(shortcutItem->action().whatsThis()).value<QKeySequence>());
-        }
-    }
 }
 
 void SettingsDialog::populateShortcuts(const QMenu *menu) const
@@ -89,7 +78,7 @@ void SettingsDialog::initializeUI(const QSettings * const settings)
     m_uiSettingsDialog.checkBoxFullscreenHideToolbar->setChecked(settings->value(m_uiSettingsDialog.checkBoxFullscreenHideToolbar->whatsThis()).toBool());
     m_uiSettingsDialog.checkBoxFullscreenHideNavigation->setChecked(settings->value(m_uiSettingsDialog.checkBoxFullscreenHideNavigation->whatsThis()).toBool());
     m_uiSettingsDialog.checkBoxFullscreenHideInformation->setChecked(settings->value(m_uiSettingsDialog.checkBoxFullscreenHideInformation->whatsThis()).toBool());
-    m_uiSettingsDialog.checkBoxRemeberRecentImages->setChecked(settings->value(m_uiSettingsDialog.checkBoxRemeberRecentImages->whatsThis()).toBool());
+    m_uiSettingsDialog.checkBoxRememberRecentImages->setChecked(settings->value(m_uiSettingsDialog.checkBoxRememberRecentImages->whatsThis()).toBool());
     m_uiSettingsDialog.checkBoxImageFitToWindow->setChecked(settings->value(m_uiSettingsDialog.checkBoxImageFitToWindow->whatsThis()).toBool());
     m_uiSettingsDialog.checkBoxImageDrawBorder->setChecked(settings->value(m_uiSettingsDialog.checkBoxImageDrawBorder->whatsThis()).toBool());
     m_uiSettingsDialog.toolButtonBorderColor->setEnabled(settings->value(m_uiSettingsDialog.checkBoxImageDrawBorder->whatsThis()).toBool());
@@ -120,7 +109,7 @@ void SettingsDialog::onAccept()
     m_userSettings->setValue(m_uiSettingsDialog.checkBoxFullscreenHideToolbar->whatsThis(), m_uiSettingsDialog.checkBoxFullscreenHideToolbar->isChecked());
     m_userSettings->setValue(m_uiSettingsDialog.checkBoxFullscreenHideNavigation->whatsThis(), m_uiSettingsDialog.checkBoxFullscreenHideNavigation->isChecked());
     m_userSettings->setValue(m_uiSettingsDialog.checkBoxFullscreenHideInformation->whatsThis(), m_uiSettingsDialog.checkBoxFullscreenHideInformation->isChecked());
-    m_userSettings->setValue(m_uiSettingsDialog.checkBoxRemeberRecentImages->whatsThis(), m_uiSettingsDialog.checkBoxRemeberRecentImages->isChecked());
+    m_userSettings->setValue(m_uiSettingsDialog.checkBoxRememberRecentImages->whatsThis(), m_uiSettingsDialog.checkBoxRememberRecentImages->isChecked());
     m_userSettings->setValue(m_uiSettingsDialog.checkBoxImageFitToWindow->whatsThis(), m_uiSettingsDialog.checkBoxImageFitToWindow->isChecked());
     m_userSettings->setValue(m_uiSettingsDialog.checkBoxImageDrawBorder->whatsThis(), m_uiSettingsDialog.checkBoxImageDrawBorder->isChecked());
     m_userSettings->setValue(SETTINGS_IMAGE_BORDER_COLOR, m_borderColor);

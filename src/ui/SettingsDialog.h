@@ -41,8 +41,10 @@ protected slots:
     virtual void onToolButtonBorderColorClicked();
     virtual void onToolButtonBackgroundColorClicked();
 
-private:
+protected:
     Ui::SettingsDialog m_uiSettingsDialog;
+
+private:
     QColor m_borderColor;
     QColor m_backgroundColor;
     QString m_languageCode;

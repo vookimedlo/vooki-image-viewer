@@ -8,7 +8,7 @@
     <x>0</x>
     <y>0</y>
     <width>726</width>
-    <height>444</height>
+    <height>465</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -59,7 +59,7 @@
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_4">
               <item>
-               <widget class="QCheckBox" name="checkBoxRemeberRecentImages">
+               <widget class="QCheckBox" name="checkBoxRememberRecentImages">
                 <property name="whatsThis">
                  <string notr="true">viv/image/remember/recent</string>
                 </property>
