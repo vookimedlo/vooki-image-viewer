@@ -21,11 +21,11 @@ int main(int argc, char *argv[])
 {
     int status = 0;
 
-    runTests<ImageBorderTest>(argc, argv, &status);
-    runTests<ImageFlipTest>(argc, argv, &status);
-    runTests<ImageRotationTest>(argc, argv, &status);
-    runTests<ImageTransformationBaseTest>(argc, argv, &status);
-    runTests<ImageZoomTest>(argc, argv, &status);
+    TEST::runTests<ImageBorderTest>(argc, argv, &status);
+    TEST::runTests<ImageFlipTest>(argc, argv, &status);
+    TEST::runTests<ImageRotationTest>(argc, argv, &status);
+    TEST::runTests<ImageTransformationBaseTest>(argc, argv, &status);
+    TEST::runTests<ImageZoomTest>(argc, argv, &status);
 
     return status;
 }

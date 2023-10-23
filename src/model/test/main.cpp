@@ -18,8 +18,8 @@ int main(int argc, char *argv[])
 {
     int status = 0;
 
-    runTests<ImageCatalogTest>(argc, argv, &status);
-    runTests<FileSystemSortFilterProxyModelTest>(argc, argv, &status);
+    TEST::runTests<ImageCatalogTest>(argc, argv, &status);
+    TEST::runTests<FileSystemSortFilterProxyModelTest>(argc, argv, &status);
 
     return status;
 }

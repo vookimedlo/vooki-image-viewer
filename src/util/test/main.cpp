@@ -20,11 +20,11 @@ int main(int argc, char *argv[])
 {
     int status = 0;
 
-    runTests<ArrayTest>(argc, argv, &status);
-    runTests<ByteSizeTest>(argc, argv, &status);
-    runTests<EnumClassArrayTest>(argc, argv, &status);
-    runTests<MiscTest>(argc, argv, &status);
-    runTests<RotatingIndexTest>(argc, argv, &status);
+    TEST::runTests<ArrayTest>(argc, argv, &status);
+    TEST::runTests<ByteSizeTest>(argc, argv, &status);
+    TEST::runTests<EnumClassArrayTest>(argc, argv, &status);
+    TEST::runTests<MiscTest>(argc, argv, &status);
+    TEST::runTests<RotatingIndexTest>(argc, argv, &status);
 
     return status;
 }
