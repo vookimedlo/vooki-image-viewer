@@ -19,5 +19,5 @@ public:
     using SettingsDialog::SettingsDialog;
     DISABLE_COPY_MOVE(SettingsDialogMock);
 
-    const Ui::SettingsDialog *dialog() { return &m_uiSettingsDialog; }
+    using SettingsDialog::ui;
 };

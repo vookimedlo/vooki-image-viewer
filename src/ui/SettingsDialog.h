@@ -32,7 +32,7 @@ public:
 protected:
     void initializeUI(const QSettings * settings);
 
-protected slots:
+public slots:
     virtual void onAccept();
     virtual void onButtonBoxButtonClicked(QAbstractButton *button);
     virtual void onLanguageChanged(int index);
@@ -42,7 +42,7 @@ protected slots:
     virtual void onToolButtonBackgroundColorClicked();
 
 protected:
-    Ui::SettingsDialog m_uiSettingsDialog;
+    const Ui::SettingsDialog *ui() const { return &m_uiSettingsDialog; };
 
 private:
     QColor m_borderColor;
@@ -50,4 +50,5 @@ private:
     QString m_languageCode;
     std::unique_ptr<QSettings> m_defaultSettings;
     std::unique_ptr<QSettings> m_userSettings;
+    Ui::SettingsDialog m_uiSettingsDialog;
 };

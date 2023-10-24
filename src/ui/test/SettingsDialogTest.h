@@ -9,10 +9,22 @@ VookiImageViewer - a tool for showing images.
 ****************************************************************************/
 
 #include <QTest>
+#include <QString>
+#include <QKeySequence>
+#include <unordered_set>
 
 class SettingsDialogTest: public QObject
 {
     Q_OBJECT
+
+    struct TextShortcutPairHashFunction
+    {
+        size_t operator()(const std::pair<QString, QKeySequence> &x) const
+        {
+            return qHash((x.first + x.second.toString()), 1234);
+        }
+    };
+    using ResultingSet = std::unordered_set<std::pair<QString, QKeySequence>, TextShortcutPairHashFunction>;
 
 public:
     explicit SettingsDialogTest(QObject *parent = nullptr) : QObject(parent){
@@ -20,5 +32,5 @@ public:
     }
 
 private slots:
-    void populateShortcuts() const;
+    void shortcuts() const;
 };
