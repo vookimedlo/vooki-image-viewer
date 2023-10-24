@@ -15,6 +15,7 @@ VookiImageViewer - a tool for showing images.
 #include "support/SettingsShortcutsTableWidgetItem.h"
 #include <QColorDialog>
 #include <QSignalBlocker>
+#include <queue>
 
 SettingsDialog::SettingsDialog(std::unique_ptr<QSettings> defaultSettings,
                                std::unique_ptr<QSettings> userSettings,
@@ -39,30 +40,39 @@ SettingsDialog::SettingsDialog(std::unique_ptr<QSettings> defaultSettings,
 
 void SettingsDialog::populateShortcuts(const QMenu *menu) const
 {
-    auto actions = menu->actions();
-    for (QAction *action : actions)
+    Q_ASSERT(menu);
+
+    std::queue<const QMenu *> unprocessedMenus;
+    unprocessedMenus.push(menu);
+
+    while(!unprocessedMenus.empty())
     {
-        if (action->isSeparator())
-            continue;
+        const QMenu *const unprocessedMenu = unprocessedMenus.front();
+        unprocessedMenus.pop();
 
-        // I don't like recursion, but menus are usually not too nested, so it doesn't matter.
-        if (action->menu() && action->menu() != menu)
+        const auto actions = unprocessedMenu->actions();
+        for (auto * const action : actions)
         {
-            populateShortcuts(action->menu());
-            continue;
+            if (action->isSeparator())
+                continue;
+
+            if (action->menu() && action->menu() != unprocessedMenu)
+            {
+                unprocessedMenus.push(action->menu());
+                continue;
+            }
+
+            if (action->whatsThis().isEmpty())
+                continue;
+
+            const int rowCount = m_uiSettingsDialog.tableShortcutsWidget->rowCount();
+            m_uiSettingsDialog.tableShortcutsWidget->insertRow(rowCount);
+            auto headerItem = std::make_unique<QTableWidgetItem>(action->toolTip());
+            m_uiSettingsDialog.tableShortcutsWidget->setVerticalHeaderItem(rowCount, headerItem.release());
+
+            auto item = std::make_unique<SettingsShortcutsTableWidgetItem>(*action);
+            m_uiSettingsDialog.tableShortcutsWidget->setItemAtCoordinates(rowCount, 0, item.release());
         }
-
-        // Skip all action which are not for key re-assignment
-        if (action->whatsThis().isEmpty())
-            continue;
-
-        const int rowCount = m_uiSettingsDialog.tableShortcutsWidget->rowCount();
-        m_uiSettingsDialog.tableShortcutsWidget->insertRow(rowCount);
-        auto headerItem = std::make_unique<QTableWidgetItem>(action->toolTip());
-        m_uiSettingsDialog.tableShortcutsWidget->setVerticalHeaderItem(rowCount, headerItem.release());
-
-        auto item = std::make_unique<SettingsShortcutsTableWidgetItem>(*action);
-        m_uiSettingsDialog.tableShortcutsWidget->setItemAtCoordinates(rowCount, 0, item.release());
     }
 }
 
