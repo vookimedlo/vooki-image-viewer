@@ -15,12 +15,29 @@ VookiImageViewer - a tool for showing images.
 #include "support/SettingsShortcutsTableWidgetItem.h"
 #include <QColorDialog>
 #include <QSignalBlocker>
-#include <queue>
+#include "../util/misc.h"
 
 SettingsDialog::SettingsDialog(std::unique_ptr<QSettings> defaultSettings,
                                std::unique_ptr<QSettings> userSettings,
                                QWidget *parent)
-                                        : QDialog(parent), m_defaultSettings(defaultSettings.release()), m_userSettings(userSettings.release())
+                                        : QDialog(parent),
+                                        m_defaultSettings(defaultSettings.release()),
+                                        m_userSettings(userSettings.release()),
+                                        m_settingsCheckboxes {
+                                            &m_uiSettingsDialog.checkBoxUseSystemLanguage,
+                                            &m_uiSettingsDialog.checkBoxGeneralStartInFullscreen,
+                                            &m_uiSettingsDialog.checkBoxWindowHideStatusbar,
+                                            &m_uiSettingsDialog.checkBoxWindowHideToolbar,
+                                            &m_uiSettingsDialog.checkBoxWindowHideNavigation,
+                                            &m_uiSettingsDialog.checkBoxWindowHideInformation,
+                                            &m_uiSettingsDialog.checkBoxFullscreenHideStatusbar,
+                                            &m_uiSettingsDialog.checkBoxFullscreenHideToolbar,
+                                            &m_uiSettingsDialog.checkBoxFullscreenHideNavigation,
+                                            &m_uiSettingsDialog.checkBoxFullscreenHideInformation,
+                                            &m_uiSettingsDialog.checkBoxRememberRecentImages,
+                                            &m_uiSettingsDialog.checkBoxImageFitToWindow,
+                                            &m_uiSettingsDialog.checkBoxImageDrawBorder,
+                                        }
 {
     Q_ASSERT(defaultSettings);
     Q_ASSERT(userSettings);
@@ -42,55 +59,25 @@ void SettingsDialog::populateShortcuts(const QMenu *menu) const
 {
     Q_ASSERT(menu);
 
-    std::queue<const QMenu *> unprocessedMenus;
-    unprocessedMenus.push(menu);
+    const auto allActions = Util::getAllActionsHavingShortcut(menu);
 
-    while(!unprocessedMenus.empty())
+    for (const auto action : allActions)
     {
-        const QMenu *const unprocessedMenu = unprocessedMenus.front();
-        unprocessedMenus.pop();
+        const int rowCount = m_uiSettingsDialog.tableShortcutsWidget->rowCount();
+        m_uiSettingsDialog.tableShortcutsWidget->insertRow(rowCount);
+        auto headerItem = std::make_unique<QTableWidgetItem>(action->toolTip());
+        m_uiSettingsDialog.tableShortcutsWidget->setVerticalHeaderItem(rowCount, headerItem.release());
 
-        const auto actions = unprocessedMenu->actions();
-        for (auto * const action : actions)
-        {
-            if (action->isSeparator())
-                continue;
-
-            if (action->menu() && action->menu() != unprocessedMenu)
-            {
-                unprocessedMenus.push(action->menu());
-                continue;
-            }
-
-            if (action->whatsThis().isEmpty())
-                continue;
-
-            const int rowCount = m_uiSettingsDialog.tableShortcutsWidget->rowCount();
-            m_uiSettingsDialog.tableShortcutsWidget->insertRow(rowCount);
-            auto headerItem = std::make_unique<QTableWidgetItem>(action->toolTip());
-            m_uiSettingsDialog.tableShortcutsWidget->setVerticalHeaderItem(rowCount, headerItem.release());
-
-            auto item = std::make_unique<SettingsShortcutsTableWidgetItem>(*action);
-            m_uiSettingsDialog.tableShortcutsWidget->setItemAtCoordinates(rowCount, 0, item.release());
-        }
+        auto item = std::make_unique<SettingsShortcutsTableWidgetItem>(*const_cast<QAction *>(action));
+        m_uiSettingsDialog.tableShortcutsWidget->setItemAtCoordinates(rowCount, 0, item.release());
     }
 }
 
 void SettingsDialog::initializeUI(const QSettings * const settings)
 {
-    m_uiSettingsDialog.checkBoxUseSystemLanguage->setChecked(settings->value(m_uiSettingsDialog.checkBoxUseSystemLanguage->whatsThis()).toBool());
-    m_uiSettingsDialog.checkBoxGeneralStartInFullscreen->setChecked(settings->value(m_uiSettingsDialog.checkBoxGeneralStartInFullscreen->whatsThis()).toBool());
-    m_uiSettingsDialog.checkBoxWindowHideStatusbar->setChecked(settings->value(m_uiSettingsDialog.checkBoxWindowHideStatusbar->whatsThis()).toBool());
-    m_uiSettingsDialog.checkBoxWindowHideToolbar->setChecked(settings->value(m_uiSettingsDialog.checkBoxWindowHideToolbar->whatsThis()).toBool());
-    m_uiSettingsDialog.checkBoxWindowHideNavigation->setChecked(settings->value(m_uiSettingsDialog.checkBoxWindowHideNavigation->whatsThis()).toBool());
-    m_uiSettingsDialog.checkBoxWindowHideInformation->setChecked(settings->value(m_uiSettingsDialog.checkBoxWindowHideInformation->whatsThis()).toBool());
-    m_uiSettingsDialog.checkBoxFullscreenHideStatusbar->setChecked(settings->value(m_uiSettingsDialog.checkBoxFullscreenHideStatusbar->whatsThis()).toBool());
-    m_uiSettingsDialog.checkBoxFullscreenHideToolbar->setChecked(settings->value(m_uiSettingsDialog.checkBoxFullscreenHideToolbar->whatsThis()).toBool());
-    m_uiSettingsDialog.checkBoxFullscreenHideNavigation->setChecked(settings->value(m_uiSettingsDialog.checkBoxFullscreenHideNavigation->whatsThis()).toBool());
-    m_uiSettingsDialog.checkBoxFullscreenHideInformation->setChecked(settings->value(m_uiSettingsDialog.checkBoxFullscreenHideInformation->whatsThis()).toBool());
-    m_uiSettingsDialog.checkBoxRememberRecentImages->setChecked(settings->value(m_uiSettingsDialog.checkBoxRememberRecentImages->whatsThis()).toBool());
-    m_uiSettingsDialog.checkBoxImageFitToWindow->setChecked(settings->value(m_uiSettingsDialog.checkBoxImageFitToWindow->whatsThis()).toBool());
-    m_uiSettingsDialog.checkBoxImageDrawBorder->setChecked(settings->value(m_uiSettingsDialog.checkBoxImageDrawBorder->whatsThis()).toBool());
+    for (const auto checkbox : m_settingsCheckboxes)
+        (*checkbox)->setChecked(settings->value((*checkbox)->whatsThis()).toBool());
+
     m_uiSettingsDialog.toolButtonBorderColor->setEnabled(settings->value(m_uiSettingsDialog.checkBoxImageDrawBorder->whatsThis()).toBool());
     m_borderColor = settings->value(SETTINGS_IMAGE_BORDER_COLOR).value<QColor>();
     m_backgroundColor = settings->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>();
@@ -109,19 +96,9 @@ void SettingsDialog::initializeUI(const QSettings * const settings)
 
 void SettingsDialog::onAccept()
 {
-    m_userSettings->setValue(m_uiSettingsDialog.checkBoxUseSystemLanguage->whatsThis(), m_uiSettingsDialog.checkBoxUseSystemLanguage->isChecked());
-    m_userSettings->setValue(m_uiSettingsDialog.checkBoxGeneralStartInFullscreen->whatsThis(), m_uiSettingsDialog.checkBoxGeneralStartInFullscreen->isChecked());
-    m_userSettings->setValue(m_uiSettingsDialog.checkBoxWindowHideStatusbar->whatsThis(), m_uiSettingsDialog.checkBoxWindowHideStatusbar->isChecked());
-    m_userSettings->setValue(m_uiSettingsDialog.checkBoxWindowHideToolbar->whatsThis(), m_uiSettingsDialog.checkBoxWindowHideToolbar->isChecked());
-    m_userSettings->setValue(m_uiSettingsDialog.checkBoxWindowHideNavigation->whatsThis(), m_uiSettingsDialog.checkBoxWindowHideNavigation->isChecked());
-    m_userSettings->setValue(m_uiSettingsDialog.checkBoxWindowHideInformation->whatsThis(), m_uiSettingsDialog.checkBoxWindowHideInformation->isChecked());
-    m_userSettings->setValue(m_uiSettingsDialog.checkBoxFullscreenHideStatusbar->whatsThis(), m_uiSettingsDialog.checkBoxFullscreenHideStatusbar->isChecked());
-    m_userSettings->setValue(m_uiSettingsDialog.checkBoxFullscreenHideToolbar->whatsThis(), m_uiSettingsDialog.checkBoxFullscreenHideToolbar->isChecked());
-    m_userSettings->setValue(m_uiSettingsDialog.checkBoxFullscreenHideNavigation->whatsThis(), m_uiSettingsDialog.checkBoxFullscreenHideNavigation->isChecked());
-    m_userSettings->setValue(m_uiSettingsDialog.checkBoxFullscreenHideInformation->whatsThis(), m_uiSettingsDialog.checkBoxFullscreenHideInformation->isChecked());
-    m_userSettings->setValue(m_uiSettingsDialog.checkBoxRememberRecentImages->whatsThis(), m_uiSettingsDialog.checkBoxRememberRecentImages->isChecked());
-    m_userSettings->setValue(m_uiSettingsDialog.checkBoxImageFitToWindow->whatsThis(), m_uiSettingsDialog.checkBoxImageFitToWindow->isChecked());
-    m_userSettings->setValue(m_uiSettingsDialog.checkBoxImageDrawBorder->whatsThis(), m_uiSettingsDialog.checkBoxImageDrawBorder->isChecked());
+    for (const auto checkbox : m_settingsCheckboxes)
+        m_userSettings->setValue((*checkbox)->whatsThis(), (*checkbox)->isChecked());
+
     m_userSettings->setValue(SETTINGS_IMAGE_BORDER_COLOR, m_borderColor);
     m_userSettings->setValue(SETTINGS_IMAGE_BACKGROUND_COLOR, m_backgroundColor);
     m_userSettings->setValue(SETTINGS_LANGUAGE_CODE, m_languageCode);

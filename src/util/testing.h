@@ -12,6 +12,7 @@ VookiImageViewer - a tool for showing images.
 #include <QTest>
 #include <QMenu>
 #include <queue>
+#include "misc.h"
 
 namespace TEST
 {
@@ -29,33 +30,11 @@ namespace TEST
     template<typename T, size_t N>
     std::vector<const QAction *> getAllActionsHavingShortcut(const std::array<T, N> &menus)
     {
-        std::queue<const QMenu *> unprocessedMenus;
-        std::ranges::for_each(menus, [&unprocessedMenus](const QMenu *const menu) { unprocessedMenus.push(menu); });
-
         std::vector<const QAction *> result;
-
-        while (!unprocessedMenus.empty())
-        {
-            const QMenu *const menu = unprocessedMenus.front();
-            unprocessedMenus.pop();
-
-            for (const auto *const action : menu->actions())
-            {
-                if (action->isSeparator())
-                    continue;
-
-                if (action->menu() && action->menu() != menu)
-                {
-                    unprocessedMenus.push(action->menu());
-                    continue;
-                }
-
-                if (action->whatsThis().isEmpty())
-                    continue;
-
-                result.push_back(action);
-            }
-        }
+        std::ranges::for_each(menus, [&result](const QMenu *const menu) {
+            const auto shortcuts = Util::getAllActionsHavingShortcut(menu);
+            result.insert(result.end(), shortcuts.cbegin(), shortcuts.cend());
+        });
 
         return result;
     }

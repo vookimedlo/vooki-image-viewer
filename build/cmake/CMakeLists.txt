@@ -527,6 +527,7 @@ ADD_TESTS(tests_model
 )
 
 ADD_TESTS(tests_ui_support
+        ../../src/util/misc.cpp
         ../../src/ui/support/RecentFileAction.cpp
         ../../src/ui/support/Settings.cpp
         ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp
@@ -555,6 +556,7 @@ TARGET_INCLUDE_DIRECTORIES(tests_ui_support BEFORE PRIVATE ${SOURCES_ABSOLUTE_PA
 TARGET_LINK_LIBRARIES(tests_ui_support PRIVATE QCoro6Core)
 
 ADD_TESTS(tests_ui
+        ../../src/util/misc.cpp
         ../../src/ui/SettingsDialog.cpp
         ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp
         ../../src/ui/support/Languages.cpp

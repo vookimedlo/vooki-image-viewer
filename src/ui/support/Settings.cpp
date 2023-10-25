@@ -10,9 +10,8 @@ VookiImageViewer - a tool for showing images.
 
 #include "Settings.h"
 #include <QCoreApplication>
-#include <queue>
 #include "SettingsStrings.h"
-
+#include "../../util/misc.h"
 
 std::unique_ptr<QSettings> Settings::defaultSettings()
 {
@@ -62,32 +61,12 @@ void Settings::initializeSettings(const QMenu *menu, QSettings * const defaultSe
     Q_ASSERT(defaultSettings);
     Q_ASSERT(userSettings);
 
-    std::queue<const QMenu *> unprocessedMenus;
-    unprocessedMenus.push(menu);
+    const auto allActions = Util::getAllActionsHavingShortcut(menu);
 
-    while(!unprocessedMenus.empty())
+    for (const auto action : allActions)
     {
-        const QMenu *const unprocessedMenu = unprocessedMenus.front();
-        unprocessedMenus.pop();
-
-        const auto actions = unprocessedMenu->actions();
-        for (auto * const action : actions)
-        {
-            if (action->isSeparator())
-                continue;
-
-            if (action->menu() && action->menu() != unprocessedMenu)
-            {
-                unprocessedMenus.push(action->menu());
-                continue;
-            }
-
-            if (action->whatsThis().isEmpty())
-                continue;
-
-            defaultSettings->setValue(action->whatsThis(), action->shortcut());
-            action->setShortcut(userSettings->value(action->whatsThis(), defaultSettings->value(action->whatsThis())).value<QKeySequence>());
-        }
+        defaultSettings->setValue(action->whatsThis(), action->shortcut());
+        const_cast<QAction *>(action)->setShortcut(userSettings->value(action->whatsThis(), defaultSettings->value(action->whatsThis())).value<QKeySequence>());
     }
 }
 
