@@ -83,10 +83,10 @@ void SettingsDialog::initializeUI(const QSettings * const settings)
     m_backgroundColor = settings->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>();
     m_languageCode = settings->value(SETTINGS_LANGUAGE_CODE).value<QString>();
 
-    if (auto findIt = std::ranges::find_if(begin(Languages::m_localizations),
+    if (std::input_iterator auto findIt = std::ranges::find_if(begin(Languages::m_localizations),
                                            end(Languages::m_localizations),
-                                           [&m_languageCode = m_languageCode](const Languages::Record &record){
-                                               return m_languageCode == record.m_code;
+                                           [&languageCode = m_languageCode](const Languages::Record &record){
+                                               return languageCode == record.m_code;
                                            }); findIt != std::end(Languages::m_localizations))
     {
         const auto position = std::distance(Languages::m_localizations.begin(), findIt);
