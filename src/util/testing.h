@@ -19,6 +19,8 @@ namespace TEST
     template<typename TestClass>
     void runTests(int argc, char *argv[], int *status)
     {
+        Q_ASSERT(status);
+
         ::QTest::Internal::callInitMain<TestClass>();
         QApplication app(argc, argv);
         QApplication::setAttribute(Qt::AA_Use96Dpi, true);

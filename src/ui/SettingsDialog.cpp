@@ -75,6 +75,8 @@ void SettingsDialog::populateShortcuts(const QMenu *menu) const
 
 void SettingsDialog::initializeUI(const QSettings * const settings)
 {
+    Q_ASSERT(settings);
+
     for (const auto checkbox : m_settingsCheckboxes)
         (*checkbox)->setChecked(settings->value((*checkbox)->whatsThis()).toBool());
 
@@ -118,6 +120,8 @@ void SettingsDialog::onAccept()
 
 void SettingsDialog::onButtonBoxButtonClicked(QAbstractButton *button)
 {
+    Q_ASSERT(button);
+
     if (QDialogButtonBox::ButtonRole::ResetRole == m_uiSettingsDialog.buttonBox->buttonRole(button))
         onRestoreDefaultsTriggered();
 }
