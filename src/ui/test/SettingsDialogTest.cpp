@@ -8,15 +8,14 @@ VookiImageViewer - a tool for showing images.
 
 ****************************************************************************/
 
-
 #include "SettingsDialogTest.h"
-#include <memory>
+#include "../../util/testing.h"
+#include "../support/test/mock/ui/MainWindow.h"
+#include "../support/SettingsStrings.h"
+#include "mock/SettingsDialogMock.h"
 #include <QKeySequenceEdit>
 #include <QSettings>
-#include "mock/SettingsDialogMock.h"
-#include "../support/test/mock/ui/MainWindow.h"
-#include "../../util/testing.h"
-
+#include <memory>
 
 void SettingsDialogTest::shortcuts() const
 {
@@ -124,4 +123,62 @@ void SettingsDialogTest::shortcuts() const
         userSettingsInitializedFromMenuOnRestoreDefaults.emplace(action->whatsThis(), action->shortcut());
 
     QCOMPARE(userSettingsInitializedFromMenuOnRestoreDefaults, defaultSettingsShortcuts);
+}
+
+void SettingsDialogTest::onToolButtonBorderColorClicked() const
+{
+    auto defaultSettings = std::make_unique<QSettings>(QSettingsMock::nullFormat, QSettings::UserScope, "test3", "test3");
+    auto userSettings = std::make_unique<QSettings>(QSettingsMock::nullFormat, QSettings::UserScope, "test4", "test4");
+
+    const QColor redColor {Qt::red};
+    const QColor greenColor {Qt::green};
+    userSettings->setValue(SETTINGS_IMAGE_BORDER_COLOR, redColor);
+    userSettings->setValue(SETTINGS_IMAGE_BACKGROUND_COLOR, greenColor);
+
+    const auto userSettingsPointer = userSettings.get();
+
+    SettingsDialogMock dialog { std::move(defaultSettings), std::move(userSettings) };
+
+    QCOMPARE_NE(dialog.m_pickerValidColor, redColor);
+
+    dialog.m_pickerReturnsValidColor = false;
+    dialog.onToolButtonBorderColorClicked();
+    dialog.onAccept();
+    QCOMPARE(userSettingsPointer->value(SETTINGS_IMAGE_BORDER_COLOR).value<QColor>(), redColor);
+    QCOMPARE(userSettingsPointer->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>(), greenColor);
+
+    dialog.m_pickerReturnsValidColor = true;
+    dialog.onToolButtonBorderColorClicked();
+    dialog.onAccept();
+    QCOMPARE(userSettingsPointer->value(SETTINGS_IMAGE_BORDER_COLOR).value<QColor>(), dialog.m_pickerValidColor);
+    QCOMPARE(userSettingsPointer->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>(), greenColor);
+}
+
+void SettingsDialogTest::onToolButtonBackgroundColorClicked() const
+{
+    auto defaultSettings = std::make_unique<QSettings>(QSettingsMock::nullFormat, QSettings::UserScope, "test3", "test3");
+    auto userSettings = std::make_unique<QSettings>(QSettingsMock::nullFormat, QSettings::UserScope, "test4", "test4");
+
+    const QColor redColor {Qt::red};
+    const QColor greenColor {Qt::green};
+    userSettings->setValue(SETTINGS_IMAGE_BORDER_COLOR, redColor);
+    userSettings->setValue(SETTINGS_IMAGE_BACKGROUND_COLOR, greenColor);
+
+    const auto userSettingsPointer = userSettings.get();
+
+    SettingsDialogMock dialog { std::move(defaultSettings), std::move(userSettings) };
+
+    QCOMPARE_NE(dialog.m_pickerValidColor, redColor);
+
+    dialog.m_pickerReturnsValidColor = false;
+    dialog.onToolButtonBackgroundColorClicked();
+    dialog.onAccept();
+    QCOMPARE(userSettingsPointer->value(SETTINGS_IMAGE_BORDER_COLOR).value<QColor>(), redColor);
+    QCOMPARE(userSettingsPointer->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>(), greenColor);
+
+    dialog.m_pickerReturnsValidColor = true;
+    dialog.onToolButtonBackgroundColorClicked();
+    dialog.onAccept();
+    QCOMPARE(userSettingsPointer->value(SETTINGS_IMAGE_BORDER_COLOR).value<QColor>(), redColor);
+    QCOMPARE(userSettingsPointer->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>(), dialog.m_pickerValidColor);
 }

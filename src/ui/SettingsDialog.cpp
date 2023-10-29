@@ -73,6 +73,11 @@ void SettingsDialog::populateShortcuts(const QMenu *menu) const
     }
 }
 
+QColor SettingsDialog::getColorFromPicker(const QColor &initialColor) const
+{
+    return QColorDialog::getColor(initialColor);
+}
+
 void SettingsDialog::initializeUI(const QSettings * const settings)
 {
     Q_ASSERT(settings);
@@ -167,12 +172,12 @@ void SettingsDialog::onRestoreDefaultsTriggered()
 
 void SettingsDialog::onToolButtonBorderColorClicked()
 {
-    if (QColor borderColor { QColorDialog::getColor(m_borderColor) }; borderColor.isValid())
+    if (QColor borderColor { getColorFromPicker(m_borderColor) }; borderColor.isValid())
         m_borderColor = borderColor;
 }
 
 void SettingsDialog::onToolButtonBackgroundColorClicked()
 {
-    if (QColor backgroundColor { QColorDialog::getColor(m_backgroundColor) }; backgroundColor.isValid())
+    if (QColor backgroundColor { getColorFromPicker(m_backgroundColor) }; backgroundColor.isValid())
         m_backgroundColor = backgroundColor;
 }

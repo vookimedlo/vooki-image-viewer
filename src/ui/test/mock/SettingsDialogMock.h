@@ -20,4 +20,13 @@ public:
     DISABLE_COPY_MOVE(SettingsDialogMock);
 
     using SettingsDialog::ui;
+
+    bool m_pickerReturnsValidColor {true};
+    const QColor m_pickerValidColor {Qt::darkBlue};
+
+protected:
+    QColor getColorFromPicker([[maybe_unused]] const QColor &initialColor) const override
+    {
+        return m_pickerReturnsValidColor ? m_pickerValidColor : QColor();
+    }
 };

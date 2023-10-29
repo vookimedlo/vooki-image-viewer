@@ -30,6 +30,7 @@ public:
     void populateShortcuts(const QMenu *menu) const;
 
 protected:
+    [[nodiscard]] virtual QColor getColorFromPicker(const QColor &initialColor) const;
     void initializeUI(const QSettings * settings);
 
 public slots:

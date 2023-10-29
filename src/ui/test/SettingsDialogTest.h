@@ -33,4 +33,6 @@ public:
 
 private slots:
     void shortcuts() const;
+    void onToolButtonBorderColorClicked() const;
+    void onToolButtonBackgroundColorClicked() const;
 };
