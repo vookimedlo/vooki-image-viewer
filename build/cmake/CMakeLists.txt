@@ -178,8 +178,15 @@ ADD_LIBRARY(exiv2wrapper STATIC ../../src/processing/Exiv2ImageAutoPtrWrapper.cp
 SET_TARGET_PROPERTIES(exiv2wrapper PROPERTIES CXX_STANDARD 11)
 TARGET_COMPILE_OPTIONS(exiv2wrapper PRIVATE
         "$<$<OR:$<CXX_COMPILER_ID:AppleClang,Clang>,$<CXX_COMPILER_ID:GNU>>:-Wno-deprecated>")
-GET_TARGET_PROPERTY(exiv2_headers exiv2lib INTERFACE_INCLUDE_DIRECTORIES)
+if (TARGET Exiv2::exiv2lib)
+    # >= 0.28.1
+    GET_TARGET_PROPERTY(exiv2_headers Exiv2::exiv2lib INTERFACE_INCLUDE_DIRECTORIES)
+else ()
+    # <  0.28.1
+    GET_TARGET_PROPERTY(exiv2_headers exiv2lib INTERFACE_INCLUDE_DIRECTORIES)
+endif()
 TARGET_INCLUDE_DIRECTORIES(exiv2wrapper PRIVATE ${exiv2_headers})
+
 
 if (APPLE)
     FIND_LIBRARY(APPKIT AppKit)
@@ -223,7 +230,7 @@ if (APPLE)
     FIND_PACKAGE(Iconv REQUIRED)
     FIND_PACKAGE(EXPAT REQUIRED)
 
-    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} exiv2-xmp exiv2lib ZLIB::ZLIB Iconv::Iconv EXPAT::EXPAT)
+    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} Exiv2::exiv2lib ZLIB::ZLIB Iconv::Iconv EXPAT::EXPAT)
 elseif (WIN32)
     SET(SOURCES
             ${SOURCES}
