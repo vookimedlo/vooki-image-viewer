@@ -27,7 +27,7 @@ jobs:
       with:
         version: '2.16.01'
     - name: install qt
-      uses: jurplel/install-qt-action@v4
+      uses: jurplel/install-qt-action@v3
       with:
         aqtversion: '==2.1.*'
         host: 'windows'
