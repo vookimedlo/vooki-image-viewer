@@ -18,8 +18,8 @@ void ArrayTest::constructArray() const
     QString testingObject3;
     QString testingObject4;
 
-    const std::array<QString, 2> firstArray { testingObject1, testingObject2 };
-    const std::array<QString, 2> secondArray { testingObject3, testingObject4 };
+    const auto firstArray { std::to_array({ testingObject1, testingObject2 }) };
+    const auto secondArray { std::to_array({ testingObject3, testingObject4 }) };
     const std::array<QString, firstArray.size() + secondArray.size()> joinedArray { Array::concatenate<QString>(firstArray, secondArray) };
 
     QCOMPARE(joinedArray[0], firstArray[0]);

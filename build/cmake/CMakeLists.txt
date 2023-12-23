@@ -527,6 +527,7 @@ ADD_TESTS(tests_model
 )
 
 ADD_TESTS(tests_ui_support
+        ../../src/util/misc.cpp
         ../../src/ui/support/RecentFileAction.cpp
         ../../src/ui/support/Settings.cpp
         ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp
@@ -551,5 +552,33 @@ else ()
     TARGET_SOURCES(tests_ui_support PRIVATE ../../src/abstraction/unix/darkmode.cpp)
 endif ()
 
-    TARGET_INCLUDE_DIRECTORIES(tests_ui_support BEFORE PRIVATE ${SOURCES_ABSOLUTE_PATH}/ui/support/test/mock ${SOURCES_ABSOLUTE_PATH} ${CMAKE_BINARY_DIR})
+TARGET_INCLUDE_DIRECTORIES(tests_ui_support BEFORE PRIVATE ${SOURCES_ABSOLUTE_PATH}/ui/support/test/mock ${SOURCES_ABSOLUTE_PATH} ${CMAKE_BINARY_DIR})
 TARGET_LINK_LIBRARIES(tests_ui_support PRIVATE QCoro6Core)
+
+ADD_TESTS(tests_ui
+        ../../src/util/misc.cpp
+        ../../src/ui/SettingsDialog.cpp
+        ../../src/ui/support/SettingsShortcutsTableWidgetItem.cpp
+        ../../src/ui/support/Languages.cpp
+        ../../src/ui/support/test/mock/QSettingsMock.cpp
+        ../../src/ui/support/test/mock/ui/MainWindow.cpp
+        ../../src/ui/support/test/mock/ui/FileSystemTreeView.cpp
+        ../../src/ui/support/test/mock/ui/ImageAreaWidget.cpp
+        ../../src/ui/support/test/mock/ui/InfoTableWidget.cpp
+        ../../src/ui/SettingsShortcutsTableWidget.cpp
+        ../../src/ui/SettingsDialog.cpp
+        ../../src/ui/test/mock/SettingsDialogMock.cpp
+        ../../src/ui/test/main.cpp
+        ../../src/ui/test/SettingsDialogTest.cpp
+        ${UI_HEADERS}
+)
+
+if (APPLE)
+    TARGET_SOURCES(tests_ui PRIVATE ../../src/abstraction/mac/darkmode.mm)
+elseif (WIN32)
+    TARGET_SOURCES(tests_ui PRIVATE ../../src/abstraction/win/darkmode.cpp)
+else ()
+    TARGET_SOURCES(tests_ui PRIVATE ../../src/abstraction/unix/darkmode.cpp)
+endif ()
+
+TARGET_INCLUDE_DIRECTORIES(tests_ui BEFORE PRIVATE ${SOURCES_ABSOLUTE_PATH}/ui/test/mock ${SOURCES_ABSOLUTE_PATH}/ui/support/test/mock ${SOURCES_ABSOLUTE_PATH} ${CMAKE_BINARY_DIR})

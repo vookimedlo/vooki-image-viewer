@@ -33,6 +33,10 @@ VookiImageViewer - a tool for showing images.
 #include <QPainter>
 #include <QStandardPaths>
 
+#if not QT_CONFIG(whatsthis)
+    #error "Qt was not compiled with the whatsthis feature, cannot compile this program which depends on it."
+#endif
+
 MainWindow::MainWindow(QWidget *parent)
                                         : QMainWindow(parent)
                                         , m_fileSystemModel(new QFileSystemModel(this))
@@ -447,7 +451,7 @@ void MainWindow::onReleaseNotesTriggered()
 
 void MainWindow::onSettingsTriggered()
 {
-    SettingsDialog dialog {this};
+    SettingsDialog dialog {Settings::defaultSettings(), Settings::userSettings(), this};
     dialog.setWindowFlags(dialog.windowFlags() & ~Qt::WindowContextHelpButtonHint);
     dialog.populateShortcuts(m_ui.menuFile);
     dialog.populateShortcuts(m_ui.menuView);

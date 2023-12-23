@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 {
     int status = 0;
 
-    runTests<ImageLoaderTest>(argc, argv, &status);
+    TEST::runTests<ImageLoaderTest>(argc, argv, &status);
 
     return status;
 }

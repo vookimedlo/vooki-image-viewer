@@ -22,15 +22,18 @@ class SettingsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit SettingsDialog(QWidget *parent = Q_NULLPTR);
+    explicit SettingsDialog(std::unique_ptr<QSettings> defaultSettings,
+                            std::unique_ptr<QSettings> userSettings,
+                            QWidget *parent = nullptr);
     DISABLE_COPY_MOVE(SettingsDialog);
 
     void populateShortcuts(const QMenu *menu) const;
 
 protected:
-    void initializeUI(const QSettings * const settings);
+    [[nodiscard]] virtual QColor getColorFromPicker(const QColor &initialColor) const;
+    void initializeUI(const QSettings * settings);
 
-protected slots:
+public slots:
     virtual void onAccept();
     virtual void onButtonBoxButtonClicked(QAbstractButton *button);
     virtual void onLanguageChanged(int index);
@@ -39,9 +42,15 @@ protected slots:
     virtual void onToolButtonBorderColorClicked();
     virtual void onToolButtonBackgroundColorClicked();
 
+protected:
+    const Ui::SettingsDialog *ui() const { return &m_uiSettingsDialog; };
+
 private:
-    Ui::SettingsDialog m_uiSettingsDialog;
     QColor m_borderColor;
     QColor m_backgroundColor;
     QString m_languageCode;
+    std::unique_ptr<QSettings> m_defaultSettings;
+    std::unique_ptr<QSettings> m_userSettings;
+    const std::array<QCheckBox **, 13> m_settingsCheckboxes;
+    Ui::SettingsDialog m_uiSettingsDialog;
 };

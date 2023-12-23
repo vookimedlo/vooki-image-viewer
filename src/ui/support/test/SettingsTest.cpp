@@ -17,7 +17,7 @@ VookiImageViewer - a tool for showing images.
 
 void SettingsTest::initializeSettings() const
 {
-    QSettings settings(QSettingsMock::nullFormat, QSettings::UserScope, "test", "test");
+    QSettings settings(QSettingsMock::nullFormat, QSettings::UserScope, "test9", "test9");
     QCOMPARE(settings.allKeys().size(), 0);
 
     SettingsMock::initializeSettings(settings);

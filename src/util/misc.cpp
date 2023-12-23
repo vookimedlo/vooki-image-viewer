@@ -9,7 +9,9 @@ VookiImageViewer - a tool for showing images.
 ****************************************************************************/
 
 #include "misc.h"
+#include <QAction>
 #include <QStringBuilder>
+#include <queue>
 
 namespace Util
 {
@@ -20,5 +22,39 @@ namespace Util
         for (const QByteArray &format : formats)
             filters << "*." % QString::fromLatin1(format.toLower());
         return filters;
+    }
+
+    std::vector<const QAction *> getAllActionsHavingShortcut(const QMenu *fromMenu)
+    {
+        Q_ASSERT(fromMenu);
+
+        std::vector<const QAction *> result;
+        std::queue<const QMenu *> unprocessedMenus;
+        unprocessedMenus.push(fromMenu);
+
+        while (!unprocessedMenus.empty())
+        {
+            const QMenu * const menu = unprocessedMenus.front();
+            unprocessedMenus.pop();
+
+            for (const auto *const action : menu->actions())
+            {
+                if (action->isSeparator())
+                    continue;
+
+                if (action->menu() && action->menu() != menu)
+                {
+                    unprocessedMenus.push(action->menu());
+                    continue;
+                }
+
+                if (action->whatsThis().isEmpty())
+                    continue;
+
+                result.push_back(action);
+            }
+        }
+
+        return result;
     }
 }

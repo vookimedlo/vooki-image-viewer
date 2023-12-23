@@ -11,9 +11,11 @@ VookiImageViewer - a tool for showing images.
 
 #include <QByteArray>
 #include <QList>
+#include <QMenu>
 #include <QStringList>
 
 namespace Util
 {
     [[nodiscard]] QStringList convertFormatsToFilters(const QList<QByteArray> &formats);
+    [[nodiscard]] std::vector<const QAction *> getAllActionsHavingShortcut(const QMenu *menu);
 }
