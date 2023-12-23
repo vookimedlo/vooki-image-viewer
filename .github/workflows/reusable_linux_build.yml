@@ -50,7 +50,7 @@ jobs:
         docker exec linux_docker /bin/sh -c 'cd /root/sources/build/ && tar -cf - *.deb *.rpm' | tar -xvf -
         echo "artifact_name=`ls *.deb *.rpm`" >> $GITHUB_ENV
     - name: archive artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ inputs.artifact_name }}_${{ env.artifact_name }}
         path: |

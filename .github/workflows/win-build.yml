@@ -85,21 +85,21 @@ jobs:
         echo "artifact_name_msi=$name" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
     - name: archive artifacts [zip]
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{env.artifact_name_zip}}
         path: |
           ${{env.artifact_path}}\${{env.artifact_name_zip}}
         retention-days: ${{ inputs.artifact_retention_days }}
     - name: archive artifacts [7z]
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{env.artifact_name_7z}}
         path: |
           ${{env.artifact_path}}\${{env.artifact_name_7z}}
         retention-days: ${{ inputs.artifact_retention_days }}
     - name: archive artifacts [msi]
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{env.artifact_name_msi}}
         path: |
