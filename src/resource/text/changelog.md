@@ -1,6 +1,13 @@
 # Release Notes
 
 --------------------------------------------------------------
+## v2023.12.24
+- Components: Updated to the latest versions.
+- Core: Minor bug fixes.
+- Image: The JPEG XL & QOI format support added.
+- Image: Minor bug fixes.
+- Tests: The application's core functionality covered by unit tests.
+--------------------------------------------------------------
 ## v2023.07.07
 - Components: Updated to the latest versions.
 - Translations: Czech updated. (Looking for translators to other languages).
