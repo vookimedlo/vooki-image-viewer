@@ -76,6 +76,8 @@
           <string>heic</string>
           <string>heif</string>
           <string>ani</string>
+          <string>jxl</string>
+          <string>qoi</string>
         </array>
         <key>CFBundleTypeRole</key>
         <string>Viewer</string>

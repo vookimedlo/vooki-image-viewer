@@ -44,10 +44,12 @@ Supported image formats cover the very common formats as well as the rare ones. 
 | ANI                       | Windows Animated Cursor                          |
 | GIF                       | Graphic Interchange Format                       |
 | JPG                       | Joint Photographic Experts Group                 |
+| JXL                       | JPEG XL                                          |
 | PNG                       | Portable Network Graphics                        |
 | PBM                       | Portable Bitmap                                  |
 | PGM                       | Portable Graymap                                 |
 | PPM                       | Portable Pixmap                                  |
+| QOI                       | Quite OK Image Format                            |
 | XBM                       | X11 Bitmap                                       |
 | XPM                       | X11 Pixmap                                       |
 | SVG                       | Scalable Vector Graphics                         |

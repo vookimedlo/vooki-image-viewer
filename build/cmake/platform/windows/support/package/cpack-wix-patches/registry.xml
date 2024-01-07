@@ -53,6 +53,9 @@
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".heic" Value="" Type="string" />
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".heif" Value="" Type="string" />
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".ani" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".jxl" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".qoi" Value="" Type="string" />
+
 
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.jpg\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.png\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
@@ -94,10 +97,12 @@
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.heic\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.heif\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.ani\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.jxl\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.qoi\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
 
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\shell\open" Name="FriendlyAppName" Value="VookiImageViewer" Type="string" />
 
-        <ProgId Id="VookiImageViewer.Image"  Advertise="yes">
+        <ProgId Id="VookiImageViewer.Image" Advertise="yes">
             <Extension Id="jpg">
                 <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
             </Extension>
@@ -216,6 +221,12 @@
                 <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
             </Extension>
             <Extension Id="ani">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="jxl">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="qoi">
                 <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
             </Extension>
         </ProgId>
