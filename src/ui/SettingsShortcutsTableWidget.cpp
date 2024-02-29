@@ -24,7 +24,7 @@ SettingsShortcutsTableWidget::SettingsShortcutsTableWidget(const int rows, const
 {
 }
 
-void SettingsShortcutsTableWidget::setItemAtCoordinates(int row, int column, QTableWidgetItem *item)
+void SettingsShortcutsTableWidget::setItemAtCoordinates(const int row, const int column, QTableWidgetItem *item)
 {
     QTableWidget::setItem(row, column, item);
 

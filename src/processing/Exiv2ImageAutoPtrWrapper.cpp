@@ -13,7 +13,7 @@ VookiImageViewer - a tool for showing images.
 #include "Exiv2ImageAutoPtrWrapper.h"
 #include <exiv2/exiv2.hpp>
 
-std::unique_ptr<Exiv2::Image> Exiv2ImageAutoPtrWrapper::open(const std::string &path, bool useCurl)
+std::unique_ptr<Exiv2::Image> Exiv2ImageAutoPtrWrapper::open(const std::string &path, const bool useCurl)
 {
     return Exiv2::ImageFactory::open(path, useCurl);
 }

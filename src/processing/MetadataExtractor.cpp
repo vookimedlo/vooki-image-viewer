@@ -32,7 +32,7 @@ const QString MetadataExtractor::m_unitPixel {tr(" px", "Image Description")};
 //: Units: Second
 const QString MetadataExtractor::m_unitSecond {tr(" s", "Image Description")};
 
-void MetadataExtractor::extract(const QString &filename, int width, int height)
+void MetadataExtractor::extract(const QString &filename, const int width, const int height)
 {
     m_gpsLatitude.clear();
     m_gpsLongitude.clear();

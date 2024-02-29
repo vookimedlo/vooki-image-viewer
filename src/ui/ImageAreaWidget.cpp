@@ -169,7 +169,7 @@ void ImageAreaWidget::onSetFitToWindowTriggered(const bool enabled)
     update();
 }
 
-void ImageAreaWidget::zoom(const double factor, bool isZoomIn)
+void ImageAreaWidget::zoom(const double factor, const bool isZoomIn)
 {
     constexpr double maxValue = 2.0;
     constexpr double minValue = 0.1;

@@ -165,7 +165,7 @@ void MainWindow::changeEvent(QEvent *event)
     QMainWindow::changeEvent(event);
 }
 
-QString MainWindow::getRecentFile(qsizetype item) const
+QString MainWindow::getRecentFile(const qsizetype item) const
 {
     const qsizetype index = item + 1;
 
@@ -483,13 +483,13 @@ void MainWindow::onZoomOutTriggered() const
     m_ui.imageAreaWidget->onZoomImageOutTriggered(0.10);
 }
 
-void MainWindow::onImageDimensionsChanged(int width, int height) const
+void MainWindow::onImageDimensionsChanged(const int width, const int height) const
 {
     //: Used in the statusbar showing the image dimensions. Example: "1024x760"
     m_ui.statusBar->setDimensionLabel(tr("%1x%2 px").arg(QString::number(width), QString::number(height)));
 }
 
-void MainWindow::onImageSizeChanged(uint64_t size) const
+void MainWindow::onImageSizeChanged(const uint64_t size) const
 {
     const ByteSize byteSize {size};
     const auto [newSize, unit] { byteSize.humanReadableSize() };
