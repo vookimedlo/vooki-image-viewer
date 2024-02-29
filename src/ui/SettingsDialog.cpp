@@ -48,8 +48,8 @@ SettingsDialog::SettingsDialog(std::unique_ptr<QSettings> defaultSettings,
         QSignalBlocker signalBlocker(m_uiSettingsDialog.comboBoxLanguage);
 
         // Populate a localization combobox
-        for (const auto &record : Languages::m_localizations)
-            m_uiSettingsDialog.comboBoxLanguage->addItem(record.m_language, record.m_code);
+        for (const auto &[code, language] : Languages::m_localizations)
+            m_uiSettingsDialog.comboBoxLanguage->addItem(language, code);
     }
 
     initializeUI(m_userSettings.get());

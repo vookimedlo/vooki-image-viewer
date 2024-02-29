@@ -24,25 +24,25 @@ namespace Util
         return filters;
     }
 
-    std::vector<const QAction *> getAllActionsHavingShortcut(const QMenu *fromMenu)
+    std::vector<const QAction *> getAllActionsHavingShortcut(const QMenu *menu)
     {
-        Q_ASSERT(fromMenu);
+        Q_ASSERT(menu);
 
         std::vector<const QAction *> result;
         std::queue<const QMenu *> unprocessedMenus;
-        unprocessedMenus.push(fromMenu);
+        unprocessedMenus.push(menu);
 
         while (!unprocessedMenus.empty())
         {
-            const QMenu * const menu = unprocessedMenus.front();
+            const QMenu * const unprocessedMenu = unprocessedMenus.front();
             unprocessedMenus.pop();
 
-            for (const auto *const action : menu->actions())
+            for (const auto *const action : unprocessedMenu->actions())
             {
                 if (action->isSeparator())
                     continue;
 
-                if (action->menu() && action->menu() != menu)
+                if (action->menu() && action->menu() != unprocessedMenu)
                 {
                     unprocessedMenus.push(action->menu());
                     continue;

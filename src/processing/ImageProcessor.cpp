@@ -54,10 +54,8 @@ QImage ImageProcessor::process()
         }
         return lastTransformedImage;
     }
-    else
-    {
-        return m_transformations.front()->transform().value<QImage>();
-    }
+
+    return m_transformations.front()->transform().value<QImage>();
 }
 
 void ImageProcessor::setAreaSize(const QSize &size)

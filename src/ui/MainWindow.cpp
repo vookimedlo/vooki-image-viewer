@@ -129,7 +129,8 @@ MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, con
                 showImage(addToRecentFiles);
                 return HANDLE_RESULT_E::OK;
             }
-            else if (info.isFile())
+
+            if (info.isFile())
             {
                 m_catalog.initialize(QFile(path));
                 showImage(addToRecentFiles);
