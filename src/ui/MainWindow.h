@@ -78,7 +78,7 @@ protected slots:
     void onZoomPercentageChanged(qreal value) const;
 
 private:
-    Ui::MainWindow m_ui;
+    Ui::MainWindow m_ui {};
     QFileSystemModel *m_fileSystemModel;
     FileSystemSortFilterProxyModel *m_sortFileSystemModel;
     ImageCatalog m_catalog;
@@ -89,5 +89,5 @@ private:
         bool isStatusBarVisible;
         bool isToolBarVisible;
         bool isInformationVisible;
-    } m_widgetVisibilityPriorFullscreen;
+    } m_widgetVisibilityPriorFullscreen {};
 };

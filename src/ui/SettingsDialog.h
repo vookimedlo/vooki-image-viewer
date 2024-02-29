@@ -52,5 +52,5 @@ private:
     std::unique_ptr<QSettings> m_defaultSettings;
     std::unique_ptr<QSettings> m_userSettings;
     const std::array<QCheckBox **, 13> m_settingsCheckboxes;
-    Ui::SettingsDialog m_uiSettingsDialog;
+    Ui::SettingsDialog m_uiSettingsDialog {};
 };

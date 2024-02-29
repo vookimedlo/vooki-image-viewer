@@ -22,5 +22,5 @@ public:
     DISABLE_COPY_MOVE(ReleaseNotesDialog);
 
 private:
-    Ui::releaseNotesDialog m_uiReleaseNotesDialog;
+    Ui::releaseNotesDialog m_uiReleaseNotesDialog {};
 };
