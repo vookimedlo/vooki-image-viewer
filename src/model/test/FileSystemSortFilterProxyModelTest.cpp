@@ -35,11 +35,11 @@ void FileSystemSortFilterProxyModelTest::sorting()
     model.setFilter(QDir::Filter::Hidden | QDir::Filter::AllEntries | QDir::Filter::NoDotAndDotDot | QDir::Filter::AllDirs);
     model.setNameFilters({ "*" });
     model.setNameFilterDisables(false);
-    auto modelIndex = model.setRootPath(makeAbsolutePath(m_multipleFilesDirPath));
+    const auto modelIndex = model.setRootPath(makeAbsolutePath(m_multipleFilesDirPath));
 
 #ifdef __cpp_lib_semaphore
     // Model is populated in the dedicated thread so we need to wait for its completion.
-    bool isDirectoryLoaded {QTest::qWaitFor([&directoryLoadedSemaphore = m_directoryLoadedSemaphore]() {
+    const bool isDirectoryLoaded {QTest::qWaitFor([&directoryLoadedSemaphore = m_directoryLoadedSemaphore]() {
         return directoryLoadedSemaphore.try_acquire();
     }, 3000)};
     QCOMPARE(isDirectoryLoaded, true);

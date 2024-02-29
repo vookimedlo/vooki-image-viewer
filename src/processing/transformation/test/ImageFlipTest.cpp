@@ -90,7 +90,7 @@ void ImageFlipTest::setFlipVerticallyTrueFalse() const
 void ImageFlipTest::setFlipHorizontallyFalse() const
 {
     ImageFlip<QTransform> m_imageFlip{};
-    auto transformBefore = m_imageFlip.transform().value<QTransform>();
+    const auto transformBefore = m_imageFlip.transform().value<QTransform>();
     QCOMPARE(m_imageFlip.isFlippedHorizontally(), false);
     QCOMPARE(m_imageFlip.isFlippedVertically(), false);
 
@@ -105,7 +105,7 @@ void ImageFlipTest::setFlipHorizontallyFalse() const
 void ImageFlipTest::setFlipVerticallyFalse() const
 {
     ImageFlip<QTransform> m_imageFlip{};
-    auto transformBefore = m_imageFlip.transform().value<QTransform>();
+    const auto transformBefore = m_imageFlip.transform().value<QTransform>();
     QCOMPARE(m_imageFlip.isFlippedHorizontally(), false);
     QCOMPARE(m_imageFlip.isFlippedVertically(), false);
 

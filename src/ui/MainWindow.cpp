@@ -119,7 +119,7 @@ MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, con
 {
     m_ui.statusBar->clearLabels();
 
-    if (QFileInfo info(path); info.exists())
+    if (const QFileInfo info(path); info.exists())
     {
         if (info.isReadable())
         {
@@ -230,7 +230,7 @@ QString MainWindow::registerProcessedImage(const QString &filePath, const bool a
         // Remove the entry exceeding the allowed limit of menu items in recent files menu
         if (constexpr int maxRecentFiles = 7; actions.size() > maxRecentFiles)
         {
-            std::unique_ptr<RecentFileAction> recentImage(dynamic_cast<RecentFileAction *>(actions.at(maxRecentFiles)));
+            const std::unique_ptr<RecentFileAction> recentImage(dynamic_cast<RecentFileAction *>(actions.at(maxRecentFiles)));
             QObject::disconnect(recentImage.get(), &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
             actions.removeAt(maxRecentFiles);
         }
@@ -285,7 +285,7 @@ void MainWindow::onAboutToQuit() const
         SETTINGS_RECENT_FILE_1, SETTINGS_RECENT_FILE_2, SETTINGS_RECENT_FILE_3, SETTINGS_RECENT_FILE_4, SETTINGS_RECENT_FILE_5
     };
 
-    std::shared_ptr<QSettings> settings = Settings::userSettings();
+    const std::shared_ptr<QSettings> settings = Settings::userSettings();
 
     for (size_t i = 0; i < settingsKeys.size(); ++i)
         settings->setValue(settingsKeys[i], (settings->value(SETTINGS_IMAGE_REMEMBER_RECENT).toBool()) ? getRecentFile(i + 1) : QString());
@@ -332,7 +332,7 @@ void MainWindow::onAboutSupportedImageFormats()
 
 void MainWindow::onClearHistory() const
 {
-    auto actions = m_ui.menuRecentFiles->actions();
+    const auto actions = m_ui.menuRecentFiles->actions();
     // Leave the first two actions intact (Clear History & Menu Separator)
     for (int i = 2; i < actions.size(); i++)
     {
@@ -491,7 +491,7 @@ void MainWindow::onImageDimensionsChanged(int width, int height) const
 
 void MainWindow::onImageSizeChanged(uint64_t size) const
 {
-    ByteSize byteSize {size};
+    const ByteSize byteSize {size};
     const auto [newSize, unit] { byteSize.humanReadableSize() };
     const auto unitString { byteSize.getUnit(unit) };
 

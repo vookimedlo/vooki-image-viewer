@@ -326,7 +326,7 @@ void ImageAreaWidget::transformImage()
 
 void ImageAreaWidget::wheelEvent(QWheelEvent *event)
 {
-    QPoint numPixels = event->pixelDelta();
+    const QPoint numPixels = event->pixelDelta();
     QPoint numDegrees = event->angleDelta() / 8;
 
     // High-res input
@@ -360,19 +360,19 @@ void ImageAreaWidget::extractMetadata(const QString &fileName)
 {
 
     MetadataExtractor metadataExtractor;
-    auto connection = connect(&metadataExtractor,
-                              &MetadataExtractor::imageInformationParsed,
-                              this,
-                              [this](const std::vector<std::pair<QString, QString>>& information) {
-                                  emit imageInformationParsed(information);
-                              });
+    const auto connection = connect(&metadataExtractor,
+                                    &MetadataExtractor::imageInformationParsed,
+                                    this,
+                                    [this](const std::vector<std::pair<QString, QString>>& information) {
+                                        emit imageInformationParsed(information);
+                                    });
 
-    auto connectionSize = connect(&metadataExtractor,
-                                  &MetadataExtractor::imageSizeParsed,
-                                  this,
-                                  [this](const uint64_t &size) {
-                                      emit imageSizeChanged(size);
-                                  });
+    const auto connectionSize = connect(&metadataExtractor,
+                                        &MetadataExtractor::imageSizeParsed,
+                                        this,
+                                        [this](const uint64_t &size) {
+                                            emit imageSizeChanged(size);
+                                        });
 
     metadataExtractor.extract(fileName, m_originalImage.width(), m_originalImage.height());
 

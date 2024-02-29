@@ -172,12 +172,12 @@ void SettingsDialog::onRestoreDefaultsTriggered()
 
 void SettingsDialog::onToolButtonBorderColorClicked()
 {
-    if (QColor borderColor { getColorFromPicker(m_borderColor) }; borderColor.isValid())
+    if (const QColor borderColor { getColorFromPicker(m_borderColor) }; borderColor.isValid())
         m_borderColor = borderColor;
 }
 
 void SettingsDialog::onToolButtonBackgroundColorClicked()
 {
-    if (QColor backgroundColor { getColorFromPicker(m_backgroundColor) }; backgroundColor.isValid())
+    if (const QColor backgroundColor { getColorFromPicker(m_backgroundColor) }; backgroundColor.isValid())
         m_backgroundColor = backgroundColor;
 }

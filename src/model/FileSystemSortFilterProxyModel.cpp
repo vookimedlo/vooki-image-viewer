@@ -25,8 +25,8 @@ bool FileSystemSortFilterProxyModel::lessThan(const QModelIndex &left, const QMo
         const auto *fsm = qobject_cast<QFileSystemModel *>(sourceModel());
         const bool asc = sortOrder() == Qt::AscendingOrder;
 
-        QFileInfo leftFileInfo = fsm->fileInfo(left);
-        QFileInfo rightFileInfo = fsm->fileInfo(right);
+        const QFileInfo leftFileInfo = fsm->fileInfo(left);
+        const QFileInfo rightFileInfo = fsm->fileInfo(right);
 
         // Move dirs up
         if (!leftFileInfo.isDir() && rightFileInfo.isDir())

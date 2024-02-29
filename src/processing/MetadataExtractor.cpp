@@ -38,7 +38,7 @@ void MetadataExtractor::extract(const QString &filename, int width, int height)
     m_gpsLongitude.clear();
     m_gpsAltitude.clear();
 
-    QFileInfo fileInfo(filename);
+    const QFileInfo fileInfo(filename);
     std::vector<std::pair<QString, QString>> information{ std::make_pair(tr("File name", "Image Properties"), fileInfo.fileName()) };
     addInformation(tr("Size", "Image Properties"), fileInfo.size(), information, MetadataExtractor::m_unitByte);
     addInformation(tr("Width", "Image Properties"), width, information, MetadataExtractor::m_unitPixel);

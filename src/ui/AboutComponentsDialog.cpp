@@ -74,7 +74,7 @@ void AboutComponentsDialog::onSelectedComponentChanged(const int row)
     }
 }
 
-void AboutComponentsDialog::showResourceMarkdown(const QString &resource)
+void AboutComponentsDialog::showResourceMarkdown(const QString &resource) const
 {
     const auto &markdown = m_uiAboutComponentsDialog.textBrowser->loadResource(QTextDocument::MarkdownResource,
                                                                               QUrl(resource));

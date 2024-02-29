@@ -24,7 +24,7 @@ void RecentFileActionTest::recentFileActionTriggered() const
     action.trigger();
     QCOMPARE(spy.count(), 1);
 
-    QList<QVariant> arguments = spy.takeFirst();
+    const QList<QVariant> arguments = spy.takeFirst();
     QCOMPARE(arguments.at(0).typeId(), QMetaType::QString);
     QCOMPARE(arguments.at(0).toString(), expectedString);
 }

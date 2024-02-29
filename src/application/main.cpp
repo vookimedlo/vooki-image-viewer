@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
             return 0;
     }
 
-    Application application(argc, argv);
+    const Application application(argc, argv);
     QCoreApplication::setOrganizationName("Michal Duda");
     QCoreApplication::setOrganizationDomain("VookiImageViewer.cz");
     QCoreApplication::setApplicationName("VookiImageViewer");
