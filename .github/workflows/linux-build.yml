@@ -12,7 +12,7 @@ jobs:
       fail-fast: true
       matrix:
         compiler: [gcc, clang]
-        distribution: [jammy, lunar, mantic]
+        distribution: [jammy, mantic, noble]
     uses: ./.github/workflows/reusable_linux_build.yml
     with:
       docker_image: ghcr.io/vookimedlo/ubuntu-qt:qt6_latestdistroofficial_${{ matrix.compiler }}_${{ matrix.distribution }}
@@ -34,7 +34,7 @@ jobs:
       fail-fast: true
       matrix:
         compiler: [gcc, clang]
-        distribution: [stable, 38, 39]
+        distribution: [stable, 38, 39, 40]
     uses: ./.github/workflows/reusable_linux_build.yml
     with:
       docker_image: ghcr.io/vookimedlo/fedora-qt:qt6_latestdistroofficial_${{ matrix.compiler }}_${{ matrix.distribution }}
