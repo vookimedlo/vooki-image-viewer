@@ -16,7 +16,7 @@ VookiImageViewer - a tool for showing images.
 
 void ImageZoomTest::areaSize() const
 {
-    const QSize size{10, 20};
+    constexpr QSize size{10, 20};
     ImageZoom<QTransform> imageZoom;
     QCOMPARE(imageZoom.getAreaSize(), QSize(0, 0));
     QCOMPARE(imageZoom.isCacheDirty(), true);
@@ -46,7 +46,7 @@ void ImageZoomTest::fitToArea() const
 
 void ImageZoomTest::originalImageSize() const
 {
-    const QSize size{10, 20};
+    constexpr QSize size{10, 20};
     ImageZoom<QTransform> imageZoom;
     QCOMPARE(imageZoom.isCacheDirty(), true);
     QCOMPARE(imageZoom.getOriginalImageSize(), QSize());
@@ -58,7 +58,7 @@ void ImageZoomTest::originalImageSize() const
 
 void ImageZoomTest::scaleFactor() const
 {
-    const double scaleFactor = 2;
+    constexpr double scaleFactor = 2;
     ImageZoom<QTransform> imageZoom;
     QCOMPARE(imageZoom.isCacheDirty(), true);
     QCOMPARE(imageZoom.getScaleFactor(), 1);
@@ -70,7 +70,7 @@ void ImageZoomTest::scaleFactor() const
 
 void ImageZoomTest::resetProperties() const
 {
-    const QSize size{10, 20};
+    constexpr QSize size{10, 20};
     ImageZoom<QTransform> imageZoom;
     imageZoom.setIsCacheDirty(false);
     imageZoom.setAreaSize(size);

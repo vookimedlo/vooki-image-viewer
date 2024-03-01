@@ -273,7 +273,7 @@ void ImageAreaWidget::nativeGestureEvent(QNativeGestureEvent *event)
             }
             break;
         case Qt::SmartZoomNativeGesture: {
-            const double factor = 1000;
+            constexpr double factor = 1000;
             if (event->value() != 0)
                 onZoomImageInTriggered(factor);
             else

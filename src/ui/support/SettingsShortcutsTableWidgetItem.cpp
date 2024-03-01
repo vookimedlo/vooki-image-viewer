@@ -11,8 +11,7 @@ VookiImageViewer - a tool for showing images.
 #include "SettingsShortcutsTableWidgetItem.h"
 
 SettingsShortcutsTableWidgetItem::SettingsShortcutsTableWidgetItem(QAction &action)
-                                        : QObject()
-                                        , QTableWidgetItem(SettingsShortcutsTableWidgetItem::type)
+                                        : QTableWidgetItem(SettingsShortcutsTableWidgetItem::type)
                                         , m_action(action)
                                         , m_keySequence(action.shortcut())
 {

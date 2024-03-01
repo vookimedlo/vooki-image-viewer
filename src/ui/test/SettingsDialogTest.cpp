@@ -68,7 +68,7 @@ void SettingsDialogTest::shortcuts() const
     QCOMPARE(userSettingsOnAccepted, userSettingsInitializedFromMenu);
 
     // Test the SettingsShortcutsTableWidgetItem::onKeySequenceChanged()
-    const auto standardKey = QKeySequence::StandardKey::MoveToNextPage;
+    constexpr auto standardKey = QKeySequence::StandardKey::MoveToNextPage;
     for (int i = 0; i < tableWidget->rowCount(); ++i)
         dynamic_cast<QKeySequenceEdit *>(tableWidget->cellWidget(i, 0))->setKeySequence(standardKey);
 
