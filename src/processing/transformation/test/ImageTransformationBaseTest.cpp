@@ -15,7 +15,7 @@ VookiImageViewer - a tool for showing images.
 #include "../ImageTransformationBase.h"
 
 template<typename T> requires std::is_same_v<QImage, T> || std::is_same_v<QTransform, T>
-final class ImageTransformationBaseHelper : public ImageTransformationBase<T>
+class ImageTransformationBaseHelper : public ImageTransformationBase<T>
 {
 public:
     [[nodiscard]] const T &getOriginalObject() const { return ImageTransformationBase<T>::getOriginalObject(); }
