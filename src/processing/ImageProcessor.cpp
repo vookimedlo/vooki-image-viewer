@@ -44,12 +44,7 @@ QImage ImageProcessor::process()
         QImage lastTransformedImage = m_originalImage.transformed(lastTransformation, Qt::SmoothTransformation);
         for (auto const transformation : m_imageTransformations)
         {
-            // Mark as dirty if the previous transformation in stack was dirty too.
-            if (needsTransformation)
-                transformation->bind(lastTransformedImage);
-            else if (transformation->isCacheDirty())
-                needsTransformation = true;
-
+            transformation->bind(lastTransformedImage);
             lastTransformedImage = transformation->transform().value<QImage>();
         }
         return lastTransformedImage;
