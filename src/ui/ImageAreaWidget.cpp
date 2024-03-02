@@ -228,10 +228,8 @@ void ImageAreaWidget::mouseMoveEvent(QMouseEvent *event)
 {
     if (!m_mouseMoveLast.isNull())
     {
-        QPoint delta = event->pos() - m_mouseMoveLast;
-
         // Scroll image only if mouse was moved at least by 10 pixels.
-        if (delta.manhattanLength() > 10)
+        if (const QPoint delta = event->pos() - m_mouseMoveLast; delta.manhattanLength() > 10)
         {
             qDebug() << "MouseMove: " << event->pos() << " prev: " << m_mouseMoveLast << " delta: " << delta;
             m_mouseMoveLast = event->pos();

@@ -59,9 +59,7 @@ void SettingsDialog::populateShortcuts(const QMenu *menu) const
 {
     Q_ASSERT(menu);
 
-    const auto allActions = Util::getAllActionsHavingShortcut(menu);
-
-    for (const auto action : allActions)
+    for (const auto action : Util::getAllActionsHavingShortcut(menu))
     {
         const int rowCount = m_uiSettingsDialog.tableShortcutsWidget->rowCount();
         m_uiSettingsDialog.tableShortcutsWidget->insertRow(rowCount);
