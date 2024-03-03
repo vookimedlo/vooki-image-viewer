@@ -27,7 +27,7 @@ bool RawThumbHandler::read(QImage *image)
         QImage thumbnail;
         if (LIBRAW_SUCCESS == raw.unpack_thumb() && LIBRAW_THUMBNAIL_JPEG == raw.imgdata.thumbnail.tformat)
         {
-            thumbnail.loadFromData(reinterpret_cast<unsigned char *>(raw.imgdata.thumbnail.thumb), raw.imgdata.thumbnail.tlength, "JPEG");
+            thumbnail.loadFromData(std::bit_cast<unsigned char *>(raw.imgdata.thumbnail.thumb), raw.imgdata.thumbnail.tlength, "JPEG");
         }
         raw.recycle();
         *image = thumbnail;

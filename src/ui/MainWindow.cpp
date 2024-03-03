@@ -30,7 +30,6 @@ VookiImageViewer - a tool for showing images.
 #include <QFileSystemModel>
 #include <QImageReader>
 #include <QMessageBox>
-#include <QPainter>
 #include <QStandardPaths>
 
 #if not QT_CONFIG(whatsthis)
