@@ -30,7 +30,6 @@ VookiImageViewer - a tool for showing images.
 #include <QFileSystemModel>
 #include <QImageReader>
 #include <QMessageBox>
-#include <QPainter>
 #include <QStandardPaths>
 
 #if not QT_CONFIG(whatsthis)
@@ -119,7 +118,7 @@ MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, con
 {
     m_ui.statusBar->clearLabels();
 
-    if (QFileInfo info(path); info.exists())
+    if (const QFileInfo info(path); info.exists())
     {
         if (info.isReadable())
         {
@@ -129,7 +128,8 @@ MainWindow::HANDLE_RESULT_E MainWindow::handleImagePath(const QString &path, con
                 showImage(addToRecentFiles);
                 return HANDLE_RESULT_E::OK;
             }
-            else if (info.isFile())
+
+            if (info.isFile())
             {
                 m_catalog.initialize(QFile(path));
                 showImage(addToRecentFiles);
@@ -165,7 +165,7 @@ void MainWindow::changeEvent(QEvent *event)
     QMainWindow::changeEvent(event);
 }
 
-QString MainWindow::getRecentFile(qsizetype item) const
+QString MainWindow::getRecentFile(const qsizetype item) const
 {
     const qsizetype index = item + 1;
 
@@ -230,7 +230,7 @@ QString MainWindow::registerProcessedImage(const QString &filePath, const bool a
         // Remove the entry exceeding the allowed limit of menu items in recent files menu
         if (constexpr int maxRecentFiles = 7; actions.size() > maxRecentFiles)
         {
-            std::unique_ptr<RecentFileAction> recentImage(dynamic_cast<RecentFileAction *>(actions.at(maxRecentFiles)));
+            const std::unique_ptr<RecentFileAction> recentImage(dynamic_cast<RecentFileAction *>(actions.at(maxRecentFiles)));
             QObject::disconnect(recentImage.get(), &RecentFileAction::recentFileActionTriggered, this, &MainWindow::onRecentFileTriggered);
             actions.removeAt(maxRecentFiles);
         }
@@ -285,7 +285,7 @@ void MainWindow::onAboutToQuit() const
         SETTINGS_RECENT_FILE_1, SETTINGS_RECENT_FILE_2, SETTINGS_RECENT_FILE_3, SETTINGS_RECENT_FILE_4, SETTINGS_RECENT_FILE_5
     };
 
-    std::shared_ptr<QSettings> settings = Settings::userSettings();
+    const std::shared_ptr<QSettings> settings = Settings::userSettings();
 
     for (size_t i = 0; i < settingsKeys.size(); ++i)
         settings->setValue(settingsKeys[i], (settings->value(SETTINGS_IMAGE_REMEMBER_RECENT).toBool()) ? getRecentFile(i + 1) : QString());
@@ -332,7 +332,7 @@ void MainWindow::onAboutSupportedImageFormats()
 
 void MainWindow::onClearHistory() const
 {
-    auto actions = m_ui.menuRecentFiles->actions();
+    const auto actions = m_ui.menuRecentFiles->actions();
     // Leave the first two actions intact (Clear History & Menu Separator)
     for (int i = 2; i < actions.size(); i++)
     {
@@ -483,15 +483,15 @@ void MainWindow::onZoomOutTriggered() const
     m_ui.imageAreaWidget->onZoomImageOutTriggered(0.10);
 }
 
-void MainWindow::onImageDimensionsChanged(int width, int height) const
+void MainWindow::onImageDimensionsChanged(const int width, const int height) const
 {
     //: Used in the statusbar showing the image dimensions. Example: "1024x760"
     m_ui.statusBar->setDimensionLabel(tr("%1x%2 px").arg(QString::number(width), QString::number(height)));
 }
 
-void MainWindow::onImageSizeChanged(uint64_t size) const
+void MainWindow::onImageSizeChanged(const uint64_t size) const
 {
-    ByteSize byteSize {size};
+    const ByteSize byteSize {size};
     const auto [newSize, unit] { byteSize.humanReadableSize() };
     const auto unitString { byteSize.getUnit(unit) };
 

@@ -48,8 +48,8 @@ SettingsDialog::SettingsDialog(std::unique_ptr<QSettings> defaultSettings,
         QSignalBlocker signalBlocker(m_uiSettingsDialog.comboBoxLanguage);
 
         // Populate a localization combobox
-        for (const auto &record : Languages::m_localizations)
-            m_uiSettingsDialog.comboBoxLanguage->addItem(record.m_language, record.m_code);
+        for (const auto &[code, language] : Languages::m_localizations)
+            m_uiSettingsDialog.comboBoxLanguage->addItem(language, code);
     }
 
     initializeUI(m_userSettings.get());
@@ -59,9 +59,7 @@ void SettingsDialog::populateShortcuts(const QMenu *menu) const
 {
     Q_ASSERT(menu);
 
-    const auto allActions = Util::getAllActionsHavingShortcut(menu);
-
-    for (const auto action : allActions)
+    for (const auto action : Util::getAllActionsHavingShortcut(menu))
     {
         const int rowCount = m_uiSettingsDialog.tableShortcutsWidget->rowCount();
         m_uiSettingsDialog.tableShortcutsWidget->insertRow(rowCount);
@@ -90,11 +88,11 @@ void SettingsDialog::initializeUI(const QSettings * const settings)
     m_backgroundColor = settings->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>();
     m_languageCode = settings->value(SETTINGS_LANGUAGE_CODE).value<QString>();
 
-    if (std::input_iterator auto findIt = std::ranges::find_if(begin(Languages::m_localizations),
-                                           end(Languages::m_localizations),
-                                           [&languageCode = m_languageCode](const Languages::Record &record){
-                                               return languageCode == record.m_code;
-                                           }); findIt != std::end(Languages::m_localizations))
+    if (const auto findIt = std::ranges::find_if(begin(Languages::m_localizations),
+                                                                               end(Languages::m_localizations),
+                                                                               [&languageCode = m_languageCode](const Languages::Record &record){
+                                                                                   return languageCode == record.m_code;
+                                                                               }); findIt != std::end(Languages::m_localizations))
     {
         const auto position = std::distance(Languages::m_localizations.begin(), findIt);
         m_uiSettingsDialog.comboBoxLanguage->setCurrentIndex(position);
@@ -131,7 +129,7 @@ void SettingsDialog::onButtonBoxButtonClicked(QAbstractButton *button)
         onRestoreDefaultsTriggered();
 }
 
-void SettingsDialog::onLanguageChanged(int index)
+void SettingsDialog::onLanguageChanged(const int index)
 {
     qDebug() << "Selected localization: " << Languages::m_localizations[index].m_language;
     m_languageCode = Languages::m_localizations[index].m_code;
@@ -172,12 +170,12 @@ void SettingsDialog::onRestoreDefaultsTriggered()
 
 void SettingsDialog::onToolButtonBorderColorClicked()
 {
-    if (QColor borderColor { getColorFromPicker(m_borderColor) }; borderColor.isValid())
+    if (const QColor borderColor { getColorFromPicker(m_borderColor) }; borderColor.isValid())
         m_borderColor = borderColor;
 }
 
 void SettingsDialog::onToolButtonBackgroundColorClicked()
 {
-    if (QColor backgroundColor { getColorFromPicker(m_backgroundColor) }; backgroundColor.isValid())
+    if (const QColor backgroundColor { getColorFromPicker(m_backgroundColor) }; backgroundColor.isValid())
         m_backgroundColor = backgroundColor;
 }

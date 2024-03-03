@@ -17,7 +17,7 @@ FileSystemSortFilterProxyModel::FileSystemSortFilterProxyModel(QObject *parent)
 {
 }
 
-bool FileSystemSortFilterProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
+bool FileSystemSortFilterProxyModel::lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const
 {
     // If sorting by filenames column
     if (sortColumn() == 0)
@@ -25,8 +25,8 @@ bool FileSystemSortFilterProxyModel::lessThan(const QModelIndex &left, const QMo
         const auto *fsm = qobject_cast<QFileSystemModel *>(sourceModel());
         const bool asc = sortOrder() == Qt::AscendingOrder;
 
-        QFileInfo leftFileInfo = fsm->fileInfo(left);
-        QFileInfo rightFileInfo = fsm->fileInfo(right);
+        const QFileInfo leftFileInfo = fsm->fileInfo(source_left);
+        const QFileInfo rightFileInfo = fsm->fileInfo(source_right);
 
         // Move dirs up
         if (!leftFileInfo.isDir() && rightFileInfo.isDir())
@@ -39,5 +39,5 @@ bool FileSystemSortFilterProxyModel::lessThan(const QModelIndex &left, const QMo
         }
     }
 
-    return QSortFilterProxyModel::lessThan(left, right);
+    return QSortFilterProxyModel::lessThan(source_left, source_right);
 }

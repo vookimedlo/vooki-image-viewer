@@ -169,7 +169,7 @@ void ImageAreaWidget::onSetFitToWindowTriggered(const bool enabled)
     update();
 }
 
-void ImageAreaWidget::zoom(const double factor, bool isZoomIn)
+void ImageAreaWidget::zoom(const double factor, const bool isZoomIn)
 {
     constexpr double maxValue = 2.0;
     constexpr double minValue = 0.1;
@@ -228,10 +228,8 @@ void ImageAreaWidget::mouseMoveEvent(QMouseEvent *event)
 {
     if (!m_mouseMoveLast.isNull())
     {
-        QPoint delta = event->pos() - m_mouseMoveLast;
-
         // Scroll image only if mouse was moved at least by 10 pixels.
-        if (delta.manhattanLength() > 10)
+        if (const QPoint delta = event->pos() - m_mouseMoveLast; delta.manhattanLength() > 10)
         {
             qDebug() << "MouseMove: " << event->pos() << " prev: " << m_mouseMoveLast << " delta: " << delta;
             m_mouseMoveLast = event->pos();
@@ -273,7 +271,7 @@ void ImageAreaWidget::nativeGestureEvent(QNativeGestureEvent *event)
             }
             break;
         case Qt::SmartZoomNativeGesture: {
-            const double factor = 1000;
+            constexpr double factor = 1000;
             if (event->value() != 0)
                 onZoomImageInTriggered(factor);
             else
@@ -326,7 +324,7 @@ void ImageAreaWidget::transformImage()
 
 void ImageAreaWidget::wheelEvent(QWheelEvent *event)
 {
-    QPoint numPixels = event->pixelDelta();
+    const QPoint numPixels = event->pixelDelta();
     QPoint numDegrees = event->angleDelta() / 8;
 
     // High-res input
@@ -360,19 +358,19 @@ void ImageAreaWidget::extractMetadata(const QString &fileName)
 {
 
     MetadataExtractor metadataExtractor;
-    auto connection = connect(&metadataExtractor,
-                              &MetadataExtractor::imageInformationParsed,
-                              this,
-                              [this](const std::vector<std::pair<QString, QString>>& information) {
-                                  emit imageInformationParsed(information);
-                              });
+    const auto connection = connect(&metadataExtractor,
+                                    &MetadataExtractor::imageInformationParsed,
+                                    this,
+                                    [this](const std::vector<std::pair<QString, QString>>& information) {
+                                        emit imageInformationParsed(information);
+                                    });
 
-    auto connectionSize = connect(&metadataExtractor,
-                                  &MetadataExtractor::imageSizeParsed,
-                                  this,
-                                  [this](const uint64_t &size) {
-                                      emit imageSizeChanged(size);
-                                  });
+    const auto connectionSize = connect(&metadataExtractor,
+                                        &MetadataExtractor::imageSizeParsed,
+                                        this,
+                                        [this](const uint64_t &size) {
+                                            emit imageSizeChanged(size);
+                                        });
 
     metadataExtractor.extract(fileName, m_originalImage.width(), m_originalImage.height());
 

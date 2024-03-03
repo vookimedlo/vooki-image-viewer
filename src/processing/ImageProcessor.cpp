@@ -11,7 +11,7 @@ VookiImageViewer - a tool for showing images.
 #include "ImageProcessor.h"
 #include <algorithm>
 
-void ImageProcessor::bind(const QImage &image, bool resetTransformation)
+void ImageProcessor::bind(const QImage &image, const bool resetTransformation)
 {
     // shallow copy
     m_originalImage = image;
@@ -44,20 +44,13 @@ QImage ImageProcessor::process()
         QImage lastTransformedImage = m_originalImage.transformed(lastTransformation, Qt::SmoothTransformation);
         for (auto const transformation : m_imageTransformations)
         {
-            // Mark as dirty if the previous transformation in stack was dirty too.
-            if (needsTransformation)
-                transformation->bind(lastTransformedImage);
-            else if (transformation->isCacheDirty())
-                needsTransformation = true;
-
+            transformation->bind(lastTransformedImage);
             lastTransformedImage = transformation->transform().value<QImage>();
         }
         return lastTransformedImage;
     }
-    else
-    {
-        return m_transformations.front()->transform().value<QImage>();
-    }
+
+    return m_transformations.front()->transform().value<QImage>();
 }
 
 void ImageProcessor::setAreaSize(const QSize &size)
@@ -66,7 +59,7 @@ void ImageProcessor::setAreaSize(const QSize &size)
     m_imageBorder.setAreaSize(size);
 }
 
-void ImageProcessor::setScaleFactor(double value)
+void ImageProcessor::setScaleFactor(const double value)
 {
     m_imageZoom.setScaleFactor(value);
 }
@@ -121,7 +114,7 @@ double ImageProcessor::getScaleFactor() const
     return m_imageZoom.getScaleFactor();
 }
 
-void ImageProcessor::setFitToArea(bool fitToArea)
+void ImageProcessor::setFitToArea(const bool fitToArea)
 {
     m_imageZoom.setFitToArea(fitToArea);
 }
@@ -131,7 +124,7 @@ bool ImageProcessor::isFitToAreaEnabled() const
     return m_imageZoom.isFitToAreaEnabled();
 }
 
-void ImageProcessor::addImageOffsetY(int imageOffsetY)
+void ImageProcessor::addImageOffsetY(const int imageOffsetY)
 {
     m_imageBorder.addImageOffsetY(imageOffsetY);
 }
@@ -141,12 +134,12 @@ int ImageProcessor::getImageOffsetY() const
     return m_imageBorder.getImageOffsetY();
 }
 
-void ImageProcessor::setImageOffsetY(int imageOffsetY)
+void ImageProcessor::setImageOffsetY(const int imageOffsetY)
 {
     m_imageBorder.setImageOffsetY(imageOffsetY);
 }
 
-void ImageProcessor::addImageOffsetX(int imageOffsetX)
+void ImageProcessor::addImageOffsetX(const int imageOffsetX)
 {
     m_imageBorder.addImageOffsetX(imageOffsetX);
 }
@@ -156,7 +149,7 @@ int ImageProcessor::getImageOffsetX() const
     return m_imageBorder.getImageOffsetX();
 }
 
-void ImageProcessor::setImageOffsetX(int imageOffsetX)
+void ImageProcessor::setImageOffsetX(const int imageOffsetX)
 {
     m_imageBorder.setImageOffsetX(imageOffsetX);
 }
@@ -171,7 +164,7 @@ void ImageProcessor::setBackgroundColor(const QColor &color)
     m_imageBorder.setBackgroundColor(color);
 }
 
-void ImageProcessor::setDrawBorder(bool drawBorder)
+void ImageProcessor::setDrawBorder(const bool drawBorder)
 {
     m_imageBorder.setDrawBorder(drawBorder);
 }

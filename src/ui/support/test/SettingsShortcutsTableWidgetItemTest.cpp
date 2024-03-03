@@ -22,7 +22,7 @@ void SettingsShortcutsTableWidgetItemTest::onKeySequenceChanged() const
     QAction action {expectedLabel};
     action.setShortcut(expectedInitialKeySequence);
 
-    SettingsShortcutsTableWidgetItem item {action};
+    const SettingsShortcutsTableWidgetItem item {action};
     QCOMPARE(action.text(), expectedLabel);
     QCOMPARE(action.shortcut(), expectedInitialKeySequence);
     QCOMPARE(item.action().text(), expectedLabel);

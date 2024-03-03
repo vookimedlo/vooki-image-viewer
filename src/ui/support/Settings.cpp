@@ -61,9 +61,7 @@ void Settings::initializeSettings(const QMenu *menu, QSettings * const defaultSe
     Q_ASSERT(defaultSettings);
     Q_ASSERT(userSettings);
 
-    const auto allActions = Util::getAllActionsHavingShortcut(menu);
-
-    for (const auto action : allActions)
+    for (const auto action : Util::getAllActionsHavingShortcut(menu))
     {
         defaultSettings->setValue(action->whatsThis(), action->shortcut());
         const_cast<QAction *>(action)->setShortcut(userSettings->value(action->whatsThis(), defaultSettings->value(action->whatsThis())).value<QKeySequence>());

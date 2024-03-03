@@ -8,8 +8,9 @@ VookiImageViewer - a tool for showing images.
 
 ****************************************************************************/
 
-#include "rawThumbPlugin.h"
 #include <memory>
+
+#include "rawThumbPlugin.h"
 #include "rawThumbHandler.h"
 
 QImageIOPlugin::Capabilities RawThumbPlugin::capabilities(QIODevice *device, const QByteArray &format) const

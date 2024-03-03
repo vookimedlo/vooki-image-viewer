@@ -32,13 +32,13 @@ const QString MetadataExtractor::m_unitPixel {tr(" px", "Image Description")};
 //: Units: Second
 const QString MetadataExtractor::m_unitSecond {tr(" s", "Image Description")};
 
-void MetadataExtractor::extract(const QString &filename, int width, int height)
+void MetadataExtractor::extract(const QString &filename, const int width, const int height)
 {
     m_gpsLatitude.clear();
     m_gpsLongitude.clear();
     m_gpsAltitude.clear();
 
-    QFileInfo fileInfo(filename);
+    const QFileInfo fileInfo(filename);
     std::vector<std::pair<QString, QString>> information{ std::make_pair(tr("File name", "Image Properties"), fileInfo.fileName()) };
     addInformation(tr("Size", "Image Properties"), fileInfo.size(), information, MetadataExtractor::m_unitByte);
     addInformation(tr("Width", "Image Properties"), width, information, MetadataExtractor::m_unitPixel);

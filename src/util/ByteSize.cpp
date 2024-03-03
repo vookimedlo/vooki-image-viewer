@@ -12,7 +12,7 @@ VookiImageViewer - a tool for showing images.
 #include <cfenv>
 #include <cmath>
 
-ByteSize::ByteSize(uint64_t size) : m_size(size)
+ByteSize::ByteSize(const uint64_t size) : m_size(size)
 {
 }
 
@@ -25,6 +25,6 @@ std::pair<double, enum ByteSize::SizeUnits> ByteSize::humanReadableSize() const 
     return {mantissa, SizeUnits{i}};
 }
 
-QString ByteSize::getUnit(enum ByteSize::SizeUnits unit) const {
+QString ByteSize::getUnit(const enum ByteSize::SizeUnits unit) const {
     return units[unit];
 }

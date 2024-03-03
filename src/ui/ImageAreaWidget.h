@@ -80,7 +80,7 @@ protected:
     void scrollTo(const QPoint &point);
     void transformImage();
     void wheelEvent(QWheelEvent *event) override;
-    void zoom(const double factor, bool isZoomIn);
+    void zoom(double factor, bool isZoomIn);
 
     void extractMetadata(const QString &fileName);
 

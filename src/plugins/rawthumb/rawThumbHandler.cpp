@@ -22,12 +22,12 @@ bool RawThumbHandler::read(QImage *image)
     QByteArray buffer = device()->readAll();
     LibRaw raw;
 
-    if (auto state = raw.open_buffer(buffer.data(), buffer.size()); LIBRAW_SUCCESS == state)
+    if (const auto state = raw.open_buffer(buffer.data(), buffer.size()); LIBRAW_SUCCESS == state)
     {
         QImage thumbnail;
         if (LIBRAW_SUCCESS == raw.unpack_thumb() && LIBRAW_THUMBNAIL_JPEG == raw.imgdata.thumbnail.tformat)
         {
-            thumbnail.loadFromData((unsigned char *)raw.imgdata.thumbnail.thumb, raw.imgdata.thumbnail.tlength, "JPEG");
+            thumbnail.loadFromData(std::bit_cast<unsigned char *>(raw.imgdata.thumbnail.thumb), raw.imgdata.thumbnail.tlength, "JPEG");
         }
         raw.recycle();
         *image = thumbnail;
@@ -43,9 +43,9 @@ bool RawThumbHandler::canRead(QIODevice *device)
     device->reset();
 
     LibRaw raw;
-    if (auto state = raw.open_buffer(buffer.data(), buffer.size()); LIBRAW_SUCCESS == state &&
-                                                                    LIBRAW_SUCCESS == raw.unpack_thumb() &&
-                                                                    LIBRAW_THUMBNAIL_JPEG == raw.imgdata.thumbnail.tformat)
+    if (const auto state = raw.open_buffer(buffer.data(), buffer.size()); LIBRAW_SUCCESS == state &&
+                                                                             LIBRAW_SUCCESS == raw.unpack_thumb() &&
+                                                                             LIBRAW_THUMBNAIL_JPEG == raw.imgdata.thumbnail.tformat)
     {
         raw.recycle();
         return true;

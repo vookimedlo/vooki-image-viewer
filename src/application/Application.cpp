@@ -55,7 +55,7 @@ bool Application::event(QEvent *event)
 {
     if (event->type() == QEvent::FileOpen)
     {
-        auto openEvent = dynamic_cast<QFileOpenEvent *>(event);
+        const auto openEvent = dynamic_cast<QFileOpenEvent *>(event);
         qDebug() << "Open file " << openEvent->file();
         emit openFileRequested(openEvent->file());
     }

@@ -164,7 +164,7 @@ void ImageBorderTest::checkBorder(const QImage &image, const QRgb borderColor, c
     checkBorder(image, borderColor, borderSize, position, {0, 0}, {image.width(), image.height()});
 }
 
-void ImageBorderTest::checkTransformationWithOffset(int offsetX, int offsetY) const
+void ImageBorderTest::checkTransformationWithOffset(const int offsetX, const int offsetY) const
 {
     constexpr auto fillingColor = Qt::blue;
 
