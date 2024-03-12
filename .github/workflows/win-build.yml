@@ -106,7 +106,7 @@ jobs:
           ${{env.artifact_path}}\${{env.artifact_name_msi}}
         retention-days: ${{ inputs.artifact_retention_days }}
     - name: release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       if: startsWith(github.ref, 'refs/tags/')
       with:
         draft: true
