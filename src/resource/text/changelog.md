@@ -1,6 +1,10 @@
 # Release Notes
 
 --------------------------------------------------------------
+## v2024.05.12
+- Components: Updated to the latest versions.
+- Image: Minor bug fixes.
+--------------------------------------------------------------
 ## v2023.12.24
 - Components: Updated to the latest versions.
 - Core: Minor bug fixes.

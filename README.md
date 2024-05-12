@@ -123,18 +123,6 @@ brew tap vookimedlo/homebrew-vookiimageviewer
 brew install --cask vookiimageviewer-macos
 ```
 
-Debian Bullseye users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
-```
-apt-get install -y debian-keyring
-apt-get install -y debian-archive-keyring
-apt-get install -y apt-transport-https
-keyring_location=/usr/share/keyrings/michal-duda-vookiimageviewer-archive-keyring.gpg
-curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/gpg.EF5E62B51DE78AFF.key' |  gpg --dearmor > ${keyring_location}
-curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.deb.txt?distro=debian&codename=bullseye' > /etc/apt/sources.list.d/michal-duda-vookiimageviewer.list
-apt-get update
-apt-get install vookiimageviewer
-```
-
 Debian Bookworm users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
 ```
 apt-get install -y debian-keyring
@@ -169,22 +157,22 @@ apt-get update
 apt-get install vookiimageviewer
 ```
 
-Ubuntu Lunar users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
-```
-apt-get install -y apt-transport-https
-keyring_location=/usr/share/keyrings/michal-duda-vookiimageviewer-archive-keyring.gpg
-curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/gpg.EF5E62B51DE78AFF.key' |  gpg --dearmor > ${keyring_location}
-curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.deb.txt?distro=ubuntu&codename=lunar' > /etc/apt/sources.list.d/michal-duda-vookiimageviewer.list
-apt-get update
-apt-get install vookiimageviewer
-```
-
 Ubuntu Mantic users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
 ```
 apt-get install -y apt-transport-https
 keyring_location=/usr/share/keyrings/michal-duda-vookiimageviewer-archive-keyring.gpg
 curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/gpg.EF5E62B51DE78AFF.key' |  gpg --dearmor > ${keyring_location}
 curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.deb.txt?distro=ubuntu&codename=mantic' > /etc/apt/sources.list.d/michal-duda-vookiimageviewer.list
+apt-get update
+apt-get install vookiimageviewer
+```
+
+Ubuntu Noble users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
+```
+apt-get install -y apt-transport-https
+keyring_location=/usr/share/keyrings/michal-duda-vookiimageviewer-archive-keyring.gpg
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/gpg.EF5E62B51DE78AFF.key' |  gpg --dearmor > ${keyring_location}
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.deb.txt?distro=ubuntu&codename=noble' > /etc/apt/sources.list.d/michal-duda-vookiimageviewer.list
 apt-get update
 apt-get install vookiimageviewer
 ```
@@ -204,6 +192,16 @@ Fedora 39 users can install the VookiImageViewer from the repository hosted by t
 dnf install yum-utils pygpgme
 rpm --import 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/gpg.EF5E62B51DE78AFF.key'
 curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.rpm.txt?distro=fedora&codename=39' > /tmp/michal-duda-vookiimageviewer.repo
+dnf config-manager --add-repo '/tmp/michal-duda-vookiimageviewer.repo'
+dnf -q makecache -y --disablerepo='*' --enablerepo='michal-duda-vookiimageviewer' --enablerepo='michal-duda-vookiimageviewer-source'
+dnf install vookiimageviewer
+```
+
+Fedora 40 users can install the VookiImageViewer from the repository hosted by the [cloudsmith.io][6] for free.
+```
+dnf install yum-utils pygpgme
+rpm --import 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/gpg.EF5E62B51DE78AFF.key'
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.rpm.txt?distro=fedora&codename=40' > /tmp/michal-duda-vookiimageviewer.repo
 dnf config-manager --add-repo '/tmp/michal-duda-vookiimageviewer.repo'
 dnf -q makecache -y --disablerepo='*' --enablerepo='michal-duda-vookiimageviewer' --enablerepo='michal-duda-vookiimageviewer-source'
 dnf install vookiimageviewer
