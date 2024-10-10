@@ -5,7 +5,7 @@ function(ADD_EP_VERSION ep version)
 endfunction()
 
 if (APPLE OR WIN32)
-    ADD_EP_VERSION(libexiv2 v0.28.2)
+    ADD_EP_VERSION(libexiv2 v0.28.3)
     ADD_EP_VERSION(libjpeg-turbo 3.0.3)
     ADD_EP_VERSION(libraw 0.21.3)
     ADD_EP_VERSION(brotli v1.1.0)
