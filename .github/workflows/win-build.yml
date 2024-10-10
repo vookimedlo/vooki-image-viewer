@@ -88,6 +88,16 @@ jobs:
         $name = Get-Childitem -Filter *.msi -Name
         echo "artifact_name_msi=$name" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
+    - name: archive log [msi]
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: wix_msi_log.zip
+        path: |
+          D:/a/vooki-image-viewer/build/_CPack_Packages/win64/WIX/wix.log
+        if-no-files-found: ignore
+        retention-days: 9
+
     - name: archive artifacts [zip]
       uses: actions/upload-artifact@v4
       with:
