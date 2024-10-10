@@ -37,10 +37,14 @@ jobs:
         arch: ${{ env.MINGW_VERSION }}
         dir: "${{github.workspace}}/qt"
         install-deps: "true"
-
     -
       name: install graphviz
       run: choco install graphviz
+    - name: update WiX
+      run: |
+        dotnet tool update --global wix
+        wix --version
+        wix extension add --global WixToolset.UI.wixext
     -
       name: build 3rd-party sources [configuration]
       working-directory: ${{github.workspace}}\..
