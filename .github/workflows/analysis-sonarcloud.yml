@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   Analysis:
-    runs-on: macos-13
+    runs-on: macos-latest
     env:
       BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory
     steps:
@@ -23,7 +23,6 @@ jobs:
         run: |
           brew update
           brew upgrade || true
-          brew link --overwrite python
           brew install pkg-config m4 libtool automake autoconf
           brew install coreutils
           brew install qt

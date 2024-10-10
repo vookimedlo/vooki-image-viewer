@@ -45,12 +45,12 @@ ExternalProject_Add(
         CONFIGURE_COMMAND ""
         COMMAND mkdir <BINARY_DIR>/build-x86_64 || true &&
                 cd <BINARY_DIR>/build-x86_64 &&
-                $(CMAKE_COMMAND) -DCMAKE_OSX_ARCHITECTURES="x86_64" -DCMAKE_BUILD_WITH_INSTALL_RPATH=OFF -DENABLE_SHARED=OFF -DCMAKE_INSTALL_PREFIX=<BINARY_DIR>/build-x86_64/install <SOURCE_DIR> &&
+                $(CMAKE_COMMAND) -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_BUILD_WITH_INSTALL_RPATH=OFF -DENABLE_SHARED=OFF -DCMAKE_INSTALL_PREFIX=<BINARY_DIR>/build-x86_64/install <SOURCE_DIR> &&
                 $(MAKE) -j &&
                 $(MAKE) install
         COMMAND mkdir <BINARY_DIR>/build-arm64 || true &&
                 cd <BINARY_DIR>/build-arm64 &&
-                $(CMAKE_COMMAND) -DCMAKE_OSX_ARCHITECTURES="arm64" -DCMAKE_BUILD_WITH_INSTALL_RPATH=OFF -DENABLE_SHARED=OFF -DCMAKE_INSTALL_PREFIX=<BINARY_DIR>/build-arm64/install <SOURCE_DIR> &&
+                $(CMAKE_COMMAND) -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_BUILD_WITH_INSTALL_RPATH=OFF -DENABLE_SHARED=OFF -DCMAKE_INSTALL_PREFIX=<BINARY_DIR>/build-arm64/install <SOURCE_DIR> &&
                 $(MAKE) -j &&
                 $(MAKE) install
         BUILD_COMMAND lipo -create build-arm64/install/lib/libjpeg.a build-x86_64/install/lib/libjpeg.a -o libjpeg.a &&

@@ -64,7 +64,7 @@ SET(BUILD_TESTING OFF)
 
 FetchContent_Declare(qcoro
         GIT_REPOSITORY https://github.com/danvratil/qcoro.git
-        GIT_TAG v0.9.0
+        GIT_TAG v0.11.0
         GIT_SHALLOW true
         )
 

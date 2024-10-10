@@ -7,8 +7,8 @@ on:
   pull_request:
 
 env:
-  QT_VERSION:              "6.7.0"
-  MINGW_VERSION:           "win64_msvc2019_64"
+  QT_VERSION:              "6.8.0"
+  MINGW_VERSION:           "win64_msvc2022_64"
   BUILD_TYPE:              Release
   artifact_retention_days: 5
 
@@ -25,11 +25,11 @@ jobs:
         submodules: true
     - uses: ilammy/setup-nasm@v1
       with:
-        version: '2.16.01'
+        version: '2.16.03'
     - name: install qt
       uses: jurplel/install-qt-action@v4
       with:
-        aqtversion: '==2.1.*'
+        aqtversion: '==3.1.*'
         host: 'windows'
         target: 'desktop'
         modules: 'qtimageformats'
