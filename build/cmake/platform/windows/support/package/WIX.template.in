@@ -2,17 +2,23 @@
 
 <?include "cpack_variables.wxi"?>
 
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" @WIX_CUSTOM_XMLNS_EXPANDED@
-    RequiredVersion="3.6.3303.0">
+<Wix
+    xmlns="http://wixtoolset.org/schemas/v4/wxs"
+    @WIX_CUSTOM_XMLNS_EXPANDED@
+    RequiredVersion="4.0"
+    >
 
-    <Product Id="$(var.CPACK_WIX_PRODUCT_GUID)"
+    <Package
         Name="$(var.CPACK_PACKAGE_NAME)"
-        Language="1033"
         Version="@VERSION_FOR_WIX@"
         Manufacturer="$(var.CPACK_PACKAGE_VENDOR)"
-        UpgradeCode="$(var.CPACK_WIX_UPGRADE_GUID)">
-
-        <Package InstallerVersion="500" Compressed="yes"/>
+        UpgradeCode="$(var.CPACK_WIX_UPGRADE_GUID)"
+        ProductCode="$(var.CPACK_WIX_PRODUCT_GUID)"
+        Scope="perMachine"
+        InstallerVersion="500"
+        Language="1033"
+        Compressed="yes"
+        >
 
         <Media Id="1" Cabinet="media1.cab" EmbedCab="yes"/>
 
@@ -22,10 +28,14 @@
             DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit."/>
 
         <WixVariable Id="WixUILicenseRtf" Value="$(var.CPACK_WIX_LICENSE_RTF)"/>
-        <Property Id="WIXUI_INSTALLDIR" Value="INSTALL_ROOT"/>
+
+        <ui:WixUI
+            Id="WixUI_InstallDir"
+            InstallDirectory="INSTALL_ROOT"
+        />
 
         <?ifdef CPACK_WIX_PRODUCT_ICON?>
-        <Property Id="ARPPRODUCTICON">ProductIcon.ico</Property>
+        <Property Id="ARPPRODUCTICON" Value="ProductIcon.ico" />
         <Icon Id="ProductIcon.ico" SourceFile="$(var.CPACK_WIX_PRODUCT_ICON)"/>
         <?endif?>
 
@@ -39,9 +49,7 @@
 
         <FeatureRef Id="ProductFeature"/>
 
-        <UIRef Id="$(var.CPACK_WIX_UI_REF)" />
-
         <?include "properties.wxi"?>
         <?include "product_fragment.wxi"?>
-    </Product>
+    </Package>
 </Wix>

@@ -41,6 +41,7 @@ foreach(GENERATOR IN LISTS CPACK_GENERATOR)
         GET_FILENAME_COMPONENT(PACKAGE_SUPPORT_DIR "platform/Windows/support/package/" ABSOLUTE)
         GET_FILENAME_COMPONENT(PACKAGE_PRODUCT_ICON "../../src/resource/openclipart/vookiimageviewericon.ico" ABSOLUTE)
 
+        SET(CPACK_WIX_VERSION 4)
         SET(CPACK_WIX_UPGRADE_GUID "91FA8A80-C971-408A-A735-4EB3D230D9F6")
         SET(CPACK_WIX_LICENSE_RTF "${PACKAGE_SUPPORT_DIR}/gpl-3.0.rtf")
         SET(CPACK_WIX_UI_BANNER "${PACKAGE_SUPPORT_DIR}/wix-vookiimageviewer-banner.png")
