@@ -47,8 +47,10 @@ Supported image formats cover the very common formats as well as the rare ones. 
 | JXL                       | JPEG XL                                          |
 | PNG                       | Portable Network Graphics                        |
 | PBM                       | Portable Bitmap                                  |
+| PXM                       | Portable FloatMap Image                          |
 | PGM                       | Portable Graymap                                 |
 | PPM                       | Portable Pixmap                                  |
+| PXR                       | Pixar Image Computer                             |
 | QOI                       | Quite OK Image Format                            |
 | XBM                       | X11 Bitmap                                       |
 | XPM                       | X11 Pixmap                                       |

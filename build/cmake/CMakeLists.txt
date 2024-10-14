@@ -362,6 +362,15 @@ ADD_IMAGE_PLUGIN(vooki_kimg_rgb ../../components/kimageformats/src/imageformats/
 #
 ADD_IMAGE_PLUGIN(vooki_kimg_qoi ../../components/kimageformats/src/imageformats/qoi.cpp ../../components/kimageformats/src/imageformats/scanlineconverter.cpp)
 
+# Portable FloatMap Image (pfm)
+#
+ADD_IMAGE_PLUGIN(vooki_kimg_pfm ../../components/kimageformats/src/imageformats/pfm.cpp)
+
+# Pixar Image Computer (pxr)
+#
+ADD_IMAGE_PLUGIN(vooki_kimg_pxr ../../components/kimageformats/src/imageformats/pxr.cpp)
+
+
 # Camera RAW Thumbnails (raf, mos, cr2, erf, dng, mrw, nef, orf, rw2, pef, x3f, srw, x3f, arw)
 # Prebuilt library for the MacOS/Windows only, Linux uses a distro package
 #
