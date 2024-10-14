@@ -1,5 +1,4 @@
 #pragma once
-#include <QImage>
 /****************************************************************************
 VookiImageViewer - a tool for showing images.
 - https://github.com/vookimedlo/vooki-image-viewer

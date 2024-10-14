@@ -450,7 +450,7 @@ else ()
     FIND_LIBRARY(LIBJXL NAMES jxl jxl_threads jxl_cms)
     if (LIBJXL)
         MESSAGE("-- JLX libraries found")
-        ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/kimageformats/src/imageformats/jxl.cpp)
+        ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/workarounds/jxl.cpp)
         TARGET_LINK_LIBRARIES(vooki_kimg_jxl ${QT_UI_LIB} ${LIBJXL})
     endif ()
 
