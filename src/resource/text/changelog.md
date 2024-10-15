@@ -1,6 +1,10 @@
 # Release Notes
 
 --------------------------------------------------------------
+## vXXXX.XX.XX
+- Components: Updated to the latest versions.
+- Image: The PFM & PXR format support added.
+--------------------------------------------------------------
 ## v2024.05.12
 - Components: Updated to the latest versions.
 - Image: Minor bug fixes.

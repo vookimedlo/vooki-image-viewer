@@ -336,7 +336,7 @@ ADD_IMAGE_PLUGIN(vooki_kimg_tga ../../components/kimageformats/src/imageformats/
 
 # Photoshop documents (psd)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_psd ../../components/kimageformats/src/imageformats/psd.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_psd ../../components/kimageformats/src/imageformats/psd.cpp ../../components/kimageformats/src/imageformats/scanlineconverter.cpp)
 
 # Windows Animated Cursor (ani)
 #
@@ -361,6 +361,15 @@ ADD_IMAGE_PLUGIN(vooki_kimg_rgb ../../components/kimageformats/src/imageformats/
 # QOI images (qoi)
 #
 ADD_IMAGE_PLUGIN(vooki_kimg_qoi ../../components/kimageformats/src/imageformats/qoi.cpp ../../components/kimageformats/src/imageformats/scanlineconverter.cpp)
+
+# Portable FloatMap Image (pfm)
+#
+ADD_IMAGE_PLUGIN(vooki_kimg_pfm ../../components/kimageformats/src/imageformats/pfm.cpp)
+
+# Pixar Image Computer (pxr)
+#
+ADD_IMAGE_PLUGIN(vooki_kimg_pxr ../../components/kimageformats/src/imageformats/pxr.cpp)
+
 
 # Camera RAW Thumbnails (raf, mos, cr2, erf, dng, mrw, nef, orf, rw2, pef, x3f, srw, x3f, arw)
 # Prebuilt library for the MacOS/Windows only, Linux uses a distro package
@@ -441,7 +450,7 @@ else ()
     FIND_LIBRARY(LIBJXL NAMES jxl jxl_threads jxl_cms)
     if (LIBJXL)
         MESSAGE("-- JLX libraries found")
-        ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/kimageformats/src/imageformats/jxl.cpp)
+        ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/workarounds/jxl.cpp)
         TARGET_LINK_LIBRARIES(vooki_kimg_jxl ${QT_UI_LIB} ${LIBJXL})
     endif ()
 
