@@ -9,71 +9,81 @@
     </message>
     <message>
         <location filename="../../ui/forms/AboutComponentsDialog.ui" line="39"/>
+        <source>brotli</source>
+        <translation>brotli</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="44"/>
         <source>Exiv2</source>
         <translation>Exiv2</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="44"/>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="49"/>
         <source>Expat</source>
         <translation>Expat</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="64"/>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="54"/>
+        <source>highway</source>
+        <translation>highway</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="74"/>
         <source>libde265</source>
         <translation>libde265</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="69"/>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="79"/>
         <source>libheif</source>
         <translation>libheif</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="74"/>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="84"/>
+        <source>libjlx</source>
+        <translation>libjlx</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="89"/>
         <source>libjpeg-turbo</source>
         <translation>libjpeg-turbo</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="79"/>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="94"/>
         <source>LibRaw</source>
         <translation>LibRaw</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="89"/>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="104"/>
         <source>QCoro</source>
         <translation>QCoro</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="94"/>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="109"/>
         <source>Qt Framework</source>
         <translation>Qt knihovna</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="99"/>
-        <source>x265</source>
-        <translation>x265</translation>
-    </message>
-    <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="104"/>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="114"/>
         <source>zlib</source>
         <translation>zlib</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="49"/>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="59"/>
         <source>Icon54.com</source>
         <translation>Icon54.com</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="84"/>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="99"/>
         <source>Open Clipart Library</source>
         <translation>Open Clipart knihovna</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="54"/>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="64"/>
         <source>KDE KImageFormats</source>
         <translation>KDE KImageFormats</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="59"/>
+        <location filename="../../ui/forms/AboutComponentsDialog.ui" line="69"/>
         <source>KDMacTouchBar</source>
         <translation>KDMacTouchBar</translation>
     </message>
@@ -87,352 +97,392 @@
         <translation>Podporované formáty</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="230"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="250"/>
         <source>Format</source>
         <translation>Formát</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="235"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="255"/>
         <source>Description</source>
         <translation>Podrobnosti</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="240"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="260"/>
         <source>ANI</source>
         <translation>ANI</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="245"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="265"/>
         <source>Windows Animated Cursor</source>
         <translation>Windows Animated Cursor</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="250"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="270"/>
         <source>GIF</source>
         <translation>GIF</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="255"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="275"/>
         <source>Graphic Interchange Format</source>
         <translation>Graphic Interchange Format</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="263"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="283"/>
         <source>JPG</source>
         <translation>JPG</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="268"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="288"/>
         <source>Joint Photographic Experts Group</source>
         <translation>Joint Photographic Experts Group</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="276"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="296"/>
         <source>PNG</source>
         <translation>PNG</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="281"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="301"/>
         <source>Portable Network Graphics</source>
         <translation>Portable Network Graphics</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="289"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="309"/>
         <source>PBM</source>
         <translation>PBM</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="294"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="314"/>
         <source>Portable Bitmap</source>
         <translation>Portable Bitmap</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="302"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="322"/>
         <source>PGM</source>
         <translation>PGM</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="307"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="327"/>
         <source>Portable Graymap</source>
         <translation>Portable Graymap</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="315"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="335"/>
         <source>PPM</source>
         <translation>PPM</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="320"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="340"/>
         <source>Portable Pixmap</source>
         <translation>Portable Pixmap</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="328"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="348"/>
         <source>XBM</source>
         <translation>XBM</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="333"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="353"/>
         <source>X11 Bitmap</source>
         <translation>X11 Bitmap</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="341"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="361"/>
         <source>XPM</source>
         <translation>XPM</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="346"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="366"/>
         <source>X11 Pixmap</source>
         <translation>X11 Pixmap</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="354"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="374"/>
         <source>SVG</source>
         <translation>SVG</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="359"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="379"/>
         <source>Scalable Vector Graphics</source>
         <translation>Scalable Vector Graphics</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="367"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="387"/>
         <source>BMP</source>
         <translation>BMP</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="372"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="392"/>
         <source>Windows Bitmap</source>
         <translation>Windows Bitmap</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="380"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="400"/>
         <source>XCF</source>
         <translation>XCF</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="385"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="405"/>
         <source>Gimp</source>
         <translation>Gimp</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="390"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="410"/>
         <source>PSD</source>
         <translation>PSD</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="395"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="415"/>
         <source>Photoshop Documents</source>
         <translation>Photoshop Documents</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="400"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="420"/>
         <source>RAS</source>
         <translation>RAS</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="405"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="425"/>
         <source>Sun Raster</source>
         <translation>Sun Raster</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="410"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="430"/>
         <source>HDR</source>
         <translation>HDR</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="415"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="435"/>
         <source>Radiance HDR</source>
         <translation>Radiance HDR</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="420"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="440"/>
         <source>PCX</source>
         <translation>PCX</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="425"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="445"/>
         <source>Personal Computer Exchange</source>
         <translation>Personal Computer Exchange</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="430"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="450"/>
         <source>RGB, RGBA, SGI, BW</source>
         <translation>RGB, RGBA, SGI, BW</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="435"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="455"/>
         <source>SGI Images</source>
         <translation>SGI Images</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="440"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="460"/>
         <source>PIC</source>
         <translation>PIC</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="445"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="465"/>
         <source>Softimage</source>
         <translation>Softimage</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="450"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="470"/>
         <source>TGA</source>
         <translation>TGA</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="455"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="475"/>
         <source>Targa</source>
         <translation>Targa</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="460"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="480"/>
         <source>ARW</source>
         <translation>ARW</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="465"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="485"/>
         <source>Sony Alpha Raw [Inner thumbnail only]</source>
         <translation>Sony Alpha Raw [vnitřní náhled]</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="470"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="490"/>
         <source>CR2</source>
         <translation>CR2</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="475"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="495"/>
         <source>Canon Raw Version 2 [Inner thumbnail only]</source>
         <translation>Canon Raw Version 2 [vnitřní náhled]</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="480"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="500"/>
         <source>DNG</source>
         <translation>DNG</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="485"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="505"/>
         <source>Digital Negative [Inner thumbnail only]</source>
         <translation>Digital Negative [vnitřní náhled]</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="490"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="510"/>
         <source>ERF</source>
         <translation>ERF</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="495"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="515"/>
         <source>Epson RAW File [Inner thumbnail only]</source>
         <translation>Epson RAW File [vnitřní náhled]</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="500"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="520"/>
         <source>MOS</source>
         <translation>MOS</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="505"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="525"/>
         <source>Leaf Raw Image File [Inner thumbnail only]</source>
         <translation>Leaf Raw Image File [vnitřní náhled]</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="510"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="530"/>
         <source>MRW</source>
         <translation>MRW</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="515"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="535"/>
         <source>Konica Minolta RAW [Inner thumbnail only]</source>
         <translation>Konica Minolta RAW [vnitřní náhled]</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="520"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="540"/>
         <source>NEF</source>
         <translation>NEF</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="525"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="545"/>
         <source>Nikon Raw Image File [Inner thumbnail only]</source>
         <translation>Nikon Raw Image File [vnitřní náhled]</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="530"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="550"/>
         <source>ORF</source>
         <translation>ORF</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="535"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="555"/>
         <source>Olympus Raw Image File [Inner thumbnail only]</source>
         <translation>Olympus Raw Image File [vnitřní náhled]</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="540"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="560"/>
         <source>PEF</source>
         <translation>PEF</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="545"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="565"/>
         <source>Pentax Raw Image File [Inner thumbnail only]</source>
         <translation>Pentax Raw Image File [vnitřní náhled]</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="550"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="570"/>
         <source>RAF</source>
         <translation>RAF</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="555"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="575"/>
         <source>Fuji Raw Image File [Inner thumbnail only]</source>
         <translation>Fuji Raw Image File [vnitřní náhled]</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="560"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="580"/>
         <source>RW2</source>
         <translation>RW2</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="565"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="585"/>
         <source>Panasonic RAW Image File [Inner thumbnail only]</source>
         <translation>Panasonic RAW Image File [vnitřní náhled]</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="570"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="590"/>
         <source>SRW</source>
         <translation>SRW</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="575"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="595"/>
         <source>Samsung RAW Image File [Inner thumbnail only]</source>
         <translation>Samsung RAW Image File [vnitřní náhled]</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="580"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="600"/>
         <source>X3F</source>
         <translation>X3F</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="585"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="605"/>
         <source>SIGMA X3F Camera RAW File [Inner thumbnail only]</source>
         <translation>SIGMA X3F Camera RAW File [vnitřní náhled]</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="590"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="610"/>
         <source>TIFF</source>
         <translation>TIFF</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="595"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="615"/>
         <source>Tagged Image File Format</source>
         <translation>Tagged Image File Format</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="600"/>
-        <source>[MacOS/Win only] HEIC</source>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="620"/>
+        <source>[macOS/win only] HEIC</source>
         <translation>[pouze macOS/win] HEIC</translation>
     </message>
     <message>
-        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="605"/>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="630"/>
+        <source>PFM</source>
+        <translation>PFM</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="635"/>
+        <source>Portable FloatMap Image</source>
+        <translation>Portable FloatMap Image</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="640"/>
+        <source>PXR</source>
+        <translation>PXR</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="645"/>
+        <source>Pixar Image Computer</source>
+        <translation>Pixar Image Computer</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="650"/>
+        <source>JXL</source>
+        <translation>JXL</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="655"/>
+        <source>JPEG XL</source>
+        <translation>JPEG XL</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="660"/>
+        <source>QOI</source>
+        <translation>QOI</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="665"/>
+        <source>Quite OK Image Format</source>
+        <translation>Quite OK Image Format</translation>
+    </message>
+    <message>
+        <location filename="../../ui/forms/AboutSupportedFormatsDialog.ui" line="625"/>
         <source>High Efficiency Image File Format</source>
         <translation>High Efficiency Image File Format</translation>
     </message>
@@ -440,42 +490,42 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../../application/Application.cpp" line="34"/>
+        <location filename="../../application/Application.cpp" line="24"/>
         <source>Services</source>
         <translation>Služby</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="35"/>
+        <location filename="../../application/Application.cpp" line="25"/>
         <source>Hide %1</source>
         <translation>Schovat %1</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="36"/>
+        <location filename="../../application/Application.cpp" line="26"/>
         <source>Hide Others</source>
         <translation>Schovat ostatní</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="37"/>
+        <location filename="../../application/Application.cpp" line="27"/>
         <source>Show %1</source>
         <translation>Zobrazit %1</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="38"/>
+        <location filename="../../application/Application.cpp" line="28"/>
         <source>Show All</source>
         <translation>Zobrazit vše</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="39"/>
+        <location filename="../../application/Application.cpp" line="29"/>
         <source>About %1</source>
         <translation>O %1</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="40"/>
+        <location filename="../../application/Application.cpp" line="30"/>
         <source>Quit %1</source>
         <translation>Ukončit %1</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="41"/>
+        <location filename="../../application/Application.cpp" line="31"/>
         <source>Preferences...</source>
         <translation>Nastavení...</translation>
     </message>
@@ -868,19 +918,19 @@ Toolbar action tool tip</extracomment>
         <translation>Poznámky k vydání ...</translation>
     </message>
     <message>
-        <location filename="../../ui/MainWindow.cpp" line="495"/>
+        <location filename="../../ui/MainWindow.cpp" line="489"/>
         <source>%1x%2 px</source>
         <extracomment>Used in the statusbar showing the image dimensions. Example: &quot;1024x760&quot;</extracomment>
         <translation>%1x%2 px</translation>
     </message>
     <message>
-        <location filename="../../ui/MainWindow.cpp" line="505"/>
+        <location filename="../../ui/MainWindow.cpp" line="499"/>
         <source>%1 %2</source>
         <extracomment>Used in the statusbar showing the image size. Example: &quot;103.4 kB&quot;</extracomment>
         <translation>%1 %2</translation>
     </message>
     <message>
-        <location filename="../../ui/MainWindow.cpp" line="511"/>
+        <location filename="../../ui/MainWindow.cpp" line="505"/>
         <source>%1 %</source>
         <extracomment>Used in the statusbar showing the zooming percentage. Example: &quot;12%&quot;</extracomment>
         <translation>%1 %</translation>
@@ -889,215 +939,215 @@ Toolbar action tool tip</extracomment>
 <context>
     <name>MetadataExtractor</name>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="27"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="17"/>
         <source>0°, mirrored</source>
         <comment>Image Description</comment>
         <translation>0°, zrcadleno</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="29"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="19"/>
         <source>180°, mirrored</source>
         <comment>Image Description</comment>
         <translation>180°, zrcadleno</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="31"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="21"/>
         <source>90°, mirrored</source>
         <comment>Image Description</comment>
         <translation>90°, zrcadleno</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="33"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="23"/>
         <source>270°, mirrored</source>
         <comment>Image Description</comment>
         <translation>270°, zrcadleno</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="26"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="16"/>
         <source>0°</source>
         <comment>Image Description</comment>
         <translation>0°</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="28"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="18"/>
         <source>180°</source>
         <comment>Image Description</comment>
         <translation>180°</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="30"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="20"/>
         <source>90°</source>
         <comment>Image Description</comment>
         <translation>90°</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="32"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="22"/>
         <source>270°</source>
         <comment>Image Description</comment>
         <translation>270°</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="37"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="27"/>
         <source> B</source>
         <comment>Image Description</comment>
         <extracomment>Units: Byte</extracomment>
         <translation> B</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="39"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="29"/>
         <source> m</source>
         <comment>Image Description</comment>
         <extracomment>Units: Meter</extracomment>
         <translation> m</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="41"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="31"/>
         <source> px</source>
         <comment>Image Description</comment>
         <extracomment>Units: Pixel</extracomment>
         <translation> px</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="43"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="33"/>
         <source> s</source>
         <comment>Image Description</comment>
         <extracomment>Units: Second</extracomment>
         <translation> s</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="52"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="42"/>
         <source>File name</source>
         <comment>Image Properties</comment>
         <translation>Jméno souboru</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="53"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="43"/>
         <source>Size</source>
         <comment>Image Properties</comment>
         <translation>Velikost</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="54"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="44"/>
         <source>Width</source>
         <comment>Image Properties</comment>
         <translation>Šířka</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="55"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="45"/>
         <source>Height</source>
         <comment>Image Properties</comment>
         <translation>Výška</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="65"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="55"/>
         <source>Orientation</source>
         <comment>Image Properties</comment>
         <translation>Orientace</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="68"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="58"/>
         <source>Date</source>
         <comment>Image Properties</comment>
         <translation>Datum</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="72"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="62"/>
         <source>GPS Latitude</source>
         <comment>Image Properties</comment>
         <translation>GPS zeměpisná šířka</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="74"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="64"/>
         <source>GPS Longitude</source>
         <comment>Image Properties</comment>
         <translation>GPS zeměpisná délka</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="76"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="66"/>
         <source>GPS Altitude</source>
         <comment>Image Properties</comment>
         <translation>GPS nadmořská výška</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="79"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="69"/>
         <source>Flash</source>
         <comment>Image Properties</comment>
         <translation>Blesk</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="81"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="71"/>
         <source>ISO</source>
         <comment>Image Properties</comment>
         <translation>ISO</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="83"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="73"/>
         <source>f-number</source>
         <comment>Image Properties</comment>
         <translation>Clonové číslo</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="84"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="74"/>
         <source>Exposure time</source>
         <comment>Image Properties</comment>
         <translation>Doba expozice</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="85"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="75"/>
         <source>Focal length</source>
         <comment>Image Properties</comment>
         <translation>Ohnisková vzdálenost</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="87"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="77"/>
         <source>Camera maker</source>
         <comment>Image Properties</comment>
         <translation>Výrobce fotoaparátu</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="88"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="78"/>
         <source>Camera model</source>
         <comment>Image Properties</comment>
         <translation>Model fotoaparátu</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="89"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="79"/>
         <source>Lens maker</source>
         <comment>Image Properties</comment>
         <translation>Výrobce objektivu</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="90"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="80"/>
         <source>Lens model</source>
         <comment>Image Properties</comment>
         <translation>Model objektivu</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.cpp" line="91"/>
+        <location filename="../../processing/MetadataExtractor.cpp" line="81"/>
         <source>Lens focal length</source>
         <comment>Image Properties</comment>
         <translation>Ohnisková vzdálenost objektivu</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.h" line="95"/>
+        <location filename="../../processing/MetadataExtractor.h" line="85"/>
         <source>Flash fired</source>
         <comment>Image Description</comment>
         <translation>S bleskem</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.h" line="95"/>
+        <location filename="../../processing/MetadataExtractor.h" line="85"/>
         <source>Flash didn&apos;t fired</source>
         <comment>Image Description</comment>
         <translation>Bez blesku</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.h" line="117"/>
+        <location filename="../../processing/MetadataExtractor.h" line="107"/>
         <source> (below sea level)</source>
         <comment>Image Description</comment>
         <translation> (pod mořem)</translation>
     </message>
     <message>
-        <location filename="../../processing/MetadataExtractor.h" line="117"/>
+        <location filename="../../processing/MetadataExtractor.h" line="107"/>
         <source> (above sea level)</source>
         <comment>Image Description</comment>
         <translation> (nad mořem)</translation>
@@ -1106,7 +1156,7 @@ Toolbar action tool tip</extracomment>
 <context>
     <name>QFileSystemModel</name>
     <message>
-        <location filename="../../application/Application.cpp" line="49"/>
+        <location filename="../../application/Application.cpp" line="39"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
@@ -1114,17 +1164,17 @@ Toolbar action tool tip</extracomment>
 <context>
     <name>QPlatformTheme</name>
     <message>
-        <location filename="../../application/Application.cpp" line="44"/>
+        <location filename="../../application/Application.cpp" line="34"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="45"/>
+        <location filename="../../application/Application.cpp" line="35"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
     <message>
-        <location filename="../../application/Application.cpp" line="46"/>
+        <location filename="../../application/Application.cpp" line="36"/>
         <source>Restore Defaults</source>
         <translation>Obnovit výchozí</translation>
     </message>
@@ -1236,17 +1286,17 @@ Toolbar action tool tip</extracomment>
 <context>
     <name>StatusBar</name>
     <message>
-        <location filename="../../ui/StatusBar.cpp" line="31"/>
+        <location filename="../../ui/StatusBar.cpp" line="21"/>
         <source>Image dimensions</source>
         <translation>Rozměry obrázku</translation>
     </message>
     <message>
-        <location filename="../../ui/StatusBar.cpp" line="32"/>
+        <location filename="../../ui/StatusBar.cpp" line="22"/>
         <source>Image size</source>
         <translation>Velikost souboru</translation>
     </message>
     <message>
-        <location filename="../../ui/StatusBar.cpp" line="33"/>
+        <location filename="../../ui/StatusBar.cpp" line="23"/>
         <source>Zoom</source>
         <translation>Zvětšení</translation>
     </message>
