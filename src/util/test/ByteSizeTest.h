@@ -15,6 +15,7 @@ class ByteSizeTest: public QObject
     Q_OBJECT
 
 private slots:
-    void humanReadableSize() const;
-
+    void humanReadableSizeForValue1() const;
+    void humanReadableSizeForEdgeValueMinus1() const;
+    void humanReadableSizeForEdgeValuePlus1() const;
 };
