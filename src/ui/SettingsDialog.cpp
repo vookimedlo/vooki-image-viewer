@@ -39,8 +39,8 @@ SettingsDialog::SettingsDialog(std::unique_ptr<QSettings> defaultSettings,
                                             &m_uiSettingsDialog.checkBoxImageDrawBorder,
                                         }
 {
-    Q_ASSERT(defaultSettings);
-    Q_ASSERT(userSettings);
+    Q_ASSERT(m_defaultSettings);
+    Q_ASSERT(m_userSettings);
 
     m_uiSettingsDialog.setupUi(this);
 
