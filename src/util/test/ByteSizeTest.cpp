@@ -14,15 +14,17 @@ VookiImageViewer - a tool for showing images.
 #include "ByteSizeTest.h"
 #include "../ByteSize.h"
 
+using enum ByteSize::SizeUnits;
+
 void ByteSizeTest::humanReadableSizeForValue1() const
 {
     constexpr int arraySize = 5;
-    constexpr std::array<enum ByteSize::SizeUnits, arraySize> sizeUnits{
-        ByteSize::SizeUnits::B,
-        ByteSize::SizeUnits::kB,
-        ByteSize::SizeUnits::MB,
-        ByteSize::SizeUnits::GB,
-        ByteSize::SizeUnits::TB,
+    constexpr std::array sizeUnits{
+        B,
+        kB,
+        MB,
+        GB,
+        TB,
     };
 
     constexpr std::array<const char *const, arraySize> units{
@@ -32,6 +34,8 @@ void ByteSizeTest::humanReadableSizeForValue1() const
         "GB",
         "TB",
     };
+
+    static_assert(units.size() == sizeUnits.size());
 
     for (unsigned int i = 0; i < arraySize; ++i)
     {
@@ -46,12 +50,12 @@ void ByteSizeTest::humanReadableSizeForValue1() const
 void ByteSizeTest::humanReadableSizeForEdgeValueMinus1() const
 {
     constexpr int arraySize = 5;
-    constexpr std::array<enum ByteSize::SizeUnits, arraySize> expectedUnits_minus1{
-        ByteSize::SizeUnits::B,
-        ByteSize::SizeUnits::B,
-        ByteSize::SizeUnits::kB,
-        ByteSize::SizeUnits::MB,
-        ByteSize::SizeUnits::GB,
+    constexpr std::array expectedUnits_minus1{
+        B,
+        B,
+        kB,
+        MB,
+        GB,
     };
 
     constexpr std::array<double, arraySize> expectedSizes_minus1{
@@ -61,6 +65,8 @@ void ByteSizeTest::humanReadableSizeForEdgeValueMinus1() const
         1024,
         1024,
     };
+
+    static_assert(expectedUnits_minus1.size() == expectedSizes_minus1.size());
 
     for (unsigned int i = 0; i < arraySize; ++i)
     {
@@ -74,12 +80,12 @@ void ByteSizeTest::humanReadableSizeForEdgeValueMinus1() const
 void ByteSizeTest::humanReadableSizeForEdgeValuePlus1() const
 {
     constexpr int arraySize = 5;
-    constexpr std::array<enum ByteSize::SizeUnits, arraySize> expectedUnits_plus1{
-        ByteSize::SizeUnits::B,
-        ByteSize::SizeUnits::kB,
-        ByteSize::SizeUnits::MB,
-        ByteSize::SizeUnits::GB,
-        ByteSize::SizeUnits::TB,
+    constexpr std::array expectedUnits_plus1{
+        B,
+        kB,
+        MB,
+        GB,
+        TB,
     };
 
     constexpr std::array<double, arraySize> expectedSizes_plus1{
@@ -89,6 +95,8 @@ void ByteSizeTest::humanReadableSizeForEdgeValuePlus1() const
         1.1,
         1.1,
     };
+
+    static_assert(expectedUnits_plus1.size() == expectedSizes_plus1.size());
 
     for (unsigned int i = 0; i < arraySize; ++i)
     {
