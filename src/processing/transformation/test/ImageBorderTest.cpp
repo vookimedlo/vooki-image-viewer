@@ -205,8 +205,7 @@ void ImageBorderTest::checkTransformationWithOffset(const int offsetX, const int
                     return (ImageBorder<QImage>::borderWidth - areaBorderHeight) > 0 ? ImageBorder<QImage>::borderWidth - areaBorderHeight : 1;
                 case LEFT:
                     return (ImageBorder<QImage>::borderWidth - areaBorderWidth) > 0 ? ImageBorder<QImage>::borderWidth - areaBorderWidth : 1;
-                case BOTTOM:
-                    [[fallthrough]];
+                case BOTTOM: [[fallthrough]];
                 case RIGHT:
                     return ImageBorder<QImage>::borderWidth;
             }

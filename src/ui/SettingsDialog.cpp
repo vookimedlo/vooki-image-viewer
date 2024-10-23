@@ -39,8 +39,8 @@ SettingsDialog::SettingsDialog(std::unique_ptr<QSettings> defaultSettings,
                                             &m_uiSettingsDialog.checkBoxImageDrawBorder,
                                         }
 {
-    Q_ASSERT(defaultSettings);
-    Q_ASSERT(userSettings);
+    Q_ASSERT(m_defaultSettings);
+    Q_ASSERT(m_userSettings);
 
     m_uiSettingsDialog.setupUi(this);
 
@@ -88,8 +88,7 @@ void SettingsDialog::initializeUI(const QSettings * const settings)
     m_backgroundColor = settings->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>();
     m_languageCode = settings->value(SETTINGS_LANGUAGE_CODE).value<QString>();
 
-    if (const auto findIt = std::ranges::find_if(begin(Languages::m_localizations),
-                                                                               end(Languages::m_localizations),
+    if (const auto findIt = std::ranges::find_if(Languages::m_localizations,
                                                                                [&languageCode = m_languageCode](const Languages::Record &record){
                                                                                    return languageCode == record.m_code;
                                                                                }); findIt != std::end(Languages::m_localizations))

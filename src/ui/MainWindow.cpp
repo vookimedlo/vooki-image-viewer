@@ -13,7 +13,7 @@ VookiImageViewer - a tool for showing images.
 #include "../model/FileSystemSortFilterProxyModel.h"
 #include "../ui/support/Settings.h"
 #include "../ui/support/SettingsStrings.h"
-#include "../util//ByteSize.h"
+#include "../util/ByteSize.h"
 #include "../util/misc.h"
 #include "AboutComponentsDialog.h"
 #include "ReleaseNotesDialog.h"
