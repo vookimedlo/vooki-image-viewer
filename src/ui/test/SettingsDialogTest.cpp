@@ -135,8 +135,6 @@ void SettingsDialogTest::onToolButtonBorderColorClicked() const
     userSettings->setValue(SETTINGS_IMAGE_BORDER_COLOR, redColor);
     userSettings->setValue(SETTINGS_IMAGE_BACKGROUND_COLOR, greenColor);
 
-    const auto userSettingsPointer = userSettings.get();
-
     SettingsDialogMock dialog { std::move(defaultSettings), std::move(userSettings) };
 
     QCOMPARE_NE(dialog.m_pickerValidColor, redColor);
@@ -144,14 +142,14 @@ void SettingsDialogTest::onToolButtonBorderColorClicked() const
     dialog.m_pickerReturnsValidColor = false;
     dialog.onToolButtonBorderColorClicked();
     dialog.onAccept();
-    QCOMPARE(userSettingsPointer->value(SETTINGS_IMAGE_BORDER_COLOR).value<QColor>(), redColor);
-    QCOMPARE(userSettingsPointer->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>(), greenColor);
+    QCOMPARE(dialog.getUserSettings().value(SETTINGS_IMAGE_BORDER_COLOR).value<QColor>(), redColor);
+    QCOMPARE(dialog.getUserSettings().value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>(), greenColor);
 
     dialog.m_pickerReturnsValidColor = true;
     dialog.onToolButtonBorderColorClicked();
     dialog.onAccept();
-    QCOMPARE(userSettingsPointer->value(SETTINGS_IMAGE_BORDER_COLOR).value<QColor>(), dialog.m_pickerValidColor);
-    QCOMPARE(userSettingsPointer->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>(), greenColor);
+    QCOMPARE(dialog.getUserSettings().value(SETTINGS_IMAGE_BORDER_COLOR).value<QColor>(), dialog.m_pickerValidColor);
+    QCOMPARE(dialog.getUserSettings().value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>(), greenColor);
 }
 
 void SettingsDialogTest::onToolButtonBackgroundColorClicked() const
@@ -164,8 +162,6 @@ void SettingsDialogTest::onToolButtonBackgroundColorClicked() const
     userSettings->setValue(SETTINGS_IMAGE_BORDER_COLOR, redColor);
     userSettings->setValue(SETTINGS_IMAGE_BACKGROUND_COLOR, greenColor);
 
-    const auto userSettingsPointer = userSettings.get();
-
     SettingsDialogMock dialog { std::move(defaultSettings), std::move(userSettings) };
 
     QCOMPARE_NE(dialog.m_pickerValidColor, redColor);
@@ -173,12 +169,12 @@ void SettingsDialogTest::onToolButtonBackgroundColorClicked() const
     dialog.m_pickerReturnsValidColor = false;
     dialog.onToolButtonBackgroundColorClicked();
     dialog.onAccept();
-    QCOMPARE(userSettingsPointer->value(SETTINGS_IMAGE_BORDER_COLOR).value<QColor>(), redColor);
-    QCOMPARE(userSettingsPointer->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>(), greenColor);
+    QCOMPARE(dialog.getUserSettings().value(SETTINGS_IMAGE_BORDER_COLOR).value<QColor>(), redColor);
+    QCOMPARE(dialog.getUserSettings().value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>(), greenColor);
 
     dialog.m_pickerReturnsValidColor = true;
     dialog.onToolButtonBackgroundColorClicked();
     dialog.onAccept();
-    QCOMPARE(userSettingsPointer->value(SETTINGS_IMAGE_BORDER_COLOR).value<QColor>(), redColor);
-    QCOMPARE(userSettingsPointer->value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>(), dialog.m_pickerValidColor);
+    QCOMPARE(dialog.getUserSettings().value(SETTINGS_IMAGE_BORDER_COLOR).value<QColor>(), redColor);
+    QCOMPARE(dialog.getUserSettings().value(SETTINGS_IMAGE_BACKGROUND_COLOR).value<QColor>(), dialog.m_pickerValidColor);
 }

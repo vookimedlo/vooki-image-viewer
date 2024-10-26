@@ -43,7 +43,9 @@ public slots:
     virtual void onToolButtonBackgroundColorClicked();
 
 protected:
-    const Ui::SettingsDialog *ui() const { return &m_uiSettingsDialog; };
+    [[nodiscard]] const Ui::SettingsDialog *ui() const { return &m_uiSettingsDialog; };
+    [[nodiscard]] virtual const QSettings &getDefaultSettings() const { return *m_defaultSettings; };
+    [[nodiscard]] virtual const QSettings &getUserSettings() const { return *m_userSettings; };
 
 private:
     QColor m_borderColor;
