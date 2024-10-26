@@ -9,18 +9,19 @@ VookiImageViewer - a tool for showing images.
 ****************************************************************************/
 
 #include "MiscTest.h"
+#include <string>
 #include "../misc.h"
 
 void MiscTest::convertFormatsToFilters() const
 {
-    #define prefix "*."
+    const std::string prefix("*.");
 
-    #define one "ext_one"
-    #define two "ext_two"
-    #define three "ext_three"
+    const std::string one("ext_one");
+    const std::string two("ext_two");
+    const std::string three("ext_three");
 
-    const QList<QByteArray> input {one, two, three};
-    const QStringList expectedList {prefix one, prefix two, prefix three};
+    const QList<QByteArray> input {one.c_str(), two.c_str(), three.c_str()};
+    const QStringList expectedList {(prefix + one).c_str(), (prefix + two).c_str(), (prefix + three).c_str()};
     const QStringList resultingList {Util::convertFormatsToFilters(input)};
     QCOMPARE(resultingList, expectedList);
 }
