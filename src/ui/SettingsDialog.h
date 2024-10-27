@@ -44,8 +44,8 @@ public slots:
 
 protected:
     [[nodiscard]] const Ui::SettingsDialog *ui() const { return &m_uiSettingsDialog; };
-    [[nodiscard]] virtual const QSettings &getDefaultSettings() const { return *m_defaultSettings; };
-    [[nodiscard]] virtual const QSettings &getUserSettings() const { return *m_userSettings; };
+    [[nodiscard]] virtual QSettings &getDefaultSettings() { return *m_defaultSettings; };
+    [[nodiscard]] virtual QSettings &getUserSettings() { return *m_userSettings; };
 
 private:
     QColor m_borderColor;

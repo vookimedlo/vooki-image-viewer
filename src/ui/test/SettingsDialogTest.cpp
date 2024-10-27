@@ -22,9 +22,6 @@ void SettingsDialogTest::shortcuts() const
     auto defaultSettings = std::make_unique<QSettings>(QSettingsMock::nullFormat, QSettings::UserScope, "test", "test");
     auto userSettings = std::make_unique<QSettings>(QSettingsMock::nullFormat, QSettings::UserScope, "test2", "test2");
 
-    const auto defaultSettingsPointer = defaultSettings.get();
-    const auto userSettingsPointer = userSettings.get();
-
     SettingsDialogMock dialog{ std::move(defaultSettings), std::move(userSettings) };
 
     MainWindow mainWindow(nullptr);
@@ -56,9 +53,9 @@ void SettingsDialogTest::shortcuts() const
     dialog.onAccept();
 
     ResultingSet userSettingsOnAccepted;
-    std::ranges::for_each(userSettingsPointer->allKeys(), [&userSettingsOnAccepted, userSettingsPointer](const QString &key) {
+    std::ranges::for_each(dialog.getUserSettings().allKeys(), [&userSettingsOnAccepted, &dialog](const QString &key) {
         if (key.startsWith("viv/shortcut/", Qt::CaseSensitive))
-            userSettingsOnAccepted.emplace(key, userSettingsPointer->value(key).value<QKeySequence>());
+            userSettingsOnAccepted.emplace(key, dialog.getUserSettings().value(key).value<QKeySequence>());
     });
 
     ResultingSet userSettingsInitializedFromMenu;
@@ -79,9 +76,9 @@ void SettingsDialogTest::shortcuts() const
     dialog.onRejected();
 
     ResultingSet userSettingsOnRejected;
-    std::ranges::for_each(userSettingsPointer->allKeys(), [&userSettingsOnRejected, userSettingsPointer](const QString &key) {
+    std::ranges::for_each(dialog.getUserSettings().allKeys(), [&userSettingsOnRejected, &dialog](const QString &key) {
         if (key.startsWith("viv/shortcut/", Qt::CaseSensitive))
-            userSettingsOnRejected.emplace(key, userSettingsPointer->value(key).value<QKeySequence>());
+            userSettingsOnRejected.emplace(key, dialog.getUserSettings().value(key).value<QKeySequence>());
     });
 
     QCOMPARE(userSettingsOnRejected, userSettingsOnAccepted);
@@ -92,28 +89,27 @@ void SettingsDialogTest::shortcuts() const
 
     QCOMPARE(userSettingsInitializedFromMenuOnRejected, userSettingsOnAccepted);
 
-
     // Test the onRestoreDefaultsTriggered()
     for (int i = 0; i < tableWidget->rowCount(); ++i)
         dynamic_cast<QKeySequenceEdit *>(tableWidget->cellWidget(i, 0))->setKeySequence(standardKey);
 
-    std::ranges::for_each(userSettingsPointer->allKeys(), [defaultSettingsPointer](const auto &key) {
+    std::ranges::for_each(dialog.getUserSettings().allKeys(), [&dialog](const auto &key) {
         static int i = QKeySequence::HelpContents;
-        defaultSettingsPointer->setValue(key, QKeySequence(static_cast<QKeySequence::StandardKey>(i++)));
+        dialog.getDefaultSettings().setValue(key, QKeySequence(static_cast<QKeySequence::StandardKey>(i++)));
     });
 
     ResultingSet defaultSettingsShortcuts;
-    std::ranges::for_each(defaultSettingsPointer->allKeys(), [&defaultSettingsShortcuts, defaultSettingsPointer](const QString &key) {
+    std::ranges::for_each(dialog.getDefaultSettings().allKeys(), [&defaultSettingsShortcuts, &dialog](const QString &key) {
         if (key.startsWith("viv/shortcut/", Qt::CaseSensitive))
-            defaultSettingsShortcuts.emplace(key, defaultSettingsPointer->value(key).value<QKeySequence>());
+            defaultSettingsShortcuts.emplace(key, dialog.getDefaultSettings().value(key).value<QKeySequence>());
     });
 
     dialog.onRestoreDefaultsTriggered();
 
     ResultingSet userSettingsOnRestoreDefaults;
-    std::ranges::for_each(userSettingsPointer->allKeys(), [&userSettingsOnRestoreDefaults, userSettingsPointer](const QString &key) {
+    std::ranges::for_each(dialog.getUserSettings().allKeys(), [&userSettingsOnRestoreDefaults, &dialog](const QString &key) {
         if (key.startsWith("viv/shortcut/", Qt::CaseSensitive))
-            userSettingsOnRestoreDefaults.emplace(key, userSettingsPointer->value(key).value<QKeySequence>());
+            userSettingsOnRestoreDefaults.emplace(key, dialog.getUserSettings().value(key).value<QKeySequence>());
     });
 
     QCOMPARE(userSettingsOnRestoreDefaults, userSettingsOnAccepted);
