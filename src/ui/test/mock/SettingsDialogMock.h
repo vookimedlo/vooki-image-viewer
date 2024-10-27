@@ -24,6 +24,9 @@ public:
     bool m_pickerReturnsValidColor {true};
     const QColor m_pickerValidColor {Qt::darkBlue};
 
+    [[nodiscard]] const QSettings &getDefaultSettings() const override { return SettingsDialog::getDefaultSettings(); };
+    [[nodiscard]] const QSettings &getUserSettings() const override { return SettingsDialog::getUserSettings(); };
+
 protected:
     QColor getColorFromPicker([[maybe_unused]] const QColor &initialColor) const override
     {

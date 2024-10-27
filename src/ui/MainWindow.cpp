@@ -45,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_ui.setupUi(this);
 
 #if defined __APPLE__
-    auto *touchBar = new KDMacTouchBar(this);
+    auto touchBar = std::make_unique<KDMacTouchBar>();
     touchBar->setTouchButtonStyle(KDMacTouchBar::IconOnly);
     touchBar->addAction(m_ui.actionZoomIn);
     touchBar->addAction(m_ui.actionZoomOut);
@@ -57,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent)
     touchBar->addAction(m_ui.actionPreviousImage);
     touchBar->addAction(m_ui.actionNextImage);
     touchBar->setHidden(true);
+    touchBar.release()->setParent(this); // Actually, parent class is responsible for destroying this instance ...
 #endif // __APPLE__
 
     m_ui.toolBar->toggleViewAction()->setShortcut(QKeySequence(Qt::Key_T));
