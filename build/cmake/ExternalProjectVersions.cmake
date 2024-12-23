@@ -15,7 +15,7 @@ endif()
 
 if (WIN32)
     ADD_EP_VERSION(zlib v1.3.1)
-    ADD_EP_VERSION(libexpat R_2_6_3)
+    ADD_EP_VERSION(libexpat R_2_6_4)
     ADD_EP_VERSION(libde265 v1.0.15)
     ADD_EP_VERSION(libheif v1.18.2)
 endif()
