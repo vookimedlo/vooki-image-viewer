@@ -36,6 +36,8 @@ if (APPLE)
     endif()
 endif()
 
+MESSAGE( "-- Current System Processor: ${CMAKE_SYSTEM_PROCESSOR}")
+
 MESSAGE("-- 3RD_PARTY_LIBS: ${3RD_PARTY_LIBS}")
 
 if (BUILD_DEPENDENCIES)
