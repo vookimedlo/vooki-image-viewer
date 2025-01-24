@@ -7,6 +7,12 @@
 # SPDX-FileType: SOURCE
 #############################################################################
 
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "ARM64")
+    SET(WINDOWS_ARCH "arm64")
+else()
+    SET(WINDOWS_ARCH "x64")
+endif()
+
 INSTALL(TARGETS ${APPLICATION_NAME}
         RUNTIME DESTINATION ".")
 INSTALL(TARGETS ${IMAGE_PLUGINS}
@@ -30,6 +36,8 @@ SET(CPACK_PRE_BUILD_SCRIPTS ${CMAKE_BINARY_DIR}/WindeployQt-CPack.cmake)
 
 INCLUDE(CPack.cmake)
 
+SET(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-win64-${WINDOWS_ARCH}")
+
 if(NOT CPACK_GENERATOR)
     SET(CPACK_GENERATOR 7Z ZIP WIX)
 endif()
@@ -48,7 +56,7 @@ foreach(GENERATOR IN LISTS CPACK_GENERATOR)
         SET(CPACK_WIX_UI_DIALOG "${PACKAGE_SUPPORT_DIR}/wix-vookiimageviewer-dialog.png")
         SET(CPACK_WIX_PRODUCT_ICON "${PACKAGE_PRODUCT_ICON}")
         SET(CPACK_WIX_PROGRAM_MENU_FOLDER .)
-        SET(CPACK_WIX_ARCHITECTURE "x64")
+        SET(CPACK_WIX_ARCHITECTURE "${WINDOWS_ARCH}")
         SET(CPACK_WIX_PROPERTY_ARPURLINFOABOUT "https://vookiimageviewer.cz/")
         SET(CPACK_WIX_PROPERTY_ARPHELPLINK "https://vookiimageviewer.cz/")
         SET(CPACK_WIX_PATCH_FILE "${PACKAGE_SUPPORT_DIR}/cpack-wix-patches/registry.xml")
