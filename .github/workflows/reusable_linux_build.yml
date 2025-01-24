@@ -2,6 +2,14 @@ name: Reusable Linux Build
 on:
   workflow_call:
     inputs:
+      toolchain:
+        description: 'What toolchain is used.'
+        required: true
+        type: string
+      runner:
+        description: 'What runner image is used.'
+        required: true
+        type: string
       docker_image:
         description: 'What docker image is used for building.'
         required: true
@@ -17,9 +25,13 @@ on:
         type: number
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
+  runner:
+    strategy:
+      fail-fast: true
+      matrix:
+        os: ${{ fromJSON( inputs.runner ) }}
+    runs-on: ${{ matrix.os }}
+    name: "${{ inputs.toolchain}}@${{ matrix.os }}"
     steps:
     - name: Prepare git
       run: |-
