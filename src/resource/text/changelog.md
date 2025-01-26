@@ -5,6 +5,7 @@
 - Core: Minor bug fixes.
 - Build: Wix5 used for Windows installer.
 - Build: Windows ARM64 support.
+- Build: Linux ARM64 support \[GitHub Actions\].
 - Components: Updated to the latest versions.
 - Image: The PFM & PXR format support added.
 --------------------------------------------------------------
