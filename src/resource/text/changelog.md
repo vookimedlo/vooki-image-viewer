@@ -1,13 +1,13 @@
 # Release Notes
 
 --------------------------------------------------------------
-## v2025.01.XX
+## v2025.02.XX
 - Core: Minor bug fixes.
 - Build: Wix5 used for Windows installer.
 - Build: Windows ARM64 support.
 - Build: Linux ARM64 support \[GitHub Actions\].
 - Components: Updated to the latest versions.
-- Image: The PFM & PXR format support added.
+- Image: The SCT, PFM & PXR format support added.
 --------------------------------------------------------------
 ## v2024.05.12
 - Components: Updated to the latest versions.
