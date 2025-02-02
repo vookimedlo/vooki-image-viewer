@@ -374,7 +374,7 @@ ADD_IMAGE_PLUGIN(vooki_kimg_pfm ../../components/kimageformats/src/imageformats/
 #
 ADD_IMAGE_PLUGIN(vooki_kimg_pxr ../../components/kimageformats/src/imageformats/pxr.cpp)
 
-# Scitex Continuous Tone Format  (sct, ct)
+# Scitex Continuous Tone Format  (sct, ct)x
 #
 ADD_IMAGE_PLUGIN(vooki_kimg_sct ../../components/kimageformats/src/imageformats/sct.cpp)
 
@@ -422,7 +422,7 @@ elseif (WIN32)
     # JPEG XL (jxl)
     #
     ADD_DEFINITIONS(-DJXL_STATIC_DEFINE)
-    ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/kimageformats/src/imageformats/jxl.cpp)
+    ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/kimageformats/src/imageformats/jxl.cpp ../../components/kimageformats/src/imageformats/microexif.cpp)
     TARGET_INCLUDE_DIRECTORIES(vooki_kimg_jxl BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
     TARGET_LINK_DIRECTORIES(vooki_kimg_jxl BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
     TARGET_LINK_LIBRARIES(vooki_kimg_jxl ${QT_UI_LIB} jxl.lib jxl_threads.lib jxl_cms.lib hwy.lib brotlicommon.lib brotlidec.lib brotlienc.lib)
@@ -458,7 +458,7 @@ else ()
     FIND_LIBRARY(LIBJXL NAMES jxl jxl_threads jxl_cms)
     if (LIBJXL)
         MESSAGE("-- JLX libraries found")
-        ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/workarounds/jxl.cpp)
+        ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/workarounds/jxl.cpp ../../components/kimageformats/src/imageformats/microexif.cpp)
         TARGET_LINK_LIBRARIES(vooki_kimg_jxl ${QT_UI_LIB} ${LIBJXL})
     endif ()
 
