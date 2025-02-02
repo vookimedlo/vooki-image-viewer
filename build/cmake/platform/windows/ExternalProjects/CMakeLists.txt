@@ -112,7 +112,7 @@ ExternalProject_Add(
 
         CONFIGURE_COMMAND ""
         BUILD_IN_SOURCE ON
-        BUILD_COMMAND SET JPEG_DEF=/DUSE_JPEG /DUSE_ZLIB /I ${3RD_PARTY_LIBS_INSTALL}/include && nmake -f <SOURCE_DIR>/Makefile.msvc lib/libraw_static.lib
+        BUILD_COMMAND SET JPEG_DEF=/DUSE_JPEG /DUSE_ZLIB /DLIBRAW_CALLOC_RAWSTORE /I ${3RD_PARTY_LIBS_INSTALL}/include && nmake -f <SOURCE_DIR>/Makefile.msvc lib/libraw_static.lib
         INSTALL_COMMAND (robocopy lib ${3RD_PARTY_LIBS_INSTALL}/lib *.lib || tree lib) && (robocopy libraw ${3RD_PARTY_LIBS_INSTALL}/include/libraw/ *.h || tree libraw)
         UPDATE_COMMAND ""
         DEPENDS ext_libjpeg-turbo ext_zlib

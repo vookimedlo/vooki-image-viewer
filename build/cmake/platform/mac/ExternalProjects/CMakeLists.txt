@@ -67,7 +67,7 @@ ExternalProject_Add(
         GIT_REPOSITORY https://github.com/LibRaw/LibRaw.git
         GIT_TAG ${EXT_LIBRAW_VERSION}
         GIT_SHALLOW true
-        CONFIGURE_COMMAND autoreconf -fiv <SOURCE_DIR> && "${CMAKE_COMMAND}" -E echo CC="$(CC) -arch x86_64 -arch arm64" CXX="$(CXX) -arch x86_64 -arch arm64" CPPFLAGS="-I${3RD_PARTY_LIBS_INSTALL}/include \${CPPFLAGS}" LDFLAGS="-L${3RD_PARTY_LIBS_INSTALL}/lib \${LDFLAGS}" <SOURCE_DIR>/configure --disable-examples --enable-static=yes --enable-shared=no -prefix=${3RD_PARTY_LIBS_INSTALL} > configure.sh
+        CONFIGURE_COMMAND autoreconf -fiv <SOURCE_DIR> && "${CMAKE_COMMAND}" -E echo CC="$(CC) -arch x86_64 -arch arm64" CXX="$(CXX) -arch x86_64 -arch arm64" CPPFLAGS="-I${3RD_PARTY_LIBS_INSTALL}/include -DLIBRAW_CALLOC_RAWSTORE \${CPPFLAGS}" LDFLAGS="-L${3RD_PARTY_LIBS_INSTALL}/lib \${LDFLAGS}" <SOURCE_DIR>/configure --disable-examples --enable-static=yes --enable-shared=no -prefix=${3RD_PARTY_LIBS_INSTALL} > configure.sh
         COMMAND sh configure.sh
         BUILD_COMMAND cd <BINARY_DIR> && $(MAKE) -j
         UPDATE_COMMAND ""
