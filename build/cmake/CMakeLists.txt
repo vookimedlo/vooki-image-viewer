@@ -340,7 +340,7 @@ ADD_IMAGE_PLUGIN(vooki_kimg_tga ../../components/kimageformats/src/imageformats/
 
 # Photoshop documents (psd)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_psd ../../components/kimageformats/src/imageformats/psd.cpp ../../components/kimageformats/src/imageformats/scanlineconverter.cpp ../../components/kimageformats/src/imageformats/microexif.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_psd ../../components/kimageformats/src/imageformats/psd.cpp ../../components/kimageformats/src/imageformats/scanlineconverter.cpp ../../components/workarounds/microexif.cpp)
 
 # Windows Animated Cursor (ani)
 #
@@ -458,7 +458,7 @@ else ()
     FIND_LIBRARY(LIBJXL NAMES jxl jxl_threads jxl_cms)
     if (LIBJXL)
         MESSAGE("-- JLX libraries found")
-        ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/workarounds/jxl.cpp ../../components/kimageformats/src/imageformats/microexif.cpp)
+        ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/workarounds/jxl.cpp ../../components/workarounds/microexif.cpp)
         TARGET_LINK_LIBRARIES(vooki_kimg_jxl ${QT_UI_LIB} ${LIBJXL})
     endif ()
 
