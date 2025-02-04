@@ -340,7 +340,7 @@ ADD_IMAGE_PLUGIN(vooki_kimg_tga ../../components/kimageformats/src/imageformats/
 
 # Photoshop documents (psd)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_psd ../../components/kimageformats/src/imageformats/psd.cpp ../../components/kimageformats/src/imageformats/scanlineconverter.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_psd ../../components/kimageformats/src/imageformats/psd.cpp ../../components/kimageformats/src/imageformats/scanlineconverter.cpp ../../components/workarounds/microexif.cpp)
 
 # Windows Animated Cursor (ani)
 #
@@ -374,6 +374,10 @@ ADD_IMAGE_PLUGIN(vooki_kimg_pfm ../../components/kimageformats/src/imageformats/
 #
 ADD_IMAGE_PLUGIN(vooki_kimg_pxr ../../components/kimageformats/src/imageformats/pxr.cpp)
 
+# Scitex Continuous Tone Format  (sct, ct)x
+#
+ADD_IMAGE_PLUGIN(vooki_kimg_sct ../../components/kimageformats/src/imageformats/sct.cpp)
+
 
 # Camera RAW Thumbnails (raf, mos, cr2, erf, dng, mrw, nef, orf, rw2, pef, x3f, srw, x3f, arw)
 # Prebuilt library for the MacOS/Windows only, Linux uses a distro package
@@ -391,7 +395,7 @@ if (APPLE)
 
     # JPEG XL (jxl)
     #
-    ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/kimageformats/src/imageformats/jxl.cpp)
+    ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/kimageformats/src/imageformats/jxl.cpp ../../components/kimageformats/src/imageformats/microexif.cpp)
     TARGET_INCLUDE_DIRECTORIES(vooki_kimg_jxl BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
     TARGET_LINK_DIRECTORIES(vooki_kimg_jxl BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
     TARGET_LINK_LIBRARIES(vooki_kimg_jxl ${QT_UI_LIB} libjxl.a libjxl_threads.a libjxl_cms.a libhwy.a libbrotlicommon.a libbrotlidec.a libbrotlienc.a)
@@ -418,7 +422,7 @@ elseif (WIN32)
     # JPEG XL (jxl)
     #
     ADD_DEFINITIONS(-DJXL_STATIC_DEFINE)
-    ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/kimageformats/src/imageformats/jxl.cpp)
+    ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/kimageformats/src/imageformats/jxl.cpp ../../components/kimageformats/src/imageformats/microexif.cpp)
     TARGET_INCLUDE_DIRECTORIES(vooki_kimg_jxl BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
     TARGET_LINK_DIRECTORIES(vooki_kimg_jxl BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
     TARGET_LINK_LIBRARIES(vooki_kimg_jxl ${QT_UI_LIB} jxl.lib jxl_threads.lib jxl_cms.lib hwy.lib brotlicommon.lib brotlidec.lib brotlienc.lib)
@@ -452,9 +456,10 @@ else ()
     endif ()
 
     FIND_LIBRARY(LIBJXL NAMES jxl jxl_threads jxl_cms)
-    if (LIBJXL)
+    pkg_check_modules(LibJXL094 IMPORTED_TARGET libjxl>=0.9.4)
+    if (LibJXL094_FOUND)
         MESSAGE("-- JLX libraries found")
-        ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/workarounds/jxl.cpp)
+        ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/workarounds/jxl.cpp ../../components/workarounds/microexif.cpp)
         TARGET_LINK_LIBRARIES(vooki_kimg_jxl ${QT_UI_LIB} ${LIBJXL})
     endif ()
 

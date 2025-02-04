@@ -54,6 +54,7 @@ Supported image formats cover the very common formats as well as the rare ones. 
 | QOI                       | Quite OK Image Format                            |
 | XBM                       | X11 Bitmap                                       |
 | XPM                       | X11 Pixmap                                       |
+| SCT                       | Scitex Continuous Tone Format                    |
 | SVG                       | Scalable Vector Graphics                         |
 | BMP                       | Windows Bitmap                                   |
 | XCF                       | Gimp                                             |
