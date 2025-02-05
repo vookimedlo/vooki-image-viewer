@@ -9,7 +9,7 @@ on:
 jobs:
   ubuntu:
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         toolchain: [gcc, clang]
         distribution: [jammy, noble, oracular, plucky]
@@ -23,7 +23,7 @@ jobs:
 
   debian:
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         toolchain: [gcc, clang]
         distribution: [stable, bookworm, trixie]
@@ -37,7 +37,7 @@ jobs:
 
   fedora:
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         toolchain: [gcc, clang]
         distribution: [stable, 40, 41]
