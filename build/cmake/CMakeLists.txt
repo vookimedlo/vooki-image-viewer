@@ -313,7 +313,7 @@ qt6_add_lrelease(${APPLICATION_NAME}
         QM_FILES_OUTPUT_VARIABLE qm_files)
 qt6_add_resources(${APPLICATION_NAME} "translations"
         PREFIX "/i18n"
-        BASE "${CMAKE_BINARY_DIR}"
+        BASE "${CMAKE_CURRENT_BINARY_DIR}"
         FILES "${qm_files}")
 
 #### Plugins ####

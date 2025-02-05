@@ -130,7 +130,7 @@ void SettingsDialog::onButtonBoxButtonClicked(QAbstractButton *button)
 
 void SettingsDialog::onLanguageChanged(const int index)
 {
-    qDebug() << "Selected localization: " << Languages::m_localizations[index].m_language;
+    qDebug() << "Selected localization: " << Languages::m_localizations[index].m_language << "[" << Languages::m_localizations[index].m_code << "]";
     m_languageCode = Languages::m_localizations[index].m_code;
 }
 
