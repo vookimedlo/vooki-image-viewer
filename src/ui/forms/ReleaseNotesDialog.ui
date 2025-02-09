@@ -4,7 +4,7 @@
  <class>releaseNotesDialog</class>
  <widget class="QDialog" name="releaseNotesDialog">
   <property name="windowModality">
-   <enum>Qt::ApplicationModal</enum>
+   <enum>Qt::WindowModality::ApplicationModal</enum>
   </property>
   <property name="geometry">
    <rect>
@@ -38,7 +38,7 @@
    </font>
   </property>
   <property name="contextMenuPolicy">
-   <enum>Qt::NoContextMenu</enum>
+   <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
   </property>
   <property name="windowTitle">
    <string extracomment="Title: Window">Release Notes</string>
@@ -48,7 +48,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="sizeConstraint">
-    <enum>QLayout::SetDefaultConstraint</enum>
+    <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
    </property>
    <property name="leftMargin">
     <number>4</number>
@@ -71,10 +71,10 @@
       </font>
      </property>
      <property name="contextMenuPolicy">
-      <enum>Qt::NoContextMenu</enum>
+      <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
      </property>
      <property name="inputMethodHints">
-      <set>Qt::ImhNone</set>
+      <set>Qt::InputMethodHint::ImhNone</set>
      </property>
      <property name="markdown">
       <string notr="true"/>
@@ -92,8 +92,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <property name="acceptRichText">
       <bool>false</bool>
      </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
      <property name="openLinks">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
     </widget>
    </item>
