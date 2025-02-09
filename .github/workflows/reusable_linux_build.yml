@@ -33,6 +33,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     name: "${{ inputs.toolchain}}@${{ matrix.os }}"
     steps:
+    - name: Workaround Github Actions ARM runner bug
+      run: |-
+        sudo systemctl daemon-reexec
+        sudo systemctl restart docker
     - name: Prepare git
       run: |-
         git config --global core.autocrlf false
