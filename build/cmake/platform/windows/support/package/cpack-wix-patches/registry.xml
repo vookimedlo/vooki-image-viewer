@@ -57,6 +57,7 @@
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".qoi" Value="" Type="string" />
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".pfm" Value="" Type="string" />
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".pxr" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".sct" Value="" Type="string" />
 
 
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.jpg\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
@@ -103,6 +104,7 @@
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.qoi\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.pfm\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.pxr\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.sct\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
 
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\shell\open" Name="FriendlyAppName" Value="VookiImageViewer" Type="string" />
 
@@ -237,6 +239,9 @@
                 <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
             </Extension>
             <Extension Id="pxr">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="sct">
                 <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
             </Extension>
         </ProgId>

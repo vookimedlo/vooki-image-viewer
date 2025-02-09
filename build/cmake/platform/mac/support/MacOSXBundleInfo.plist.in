@@ -80,6 +80,7 @@
           <string>qoi</string>
           <string>pfm</string>
           <string>pxr</string>
+          <string>sct</string>
         </array>
         <key>CFBundleTypeRole</key>
         <string>Viewer</string>
