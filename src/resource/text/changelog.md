@@ -8,6 +8,8 @@
 - Build: Linux ARM64 support \[GitHub Actions\].
 - Components: Updated to the latest versions.
 - Image: The SCT, PFM & PXR format support added.
+- Translations: Translation loading fixed.
+- Fix: Minimal macOS version set to the last but one major version. \[[#44](https://github.com/vookimedlo/vooki-image-viewer/issues/44)\]
 --------------------------------------------------------------
 ## v2024.05.12
 - Components: Updated to the latest versions.

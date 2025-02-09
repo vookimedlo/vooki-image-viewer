@@ -17,6 +17,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 CMAKE_MINIMUM_REQUIRED(VERSION 3.18.4)
+SET(CMAKE_OSX_DEPLOYMENT_TARGET "14.0" CACHE STRING "Minimum OS X version to target for deployment (at runtime); newer APIs weak linked.")
+SET(ENV{MACOSX_DEPLOYMENT_TARGET} ${CMAKE_OSX_DEPLOYMENT_TARGET})
 
 PROJECT(ApplicationAndDependencies HOMEPAGE_URL "https://vookiimageviewer.cz")
 
