@@ -9,7 +9,7 @@ if (APPLE OR WIN32)
     ADD_EP_VERSION(libjpeg-turbo 3.1.0)
     ADD_EP_VERSION(libraw 0.21.3)
     ADD_EP_VERSION(brotli v1.1.0)
-    ADD_EP_VERSION(libjxl v0.11.1)
+    ADD_EP_VERSION(libjxl v0.10.4)
 endif()
 
 if (APPLE)
