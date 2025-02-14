@@ -42,9 +42,9 @@ jobs:
       run: choco install graphviz
     - name: update WiX
       run: |
-        dotnet tool update --global wix
+        dotnet tool update --global wix -version 5.0.2
         wix --version
-        wix extension add --global WixToolset.UI.wixext
+        wix extension add --global WixToolset.UI.wixext/5.0.2
     -
       name: build 3rd-party sources [configuration]
       working-directory: ${{github.workspace}}\..
