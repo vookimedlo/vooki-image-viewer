@@ -1,7 +1,7 @@
 # Release Notes
 
 --------------------------------------------------------------
-## v2025.02.XX
+## v2025.02.15
 - Core: Minor bug fixes.
 - Build: Wix5 used for Windows installer.
 - Build: Windows ARM64 support.
