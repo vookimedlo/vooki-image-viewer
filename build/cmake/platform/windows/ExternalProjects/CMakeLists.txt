@@ -7,7 +7,7 @@
 # SPDX-FileType: SOURCE
 #############################################################################
 
-CMAKE_MINIMUM_REQUIRED(VERSION 3.18.4)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.30.0)
 
 PROJECT(vdeps HOMEPAGE_URL "https://vookiimageviewer.cz")
 
