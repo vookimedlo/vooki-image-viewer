@@ -1,26 +1,20 @@
+#############################################################################
 # VookiImageViewer - a tool for showing images.
-# Copyright(C) 2023 Michal Duda <github@vookimedlo.cz>
+# - https://github.com/vookimedlo/vooki-image-viewer
 #
-# https://github.com/vookimedlo/vooki-image-viewer
-#
-# This program is free software : you can redistribute it and / or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program. If not, see <http://www.gnu.org/licenses/>.
+# SPDX-FileCopyrightText: 2023 Michal Duda <github@vookimedlo.cz>
+# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-FileType: SOURCE
+#############################################################################
+
 
 CMAKE_MINIMUM_REQUIRED(VERSION 3.18.4)
 SET(CMAKE_OSX_DEPLOYMENT_TARGET "14.0" CACHE STRING "Minimum OS X version to target for deployment (at runtime); newer APIs weak linked.")
 SET(ENV{MACOSX_DEPLOYMENT_TARGET} ${CMAKE_OSX_DEPLOYMENT_TARGET})
 
 PROJECT(ApplicationAndDependencies HOMEPAGE_URL "https://vookiimageviewer.cz")
+
+MESSAGE("-- CMake version: ${CMAKE_CACHE_MAJOR_VERSION}.${CMAKE_CACHE_MINOR_VERSION}.${CMAKE_CACHE_PATCH_VERSION}")
 
 SET(3RD_PARTY_LIBS ${CMAKE_BINARY_DIR}/EPs)
 SET(3RD_PARTY_LIBS_INSTALL "${3RD_PARTY_LIBS}/install")
@@ -38,7 +32,37 @@ if (APPLE)
     endif()
 endif()
 
-MESSAGE( "-- Current System Processor: ${CMAKE_SYSTEM_PROCESSOR}")
+message("-- System processor: ${CMAKE_SYSTEM_PROCESSOR}")
+
+include(CheckCXXSourceCompiles)
+# Test for ARM architecture
+check_cxx_source_compiles("
+#if defined(__aarch64__) || defined(_M_ARM64)
+int main() { return 0; }
+#else
+#error Not ARM64 architecture
+#endif
+" IS_ARM64)
+
+
+
+if(IS_ARM64)
+    message("-- Target architecture: ARM64 detected")
+else ()
+    # Test for x86 architecture
+    check_cxx_source_compiles("
+#if (defined(__x86_64__) || defined(_M_X64) || defined(_M_AMD64))
+int main() { return 0; }
+#else
+#error Not x64 architecture
+#endif
+" IS_X64)
+    if(IS_X64)
+        message("-- Target architecture: x64 detected")
+    else()
+        message("-- Target architecture: Unknown - probably: ${CMAKE_SYSTEM_PROCESSOR}")
+    endif()
+endif ()
 
 MESSAGE("-- 3RD_PARTY_LIBS: ${3RD_PARTY_LIBS}")
 
