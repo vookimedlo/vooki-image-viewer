@@ -82,7 +82,7 @@ protected:
     void wheelEvent(QWheelEvent *event) override;
     void zoom(double factor, bool isZoomIn);
 
-    void extractMetadata(const QString &fileName);
+    QCoro::Task<void> extractMetadata(const QString &fileName);
 
 private:
     QImage m_originalImage {};

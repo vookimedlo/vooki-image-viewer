@@ -17,6 +17,7 @@ VookiImageViewer - a tool for showing images.
 #include <string>
 #include <utility>
 #include <vector>
+#include <qcorotask.h>
 #include "AutoPtrWrapper.h"
 #include <exiv2/exiv2.hpp>
 #include "../util/compiler.h"
@@ -30,7 +31,7 @@ public:
     ~MetadataExtractor() override = default;
     DISABLE_COPY_MOVE(MetadataExtractor);
 
-    virtual void extract(const QString &filename, int width, int height);
+    virtual QCoro::Task<void> extract(const QString &filename, int width, int height);
 
 signals:
     void imageInformationParsed(const std::vector<std::pair<QString, QString>>& information);
