@@ -116,8 +116,14 @@ protected:
         }
     }
 
+    using InformationMap=std::vector<std::pair<QString, QString>>;
+    void extractBasicProperties(const Exiv2::ExifData &exifData, InformationMap &information);
+    void extractGPSInformation(const Exiv2::ExifData &exifData, InformationMap &information);
+    void extractCameraInformation(const Exiv2::ExifData &exifData, InformationMap &information);
+
 private:
-    [[nodiscard]] int64_t toLong(std::unique_ptr<Exiv2::Value> value) const
+    static void logAllExifTags(const Exiv2::ExifData &exifData);
+    [[nodiscard]] static int64_t toLong(std::unique_ptr<Exiv2::Value> value)
     {
 #if EXIV2_TEST_VERSION(0,28,0)
         return value->toInt64();
