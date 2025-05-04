@@ -8,13 +8,22 @@ on:
 
 env:
   QT_VERSION:              "6.9.0"
-  MINGW_VERSION:           "win64_msvc2022_64"
   BUILD_TYPE:              Release
   artifact_retention_days: 5
 
 jobs:
   build:
-    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+            - os: windows-latest
+              MINGW_VERSION: "win64_msvc2022_64"
+              ARCH: x64
+            - os: windows-11-arm
+              MINGW_VERSION: "msvc2022_arm64"
+              ARCH: arm64
+    runs-on: ${{ matrix.os }}
     steps:
     - name: Prepare git
       run: |-
@@ -27,16 +36,19 @@ jobs:
       with:
         version: '2.16.03'
     - name: install qt
-      uses: jurplel/install-qt-action@v4
+      uses: jdpurcell/install-qt-action@v5
+#      uses: jurplel/install-qt-action@v5
       with:
-        aqtversion: '==3.1.*'
         host: 'windows'
         target: 'desktop'
         modules: 'qtimageformats'
         version: ${{ env.QT_VERSION }}
-        arch: ${{ env.MINGW_VERSION }}
+        arch: ${{ matrix.MINGW_VERSION }}
         dir: "${{github.workspace}}/qt"
         install-deps: "true"
+        cache: true
+        #use-naqt: true
+        #setup-python: false
     -
       name: install graphviz
       run: choco install graphviz
@@ -52,7 +64,7 @@ jobs:
         CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}
       run: |
         "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-        cmake -DBUILD_DEPENDENCIES=ON -A x64 -G "Visual Studio 17 2022" -Bbuild ${{github.workspace}} -Wno-dev
+        cmake -DBUILD_DEPENDENCIES=ON -A ${{ matrix.ARCH }} -G "Visual Studio 17 2022" -Bbuild ${{github.workspace}} -Wno-dev
 
     -
       name: build 3rd-party sources
