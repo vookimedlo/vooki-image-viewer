@@ -54,28 +54,26 @@ SET(CMAKE_CXX_EXTENSIONS OFF)
 
 include(FetchContent)
 
+SET(QCORO_VERSION "v0.12.0")
+
 SET(QCORO_BUILD_EXAMPLES OFF)
+SET(QCORO_BUILD_TESTING OFF)
 SET(QCORO_WITH_QTDBUS OFF)
 SET(QCORO_WITH_QTNETWORK OFF)
 SET(QCORO_WITH_QTWEBSOCKETS OFF)
 SET(QCORO_WITH_QTQUICK OFF)
 SET(QCORO_WITH_QML OFF)
-SET(BUILD_TESTING OFF)
+set(QCORO_DISABLE_DEPRECATED_TASK_H ON)
 
 FetchContent_Declare(qcoro
         GIT_REPOSITORY https://github.com/danvratil/qcoro.git
-        GIT_TAG v0.12.0
+        GIT_TAG ${QCORO_VERSION}
         GIT_SHALLOW true
-        )
-
-FetchContent_GetProperties(qcoro POPULATED qcoro_POPULATED)
-if(NOT qcoro_POPULATED)
-    FetchContent_Populate(qcoro)
-    add_subdirectory(${qcoro_SOURCE_DIR} ${qcoro_BINARY_DIR} EXCLUDE_FROM_ALL)
-endif()
+        EXCLUDE_FROM_ALL
+)
+FetchContent_MakeAvailable(qcoro)
 
 qcoro_enable_coroutines()
-
 
 SET(CMAKE_AUTOMOC ON)
 SET(CMAKE_AUTORCC ON)
