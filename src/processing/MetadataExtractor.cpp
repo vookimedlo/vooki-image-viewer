@@ -86,21 +86,21 @@ void MetadataExtractor::extractBasicProperties(const Exiv2::ExifData &exifData, 
     addInformation<Orientation>(tr("Orientation", "Image Properties"),
                                               Exiv2::orientation(exifData), information);
 #if EXIV2_TEST_VERSION(0, 27, 4)
-    addInformation(tr("Date", "Image Properties"), 
+    addInformation(tr("Date", "Image Properties"),
                   Exiv2::dateTimeOriginal(exifData), information);
-    
+
     addInformation<Flash>(tr("Flash", "Image Properties"),
                                         Exiv2::flash(exifData), information);
 #endif
-    addInformation(tr("ISO", "Image Properties"), 
+    addInformation(tr("ISO", "Image Properties"),
                   Exiv2::isoSpeed(exifData), information);
-    
+
     addInformation<Float>(tr("f-number", "Image Properties"),
                                         Exiv2::fNumber(exifData), information);
-    
+
     addInformation<Float>(tr("Exposure time", "Image Properties"),
                                         Exiv2::exposureTime(exifData), information);
-    
+
     addInformation<Float>(tr("Focal length", "Image Properties"),
                                         Exiv2::focalLength(exifData), information);
 }
@@ -118,30 +118,30 @@ void MetadataExtractor::extractGPSInformation(const Exiv2::ExifData &exifData, I
 
     // Add GPS latitude information
     addInformation<GPSLatitude>("",
-                                              exifData.findKey(Exiv2::ExifKey(GPS_LATITUDE_TAG)), 
+                                              exifData.findKey(Exiv2::ExifKey(GPS_LATITUDE_TAG)),
                                               information);
-    
+
     addInformation<GPSLatitudeRef>(tr("GPS Latitude", "Image Properties"),
-                                                 exifData.findKey(Exiv2::ExifKey(GPS_LATITUDE_REF_TAG)), 
+                                                 exifData.findKey(Exiv2::ExifKey(GPS_LATITUDE_REF_TAG)),
                                                  information);
-    
+
     // Add GPS longitude information
     addInformation<GPSLongitude>("",
-                                               exifData.findKey(Exiv2::ExifKey(GPS_LONGITUDE_TAG)), 
+                                               exifData.findKey(Exiv2::ExifKey(GPS_LONGITUDE_TAG)),
                                                information);
-    
+
     addInformation<GPSLongitudeRef>(tr("GPS Longitude", "Image Properties"),
-                                                  exifData.findKey(Exiv2::ExifKey(GPS_LONGITUDE_REF_TAG)), 
+                                                  exifData.findKey(Exiv2::ExifKey(GPS_LONGITUDE_REF_TAG)),
                                                   information);
-    
+
     // Add GPS altitude information
     addInformation<GPSAltitude>("",
-                                              exifData.findKey(Exiv2::ExifKey(GPS_ALTITUDE_TAG)), 
-                                              information, 
+                                              exifData.findKey(Exiv2::ExifKey(GPS_ALTITUDE_TAG)),
+                                              information,
                                               MetadataExtractor::m_unitMeter);
-    
+
     addInformation<GPSAltitudeRef>(tr("GPS Altitude", "Image Properties"),
-                                                 exifData.findKey(Exiv2::ExifKey(GPS_ALTITUDE_REF_TAG)), 
+                                                 exifData.findKey(Exiv2::ExifKey(GPS_ALTITUDE_REF_TAG)),
                                                  information);
 }
 
@@ -153,25 +153,25 @@ void MetadataExtractor::extractCameraInformation(const Exiv2::ExifData &exifData
     using enum ExivProcessing;
 
     // Add camera information
-    addInformation(tr("Camera maker", "Image Properties"), 
-                  exifData.findKey(Exiv2::ExifKey(CAMERA_MAKE_TAG)), 
+    addInformation(tr("Camera maker", "Image Properties"),
+                  exifData.findKey(Exiv2::ExifKey(CAMERA_MAKE_TAG)),
                   information);
-    
-    addInformation(tr("Camera model", "Image Properties"), 
-                  Exiv2::model(exifData), 
+
+    addInformation(tr("Camera model", "Image Properties"),
+                  Exiv2::model(exifData),
                   information);
-    
+
     // Add lens information
-    addInformation(tr("Lens maker", "Image Properties"), 
-                  exifData.findKey(Exiv2::ExifKey(LENS_MAKE_TAG)), 
+    addInformation(tr("Lens maker", "Image Properties"),
+                  exifData.findKey(Exiv2::ExifKey(LENS_MAKE_TAG)),
                   information);
-    
-    addInformation(tr("Lens model", "Image Properties"), 
-                  Exiv2::lensName(exifData), 
+
+    addInformation(tr("Lens model", "Image Properties"),
+                  Exiv2::lensName(exifData),
                   information);
-    
+
     addInformation<Float>(tr("Lens focal length", "Image Properties"),
-                                        Exiv2::focalLength(exifData), 
+                                        Exiv2::focalLength(exifData),
                                         information);
 }
 
