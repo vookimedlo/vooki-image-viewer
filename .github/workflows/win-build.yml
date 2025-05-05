@@ -13,7 +13,6 @@ env:
 
 jobs:
   build:
-    runs-on: windows-11-arm
     strategy:
       fail-fast: false
       matrix:
@@ -21,10 +20,12 @@ jobs:
             - os: windows-latest
               MINGW_VERSION: "win64_msvc2022_64"
               ARCH: x64
+              VCVARS: "vcvars64.bat"
             - os: windows-11-arm
-              MINGW_VERSION: "windows_msvc2022_arm64"
+              MINGW_VERSION: "win64_msvc2022_arm64_cross_compiled"
               ARCH: arm64
-
+              VCVARS: "vcvarsarm64.bat"
+    runs-on: ${{ matrix.os }}
     steps:
     - name: Prepare git
       run: |-
@@ -44,7 +45,7 @@ jobs:
         target: 'desktop'
         modules: 'qtimageformats'
         version: ${{ env.QT_VERSION }}
-        #arch: ${{ matrix.MINGW_VERSION }}
+        arch: ${{ matrix.MINGW_VERSION }}
         dir: "${{github.workspace}}/qt"
         install-deps: "true"
         cache: true
@@ -64,7 +65,7 @@ jobs:
       env:
         CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}
       run: |
-        "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\${{ matrix.VCVARS }}"
         cmake -DBUILD_DEPENDENCIES=ON -A ${{ matrix.ARCH }} -G "Visual Studio 17 2022" -Bbuild ${{github.workspace}} -Wno-dev
 
     -
