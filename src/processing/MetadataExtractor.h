@@ -17,6 +17,7 @@ VookiImageViewer - a tool for showing images.
 #include <string>
 #include <utility>
 #include <vector>
+#include <qcorotask.h>
 #include "AutoPtrWrapper.h"
 #include <exiv2/exiv2.hpp>
 #include "../util/compiler.h"
@@ -30,7 +31,7 @@ public:
     ~MetadataExtractor() override = default;
     DISABLE_COPY_MOVE(MetadataExtractor);
 
-    virtual void extract(const QString &filename, int width, int height);
+    virtual QCoro::Task<void> extract(const QString &filename, int width, int height);
 
 signals:
     void imageInformationParsed(const std::vector<std::pair<QString, QString>>& information);
@@ -115,8 +116,14 @@ protected:
         }
     }
 
+    using InformationMap=std::vector<std::pair<QString, QString>>;
+    void extractBasicProperties(const Exiv2::ExifData &exifData, InformationMap &information);
+    void extractGPSInformation(const Exiv2::ExifData &exifData, InformationMap &information);
+    void extractCameraInformation(const Exiv2::ExifData &exifData, InformationMap &information);
+
 private:
-    [[nodiscard]] int64_t toLong(std::unique_ptr<Exiv2::Value> value) const
+    static void logAllExifTags(const Exiv2::ExifData &exifData);
+    [[nodiscard]] static int64_t toLong(std::unique_ptr<Exiv2::Value> value)
     {
 #if EXIV2_TEST_VERSION(0,28,0)
         return value->toInt64();

@@ -7,7 +7,7 @@ on:
   pull_request:
 
 env:
-  QT_VERSION:              "6.8.2"
+  QT_VERSION:              "6.9.0"
   MINGW_VERSION:           "win64_msvc2022_64"
   BUILD_TYPE:              Release
   artifact_retention_days: 5
@@ -42,9 +42,9 @@ jobs:
       run: choco install graphviz
     - name: update WiX
       run: |
-        dotnet tool update --global wix --version 5.0.2
+        dotnet tool update --global wix --version 6.0.0
         wix --version
-        wix extension add --global WixToolset.UI.wixext/5.0.2
+        wix extension add --global WixToolset.UI.wixext/6.0.0
     -
       name: build 3rd-party sources [configuration]
       working-directory: ${{github.workspace}}\..

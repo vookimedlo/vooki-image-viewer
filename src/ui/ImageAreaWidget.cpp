@@ -9,17 +9,16 @@ VookiImageViewer - a tool for showing images.
 ****************************************************************************/
 
 #include "ImageAreaWidget.h"
-#include <QtConcurrent>
+#include "../processing/MetadataExtractor.h"
+#include "MainWindow.h"
 #include <QDebug>
 #include <QFile>
 #include <QGuiApplication>
 #include <QPaintEvent>
 #include <QPainter>
+#include <QtConcurrent>
 #include <cmath>
 #include <qcorofuture.h>
-#include "MainWindow.h"
-#include "../processing/MetadataExtractor.h"
-
 
 ImageAreaWidget::ImageAreaWidget(QWidget *parent)
                                         : QWidget(parent)
@@ -48,9 +47,8 @@ QCoro::Task<bool> ImageAreaWidget::showImage(const QString &fileName)
     if (m_originalImage.isNull())
         co_return false;
 
-    auto metadataTask = QtConcurrent::run([fileName, this]() {
-        extractMetadata(fileName);
-    });
+    // Start metadata extraction asynchronously
+    auto metadataTask = extractMetadata(fileName);
 
     m_imageProcessor.bind(m_originalImage);
     update();
@@ -60,6 +58,7 @@ QCoro::Task<bool> ImageAreaWidget::showImage(const QString &fileName)
     transformImage();
     update();
 
+    // Wait for metadata extraction to complete
     co_await metadataTask;
 
     if (m_imageLoader.imageCount() > 1)
@@ -287,7 +286,7 @@ void ImageAreaWidget::nativeGestureEvent(QNativeGestureEvent *event)
 void ImageAreaWidget::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    const QRect& dirtyRect = event->rect();
+    const QRect &dirtyRect = event->rect();
     painter.drawImage(dirtyRect, m_finalImage, dirtyRect);
 }
 
@@ -344,7 +343,7 @@ void ImageAreaWidget::wheelEvent(QWheelEvent *event)
         // Scroll
         else
         {
-            QPoint numSteps { numDegrees / 15 };
+            QPoint numSteps{ numDegrees / 15 };
             numSteps.rx() *= m_imageOffsetStep;
             numSteps.ry() *= m_imageOffsetStep;
             scrollTo(numSteps);
@@ -354,26 +353,42 @@ void ImageAreaWidget::wheelEvent(QWheelEvent *event)
     event->accept();
 }
 
-void ImageAreaWidget::extractMetadata(const QString &fileName)
+QCoro::Task<void> ImageAreaWidget::extractMetadata(const QString &fileName)
 {
+    const auto metadataExtractor = std::make_shared<MetadataExtractor>();
+    QPointer<ImageAreaWidget> safeThis(this);
 
-    MetadataExtractor metadataExtractor;
-    const auto connection = connect(&metadataExtractor,
-                                    &MetadataExtractor::imageInformationParsed,
-                                    this,
-                                    [this](const std::vector<std::pair<QString, QString>>& information) {
-                                        emit imageInformationParsed(information);
-                                    });
+    auto infoConnection = connect(metadataExtractor.get(),
+        &MetadataExtractor::imageInformationParsed,
+        this,
+        [safeThis](const std::vector<std::pair<QString, QString>> &information) {
+        if (safeThis)
+            safeThis->emit imageInformationParsed(information);
+    });
 
-    const auto connectionSize = connect(&metadataExtractor,
-                                        &MetadataExtractor::imageSizeParsed,
-                                        this,
-                                        [this](const uint64_t &size) {
-                                            emit imageSizeChanged(size);
-                                        });
+    auto sizeConnection = connect(metadataExtractor.get(),
+        &MetadataExtractor::imageSizeParsed,
+        this,
+        [safeThis](const uint64_t &size) {
+        if (safeThis)
+            safeThis->emit imageSizeChanged(size);
+    });
 
-    metadataExtractor.extract(fileName, m_originalImage.width(), m_originalImage.height());
+    auto dimensionsConnection = connect(metadataExtractor.get(),
+        &MetadataExtractor::imageDimensionsParsed,
+        this,
+        [safeThis](int width, int height) {
+        if (safeThis)
+            safeThis->emit imageDimensionsChanged(width, height);
+    });
 
-    disconnect(connection);
-    disconnect(connectionSize);
+    // Extract metadata asynchronously
+    co_await metadataExtractor->extract(fileName, m_originalImage.width(), m_originalImage.height());
+
+    // Cleanup connections
+    disconnect(infoConnection);
+    disconnect(sizeConnection);
+    disconnect(dimensionsConnection);
+
+    co_return;
 }
