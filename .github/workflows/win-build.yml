@@ -13,6 +13,7 @@ env:
 
 jobs:
   build:
+    runs-on: windows-11-arm
     strategy:
       fail-fast: false
       matrix:
@@ -23,7 +24,7 @@ jobs:
             - os: windows-11-arm
               MINGW_VERSION: "windows_msvc2022_arm64"
               ARCH: arm64
-    runs-on: ${{ matrix.os }}
+
     steps:
     - name: Prepare git
       run: |-
