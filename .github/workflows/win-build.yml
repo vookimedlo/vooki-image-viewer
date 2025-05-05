@@ -21,7 +21,7 @@ jobs:
               MINGW_VERSION: "win64_msvc2022_64"
               ARCH: x64
             - os: windows-11-arm
-              MINGW_VERSION: "msvc2022_arm64"
+              MINGW_VERSION: "windows_msvc2022_arm64"
               ARCH: arm64
     runs-on: ${{ matrix.os }}
     steps:
@@ -43,7 +43,7 @@ jobs:
         target: 'desktop'
         modules: 'qtimageformats'
         version: ${{ env.QT_VERSION }}
-        arch: ${{ matrix.MINGW_VERSION }}
+        #arch: ${{ matrix.MINGW_VERSION }}
         dir: "${{github.workspace}}/qt"
         install-deps: "true"
         cache: true
