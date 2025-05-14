@@ -41,26 +41,26 @@ endif()
 include(CheckCXXSourceCompiles)
 # Test for ARM architecture
 check_cxx_source_compiles("
-#if defined(__arm__) || defined(__aarch64__) || defined(_M_ARM)
+#if defined(__aarch64__) || defined(_M_ARM64)
 int main() { return 0; }
 #else
-#error Not ARM architecture
+#error Not ARM64 architecture
 #endif
-" IS_ARM_ARCHITECTURE)
+" IS_ARM64)
 
 # Test for x86 architecture
 check_cxx_source_compiles("
-#if defined(__x86_64__) || defined(_M_X64) || defined(__i386) || defined(_M_IX86)
+#if (defined(__x86_64__) || defined(_M_X64) || defined(_M_AMD64))
 int main() { return 0; }
 #else
 #error Not x86 architecture
 #endif
-" IS_X86_ARCHITECTURE)
+" IS_X64)
 
-if(IS_ARM_ARCHITECTURE)
-    message("ARM architecture detected")
-elseif(IS_X86_ARCHITECTURE)
-    message("x86 architecture detected")
+if(IS_ARM64)
+    message("ARM64 architecture detected")
+elseif(IS_X64)
+    message("x64 architecture detected")
 else()
     message("Unknown architecture")
 endif()
