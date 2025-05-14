@@ -38,6 +38,34 @@ if (APPLE)
     endif()
 endif()
 
+include(CheckCXXSourceCompiles)
+# Test for ARM architecture
+check_cxx_source_compiles("
+#if defined(__arm__) || defined(__aarch64__) || defined(_M_ARM)
+int main() { return 0; }
+#else
+#error Not ARM architecture
+#endif
+" IS_ARM_ARCHITECTURE)
+
+# Test for x86 architecture
+check_cxx_source_compiles("
+#if defined(__x86_64__) || defined(_M_X64) || defined(__i386) || defined(_M_IX86)
+int main() { return 0; }
+#else
+#error Not x86 architecture
+#endif
+" IS_X86_ARCHITECTURE)
+
+if(IS_ARM_ARCHITECTURE)
+    message("ARM architecture detected")
+elseif(IS_X86_ARCHITECTURE)
+    message("x86 architecture detected")
+else()
+    message("Unknown architecture")
+endif()
+
+
 MESSAGE( "-- Current System Processor: ${CMAKE_SYSTEM_PROCESSOR}")
 
 MESSAGE("-- 3RD_PARTY_LIBS: ${3RD_PARTY_LIBS}")
