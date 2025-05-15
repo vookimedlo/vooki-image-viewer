@@ -108,7 +108,7 @@ jobs:
       with:
         name: sandbox-${{ matrix.ARCH }}.zip
         path: |
-          D:/a/vooki-image-viewer
+          C:/a/vooki-image-viewer
         if-no-files-found: ignore
         retention-days: 9
 
@@ -116,9 +116,10 @@ jobs:
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: wix_msi_log.zip
+        name: wix_msi_log-${{ matrix.ARCH }}.zip
         path: |
           D:/a/vooki-image-viewer/build/_CPack_Packages/win64/WIX/wix.log
+          C:/a/vooki-image-viewer/build/_CPack_Packages/win64/WIX/wix.log
         if-no-files-found: ignore
         retention-days: 9
 
