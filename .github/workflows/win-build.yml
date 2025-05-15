@@ -102,11 +102,11 @@ jobs:
         $name = Get-Childitem -Filter *.msi -Name
         echo "artifact_name_msi=$name" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
-    - name: archive sandbox [msi]
+    - name: archive sandbox
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: sandbox.zip
+        name: sandbox-${{ matrix.ARCH }}.zip
         path: |
           D:/a/vooki-image-viewer
         if-no-files-found: ignore
