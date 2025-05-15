@@ -112,14 +112,24 @@ jobs:
         if-no-files-found: ignore
         retention-days: 9
 
-    - name: archive log [msi]
+    - name: archive log from C [msi]
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: wix_msi_log-${{ matrix.ARCH }}.zip
+        path: |
+          C:/a/vooki-image-viewer/build/_CPack_Packages/win64/WIX/wix.log
+        if-no-files-found: ignore
+        retention-days: 9
+
+
+    - name: archive log from D [msi]
       uses: actions/upload-artifact@v4
       if: always()
       with:
         name: wix_msi_log-${{ matrix.ARCH }}.zip
         path: |
           D:/a/vooki-image-viewer/build/_CPack_Packages/win64/WIX/wix.log
-          C:/a/vooki-image-viewer/build/_CPack_Packages/win64/WIX/wix.log
         if-no-files-found: ignore
         retention-days: 9
 

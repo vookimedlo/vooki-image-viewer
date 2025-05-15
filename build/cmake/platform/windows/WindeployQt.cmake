@@ -10,7 +10,8 @@
 function(deployqt)
     get_target_property(_qmake_executable Qt6::qmake IMPORTED_LOCATION)
     get_filename_component(_qt_bin_dir "${_qmake_executable}" DIRECTORY)
-    find_program(DEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
+    #find_program(DEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
+    find_program(DEPLOYQT_EXECUTABLE windeployqt REQUIRED)
 
     add_custom_command(TARGET ${APPLICATION_NAME} POST_BUILD
             COMMAND "${CMAKE_COMMAND}" -E
