@@ -7,10 +7,13 @@
 # SPDX-FileType: SOURCE
 #############################################################################
 
-if(CMAKE_SYSTEM_PROCESSOR MATCHES "ARM64")
+
+if(IS_ARM64)
     SET(WINDOWS_ARCH "arm64")
-else()
+elseif(IS_X64)
     SET(WINDOWS_ARCH "x64")
+else()
+    message(FATAL_ERROR "Unknown architecture - probably: ${CMAKE_SYSTEM_PROCESSOR}\n\tCancelling build!\n\n")
 endif()
 
 INSTALL(TARGETS ${APPLICATION_NAME}

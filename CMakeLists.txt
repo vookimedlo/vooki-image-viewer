@@ -53,20 +53,18 @@ check_cxx_source_compiles("
 #if (defined(__x86_64__) || defined(_M_X64) || defined(_M_AMD64))
 int main() { return 0; }
 #else
-#error Not x86 architecture
+#error Not x64 architecture
 #endif
 " IS_X64)
+
 
 if(IS_ARM64)
     message("ARM64 architecture detected")
 elseif(IS_X64)
     message("x64 architecture detected")
 else()
-    message("Unknown architecture")
+    message("Unknown architecture - probably: ${CMAKE_SYSTEM_PROCESSOR}")
 endif()
-
-
-MESSAGE( "-- Current System Processor: ${CMAKE_SYSTEM_PROCESSOR}")
 
 MESSAGE("-- 3RD_PARTY_LIBS: ${3RD_PARTY_LIBS}")
 
