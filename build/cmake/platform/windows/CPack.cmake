@@ -32,7 +32,6 @@ if(INSTALL_SYSTEM_RUNTIME)
     SET(CMAKE_INSTALL_UCRT_LIBRARIES FALSE) # Windows >= 10 already contains these
 endif()
 
-FIND_PROGRAM(WINDEPLOYQT windeployqt HINTS "${_qt_bin_dir}")
 CONFIGURE_FILE("platform/Windows/WindeployQt-CPack.cmake.in" "${CMAKE_BINARY_DIR}/WindeployQt-CPack.cmake" @ONLY)
 
 SET(CPACK_PRE_BUILD_SCRIPTS ${CMAKE_BINARY_DIR}/WindeployQt-CPack.cmake)

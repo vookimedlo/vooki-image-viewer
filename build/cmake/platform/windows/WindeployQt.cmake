@@ -12,8 +12,17 @@ function(deployqt)
     GET_FILENAME_COMPONENT(_qt_bin_dir "${_qmake_executable}" DIRECTORY)
     FIND_PROGRAM(DEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}" REQUIRED)
 
+    SET(WINDEPLOYQT_EXECUTABLE "${DEPLOYQT_EXECUTABLE}" PARENT_SCOPE)
+
+    SET(deployqt_qtpath_location "${QT6_INSTALL_PREFIX}/${QT6_INSTALL_BINS}/qtpaths.bat")
+    IF (EXISTS "${deployqt_qtpath_location}")
+        SET(deployqt_qtpath_option "--qtpaths ${deployqt_qtpath_location}" PARENT_SCOPE)
+    ELSE()
+        SET(deployqt_qtpath_option "" PARENT_SCOPE)
+    ENDIF()
+
     ADD_CUSTOM_COMMAND(TARGET ${APPLICATION_NAME} POST_BUILD
             COMMAND "${CMAKE_COMMAND}" -E
-            env PATH="${_qt_bin_dir}/${host_prefix}" "${DEPLOYQT_EXECUTABLE}" --qtpaths "${QT6_INSTALL_PREFIX}/${QT6_INSTALL_BINS}/qtpaths.bat" --no-quick-import --no-system-d3d-compiler --compiler-runtime --no-opengl-sw "$<TARGET_FILE:${APPLICATION_NAME}>"
+            env PATH="${_qt_bin_dir}" "${DEPLOYQT_EXECUTABLE}" ${deployqt_qtpath_option} --no-quick-import --no-system-d3d-compiler --compiler-runtime --no-opengl-sw "$<TARGET_FILE:${APPLICATION_NAME}>"
             COMMENT "Deploying QT runtime ...")
 endfunction()
