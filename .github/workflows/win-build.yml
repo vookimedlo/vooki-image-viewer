@@ -18,11 +18,11 @@ jobs:
       matrix:
         include:
             - os: windows-latest
-              MINGW_VERSION: "win64_msvc2022_64"
+              QT_ARCH: "win64_msvc2022_64"
               ARCH: x64
               VCVARS: "vcvars64.bat"
             - os: windows-11-arm
-              MINGW_VERSION: "win64_msvc2022_arm64_cross_compiled"
+              QT_ARCH: "win64_msvc2022_arm64_cross_compiled"
               ARCH: arm64
               VCVARS: "vcvarsarm64.bat"
     runs-on: ${{ matrix.os }}
@@ -30,10 +30,6 @@ jobs:
     - name: Prepare git
       run: |-
         git config --global core.symlinks true
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        submodules: true
     - uses: ilammy/setup-nasm@v1
       with:
         version: '2.16.03'
@@ -45,20 +41,23 @@ jobs:
         target: 'desktop'
         modules: 'qtimageformats'
         version: ${{ env.QT_VERSION }}
-        arch: ${{ matrix.MINGW_VERSION }}
-        dir: "${{github.workspace}}/qt"
+        arch: ${{ matrix.QT_ARCH }}
+        dir: "${{runner.workspace}}/qt"
         install-deps: "true"
         cache: true
         #use-naqt: true
         #setup-python: false
-    -
-      name: install graphviz
+    - name: install graphviz
       run: choco install graphviz
     - name: update WiX
       run: |
         dotnet tool update --global wix --version 6.0.0
         wix --version
         wix extension add --global WixToolset.UI.wixext/6.0.0
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        submodules: true
     -
       name: build 3rd-party sources [configuration]
       working-directory: ${{github.workspace}}\..
@@ -102,15 +101,15 @@ jobs:
         $name = Get-Childitem -Filter *.msi -Name
         echo "artifact_name_msi=$name" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
-    - name: archive sandbox
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: sandbox-${{ matrix.ARCH }}.zip
-        path: |
-          C:/a/vooki-image-viewer
-        if-no-files-found: ignore
-        retention-days: 9
+#    - name: archive sandbox
+#      uses: actions/upload-artifact@v4
+#      if: always()
+#      with:
+#        name: sandbox-${{ matrix.ARCH }}.zip
+#        path: |
+#          C:/a/vooki-image-viewer
+#        if-no-files-found: ignore
+#        retention-days: 9
 
     - name: archive log from C [msi]
       uses: actions/upload-artifact@v4
