@@ -22,10 +22,12 @@ jobs:
       matrix:
         include:
             - os: windows-latest
+              QT_HOST: "windows"
               QT_ARCH: "win64_msvc2022_64"
               ARCH: x64
             - os: windows-11-arm
-              QT_ARCH: "win64_msvc2022_arm64_cross_compiled"
+              QT_HOST: "windows_arm64"
+              QT_ARCH: "win64_msvc2022_arm64"
               ARCH: arm64
     runs-on: ${{ matrix.os }}
     steps:
@@ -39,7 +41,7 @@ jobs:
       uses: jdpurcell/install-qt-action@v5
 #      uses: jurplel/install-qt-action@v5
       with:
-        host: 'windows'
+        host: ${{ env.QT_HOST }}
         target: 'desktop'
         modules: 'qtimageformats'
         version: ${{ env.QT_VERSION }}
