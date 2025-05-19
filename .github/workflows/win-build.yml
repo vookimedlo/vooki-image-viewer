@@ -22,10 +22,12 @@ jobs:
       matrix:
         include:
             - os: windows-latest
+              QT_HOST: "windows"
               QT_ARCH: "win64_msvc2022_64"
               ARCH: x64
             - os: windows-11-arm
-              QT_ARCH: "win64_msvc2022_arm64_cross_compiled"
+              QT_HOST: "windows_arm64"
+              QT_ARCH: "win64_msvc2022_arm64"
               ARCH: arm64
     runs-on: ${{ matrix.os }}
     steps:
@@ -36,10 +38,9 @@ jobs:
       with:
         version: '2.16.03'
     - name: install qt
-      uses: jdpurcell/install-qt-action@v5
-#      uses: jurplel/install-qt-action@v5
+      uses: jurplel/install-qt-action@v4
       with:
-        host: 'windows'
+        host: ${{ env.QT_HOST }}
         target: 'desktop'
         modules: 'qtimageformats'
         version: ${{ env.QT_VERSION }}
@@ -47,8 +48,7 @@ jobs:
         dir: "${{runner.workspace}}/qt"
         install-deps: "true"
         cache: true
-        #use-naqt: true
-        #setup-python: false
+        setup-python: false
     - name: install graphviz
       run: choco install graphviz
     - name: update WiX
