@@ -53,9 +53,9 @@ jobs:
       run: choco install graphviz
     - name: update WiX
       run: |
-        dotnet tool update --global wix --version 6.0.0
+        dotnet tool update --global wix --version 6.0.1
         wix --version
-        wix extension add --global WixToolset.UI.wixext/6.0.0
+        wix extension add --global WixToolset.UI.wixext/6.0.1
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
