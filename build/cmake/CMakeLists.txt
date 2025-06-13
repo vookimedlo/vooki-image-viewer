@@ -161,6 +161,14 @@ SET(UIS
 
 QT_WRAP_UIS()
 
+function(LIST_CMAKE_VARIABLES)
+    get_cmake_property(_variableNames VARIABLES)
+    list (SORT _variableNames)
+    foreach (_variableName ${_variableNames})
+        message(STATUS "${_variableName}=${${_variableName}}")
+    endforeach()
+endfunction()
+
 # Satisfy new Policy CMP0071
 #
 SET_PROPERTY(SOURCE "ui_AboutComponentsDialog.h" PROPERTY SKIP_AUTOMOC ON)
@@ -453,6 +461,7 @@ else ()
         TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} ${LIBRAW})
     endif ()
 
+    FIND_PACKAGE(PkgConfig REQUIRED)
     FIND_LIBRARY(LIBJXL NAMES jxl jxl_threads jxl_cms)
     pkg_check_modules(LibJXL094 IMPORTED_TARGET libjxl>=0.9.4)
     if (LibJXL094_FOUND)

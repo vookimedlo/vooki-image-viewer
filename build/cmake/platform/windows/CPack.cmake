@@ -7,10 +7,13 @@
 # SPDX-FileType: SOURCE
 #############################################################################
 
-if(CMAKE_SYSTEM_PROCESSOR MATCHES "ARM64")
+
+if(IS_ARM64)
     SET(WINDOWS_ARCH "arm64")
-else()
+elseif(IS_X64)
     SET(WINDOWS_ARCH "x64")
+else()
+    message(FATAL_ERROR "Unknown architecture - probably: ${CMAKE_SYSTEM_PROCESSOR}\n\tCancelling build!\n\n")
 endif()
 
 INSTALL(TARGETS ${APPLICATION_NAME}
@@ -29,7 +32,6 @@ if(INSTALL_SYSTEM_RUNTIME)
     SET(CMAKE_INSTALL_UCRT_LIBRARIES FALSE) # Windows >= 10 already contains these
 endif()
 
-FIND_PROGRAM(WINDEPLOYQT windeployqt HINTS "${_qt_bin_dir}")
 CONFIGURE_FILE("platform/Windows/WindeployQt-CPack.cmake.in" "${CMAKE_BINARY_DIR}/WindeployQt-CPack.cmake" @ONLY)
 
 SET(CPACK_PRE_BUILD_SCRIPTS ${CMAKE_BINARY_DIR}/WindeployQt-CPack.cmake)
