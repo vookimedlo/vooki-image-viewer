@@ -224,6 +224,10 @@ if (APPLE)
             ${UI_HEADERS}
             ${UI_RESOURCES})
 
+    if(TARGET all_dependencies)
+        add_dependencies(${APPLICATION_NAME} all_dependencies)
+    endif()
+
     TARGET_INCLUDE_DIRECTORIES(${APPLICATION_NAME} BEFORE PRIVATE ${COMPONENTS_ABSOLUTE_PATH})
 
     GET_FILENAME_COMPONENT(PLIST_IN_ABSOLUTE_PATH platform/mac/support/MacOSXBundleInfo.plist.in ABSOLUTE)
@@ -250,6 +254,10 @@ elseif (WIN32)
             ${SOURCES}
             ${UI_HEADERS}
             ${UI_RESOURCES})
+
+    if(TARGET all_dependencies)
+        add_dependencies(${APPLICATION_NAME} all_dependencies)
+    endif()
 
     TARGET_INCLUDE_DIRECTORIES(${APPLICATION_NAME} BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
     TARGET_LINK_DIRECTORIES(${APPLICATION_NAME} BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)

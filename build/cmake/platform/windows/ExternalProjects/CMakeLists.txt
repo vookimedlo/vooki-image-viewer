@@ -138,3 +138,16 @@ ExternalProject_Add(
         UPDATE_COMMAND ""
         DEPENDS ext_brotli ext_highway
 )
+
+add_custom_target(all_dependencies DEPENDS
+    ext_zlib
+    ext_brotli
+    ext_libexpat
+    ext_libexiv2
+    ext_libjpeg-turbo
+    ext_libde265
+    ext_libheif
+    ext_libraw
+    ext_highway
+    ext_libjxl
+)
