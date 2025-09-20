@@ -43,16 +43,168 @@ endif ()
 MESSAGE("-- Application version is ${VERSION}")
 CONFIGURE_FILE(../../src/util/version.h.in "${CMAKE_BINARY_DIR}/version.h" @ONLY)
 
-FIND_PACKAGE(exiv2 REQUIRED)
-if (APPLE OR WIN32)
-    FIND_PACKAGE(libjpeg-turbo REQUIRED)
-endif()
-
 SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 SET(CMAKE_CXX_EXTENSIONS OFF)
 
 include(FetchContent)
+include(../ExternalProjectVersions.cmake)
+
+if(APPLE OR WIN32)
+    if(NOT DEFINED BUILD_DEPENDENCIES OR BUILD_DEPENDENCIES)
+        # On macOS and Windows, we build dependencies ourselves. On Linux, we use
+        # system-provided packages.
+
+    # zlib (Windows only)
+    if(WIN32)
+        FetchContent_Declare(
+            zlib
+            GIT_REPOSITORY https://github.com/madler/zlib.git
+            GIT_TAG ${EXT_ZLIB_VERSION}
+            GIT_SHALLOW TRUE
+        )
+        set(BUILD_SHARED_LIBS OFF CACHE BOOL "")
+        FetchContent_MakeAvailable(zlib)
+    endif()
+
+    # expat (Windows only)
+    if(WIN32)
+        FetchContent_Declare(
+            expat
+            GIT_REPOSITORY https://github.com/libexpat/libexpat.git
+            GIT_TAG ${EXT_LIBEXPAT_VERSION}
+            GIT_SHALLOW TRUE
+        )
+        set(EXPAT_SHARED_LIBS OFF CACHE BOOL "")
+        set(EXPAT_BUILD_DOCS OFF CACHE BOOL "")
+        set(EXPAT_BUILD_TESTS OFF CACHE BOOL "")
+        set(EXPAT_ENABLE_INSTALL ON CACHE BOOL "")
+        FetchContent_MakeAvailable(expat)
+    endif()
+
+    # exiv2
+    FetchContent_Declare(
+        exiv2
+        GIT_REPOSITORY https://github.com/Exiv2/exiv2.git
+        GIT_TAG ${EXT_LIBEXIV2_VERSION}
+        GIT_SHALLOW TRUE
+    )
+    set(BUILD_SHARED_LIBS OFF CACHE BOOL "")
+    set(EXIV2_BUILD_SAMPLES OFF CACHE BOOL "")
+    set(EXIV2_BUILD_EXIV2_COMMAND OFF CACHE BOOL "")
+    set(EXIV2_ENABLE_INIH OFF CACHE BOOL "")
+    set(EXIV2_ENABLE_VIDEO OFF CACHE BOOL "")
+    set(EXIV2_ENABLE_BROTLI OFF CACHE BOOL "")
+    FetchContent_MakeAvailable(exiv2)
+
+    # libjpeg-turbo
+    FetchContent_Declare(
+        libjpeg-turbo
+        GIT_REPOSITORY https://github.com/libjpeg-turbo/libjpeg-turbo.git
+        GIT_TAG ${EXT_LIBJPEG-TURBO_VERSION}
+        GIT_SHALLOW TRUE
+    )
+    set(ENABLE_SHARED OFF CACHE BOOL "")
+    if(WIN32)
+        set(WITH_CRT_DLL ON CACHE BOOL "")
+    endif()
+    FetchContent_MakeAvailable(libjpeg-turbo)
+
+    # highway
+    FetchContent_Declare(
+        highway
+        GIT_REPOSITORY https://github.com/google/highway.git
+        GIT_TAG ${EXT_HIGHWAY_VERSION}
+        GIT_SHALLOW TRUE
+    )
+    set(HWY_ENABLE_TESTS OFF CACHE BOOL "")
+    set(HWY_ENABLE_EXAMPLES OFF CACHE BOOL "")
+    set(HWY_ENABLE_CONTRIB OFF CACHE BOOL "")
+    set(BUILD_SHARED_LIBS OFF CACHE BOOL "")
+    FetchContent_MakeAvailable(highway)
+
+    # brotli
+    FetchContent_Declare(
+        brotli
+        GIT_REPOSITORY https://github.com/google/brotli.git
+        GIT_TAG ${EXT_BROTLI_VERSION}
+        GIT_SHALLOW TRUE
+    )
+    set(BUILD_SHARED_LIBS OFF CACHE BOOL "")
+    FetchContent_MakeAvailable(brotli)
+
+    # libjxl
+    FetchContent_Declare(
+        libjxl
+        GIT_REPOSITORY https://github.com/libjxl/libjxl.git
+        GIT_TAG ${EXT_LIBJXL_VERSION}
+        GIT_SHALLOW TRUE
+    )
+    set(JPEGXL_STATIC ON CACHE BOOL "")
+    set(BUILD_SHARED_LIBS OFF CACHE BOOL "")
+    set(BUILD_TESTING OFF CACHE BOOL "")
+    set(JPEGXL_ENABLE_BENCHMARK OFF CACHE BOOL "")
+    set(JPEGXL_ENABLE_EXAMPLES OFF CACHE BOOL "")
+    set(JPEGXL_ENABLE_TOOLS OFF CACHE BOOL "")
+    set(JPEGXL_ENABLE_VIEWERS OFF CACHE BOOL "")
+    set(JPEGXL_FORCE_SYSTEM_BROTLI ON CACHE BOOL "")
+    set(JPEGXL_FORCE_SYSTEM_HWY ON CACHE BOOL "")
+    FetchContent_MakeAvailable(libjxl)
+
+    # libraw
+    FetchContent_Declare(
+        libraw
+        GIT_REPOSITORY https://github.com/LibRaw/LibRaw.git
+        GIT_TAG ${EXT_LIBRAW_VERSION}
+        GIT_SHALLOW TRUE
+    )
+    # libraw does not have a great CMake build system, so we can't use
+    # FetchContent_MakeAvailable directly. Instead, we just add the subdirectory.
+    FetchContent_GetProperties(libraw)
+    if(NOT libraw_POPULATED)
+        FetchContent_Populate(libraw)
+    endif()
+    add_subdirectory(${libraw_SOURCE_DIR} ${libraw_BINARY_DIR})
+
+    # libde265 (Windows only)
+    if(WIN32)
+        FetchContent_Declare(
+            libde265
+            GIT_REPOSITORY https://github.com/strukturag/libde265.git
+            GIT_TAG ${EXT_LIBDE265_VERSION}
+            GIT_SHALLOW TRUE
+        )
+        set(BUILD_SHARED_LIBS ON CACHE BOOL "")
+        set(ENABLE_SDL OFF CACHE BOOL "")
+        set(ENABLE_DECODER OFF CACHE BOOL "")
+        set(ENABLE_ENCODER OFF CACHE BOOL "")
+        FetchContent_MakeAvailable(libde265)
+    endif()
+
+    # libheif (Windows only)
+    if(WIN32)
+        FetchContent_Declare(
+            libheif
+            GIT_REPOSITORY https://github.com/strukturag/libheif.git
+            GIT_TAG ${EXT_LIBHEIF_VERSION}
+            GIT_SHALLOW TRUE
+        )
+        set(BUILD_SHARED_LIBS OFF CACHE BOOL "")
+        set(ENABLE_PLUGIN_LOADING OFF CACHE BOOL "")
+        set(WITH_AOM_DECODER OFF CACHE BOOL "")
+        set(WITH_AOM_ENCODER OFF CACHE BOOL "")
+        set(WITH_DAV1D OFF CACHE BOOL "")
+        set(WITH_LIBDE265 ON CACHE BOOL "")
+        set(WITH_RAV1E OFF CACHE BOOL "")
+        set(WITH_X265 OFF CACHE BOOL "")
+        set(WITH_SvtEnc OFF CACHE BOOL "")
+        set(WITH_EXAMPLES OFF CACHE BOOL "")
+        FetchContent_MakeAvailable(libheif)
+    endif()
+    endif() # BUILD_DEPENDENCIES
+endif()
+
+if(NOT DEFINED BUILD_DEPENDENCIES OR NOT BUILD_DEPENDENCIES)
 
 SET(QCORO_VERSION "v0.12.0")
 
@@ -224,10 +376,6 @@ if (APPLE)
             ${UI_HEADERS}
             ${UI_RESOURCES})
 
-    if(TARGET all_dependencies)
-        add_dependencies(${APPLICATION_NAME} all_dependencies)
-    endif()
-
     TARGET_INCLUDE_DIRECTORIES(${APPLICATION_NAME} BEFORE PRIVATE ${COMPONENTS_ABSOLUTE_PATH})
 
     GET_FILENAME_COMPONENT(PLIST_IN_ABSOLUTE_PATH platform/mac/support/MacOSXBundleInfo.plist.in ABSOLUTE)
@@ -240,7 +388,7 @@ if (APPLE)
     FIND_PACKAGE(Iconv REQUIRED)
     FIND_PACKAGE(EXPAT REQUIRED)
 
-    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} Exiv2::exiv2lib ZLIB::ZLIB Iconv::Iconv EXPAT::EXPAT)
+    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} PRIVATE exiv2lib ZLIB::ZLIB Iconv::Iconv EXPAT::EXPAT)
 elseif (WIN32)
     SET(SOURCES
             ${SOURCES}
@@ -255,13 +403,7 @@ elseif (WIN32)
             ${UI_HEADERS}
             ${UI_RESOURCES})
 
-    if(TARGET all_dependencies)
-        add_dependencies(${APPLICATION_NAME} all_dependencies)
-    endif()
-
-    TARGET_INCLUDE_DIRECTORIES(${APPLICATION_NAME} BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
-    TARGET_LINK_DIRECTORIES(${APPLICATION_NAME} BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
-    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} exiv2.lib libexpatMD.lib zlibstatic.lib wsock32 ws2_32 Psapi exiv2wrapper)
+    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} PRIVATE exiv2lib expat zlibstatic wsock32 ws2_32 Psapi exiv2wrapper)
 else ()
     SET(SOURCES
             ${SOURCES}
@@ -399,20 +541,13 @@ ADD_IMAGE_PLUGIN(vooki_kimg_sct ../../components/kimageformats/src/imageformats/
 if (APPLE)
     # MacOS
     #
-    SET(CMAKE_CXX_FLAGS "-I${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include ${CMAKE_CXX_FLAGS}")
-    SET(CMAKE_MODULE_LINKER_FLAGS "-L${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib ${CMAKE_MODULE_LINKER_FLAGS}")
-
     ADD_IMAGE_PLUGIN(vooki_raw_thumb ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
-    TARGET_INCLUDE_DIRECTORIES(vooki_raw_thumb BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
-    TARGET_LINK_DIRECTORIES(vooki_raw_thumb BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
-    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_r.a libjpeg-turbo::turbojpeg-static -lz)
+    TARGET_LINK_LIBRARIES(vooki_raw_thumb PRIVATE ${QT_UI_LIB} raw jpeg-static ZLIB::ZLIB)
 
     # JPEG XL (jxl)
     #
     ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/kimageformats/src/imageformats/jxl.cpp ../../components/kimageformats/src/imageformats/microexif.cpp)
-    TARGET_INCLUDE_DIRECTORIES(vooki_kimg_jxl BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
-    TARGET_LINK_DIRECTORIES(vooki_kimg_jxl BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
-    TARGET_LINK_LIBRARIES(vooki_kimg_jxl ${QT_UI_LIB} libjxl.a libjxl_threads.a libjxl_cms.a libhwy.a libbrotlicommon.a libbrotlidec.a libbrotlienc.a)
+    TARGET_LINK_LIBRARIES(vooki_kimg_jxl PRIVATE ${QT_UI_LIB} jxl jxl_threads hwy Brotli::brotlicommon Brotli::brotlidec Brotli::brotlienc)
 
     include(platform/mac/MacdeployQt.cmake)
     deployqt()
@@ -424,22 +559,16 @@ elseif (WIN32)
     ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS -DLIBRAW_NODLL -DLIBHEIF_STATIC_BUILD -DLIBDE265_STATIC_BUILD)
 
     ADD_IMAGE_PLUGIN(vooki_raw_thumb ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
-    TARGET_INCLUDE_DIRECTORIES(vooki_raw_thumb BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
-    TARGET_LINK_DIRECTORIES(vooki_raw_thumb BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
-    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_static.lib turbojpeg-static zlibstatic.lib)
+    TARGET_LINK_LIBRARIES(vooki_raw_thumb PRIVATE ${QT_UI_LIB} raw jpeg-static zlibstatic)
 
     ADD_IMAGE_PLUGIN(vooki_kimg_heif ../../components/kimageformats/src/imageformats/heif.cpp)
-    TARGET_INCLUDE_DIRECTORIES(vooki_kimg_heif BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
-    TARGET_LINK_DIRECTORIES(vooki_kimg_heif BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
-    TARGET_LINK_LIBRARIES(vooki_kimg_heif ${QT_UI_LIB} de265.lib heif.lib)
+    TARGET_LINK_LIBRARIES(vooki_kimg_heif PRIVATE ${QT_UI_LIB} de265 heif)
 
     # JPEG XL (jxl)
     #
     ADD_DEFINITIONS(-DJXL_STATIC_DEFINE)
     ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/kimageformats/src/imageformats/jxl.cpp ../../components/kimageformats/src/imageformats/microexif.cpp)
-    TARGET_INCLUDE_DIRECTORIES(vooki_kimg_jxl BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
-    TARGET_LINK_DIRECTORIES(vooki_kimg_jxl BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
-    TARGET_LINK_LIBRARIES(vooki_kimg_jxl ${QT_UI_LIB} jxl.lib jxl_threads.lib jxl_cms.lib hwy.lib brotlicommon.lib brotlidec.lib brotlienc.lib)
+    TARGET_LINK_LIBRARIES(vooki_kimg_jxl PRIVATE ${QT_UI_LIB} jxl jxl_threads hwy Brotli::brotlicommon Brotli::brotlidec Brotli::brotlienc)
 
     SET(PLUGINS "$<TARGET_FILE_DIR:${APPLICATION_NAME}>/imageformats")
     SET_TARGET_PROPERTIES(${IMAGE_PLUGINS}
@@ -622,3 +751,5 @@ else ()
 endif ()
 
 TARGET_INCLUDE_DIRECTORIES(tests_ui BEFORE PRIVATE ${SOURCES_ABSOLUTE_PATH}/ui/test/mock ${SOURCES_ABSOLUTE_PATH}/ui/support/test/mock ${SOURCES_ABSOLUTE_PATH} ${CMAKE_BINARY_DIR})
+
+endif() # BUILD_DEPENDENCIES

@@ -66,22 +66,4 @@ endif ()
 
 MESSAGE("-- 3RD_PARTY_LIBS: ${3RD_PARTY_LIBS}")
 
-if(NOT DEFINED BUILD_DEPENDENCIES)
-  set(BUILD_DEPS_AND_APP ON)
-else()
-  set(BUILD_DEPS_AND_APP OFF)
-endif()
-
-if(BUILD_DEPS_AND_APP OR (DEFINED BUILD_DEPENDENCIES AND BUILD_DEPENDENCIES))
-    MESSAGE("-- Building required dependencies ...")
-    if (APPLE)
-        ADD_SUBDIRECTORY(build/cmake/platform/mac/ExternalProjects)
-    elseif (WIN32)
-        ADD_SUBDIRECTORY(build/cmake/platform/windows/ExternalProjects)
-    endif()
-endif()
-
-if(BUILD_DEPS_AND_APP OR (DEFINED BUILD_DEPENDENCIES AND NOT BUILD_DEPENDENCIES))
-    MESSAGE("-- Building application ...")
-    ADD_SUBDIRECTORY(build/cmake)
-endif()
+ADD_SUBDIRECTORY(build/cmake)
