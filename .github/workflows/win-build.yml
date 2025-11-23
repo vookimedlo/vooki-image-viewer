@@ -7,7 +7,7 @@ on:
   pull_request:
 
 env:
-  QT_VERSION:              "6.9.1"
+  QT_VERSION:              "6.10.1"
   BUILD_TYPE:              Release
   artifact_retention_days: 5
 
@@ -36,7 +36,7 @@ jobs:
         git config --global core.symlinks true
     - uses: ilammy/setup-nasm@v1
       with:
-        version: '2.16.03'
+        version: '3.01'
     - name: install qt
       uses: jurplel/install-qt-action@v4
       with:
@@ -53,9 +53,9 @@ jobs:
       run: choco install graphviz
     - name: update WiX
       run: |
-        dotnet tool update --global wix --version 6.0.1
+        dotnet tool update --global wix --version 6.0.2
         wix --version
-        wix extension add --global WixToolset.UI.wixext/6.0.1
+        wix extension add --global WixToolset.UI.wixext/6.0.2
     - uses: actions/checkout@v5
       with:
         fetch-depth: 0
