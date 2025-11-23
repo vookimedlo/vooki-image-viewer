@@ -334,7 +334,7 @@ endfunction()
 
 # Personal Computer Exchange (pcx)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_pcx ../../components/kimageformats/src/imageformats/pcx.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_pcx ../../components/kimageformats/src/imageformats/pcx.cpp ../../components/kimageformats/src/imageformats/scanlineconverter.cpp)
 
 # Gimp (xcf)
 #
@@ -342,11 +342,11 @@ ADD_IMAGE_PLUGIN(vooki_kimg_xcf ../../components/kimageformats/src/imageformats/
 
 # Targa (tga): supports more formats than Qt's version
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_tga ../../components/kimageformats/src/imageformats/tga.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_tga ../../components/kimageformats/src/imageformats/tga.cpp ../../components/kimageformats/src/imageformats/scanlineconverter.cpp ../../components/kimageformats/src/imageformats/microexif.cpp)
 
 # Photoshop documents (psd)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_psd ../../components/kimageformats/src/imageformats/psd.cpp ../../components/kimageformats/src/imageformats/scanlineconverter.cpp ../../components/workarounds/microexif.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_psd ../../components/kimageformats/src/imageformats/psd.cpp ../../components/kimageformats/src/imageformats/scanlineconverter.cpp ../../components/kimageformats/src/imageformats/microexif.cpp)
 
 # Windows Animated Cursor (ani)
 #
@@ -362,11 +362,11 @@ ADD_IMAGE_PLUGIN(vooki_kimg_ras ../../components/kimageformats/src/imageformats/
 
 # Softimage PIC (pic)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_pic ../../components/kimageformats/src/imageformats/pic.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_pic ../../components/kimageformats/src/imageformats/pic.cpp ../../components/kimageformats/src/imageformats/scanlineconverter.cpp)
 
 # SGI images (rgb, rgba, sgi, bw)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_rgb ../../components/kimageformats/src/imageformats/rgb.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_rgb ../../components/kimageformats/src/imageformats/rgb.cpp ../../components/kimageformats/src/imageformats/scanlineconverter.cpp)
 
 # QOI images (qoi)
 #
@@ -382,7 +382,7 @@ ADD_IMAGE_PLUGIN(vooki_kimg_pxr ../../components/kimageformats/src/imageformats/
 
 # Scitex Continuous Tone Format  (sct, ct)x
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_sct ../../components/kimageformats/src/imageformats/sct.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_sct ../../components/kimageformats/src/imageformats/sct.cpp ../../components/kimageformats/src/imageformats/scanlineconverter.cpp)
 
 
 # Camera RAW Thumbnails (raf, mos, cr2, erf, dng, mrw, nef, orf, rw2, pef, x3f, srw, x3f, arw)
@@ -420,7 +420,7 @@ elseif (WIN32)
     TARGET_LINK_DIRECTORIES(vooki_raw_thumb BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
     TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_static.lib turbojpeg-static zlibstatic.lib)
 
-    ADD_IMAGE_PLUGIN(vooki_kimg_heif ../../components/kimageformats/src/imageformats/heif.cpp)
+    ADD_IMAGE_PLUGIN(vooki_kimg_heif ../../components/kimageformats/src/imageformats/heif.cpp ../../components/kimageformats/src/imageformats/microexif.cpp)
     TARGET_INCLUDE_DIRECTORIES(vooki_kimg_heif BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
     TARGET_LINK_DIRECTORIES(vooki_kimg_heif BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
     TARGET_LINK_LIBRARIES(vooki_kimg_heif ${QT_UI_LIB} de265.lib heif.lib)
