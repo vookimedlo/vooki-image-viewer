@@ -12,7 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         toolchain: [gcc, clang]
-        distribution: [questing, plucky, noble]
+        distribution: [resolute, questing, plucky]
     name: ubuntu ${{matrix.distribution}}
     uses: ./.github/workflows/reusable_linux_build.yml
     with:
@@ -40,7 +40,7 @@ jobs:
       fail-fast: false
       matrix:
         toolchain: [gcc, clang]
-        distribution: [43, 42, 41]
+        distribution: [44, 43, 42]
     name: fedora ${{matrix.distribution}}
     uses: ./.github/workflows/reusable_linux_build.yml
     with:
