@@ -42,7 +42,7 @@ jobs:
       - name: Run build-wrapper
         run: |
           cmake -DCMAKE_BUILD_TYPE=Release -DAPPLE_FAT_ARCH=OFF -H. -Bbuild_sonar ${{github.workspace}}
-          build-wrapper-macosx-aarch64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build_sonar
+          build-wrapper-macosx-x86 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build_sonar
           find build_sonar -type f
 
       - name: Run tests
