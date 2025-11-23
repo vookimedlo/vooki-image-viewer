@@ -466,7 +466,7 @@ else ()
     pkg_check_modules(LibJXL094 IMPORTED_TARGET libjxl>=0.9.4)
     if (LibJXL094_FOUND)
         MESSAGE("-- JLX libraries found")
-        ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/workarounds/jxl.cpp ../../components/workarounds/microexif.cpp)
+        ADD_IMAGE_PLUGIN(vooki_kimg_jxl ../../components/kimageformats/src/imageformats/jxl.cpp ../../components/kimageformats/src/imageformats/microexif.cpp)
         TARGET_LINK_LIBRARIES(vooki_kimg_jxl ${QT_UI_LIB} ${LIBJXL})
     endif ()
 
