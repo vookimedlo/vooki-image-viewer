@@ -15,6 +15,7 @@ permissions:
 jobs:
   Analysis:
     runs-on: macos-latest
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
     env:
       BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory
     steps:
