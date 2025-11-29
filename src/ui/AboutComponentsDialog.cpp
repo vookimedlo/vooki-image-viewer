@@ -40,33 +40,30 @@ void AboutComponentsDialog::onSelectedComponentChanged(const int row)
             showResourceMarkdown("qrc:/text/aboutkimageformats");
             break;
         case 6:
-            showResourceMarkdown("qrc:/text/aboutkdmactouchbar");
-            break;
-        case 7:
             showResourceMarkdown("qrc:/text/aboutlibde265");
             break;
-        case 8:
+        case 7:
             showResourceMarkdown("qrc:/text/aboutlibheif");
             break;
-        case 9:
+        case 8:
             showResourceMarkdown("qrc:/text/aboutlibjxl");
             break;
-        case 10:
+        case 9:
             showResourceMarkdown("qrc:/text/aboutlibjpegturbo");
             break;
-        case 11:
+        case 10:
             showResourceMarkdown("qrc:/text/aboutlibraw");
             break;
-        case 12:
+        case 11:
             showResourceMarkdown("qrc:/text/aboutopenclipart");
             break;
-        case 13:
+        case 12:
             showResourceMarkdown("qrc:/text/aboutqcoro");
             break;
-        case 14:
+        case 13:
             showResourceMarkdown("qrc:/text/aboutqt");
             break;
-        case 15:
+        case 14:
             showResourceMarkdown("qrc:/text/aboutzlib");
             break;
         default:

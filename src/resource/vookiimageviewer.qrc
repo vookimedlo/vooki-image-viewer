@@ -56,7 +56,6 @@
         <file alias="aboutlibraw">text/aboutLibRaw.md</file>
         <file alias="aboutlibde265">text/aboutLibde265.md</file>
         <file alias="aboutlibheif">text/aboutLibheif.md</file>
-        <file alias="aboutkdmactouchbar">text/aboutKDMacTouchBar.md</file>
         <file alias="aboutzlib">text/aboutzlib.md</file>
         <file alias="aboutqcoro">text/aboutqcoro.md</file>
         <file alias="aboutbrotli">text/aboutbrotli.md</file>
