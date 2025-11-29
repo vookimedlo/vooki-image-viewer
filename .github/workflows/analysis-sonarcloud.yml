@@ -15,7 +15,6 @@ permissions:
 jobs:
   Analysis:
     runs-on: macos-latest
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
     env:
       BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory
     steps:
@@ -71,8 +70,34 @@ jobs:
           done
 
           xcrun llvm-cov show --show-branches=count -instr-profile=voo_tests.profdata $cov_arguments > coverage.txt
+          xcrun llvm-cov show --show-branches=count -format=html -instr-profile=voo_tests.profdata $cov_arguments -output-dir=coverage_report
+
+      - name: Zip coverage report
+        run: |
+          zip -r coverage_report.zip coverage_report || true
+
+      - name: Archive coverage report
+        uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: coverage_report.zip
+          path: |
+            coverage_report.zip
+          if-no-files-found: ignore
+          retention-days: 60
+
+      - name: archive coverage.txt
+        uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: coverage.txt
+          path: |
+            coverage.txt
+          if-no-files-found: ignore
+          retention-days: 60
 
       - name:  Analyze with SonarQube Scan
+        if: ${{env.SONAR_TOKEN != '' && (github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository) }}
         uses: SonarSource/sonarqube-scan-action@v6.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
