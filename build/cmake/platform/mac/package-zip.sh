@@ -20,8 +20,6 @@ SHASUM=$(shasum -ba 256 $ZIP_PATH)
 SHA=$(echo $SHASUM | cut -f 1 -d\ )
 echo "$SHASUM"
 
-CASK_PATH="$RELEASE_OUTPUT_DIR/ck550-macos.rb"
-
 cat > "./vookiimageviewer-macos.rb" <<EOF
 cask 'vookiimageviewer-macos' do
 version '$SHORT_VERSION_STRING'
@@ -31,7 +29,10 @@ sha256 '$SHA'
 name 'VookiImageViewer'
 homepage "https://github.com/vookimedlo/vooki-image-viewer"
 
+depends_on macos: ">= :sequoia"
+
 app 'VookiImageViewer.app'
+desc "Image viewer"
 end
 EOF
 
