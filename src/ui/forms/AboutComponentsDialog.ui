@@ -32,7 +32,7 @@
         <bool>true</bool>
        </property>
        <property name="selectionBehavior">
-        <enum>QAbstractItemView::SelectRows</enum>
+        <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
        </property>
        <item>
         <property name="text">
@@ -62,11 +62,6 @@
        <item>
         <property name="text">
          <string>KDE KImageFormats</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>KDMacTouchBar</string>
         </property>
        </item>
        <item>
@@ -143,7 +138,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="textInteractionFlags">
-        <set>Qt::TextBrowserInteraction</set>
+        <set>Qt::TextInteractionFlag::TextBrowserInteraction</set>
        </property>
        <property name="openExternalLinks">
         <bool>true</bool>
@@ -155,10 +150,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Close</set>
+      <set>QDialogButtonBox::StandardButton::Close</set>
      </property>
     </widget>
    </item>

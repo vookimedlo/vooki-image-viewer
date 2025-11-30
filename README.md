@@ -13,7 +13,7 @@
 
 A lightweight image viewer for a fast image preview. It has been developed to have the same viewer available for all major operating systems - Microsoft Windows 11, macOS and GNU/Linux.
 
-The main goal is to have a free of charge cross-platform viewer with a simple design and minimum functions that are commonly used.
+The main goal is to have a free-of-charge cross-platform viewer with a simple design and minimum functions that are commonly used.
 
 - Transformations
   - Flip _(horizontal, vertical)._
@@ -24,7 +24,7 @@ The main goal is to have a free of charge cross-platform viewer with a simple de
 - Custom background color.
 - Custom image border color.
 - Remembers recent files.
-- Supports Apple's high definition trackpad gestures.
+- Supports Apple's high-definition trackpad gestures.
 
 
 ---

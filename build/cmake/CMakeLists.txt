@@ -212,10 +212,7 @@ if (APPLE)
             ${SOURCES}
             ../../src/abstraction/mac/init.mm
             ../../src/abstraction/mac/darkmode.mm
-            ../../components/KDMacTouchBar/src/kdmactouchbar.mm
             )
-
-    GET_FILENAME_COMPONENT(COMPONENTS_ABSOLUTE_PATH ../../components/KDMacTouchBar/src ABSOLUTE)
 
     ADD_EXECUTABLE(${APPLICATION_NAME}
             MACOSX_BUNDLE
