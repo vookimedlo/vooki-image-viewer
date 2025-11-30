@@ -139,18 +139,6 @@ Windows users can install the VookiImageViewer by the Microsoft WinGet tool or b
 winget install --id MichalDuda.VookiImageViewer
 ```
 
-Debian Bookworm users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
-```
-apt-get install -y debian-keyring
-apt-get install -y debian-archive-keyring
-apt-get install -y apt-transport-https
-keyring_location=/usr/share/keyrings/michal-duda-vookiimageviewer-archive-keyring.gpg
-curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/gpg.EF5E62B51DE78AFF.key' |  gpg --dearmor > ${keyring_location}
-curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.deb.txt?distro=debian&codename=bookworm' > /etc/apt/sources.list.d/michal-duda-vookiimageviewer.list
-apt-get update
-apt-get install vookiimageviewer
-```
-
 Debian Trixie users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
 ```
 apt-get install -y debian-keyring
@@ -163,32 +151,14 @@ apt-get update
 apt-get install vookiimageviewer
 ```
 
-Ubuntu Jammy users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
+Debian Forky users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
 ```
+apt-get install -y debian-keyring
+apt-get install -y debian-archive-keyring
 apt-get install -y apt-transport-https
 keyring_location=/usr/share/keyrings/michal-duda-vookiimageviewer-archive-keyring.gpg
 curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/gpg.EF5E62B51DE78AFF.key' |  gpg --dearmor > ${keyring_location}
-curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.deb.txt?distro=ubuntu&codename=jammy' > /etc/apt/sources.list.d/michal-duda-vookiimageviewer.list
-apt-get update
-apt-get install vookiimageviewer
-```
-
-Ubuntu Noble users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
-```
-apt-get install -y apt-transport-https
-keyring_location=/usr/share/keyrings/michal-duda-vookiimageviewer-archive-keyring.gpg
-curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/gpg.EF5E62B51DE78AFF.key' |  gpg --dearmor > ${keyring_location}
-curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.deb.txt?distro=ubuntu&codename=noble' > /etc/apt/sources.list.d/michal-duda-vookiimageviewer.list
-apt-get update
-apt-get install vookiimageviewer
-```
-
-Ubuntu Oracular users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
-```
-apt-get install -y apt-transport-https
-keyring_location=/usr/share/keyrings/michal-duda-vookiimageviewer-archive-keyring.gpg
-curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/gpg.EF5E62B51DE78AFF.key' |  gpg --dearmor > ${keyring_location}
-curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.deb.txt?distro=ubuntu&codename=oracular' > /etc/apt/sources.list.d/michal-duda-vookiimageviewer.list
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.deb.txt?distro=debian&codename=forky' > /etc/apt/sources.list.d/michal-duda-vookiimageviewer.list
 apt-get update
 apt-get install vookiimageviewer
 ```
@@ -203,14 +173,24 @@ apt-get update
 apt-get install vookiimageviewer
 ```
 
-Fedora 40 users can install the VookiImageViewer from the repository hosted by the [cloudsmith.io][6] for free.
+Ubuntu Questing users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
 ```
-dnf install yum-utils pygpgme
-rpm --import 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/gpg.EF5E62B51DE78AFF.key'
-curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.rpm.txt?distro=fedora&codename=40' > /tmp/michal-duda-vookiimageviewer.repo
-dnf config-manager --add-repo '/tmp/michal-duda-vookiimageviewer.repo'
-dnf -q makecache -y --disablerepo='*' --enablerepo='michal-duda-vookiimageviewer' --enablerepo='michal-duda-vookiimageviewer-source'
-dnf install vookiimageviewer
+apt-get install -y apt-transport-https
+keyring_location=/usr/share/keyrings/michal-duda-vookiimageviewer-archive-keyring.gpg
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/gpg.EF5E62B51DE78AFF.key' |  gpg --dearmor > ${keyring_location}
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.deb.txt?distro=ubuntu&codename=questing' > /etc/apt/sources.list.d/michal-duda-vookiimageviewer.list
+apt-get update
+apt-get install vookiimageviewer
+```
+
+Ubuntu Resolute users can install the VookiImageViewer from the APT repository hosted by the [cloudsmith.io][6] for free.
+```
+apt-get install -y apt-transport-https
+keyring_location=/usr/share/keyrings/michal-duda-vookiimageviewer-archive-keyring.gpg
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/gpg.EF5E62B51DE78AFF.key' |  gpg --dearmor > ${keyring_location}
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.deb.txt?distro=ubuntu&codename=resolute' > /etc/apt/sources.list.d/michal-duda-vookiimageviewer.list
+apt-get update
+apt-get install vookiimageviewer
 ```
 
 Fedora 41 users can install the VookiImageViewer from the repository hosted by the [cloudsmith.io][6] for free.
@@ -223,6 +203,25 @@ dnf -q makecache -y --disablerepo='*' --enablerepo='michal-duda-vookiimageviewer
 dnf install vookiimageviewer
 ```
 
+Fedora 42 users can install the VookiImageViewer from the repository hosted by the [cloudsmith.io][6] for free.
+```
+dnf install yum-utils pygpgme
+rpm --import 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/gpg.EF5E62B51DE78AFF.key'
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.rpm.txt?distro=fedora&codename=42' > /tmp/michal-duda-vookiimageviewer.repo
+dnf config-manager --add-repo '/tmp/michal-duda-vookiimageviewer.repo'
+dnf -q makecache -y --disablerepo='*' --enablerepo='michal-duda-vookiimageviewer' --enablerepo='michal-duda-vookiimageviewer-source'
+dnf install vookiimageviewer
+```
+
+Fedora 43 users can install the VookiImageViewer from the repository hosted by the [cloudsmith.io][6] for free.
+```
+dnf install yum-utils pygpgme
+rpm --import 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/gpg.EF5E62B51DE78AFF.key'
+curl -1sLf 'https://dl.cloudsmith.io/public/michal-duda/vookiimageviewer/config.rpm.txt?distro=fedora&codename=43' > /tmp/michal-duda-vookiimageviewer.repo
+dnf config-manager --add-repo '/tmp/michal-duda-vookiimageviewer.repo'
+dnf -q makecache -y --disablerepo='*' --enablerepo='michal-duda-vookiimageviewer' --enablerepo='michal-duda-vookiimageviewer-source'
+dnf install vookiimageviewer
+```
 
 -----------------
 
