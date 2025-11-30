@@ -1,6 +1,13 @@
 # Release Notes
 
 --------------------------------------------------------------
+## v2025.11.30
+- Core: Minor bug fixes.
+- Build: Wix6 used for Windows installer.
+- Build: Windows ARM64 support \[GitHub Actions\].
+- Components: Updated to the latest versions.
+- Components: The KDMacTouchBar was removed because it is not maintained anymore.
+--------------------------------------------------------------
 ## v2025.02.15
 - Core: Minor bug fixes.
 - Build: Wix5 used for Windows installer.
