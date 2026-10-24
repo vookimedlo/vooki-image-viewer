@@ -76,7 +76,7 @@ jobs:
       env:
         CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}
       run: |
-        cmake -DBUILD_DEPENDENCIES=ON -A ${{ matrix.ARCH }} -G ${{ matrix.CMAKE_GEN }} -Bbuild ${{github.workspace}} -Wno-dev
+        cmake -DBUILD_DEPENDENCIES=ON -A ${{ matrix.ARCH }} -G "${{ matrix.CMAKE_GEN }}" -Bbuild ${{github.workspace}} -Wno-dev
 
     -
       name: build 3rd-party sources
@@ -90,7 +90,7 @@ jobs:
       env:
         CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}
       run: |
-        cmake -DBUILD_DEPENDENCIES=OFF -A ${{ matrix.ARCH }} -G ${{ matrix.CMAKE_GEN }} -Bbuild ${{github.workspace}} -Wno-dev -DINSTALL_SYSTEM_RUNTIME=1
+        cmake -DBUILD_DEPENDENCIES=OFF -A ${{ matrix.ARCH }} -G "${{ matrix.CMAKE_GEN }}" -Bbuild ${{github.workspace}} -Wno-dev -DINSTALL_SYSTEM_RUNTIME=1
 
     -
       name: build sources
