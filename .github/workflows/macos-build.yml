@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: macos-26-arm
+    runs-on: macos-latest
 
     steps:
     - name: checkout
