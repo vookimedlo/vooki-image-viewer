@@ -1430,22 +1430,6 @@
   </connection>
   <connection>
    <sender>imageAreaWidget</sender>
-   <signal>imageInformationParsed(const std::vector&lt;std::pair&lt;QString, QString&gt;&gt;&amp;)</signal>
-   <receiver>infoTableWidget</receiver>
-   <slot>displayInformation(const std::vector&lt;std::pair&lt;QString, QString&gt;&gt;&amp;)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>428</x>
-     <y>145</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>591</x>
-     <y>176</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>imageAreaWidget</sender>
    <signal>imageSizeChanged(uint64_t)</signal>
    <receiver>MainWindow</receiver>
    <slot>onImageSizeChanged(uint64_t)</slot>

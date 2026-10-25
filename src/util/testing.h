@@ -24,7 +24,7 @@ namespace TEST
         ::QTest::Internal::callInitMain<TestClass>();
         QApplication app(argc, argv);
         QApplication::setAttribute(Qt::AA_Use96Dpi, true);
-        QTEST_DISABLE_KEYPAD_NAVIGATION TestClass tc;
+        TestClass tc;
         QTEST_SET_MAIN_SOURCE_PATH
         *status |= QTest::qExec(&tc, argc, argv);
     }
