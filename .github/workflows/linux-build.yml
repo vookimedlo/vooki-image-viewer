@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         toolchain: [gcc, clang]
-        distribution: [stonking, noble, resolute]
+        distribution: [stonking, resolute]
     name: ubuntu ${{matrix.distribution}}
     uses: ./.github/workflows/reusable_linux_build.yml
     with:
