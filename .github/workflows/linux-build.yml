@@ -20,7 +20,7 @@ jobs:
     name: ubuntu ${{matrix.distribution}}
     uses: ./.github/workflows/reusable_linux_build.yml
     with:
-      runner: '["ubuntu-latest", "ubuntu-24.04-arm"]'
+      runner: '["ubuntu-latest", "ubuntu-26.04-arm"]'
       toolchain: ${{matrix.toolchain}}
       docker_image: ghcr.io/vookimedlo/ubuntu-qt:qt6_latestdistroofficial_${{ matrix.toolchain }}_${{ matrix.distribution }}
       artifact_name: ubuntu_${{ matrix.distribution }}_${{ matrix.toolchain }}
@@ -34,7 +34,7 @@ jobs:
     name: debian ${{matrix.distribution}}
     uses: ./.github/workflows/reusable_linux_build.yml
     with:
-      runner: '["ubuntu-latest", "ubuntu-24.04-arm"]'
+      runner: '["ubuntu-latest", "ubuntu-26.04-arm"]'
       toolchain: ${{matrix.toolchain}}
       docker_image: ghcr.io/vookimedlo/debian-qt:qt6_latestdistroofficial_${{ matrix.toolchain }}_${{ matrix.distribution }}
       artifact_name: debian_${{ matrix.distribution }}_${{ matrix.toolchain }}
@@ -48,7 +48,7 @@ jobs:
     name: fedora ${{matrix.distribution}}
     uses: ./.github/workflows/reusable_linux_build.yml
     with:
-      runner: '["ubuntu-latest", "ubuntu-24.04-arm"]'
+      runner: '["ubuntu-latest", "ubuntu-26.04-arm"]'
       toolchain: ${{matrix.toolchain}}
       docker_image: ghcr.io/vookimedlo/fedora-qt:qt6_latestdistroofficial_${{ matrix.toolchain }}_${{ matrix.distribution }}
       artifact_name: fedora_${{ matrix.distribution }}_${{ matrix.toolchain }}
