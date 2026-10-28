@@ -343,7 +343,7 @@ ADD_IMAGE_PLUGIN(vooki_kimg_tga ../../components/kimageformats/src/imageformats/
 
 # Photoshop documents (psd)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_psd ../../components/kimageformats/src/imageformats/psd.cpp ../../components/kimageformats/src/imageformats/scanlineconverter.cpp ../../components/kimageformats/src/imageformats/microexif.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_psd ../../components/kimageformats/src/imageformats/psd.cpp ../../components/kimageformats/src/imageformats/scanlineconverter.cpp ../../components/kimageformats/src/imageformats/microexif.cpp ../../components/kimageformats/src/imageformats/photoshop.cpp)
 
 # Windows Animated Cursor (ani)
 #
