@@ -54,7 +54,7 @@ SET(CMAKE_CXX_EXTENSIONS OFF)
 
 include(FetchContent)
 
-SET(QCORO_VERSION "v0.12.0")
+SET(QCORO_VERSION "v0.13.0")
 
 SET(QCORO_BUILD_EXAMPLES OFF)
 SET(QCORO_BUILD_TESTING OFF)
@@ -66,7 +66,7 @@ SET(QCORO_WITH_QML OFF)
 set(QCORO_DISABLE_DEPRECATED_TASK_H ON)
 
 FetchContent_Declare(qcoro
-        GIT_REPOSITORY https://github.com/danvratil/qcoro.git
+        GIT_REPOSITORY https://github.com/qcoro/qcoro.git
         GIT_TAG ${QCORO_VERSION}
         GIT_SHALLOW true
         EXCLUDE_FROM_ALL

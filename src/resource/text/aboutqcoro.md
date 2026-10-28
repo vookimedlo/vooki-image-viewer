@@ -2,9 +2,9 @@
 
 -----------------
 
-- WWW: https://github.com/danvratil/qcoro
+- WWW: https://github.com/qcoro/qcoro
 - License: [MIT][1]
 
 -----------------
 
-[1]: https://github.com/danvratil/qcoro/blob/main/LICENSE
+[1]: https://github.com/qcoro/qcoro/blob/main/LICENSE
