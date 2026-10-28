@@ -25,14 +25,16 @@ jobs:
       fail-fast: false
       matrix:
         include:
-            - os: windows-latest
+            - os: windows-2022
               QT_HOST: "windows"
               QT_ARCH: "win64_msvc2022_64"
               ARCH: x64
+              CMAKE_GEN: "Visual Studio 17 2022"
             - os: windows-11-arm
               QT_HOST: "windows_arm64"
               QT_ARCH: "win64_msvc2022_arm64"
               ARCH: arm64
+              CMAKE_GEN: "Visual Studio 18 2026"
     runs-on: ${{ matrix.os }}
     steps:
     - name: Prepare git
@@ -65,7 +67,7 @@ jobs:
         fetch-depth: 0
         submodules: true
     - name: Configure build for ${{ matrix.ARCH }}
-      uses: ilammy/msvc-dev-cmd@v1
+      uses: rzlamrr/msvc-dev-cmd@v2
       with:
         arch: ${{ matrix.ARCH }}
     -
@@ -74,7 +76,7 @@ jobs:
       env:
         CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}
       run: |
-        cmake -DBUILD_DEPENDENCIES=ON -A ${{ matrix.ARCH }} -G "Visual Studio 17 2022" -Bbuild ${{github.workspace}} -Wno-dev
+        cmake -DBUILD_DEPENDENCIES=ON -A ${{ matrix.ARCH }} -G "${{ matrix.CMAKE_GEN }}" -Bbuild ${{github.workspace}} -Wno-dev
 
     -
       name: build 3rd-party sources
@@ -88,13 +90,11 @@ jobs:
       env:
         CMAKE_PREFIX_PATH: ${{env.Qt6_Dir}}
       run: |
-        cmake -DBUILD_DEPENDENCIES=OFF -A ${{ matrix.ARCH }} -G "Visual Studio 17 2022" -Bbuild ${{github.workspace}} -Wno-dev -DINSTALL_SYSTEM_RUNTIME=1
+        cmake -DBUILD_DEPENDENCIES=OFF -A ${{ matrix.ARCH }} -G "${{ matrix.CMAKE_GEN }}" -Bbuild ${{github.workspace}} -Wno-dev -DINSTALL_SYSTEM_RUNTIME=1
 
     -
       name: build sources
       working-directory: ${{github.workspace}}\..
-      env:
-        VCINSTALLDIR: "C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\VC\\"
       run: |
         cmake --build build --config ${{env.BUILD_TYPE}} --target package
 

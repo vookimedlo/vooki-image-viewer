@@ -41,6 +41,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     m_ui.setupUi(this);
 
+    // Not in MainWindow.ui - uic (Qt 6.12+) rejects signatures with templated arguments
+    QObject::connect(m_ui.imageAreaWidget, &ImageAreaWidget::imageInformationParsed, m_ui.infoTableWidget, &InfoTableWidget::displayInformation);
+
     m_ui.toolBar->toggleViewAction()->setShortcut(QKeySequence(Qt::Key_T));
     m_ui.toolBar->toggleViewAction()->setWhatsThis("viv/shortcut/window/toolbar");
     m_ui.menuShow->addAction(m_ui.toolBar->toggleViewAction());
