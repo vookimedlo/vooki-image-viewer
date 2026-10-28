@@ -55,6 +55,8 @@ Supported image formats cover the very common formats as well as the rare ones. 
 | XBM                      | X11 Bitmap                                       |
 | XPM                      | X11 Pixmap                                       |
 | SCT                      | Scitex Continuous Tone Format                    |
+| FF                       | Farbfeld                                         |
+| TIM                      | PlayStation Graphics                             |
 | SVG                      | Scalable Vector Graphics                         |
 | BMP                      | Windows Bitmap                                   |
 | XCF                      | Gimp                                             |

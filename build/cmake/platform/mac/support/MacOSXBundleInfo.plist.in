@@ -81,6 +81,8 @@
           <string>pfm</string>
           <string>pxr</string>
           <string>sct</string>
+          <string>ff</string>
+          <string>tim</string>
         </array>
         <key>CFBundleTypeRole</key>
         <string>Viewer</string>

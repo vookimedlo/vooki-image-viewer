@@ -381,6 +381,14 @@ ADD_IMAGE_PLUGIN(vooki_kimg_pxr ../../components/kimageformats/src/imageformats/
 #
 ADD_IMAGE_PLUGIN(vooki_kimg_sct ../../components/kimageformats/src/imageformats/sct.cpp ../../components/kimageformats/src/imageformats/scanlineconverter.cpp)
 
+# Farbfeld (ff)
+#
+ADD_IMAGE_PLUGIN(vooki_kimg_ff ../../components/kimageformats/src/imageformats/ff.cpp)
+
+# PlayStation Graphics (tim)
+#
+ADD_IMAGE_PLUGIN(vooki_kimg_tim ../../components/kimageformats/src/imageformats/tim.cpp)
+
 
 # Camera RAW Thumbnails (raf, mos, cr2, erf, dng, mrw, nef, orf, rw2, pef, x3f, srw, x3f, arw)
 # Prebuilt library for the MacOS/Windows only, Linux uses a distro package
