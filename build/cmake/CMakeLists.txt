@@ -250,7 +250,7 @@ elseif (WIN32)
 
     TARGET_INCLUDE_DIRECTORIES(${APPLICATION_NAME} BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
     TARGET_LINK_DIRECTORIES(${APPLICATION_NAME} BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
-    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} exiv2.lib libexpatMD.lib zlibstatic.lib wsock32 ws2_32 Psapi exiv2wrapper)
+    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} exiv2.lib libexpatMD.lib zs.lib wsock32 ws2_32 Psapi exiv2wrapper)
 else ()
     SET(SOURCES
             ${SOURCES}
@@ -415,7 +415,7 @@ elseif (WIN32)
     ADD_IMAGE_PLUGIN(vooki_raw_thumb ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
     TARGET_INCLUDE_DIRECTORIES(vooki_raw_thumb BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
     TARGET_LINK_DIRECTORIES(vooki_raw_thumb BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
-    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_static.lib turbojpeg-static zlibstatic.lib)
+    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_static.lib turbojpeg-static zs.lib)
 
     ADD_IMAGE_PLUGIN(vooki_kimg_heif ../../components/kimageformats/src/imageformats/heif.cpp ../../components/kimageformats/src/imageformats/microexif.cpp)
     TARGET_INCLUDE_DIRECTORIES(vooki_kimg_heif BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
