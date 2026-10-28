@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  QT_VERSION:              "6.10.1"
+  QT_VERSION:              "6.12.0"
   BUILD_TYPE:              Release
   artifact_retention_days: 5
 
