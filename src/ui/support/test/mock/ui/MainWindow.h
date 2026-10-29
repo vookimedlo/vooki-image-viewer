@@ -44,6 +44,7 @@ private slots:
     void onHomeDirClicked() const {};
     void onImageDimensionsChanged([[maybe_unused]] int width, [[maybe_unused]] int height) const {};
     void onImageSizeChanged([[maybe_unused]] uint64_t size) const {};
+    void onMenuBarToggled([[maybe_unused]] bool toggled) const {};
     void onNextImageTriggered() const {};
     void onOriginalSizeTriggered() const {};
     void onPicturesDirClicked() const {};

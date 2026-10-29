@@ -28,10 +28,12 @@ void Settings::initializeSettings(QSettings * const defaultSettings)
     Q_ASSERT(defaultSettings);
 
     defaultSettings->setValue(SETTINGS_GENERAL_FULLSCREEN, false);
+    defaultSettings->setValue(SETTINGS_WINDOW_HIDE_MENUBAR, false);
     defaultSettings->setValue(SETTINGS_WINDOW_HIDE_STATUSBAR, false);
     defaultSettings->setValue(SETTINGS_WINDOW_HIDE_TOOLBAR, false);
     defaultSettings->setValue(SETTINGS_WINDOW_HIDE_NAVIGATION, false);
     defaultSettings->setValue(SETTINGS_WINDOW_HIDE_INFORMATION, false);
+    defaultSettings->setValue(SETTINGS_FULLSCREEN_HIDE_MENUBAR, false);
     defaultSettings->setValue(SETTINGS_FULLSCREEN_HIDE_STATUSBAR, true);
     defaultSettings->setValue(SETTINGS_FULLSCREEN_HIDE_TOOLBAR, true);
     defaultSettings->setValue(SETTINGS_FULLSCREEN_HIDE_NAVIGATION, true);

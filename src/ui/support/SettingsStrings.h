@@ -13,6 +13,7 @@ VookiImageViewer - a tool for showing images.
 
 #define FOR_LIST_OF_VARIABLES(ITEM) \
     ITEM(SETTINGS_GENERAL_FULLSCREEN, "viv/general/fullscreen") \
+    ITEM(SETTINGS_FULLSCREEN_HIDE_MENUBAR, "viv/fullscreen/hide/menubar") \
     ITEM(SETTINGS_FULLSCREEN_HIDE_STATUSBAR, "viv/fullscreen/hide/statusbar") \
     ITEM(SETTINGS_FULLSCREEN_HIDE_TOOLBAR, "viv/fullscreen/hide/toolbar") \
     ITEM(SETTINGS_FULLSCREEN_HIDE_NAVIGATION, "viv/fullscreen/hide/navigation") \
@@ -29,6 +30,7 @@ VookiImageViewer - a tool for showing images.
     ITEM(SETTINGS_RECENT_FILE_3, "viv/recent/file/3") \
     ITEM(SETTINGS_RECENT_FILE_4, "viv/recent/file/4") \
     ITEM(SETTINGS_RECENT_FILE_5, "viv/recent/file/5") \
+    ITEM(SETTINGS_WINDOW_HIDE_MENUBAR, "viv/window/hide/menubar") \
     ITEM(SETTINGS_WINDOW_HIDE_STATUSBAR, "viv/window/hide/statusbar") \
     ITEM(SETTINGS_WINDOW_HIDE_TOOLBAR, "viv/window/hide/toolbar") \
     ITEM(SETTINGS_WINDOW_HIDE_NAVIGATION, "viv/window/hide/navigation") \

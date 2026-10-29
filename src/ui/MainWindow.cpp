@@ -52,6 +52,14 @@ MainWindow::MainWindow(QWidget *parent)
     m_ui.dockWidget->toggleViewAction()->setWhatsThis("viv/shortcut/window/navigation");
     m_ui.menuShow->addAction(m_ui.dockWidget->toggleViewAction());
 
+    // Shortcuts of actions placed only in a hidden menubar would not work, so make them reachable from the window itself.
+    addActions(m_ui.menuBar->actions());
+
+#ifdef Q_OS_MACOS
+    // The native macOS menubar cannot be hidden.
+    m_ui.actionMenuBar->setVisible(false);
+#endif
+
     m_ui.dockInfoWidget->toggleViewAction()->setShortcut(QKeySequence(Qt::Key_E));
     m_ui.dockInfoWidget->toggleViewAction()->setWhatsThis("viv/shortcut/window/info");
     m_ui.menuShow->addAction(m_ui.dockInfoWidget->toggleViewAction());
@@ -84,6 +92,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     if (settings->value(SETTINGS_IMAGE_FITIMAGETOWINDOW).toBool())
         m_ui.actionFitToWindow->setChecked(true);
+
+    if (settings->value(SETTINGS_WINDOW_HIDE_MENUBAR).toBool())
+        m_ui.actionMenuBar->setChecked(false);
 
     if (settings->value(SETTINGS_WINDOW_HIDE_STATUSBAR).toBool())
         m_ui.actionStatusBar->setChecked(false);
@@ -359,6 +370,11 @@ void MainWindow::onFullScreenToggled([[maybe_unused]] bool toggled)
             m_ui.dockInfoWidget->show();
         else
             m_ui.dockInfoWidget->hide();
+        m_ui.actionMenuBar->setChecked(m_widgetVisibilityPriorFullscreen.isMenuBarVisible);
+        if (m_widgetVisibilityPriorFullscreen.isMenuBarVisible)
+            m_ui.menuBar->show();
+        else
+            m_ui.menuBar->hide();
         m_ui.actionStatusBar->setChecked(m_widgetVisibilityPriorFullscreen.isStatusBarVisible);
         if (m_widgetVisibilityPriorFullscreen.isStatusBarVisible)
             m_ui.statusBar->show();
@@ -370,6 +386,7 @@ void MainWindow::onFullScreenToggled([[maybe_unused]] bool toggled)
         m_widgetVisibilityPriorFullscreen.isToolBarVisible = m_ui.toolBar->toggleViewAction()->isChecked();
         m_widgetVisibilityPriorFullscreen.isFileSystemNavigationVisible = m_ui.dockWidget->toggleViewAction()->isChecked();
         m_widgetVisibilityPriorFullscreen.isInformationVisible = m_ui.dockInfoWidget->toggleViewAction()->isChecked();
+        m_widgetVisibilityPriorFullscreen.isMenuBarVisible = m_ui.actionMenuBar->isChecked();
         m_widgetVisibilityPriorFullscreen.isStatusBarVisible = m_ui.actionStatusBar->isChecked();
 
         const auto settings = Settings::userSettings();
@@ -391,6 +408,12 @@ void MainWindow::onFullScreenToggled([[maybe_unused]] bool toggled)
             m_ui.dockInfoWidget->hide();
         }
 
+        if (settings->value(SETTINGS_FULLSCREEN_HIDE_MENUBAR).toBool())
+        {
+            m_ui.actionMenuBar->setChecked(false);
+            m_ui.menuBar->hide();
+        }
+
         if (settings->value(SETTINGS_FULLSCREEN_HIDE_STATUSBAR).toBool())
         {
             m_ui.actionStatusBar->setChecked(false);
@@ -399,6 +422,11 @@ void MainWindow::onFullScreenToggled([[maybe_unused]] bool toggled)
 
         showFullScreen();
     }
+}
+
+void MainWindow::onMenuBarToggled(const bool toggled) const
+{
+    toggled ? m_ui.menuBar->show() : m_ui.menuBar->hide();
 }
 
 void MainWindow::onNextImageTriggered()

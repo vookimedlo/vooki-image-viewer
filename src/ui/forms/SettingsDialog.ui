@@ -175,6 +175,16 @@
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
               <item>
+               <widget class="QCheckBox" name="checkBoxWindowHideMenubar">
+                <property name="whatsThis">
+                 <string notr="true">viv/window/hide/menubar</string>
+                </property>
+                <property name="text">
+                 <string>Hide menubar</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QCheckBox" name="checkBoxWindowHideStatusbar">
                 <property name="whatsThis">
                  <string notr="true">viv/window/hide/statusbar</string>
@@ -226,6 +236,16 @@
               <string>Switch to FullScreen</string>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_2">
+              <item>
+               <widget class="QCheckBox" name="checkBoxFullscreenHideMenubar">
+                <property name="whatsThis">
+                 <string notr="true">viv/fullscreen/hide/menubar</string>
+                </property>
+                <property name="text">
+                 <string>Hide menubar</string>
+                </property>
+               </widget>
+              </item>
               <item>
                <widget class="QCheckBox" name="checkBoxFullscreenHideStatusbar">
                 <property name="whatsThis">

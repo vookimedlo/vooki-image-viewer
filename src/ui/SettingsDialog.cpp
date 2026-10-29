@@ -26,10 +26,12 @@ SettingsDialog::SettingsDialog(std::unique_ptr<QSettings> defaultSettings,
                                         m_settingsCheckboxes {
                                             &m_uiSettingsDialog.checkBoxUseSystemLanguage,
                                             &m_uiSettingsDialog.checkBoxGeneralStartInFullscreen,
+                                            &m_uiSettingsDialog.checkBoxWindowHideMenubar,
                                             &m_uiSettingsDialog.checkBoxWindowHideStatusbar,
                                             &m_uiSettingsDialog.checkBoxWindowHideToolbar,
                                             &m_uiSettingsDialog.checkBoxWindowHideNavigation,
                                             &m_uiSettingsDialog.checkBoxWindowHideInformation,
+                                            &m_uiSettingsDialog.checkBoxFullscreenHideMenubar,
                                             &m_uiSettingsDialog.checkBoxFullscreenHideStatusbar,
                                             &m_uiSettingsDialog.checkBoxFullscreenHideToolbar,
                                             &m_uiSettingsDialog.checkBoxFullscreenHideNavigation,
@@ -43,6 +45,12 @@ SettingsDialog::SettingsDialog(std::unique_ptr<QSettings> defaultSettings,
     Q_ASSERT(m_userSettings);
 
     m_uiSettingsDialog.setupUi(this);
+
+#ifdef Q_OS_MACOS
+    // The native macOS menubar cannot be hidden.
+    m_uiSettingsDialog.checkBoxWindowHideMenubar->hide();
+    m_uiSettingsDialog.checkBoxFullscreenHideMenubar->hide();
+#endif
 
     {
         QSignalBlocker signalBlocker(m_uiSettingsDialog.comboBoxLanguage);

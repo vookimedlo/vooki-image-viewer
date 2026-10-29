@@ -64,6 +64,7 @@ protected slots:
     void onHomeDirClicked() const;
     void onImageDimensionsChanged(int width, int height) const;
     void onImageSizeChanged(uint64_t size) const;
+    void onMenuBarToggled(bool toggled) const;
     void onNextImageTriggered();
     void onOriginalSizeTriggered() const;
     void onPicturesDirClicked() const;
@@ -86,6 +87,7 @@ private:
     struct
     {
         bool isFileSystemNavigationVisible;
+        bool isMenuBarVisible;
         bool isStatusBarVisible;
         bool isToolBarVisible;
         bool isInformationVisible;
