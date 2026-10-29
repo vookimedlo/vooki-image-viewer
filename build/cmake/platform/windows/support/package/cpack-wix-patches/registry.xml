@@ -58,6 +58,8 @@
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".pfm" Value="" Type="string" />
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".pxr" Value="" Type="string" />
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".sct" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".ff" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\SupportedTypes" Name=".tim" Value="" Type="string" />
 
 
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.jpg\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
@@ -105,6 +107,8 @@
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.pfm\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.pxr\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.sct\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.ff\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\.tim\OpenWithProgids" Name="VookiImageViewer.Image" Value="" Type="string" />
 
         <RegistryValue Root="HKLM" Key="SOFTWARE\Classes\Applications\VookiImageViewer.exe\shell\open" Name="FriendlyAppName" Value="VookiImageViewer" Type="string" />
 
@@ -242,6 +246,12 @@
                 <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
             </Extension>
             <Extension Id="sct">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="ff">
+                <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
+            </Extension>
+            <Extension Id="tim">
                 <Verb Id="open" Command="open" Argument="&quot;%1&quot;" />
             </Extension>
         </ProgId>

@@ -54,7 +54,7 @@ SET(CMAKE_CXX_EXTENSIONS OFF)
 
 include(FetchContent)
 
-SET(QCORO_VERSION "v0.12.0")
+SET(QCORO_VERSION "v0.13.0")
 
 SET(QCORO_BUILD_EXAMPLES OFF)
 SET(QCORO_BUILD_TESTING OFF)
@@ -66,7 +66,7 @@ SET(QCORO_WITH_QML OFF)
 set(QCORO_DISABLE_DEPRECATED_TASK_H ON)
 
 FetchContent_Declare(qcoro
-        GIT_REPOSITORY https://github.com/danvratil/qcoro.git
+        GIT_REPOSITORY https://github.com/qcoro/qcoro.git
         GIT_TAG ${QCORO_VERSION}
         GIT_SHALLOW true
         EXCLUDE_FROM_ALL
@@ -250,7 +250,7 @@ elseif (WIN32)
 
     TARGET_INCLUDE_DIRECTORIES(${APPLICATION_NAME} BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
     TARGET_LINK_DIRECTORIES(${APPLICATION_NAME} BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
-    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} exiv2.lib libexpatMD.lib zlibstatic.lib wsock32 ws2_32 Psapi exiv2wrapper)
+    TARGET_LINK_LIBRARIES(${APPLICATION_NAME} exiv2.lib libexpatMD.lib zs.lib wsock32 ws2_32 Psapi exiv2wrapper)
 else ()
     SET(SOURCES
             ${SOURCES}
@@ -343,7 +343,7 @@ ADD_IMAGE_PLUGIN(vooki_kimg_tga ../../components/kimageformats/src/imageformats/
 
 # Photoshop documents (psd)
 #
-ADD_IMAGE_PLUGIN(vooki_kimg_psd ../../components/kimageformats/src/imageformats/psd.cpp ../../components/kimageformats/src/imageformats/scanlineconverter.cpp ../../components/kimageformats/src/imageformats/microexif.cpp)
+ADD_IMAGE_PLUGIN(vooki_kimg_psd ../../components/kimageformats/src/imageformats/psd.cpp ../../components/kimageformats/src/imageformats/scanlineconverter.cpp ../../components/kimageformats/src/imageformats/microexif.cpp ../../components/kimageformats/src/imageformats/photoshop.cpp)
 
 # Windows Animated Cursor (ani)
 #
@@ -381,6 +381,14 @@ ADD_IMAGE_PLUGIN(vooki_kimg_pxr ../../components/kimageformats/src/imageformats/
 #
 ADD_IMAGE_PLUGIN(vooki_kimg_sct ../../components/kimageformats/src/imageformats/sct.cpp ../../components/kimageformats/src/imageformats/scanlineconverter.cpp)
 
+# Farbfeld (ff)
+#
+ADD_IMAGE_PLUGIN(vooki_kimg_ff ../../components/kimageformats/src/imageformats/ff.cpp)
+
+# PlayStation Graphics (tim)
+#
+ADD_IMAGE_PLUGIN(vooki_kimg_tim ../../components/kimageformats/src/imageformats/tim.cpp)
+
 
 # Camera RAW Thumbnails (raf, mos, cr2, erf, dng, mrw, nef, orf, rw2, pef, x3f, srw, x3f, arw)
 # Prebuilt library for the MacOS/Windows only, Linux uses a distro package
@@ -415,7 +423,7 @@ elseif (WIN32)
     ADD_IMAGE_PLUGIN(vooki_raw_thumb ../../src/plugins/rawthumb/rawThumbHandler.cpp ../../src/plugins/rawthumb/rawThumbPlugin.cpp)
     TARGET_INCLUDE_DIRECTORIES(vooki_raw_thumb BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)
     TARGET_LINK_DIRECTORIES(vooki_raw_thumb BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/lib)
-    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_static.lib turbojpeg-static zlibstatic.lib)
+    TARGET_LINK_LIBRARIES(vooki_raw_thumb ${QT_UI_LIB} libraw_static.lib turbojpeg-static zs.lib)
 
     ADD_IMAGE_PLUGIN(vooki_kimg_heif ../../components/kimageformats/src/imageformats/heif.cpp ../../components/kimageformats/src/imageformats/microexif.cpp)
     TARGET_INCLUDE_DIRECTORIES(vooki_kimg_heif BEFORE PRIVATE ${3RD_PARTY_LIBS_INSTALL_ABSOLUTE}/include)

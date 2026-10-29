@@ -1,6 +1,13 @@
 # Release Notes
 
 --------------------------------------------------------------
+## Unreleased
+- Core: Qt 6.12 support.
+- Build: Wix7 used for Windows installer.
+- Build: Minimal macOS version set to 26.0 (the last two major versions are supported).
+- Components: Updated to the latest versions.
+- Image: The FF & TIM format support added.
+--------------------------------------------------------------
 ## v2025.11.30
 - Core: Minor bug fixes.
 - Build: Wix6 used for Windows installer.
